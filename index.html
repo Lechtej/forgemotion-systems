@@ -1,101 +1,157 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ForgeMotion Systems</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    /* Prosta animacja fade-in dla hero */
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 1s forwards;
     }
     @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body class="bg-gray-900 text-white font-sans">
 
-  <!-- Header -->
-  <header class="bg-gray-800 p-4 fixed w-full z-10 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">ForgeMotion Systems</h1>
+<!-- HEADER -->
+<header class="bg-gray-800 p-4 fixed w-full z-10 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-xl font-bold">ForgeMotion Systems</h1>
+
+    <div class="flex items-center space-x-6">
       <nav>
         <ul class="flex space-x-6">
-          <li><a href="#hero" class="hover:text-blue-400">Home</a></li>
-          <li><a href="#produkty" class="hover:text-blue-400">Produkty</a></li>
-          <li><a href="#onas" class="hover:text-blue-400">O nas</a></li>
-          <li><a href="#kontakt" class="hover:text-blue-400">Kontakt</a></li>
+          <li><a href="#hero" class="hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
+          <li><a href="#products" class="hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="#about" class="hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
+          <li><a href="#contact" class="hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
         </ul>
       </nav>
-    </div>
-  </header>
 
-  <!-- Hero Section -->
-  <section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
-    <h2 class="text-4xl md:text-6xl font-bold mb-4">Precision Motion Systems</h2>
-    <p class="text-lg md:text-2xl mb-6">Platformy 6DOF, 3DOF, 2DOF i systemy symulatorowe najwyższej jakości</p>
-    <a href="#produkty" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">Zobacz produkty</a>
-  </section>
-
-  <!-- Produkty Section -->
-  <section id="produkty" class="container mx-auto py-16 px-4">
-    <h3 class="text-3xl font-bold mb-8 text-center">Nasze produkty</h3>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- Platforma 6DOF -->
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transform transition duration-300">
-        <img src="https://via.placeholder.com/300x200?text=6DOF" alt="Platforma 6DOF" class="mb-4 rounded">
-        <h4 class="text-xl font-semibold mb-2">Platforma 6DOF</h4>
-        <p class="text-gray-300 mb-2">Pełny ruch, realistyczne odwzorowanie dynamiki pojazdu i lotu.</p>
-      </div>
-      <!-- Platforma 3DOF / 2DOF -->
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transform transition duration-300">
-        <img src="https://via.placeholder.com/300x200?text=3DOF+2DOF" alt="Platforma 3DOF / 2DOF" class="mb-4 rounded">
-        <h4 class="text-xl font-semibold mb-2">Platforma 3DOF / 2DOF</h4>
-        <p class="text-gray-300 mb-2">Kompaktowe i modułowe rozwiązania dla każdego symulatora.</p>
-      </div>
-      <!-- Beltrensioner -->
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transform transition duration-300">
-        <img src="https://via.placeholder.com/300x200?text=Beltrensioner" alt="Beltrensioner" class="mb-4 rounded">
-        <h4 class="text-xl font-semibold mb-2">Beltrensioner</h4>
-        <p class="text-gray-300 mb-2">Realistyczny system pasów i odczucia przy przyspieszeniu.</p>
-      </div>
-      <!-- Replika fotela katapultowego -->
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transform transition duration-300">
-        <img src="https://via.placeholder.com/300x200?text=Fotel+Katapultowy" alt="Replika fotela katapultowego" class="mb-4 rounded">
-        <h4 class="text-xl font-semibold mb-2">Replika fotela katapultowego</h4>
-        <p class="text-gray-300 mb-2">Precyzyjna rekonstrukcja dla symulacji lotniczych.</p>
+      <!-- LANGUAGE SWITCH -->
+      <div class="flex space-x-2 text-sm">
+        <button onclick="setLanguage('en')" class="hover:text-blue-400">EN</button>
+        <span>|</span>
+        <button onclick="setLanguage('pl')" class="hover:text-blue-400">PL</button>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <!-- About Section -->
-  <section id="onas" class="bg-gray-800 py-16 px-4">
-    <div class="container mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-6">O nas</h3>
-      <p class="text-gray-300 max-w-2xl mx-auto">ForgeMotion Systems specjalizuje się w projektowaniu i produkcji profesjonalnych systemów motion dla symulatorów lotu i wyścigów. Nasze konstrukcje łączą precyzję, bezpieczeństwo i komfort użytkownika.</p>
+<!-- HERO -->
+<section id="hero"
+  class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
+
+  <h2 class="text-4xl md:text-6xl font-bold mb-4"
+      data-en="Precision Motion Systems"
+      data-pl="Precyzyjne systemy motion"></h2>
+
+  <p class="text-lg md:text-2xl mb-6"
+     data-en="Professional 6DOF, 3DOF and 2DOF motion platforms for racing and flight simulation"
+     data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF do symulacji wyścigowych i lotniczych"></p>
+
+  <a href="#products"
+     class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold"
+     data-en="View products"
+     data-pl="Zobacz produkty"></a>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="container mx-auto py-16 px-4">
+  <h3 class="text-3xl font-bold mb-8 text-center"
+      data-en="Our products"
+      data-pl="Nasze produkty"></h3>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+    <!-- 6DOF -->
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h4 class="text-xl font-semibold mb-2">6DOF Platform</h4>
+      <p data-en="Full-motion platform for high-end racing and flight simulation"
+         data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
     </div>
-  </section>
 
-  <!-- Contact Section -->
-  <section id="kontakt" class="container mx-auto py-16 px-4">
-    <h3 class="text-3xl font-bold mb-6 text-center">Kontakt</h3>
-    <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
-      <input type="text" placeholder="Imię i nazwisko" class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500">
-      <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500">
-      <input type="text" placeholder="Firma / Projekt" class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500">
-      <textarea placeholder="Wiadomość" class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500"></textarea>
-      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">Wyślij wiadomość</button>
-    </form>
-  </section>
+    <!-- 3DOF / 2DOF -->
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h4 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h4>
+      <p data-en="Compact and modular motion systems"
+         data-pl="Kompaktowe i modułowe systemy motion"></p>
+    </div>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 py-6 text-center text-gray-400">
-    &copy; 2025 ForgeMotion Systems. Wszelkie prawa zastrzeżone.
-  </footer>
+    <!-- SEAT BELT TENSIONER -->
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h4 class="text-xl font-semibold mb-2">Seat belt tensioner</h4>
+      <p data-en="Realistic braking and acceleration forces through seat belt feedback"
+         data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
+    </div>
+
+    <!-- EJECTION SEAT -->
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h4 class="text-xl font-semibold mb-2">Ejection seat replica</h4>
+      <p data-en="High-fidelity aircraft ejection seat replica for simulators"
+         data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="bg-gray-800 py-16 px-4">
+  <div class="container mx-auto text-center">
+    <h3 class="text-3xl font-bold mb-6"
+        data-en="About us"
+        data-pl="O nas"></h3>
+
+    <p class="text-gray-300 max-w-2xl mx-auto"
+       data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for racing and aviation industries."
+       data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej."></p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="container mx-auto py-16 px-4">
+  <h3 class="text-3xl font-bold mb-6 text-center"
+      data-en="Contact"
+      data-pl="Kontakt"></h3>
+
+  <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
+    <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
+    <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
+    <textarea placeholder="Message / Wiadomość" class="p-3 rounded bg-gray-700"></textarea>
+    <button class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+            data-en="Send message"
+            data-pl="Wyślij wiadomość"></button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 py-6 text-center text-gray-400">
+  © 2025 ForgeMotion Systems
+</footer>
+
+<!-- LANGUAGE SCRIPT -->
+<script>
+  function setLanguage(lang) {
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = el.dataset[lang];
+    });
+  }
+
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLanguage(savedLang);
+</script>
 
 </body>
 </html>
