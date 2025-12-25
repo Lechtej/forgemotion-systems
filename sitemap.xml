@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <!-- English version -->
   <url>
     <loc>https://forgemotionsystems.com/en</loc>
     <lastmod>2025-12-25</lastmod>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://forgemotionsystems.com/images/og-en.jpg</image:loc>
+      <image:title>ForgeMotion Systems – Motion Platforms</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://forgemotionsystems.com/en#hero</loc>
@@ -33,6 +38,10 @@
     <loc>https://forgemotionsystems.com/pl</loc>
     <lastmod>2025-12-25</lastmod>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://forgemotionsystems.com/images/og-pl.jpg</image:loc>
+      <image:title>ForgeMotion Systems – Platformy Motion</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://forgemotionsystems.com/pl#hero</loc>
