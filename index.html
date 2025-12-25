@@ -173,18 +173,26 @@
   setLanguage(savedLang);
 </script>
 
-  <script>
-  // Definicja meta tagów dla każdego języka
+<script>
+  // Definicja meta danych dla każdego języka
   const metaData = {
     en: {
       title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
       description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
-      keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems"
+      keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
+      ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
+      ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
+      twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
+      twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames."
     },
     pl: {
       title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
       description: "ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych oraz kastomizowane ramy dla symulatorów wyścigowych i lotniczych. Zwiększ realizm i precyzję swoich symulacji.",
-      keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems"
+      keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems",
+      ogTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
+      ogDescription: "Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych i kastomizowane ramy dla symulatorów wyścigowych i lotniczych.",
+      twitterTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
+      twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy."
     }
   };
 
@@ -212,6 +220,29 @@
       document.head.appendChild(keywordsTag);
     }
     keywordsTag.content = data.keywords;
+
+    // Open Graph
+    const ogTitle = document.querySelector('meta[property="og:title"]') || createMeta("og:title");
+    ogTitle.content = data.ogTitle;
+
+    const ogDescription = document.querySelector('meta[property="og:description"]') || createMeta("og:description");
+    ogDescription.content = data.ogDescription;
+
+    // Twitter Cards
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]') || createMeta("twitter:title", true);
+    twitterTitle.content = data.twitterTitle;
+
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]') || createMeta("twitter:description", true);
+    twitterDescription.content = data.twitterDescription;
+  }
+
+  // Pomocnicza funkcja do tworzenia meta jeśli nie istnieje
+  function createMeta(name, isNameAttr = false) {
+    const meta = document.createElement('meta');
+    if (isNameAttr) meta.name = name;
+    else meta.setAttribute("property", name);
+    document.head.appendChild(meta);
+    return meta;
   }
 
   // Integracja z Twoją funkcją setLanguage
@@ -232,7 +263,6 @@
   const savedLang = localStorage.getItem('lang') || 'en';
   setLanguage(savedLang);
 </script>
-
   
 </body>
 </html>
