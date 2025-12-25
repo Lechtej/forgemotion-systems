@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- English version -->
+  <url>
+    <loc>https://forgemotionsystems.com/en</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forgemotionsystems.com/en"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://forgemotionsystems.com/pl"/>
+  </url>
+
+  <!-- Polish version -->
+  <url>
+    <loc>https://forgemotionsystems.com/pl</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://forgemotionsystems.com/en"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://forgemotionsystems.com/pl"/>
+  </url>
+
+</urlset>
