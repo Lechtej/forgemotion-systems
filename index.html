@@ -50,12 +50,18 @@
 <body class="bg-gray-900 text-white font-sans">
 
 <!-- HEADER -->
+<!-- HEADER -->
 <header class="bg-gray-800 p-4 fixed w-full z-10 shadow-md">
-  <div class="container mx-auto flex justify-between items-center">
-    
-    <img src="/logo.png" alt="ForgeMotion Systems logo" class="h-14">
+  <div class="container mx-auto flex justify-between items-center gap-4">
 
-    <div class="flex items-center space-x-6">
+    <!-- LOGO (responsive) -->
+    <img
+      src="/logo.png"
+      alt="ForgeMotion Systems logo"
+      class="h-9 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto object-contain shrink-0"
+    >
+
+    <div class="flex items-center space-x-6 flex-wrap justify-end">
       <nav>
         <ul class="flex space-x-6">
           <li><a href="#hero" class="hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
@@ -72,9 +78,10 @@
         <button onclick="setLanguage('pl')" class="hover:text-blue-400">PL</button>
       </div>
     </div>
+
   </div>
 </header>
-
+  
 <!-- HERO SECTION (SEO) -->
 <section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
   <h1 class="text-4xl md:text-6xl font-bold mb-4" data-en="Precision Motion Systems for Racing & Flight Simulators" data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
