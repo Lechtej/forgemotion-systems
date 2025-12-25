@@ -182,8 +182,11 @@
       keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
       ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
       ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
+      ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
       twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-      twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames."
+      twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
+      twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+      canonical: "https://forgemotionsystems.com/en"
     },
     pl: {
       title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
@@ -191,61 +194,71 @@
       keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems",
       ogTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
       ogDescription: "Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych i kastomizowane ramy dla symulatorów wyścigowych i lotniczych.",
+      ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
       twitterTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
-      twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy."
+      twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy.",
+      twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+      canonical: "https://forgemotionsystems.com/pl"
     }
   };
 
-  // Funkcja aktualizująca meta tagi
+  // Tworzenie / aktualizacja meta tagu
+  function setMeta(name, content, isProperty = false) {
+    let tag;
+    if (isProperty) {
+      tag = document.querySelector(`meta[property="${name}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', name);
+        document.head.appendChild(tag);
+      }
+    } else {
+      tag = document.querySelector(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.name = name;
+        document.head.appendChild(tag);
+      }
+    }
+    tag.content = content;
+  }
+
+  // Aktualizacja wszystkich meta tagów dla danego języka
   function updateMetaTags(lang) {
     const data = metaData[lang];
 
-    // Title
+    // Podstawowe SEO
     document.title = data.title;
+    setMeta("description", data.description);
+    setMeta("keywords", data.keywords);
+    setMeta("author", "ForgeMotion Systems");
+    setMeta("robots", "index, follow");
+    setMeta("viewport", "width=device-width, initial-scale=1.0");
 
-    // Meta description
-    let descTag = document.querySelector('meta[name="description"]');
-    if (!descTag) {
-      descTag = document.createElement('meta');
-      descTag.name = "description";
-      document.head.appendChild(descTag);
+    // Canonical
+    let canonicalTag = document.querySelector('link[rel="canonical"]');
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link');
+      canonicalTag.rel = "canonical";
+      document.head.appendChild(canonicalTag);
     }
-    descTag.content = data.description;
-
-    // Meta keywords
-    let keywordsTag = document.querySelector('meta[name="keywords"]');
-    if (!keywordsTag) {
-      keywordsTag = document.createElement('meta');
-      keywordsTag.name = "keywords";
-      document.head.appendChild(keywordsTag);
-    }
-    keywordsTag.content = data.keywords;
+    canonicalTag.href = data.canonical;
 
     // Open Graph
-    const ogTitle = document.querySelector('meta[property="og:title"]') || createMeta("og:title");
-    ogTitle.content = data.ogTitle;
-
-    const ogDescription = document.querySelector('meta[property="og:description"]') || createMeta("og:description");
-    ogDescription.content = data.ogDescription;
+    setMeta("og:title", data.ogTitle, true);
+    setMeta("og:description", data.ogDescription, true);
+    setMeta("og:image", data.ogImage, true);
+    setMeta("og:url", data.canonical, true);
+    setMeta("og:type", "website", true);
 
     // Twitter Cards
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]') || createMeta("twitter:title", true);
-    twitterTitle.content = data.twitterTitle;
-
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]') || createMeta("twitter:description", true);
-    twitterDescription.content = data.twitterDescription;
+    setMeta("twitter:title", data.twitterTitle, true);
+    setMeta("twitter:description", data.twitterDescription, true);
+    setMeta("twitter:image", data.twitterImage, true);
+    setMeta("twitter:card", "summary_large_image", true);
   }
 
-  // Pomocnicza funkcja do tworzenia meta jeśli nie istnieje
-  function createMeta(name, isNameAttr = false) {
-    const meta = document.createElement('meta');
-    if (isNameAttr) meta.name = name;
-    else meta.setAttribute("property", name);
-    document.head.appendChild(meta);
-    return meta;
-  }
-
-  // Integracja z Twoją funkcją setLanguage
+  // Funkcja zmiany języka z aktualizacją meta + treści strony
   function setLanguage(lang) {
     localStorage.setItem('lang', lang);
     document.documentElement.lang = lang;
@@ -259,10 +272,11 @@
     updateMetaTags(lang);
   }
 
-  // Wczytanie ustawionego języka przy starcie strony
+  // Wczytanie języka przy starcie strony
   const savedLang = localStorage.getItem('lang') || 'en';
   setLanguage(savedLang);
 </script>
+
   
 </body>
 </html>
