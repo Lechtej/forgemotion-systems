@@ -116,6 +116,65 @@
   </div>
 </section>
 
+  <!-- INSPIRATION / TEDX SECTION -->
+<section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
+  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" 
+      data-en="From TEDx to Motion Platforms" 
+      data-pl="Od TEDx do technologii motion"></h2>
+  
+  <div class="max-w-3xl mx-auto">
+    <!-- Embedded TEDx Video -->
+    <div class="relative" style="padding-top:56.25%;">
+      <iframe class="absolute top-0 left-0 w-full h-full" 
+              src="https://www.youtube.com/embed/2k_porGEQZI" 
+              title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska" 
+              frameborder="0" allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Description Text -->
+    <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl" 
+       data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering." 
+       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię.">
+    </p>
+
+    <p class="text-gray-300 text-lg md:text-xl" 
+       data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging." 
+       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą.">
+    </p>
+  </div>
+</section>
+
+<!-- Simple fade-in animation -->
+<style>
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive iframe container */
+  .relative {
+    position: relative;
+    width: 100%;
+  }
+  .relative iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+
 <!-- CONTACT SECTION (SEO) -->
 <section id="contact" class="container mx-auto py-16 px-4">
   <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
