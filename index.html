@@ -173,5 +173,66 @@
   setLanguage(savedLang);
 </script>
 
+  <script>
+  // Definicja meta tagów dla każdego języka
+  const metaData = {
+    en: {
+      title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
+      description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
+      keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems"
+    },
+    pl: {
+      title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
+      description: "ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych oraz kastomizowane ramy dla symulatorów wyścigowych i lotniczych. Zwiększ realizm i precyzję swoich symulacji.",
+      keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems"
+    }
+  };
+
+  // Funkcja aktualizująca meta tagi
+  function updateMetaTags(lang) {
+    const data = metaData[lang];
+
+    // Title
+    document.title = data.title;
+
+    // Meta description
+    let descTag = document.querySelector('meta[name="description"]');
+    if (!descTag) {
+      descTag = document.createElement('meta');
+      descTag.name = "description";
+      document.head.appendChild(descTag);
+    }
+    descTag.content = data.description;
+
+    // Meta keywords
+    let keywordsTag = document.querySelector('meta[name="keywords"]');
+    if (!keywordsTag) {
+      keywordsTag = document.createElement('meta');
+      keywordsTag.name = "keywords";
+      document.head.appendChild(keywordsTag);
+    }
+    keywordsTag.content = data.keywords;
+  }
+
+  // Integracja z Twoją funkcją setLanguage
+  function setLanguage(lang) {
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
+
+    // Zmiana tekstów na stronie
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = el.dataset[lang];
+    });
+
+    // Aktualizacja meta tagów
+    updateMetaTags(lang);
+  }
+
+  // Wczytanie ustawionego języka przy starcie strony
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLanguage(savedLang);
+</script>
+
+  
 </body>
 </html>
