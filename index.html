@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<!-- Favicon -->
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Podstawowe meta (będzie nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
-  <meta name="description" content="ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF and 2DOF motion platforms for racing and flight simulators.">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="">
 
-<meta name="keywords" content="motion platform, 6DOF, racing simulator, flight simulator, motion systems">
+  <!-- Open Graph -->
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
 
-<meta name="author" content="ForgeMotion Systems">
-
-<!-- Open Graph -->
-<meta property="og:title" content="ForgeMotion Systems">
-<meta property="og:description" content="Professional motion platforms and simulator equipment">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://forgemotionsystems.com">
-<meta property="og:image" content="https://forgemotionsystems.com/og-image.jpg">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="">
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -40,7 +47,6 @@
     }
   </style>
 </head>
-
 <body class="bg-gray-900 text-white font-sans">
 
 <!-- HEADER -->
@@ -69,88 +75,51 @@
 </header>
 
 <!-- HERO -->
-<section id="hero"
-  class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
-
-  <h2 class="text-4xl md:text-6xl font-bold mb-4"
-      data-en="Precision Motion Systems"
-      data-pl="Precyzyjne systemy motion"></h2>
-
-  <p class="text-lg md:text-2xl mb-6"
-     data-en="Professional 6DOF, 3DOF and 2DOF motion platforms for racing and flight simulation"
-     data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF do symulacji wyścigowych i lotniczych"></p>
-
-  <a href="#products"
-     class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold"
-     data-en="View products"
-     data-pl="Zobacz produkty"></a>
+<section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
+  <h2 class="text-4xl md:text-6xl font-bold mb-4" data-en="Precision Motion Systems" data-pl="Precyzyjne systemy motion"></h2>
+  <p class="text-lg md:text-2xl mb-6" data-en="Professional 6DOF, 3DOF and 2DOF motion platforms for racing and flight simulation" data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF do symulacji wyścigowych i lotniczych"></p>
+  <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold" data-en="View products" data-pl="Zobacz produkty"></a>
 </section>
 
 <!-- PRODUCTS -->
 <section id="products" class="container mx-auto py-16 px-4">
-  <h3 class="text-3xl font-bold mb-8 text-center"
-      data-en="Our products"
-      data-pl="Nasze produkty"></h3>
-
+  <h3 class="text-3xl font-bold mb-8 text-center" data-en="Our products" data-pl="Nasze produkty"></h3>
   <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-    <!-- 6DOF -->
     <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
       <h4 class="text-xl font-semibold mb-2">6DOF Platform</h4>
-      <p data-en="Full-motion platform for high-end racing and flight simulation"
-         data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
+      <p data-en="Full-motion platform for high-end racing and flight simulation" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
     </div>
-
-    <!-- 3DOF / 2DOF -->
     <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
       <h4 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h4>
-      <p data-en="Compact and modular motion systems"
-         data-pl="Kompaktowe i modułowe systemy motion"></p>
+      <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
     </div>
-
-    <!-- SEAT BELT TENSIONER -->
     <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
       <h4 class="text-xl font-semibold mb-2">Seat belt tensioner</h4>
-      <p data-en="Realistic braking and acceleration forces through seat belt feedback"
-         data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
+      <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
     </div>
-
-    <!-- EJECTION SEAT -->
     <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
       <h4 class="text-xl font-semibold mb-2">Ejection seat replica</h4>
-      <p data-en="High-fidelity aircraft ejection seat replica for simulators"
-         data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
+      <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
     </div>
-
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about" class="bg-gray-800 py-16 px-4">
   <div class="container mx-auto text-center">
-    <h3 class="text-3xl font-bold mb-6"
-        data-en="About us"
-        data-pl="O nas"></h3>
-
-    <p class="text-gray-300 max-w-2xl mx-auto"
-       data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for racing and aviation industries."
-       data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej."></p>
+    <h3 class="text-3xl font-bold mb-6" data-en="About us" data-pl="O nas"></h3>
+    <p class="text-gray-300 max-w-2xl mx-auto" data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for racing and aviation industries." data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej."></p>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="container mx-auto py-16 px-4">
-  <h3 class="text-3xl font-bold mb-6 text-center"
-      data-en="Contact"
-      data-pl="Kontakt"></h3>
-
+  <h3 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h3>
   <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
     <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
     <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
     <textarea placeholder="Message / Wiadomość" class="p-3 rounded bg-gray-700"></textarea>
-    <button class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-            data-en="Send message"
-            data-pl="Wyślij wiadomość"></button>
+    <button class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold" data-en="Send message" data-pl="Wyślij wiadomość"></button>
   </form>
 </section>
 
@@ -159,22 +128,8 @@
   © 2025 ForgeMotion Systems
 </footer>
 
-<!-- LANGUAGE SCRIPT -->
+<!-- DYNAMIC LANGUAGE & META TAGS SCRIPT -->
 <script>
-  function setLanguage(lang) {
-    localStorage.setItem('lang', lang);
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-en]').forEach(el => {
-      el.textContent = el.dataset[lang];
-    });
-  }
-
-  const savedLang = localStorage.getItem('lang') || 'en';
-  setLanguage(savedLang);
-</script>
-
-<script>
-  // Definicja meta danych dla każdego języka
   const metaData = {
     en: {
       title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
@@ -202,81 +157,56 @@
     }
   };
 
-  // Tworzenie / aktualizacja meta tagu
-  function setMeta(name, content, isProperty = false) {
+  function setMeta(name, content, isProperty=false){
     let tag;
-    if (isProperty) {
-      tag = document.querySelector(`meta[property="${name}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute('property', name);
-        document.head.appendChild(tag);
-      }
+    if(isProperty){
+      tag=document.querySelector(`meta[property="${name}"]`);
+      if(!tag){tag=document.createElement('meta');tag.setAttribute('property',name);document.head.appendChild(tag);}
     } else {
-      tag = document.querySelector(`meta[name="${name}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.name = name;
-        document.head.appendChild(tag);
-      }
+      tag=document.querySelector(`meta[name="${name}"]`);
+      if(!tag){tag=document.createElement('meta');tag.name=name;document.head.appendChild(tag);}
     }
-    tag.content = content;
+    tag.content=content;
   }
 
-  // Aktualizacja wszystkich meta tagów dla danego języka
-  function updateMetaTags(lang) {
-    const data = metaData[lang];
-
-    // Podstawowe SEO
-    document.title = data.title;
-    setMeta("description", data.description);
-    setMeta("keywords", data.keywords);
-    setMeta("author", "ForgeMotion Systems");
-    setMeta("robots", "index, follow");
-    setMeta("viewport", "width=device-width, initial-scale=1.0");
+  function updateMetaTags(lang){
+    const data=metaData[lang];
+    document.title=data.title;
+    setMeta("description",data.description);
+    setMeta("keywords",data.keywords);
+    setMeta("author","ForgeMotion Systems");
+    setMeta("robots","index, follow");
+    setMeta("viewport","width=device-width, initial-scale=1.0");
 
     // Canonical
-    let canonicalTag = document.querySelector('link[rel="canonical"]');
-    if (!canonicalTag) {
-      canonicalTag = document.createElement('link');
-      canonicalTag.rel = "canonical";
-      document.head.appendChild(canonicalTag);
-    }
-    canonicalTag.href = data.canonical;
+    let canonicalTag=document.querySelector('link[rel="canonical"]');
+    if(!canonicalTag){canonicalTag=document.createElement('link');canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
+    canonicalTag.href=data.canonical;
 
     // Open Graph
-    setMeta("og:title", data.ogTitle, true);
-    setMeta("og:description", data.ogDescription, true);
-    setMeta("og:image", data.ogImage, true);
-    setMeta("og:url", data.canonical, true);
-    setMeta("og:type", "website", true);
+    setMeta("og:title",data.ogTitle,true);
+    setMeta("og:description",data.ogDescription,true);
+    setMeta("og:image",data.ogImage,true);
+    setMeta("og:url",data.canonical,true);
+    setMeta("og:type","website",true);
 
     // Twitter Cards
-    setMeta("twitter:title", data.twitterTitle, true);
-    setMeta("twitter:description", data.twitterDescription, true);
-    setMeta("twitter:image", data.twitterImage, true);
-    setMeta("twitter:card", "summary_large_image", true);
+    setMeta("twitter:title",data.twitterTitle,true);
+    setMeta("twitter:description",data.twitterDescription,true);
+    setMeta("twitter:image",data.twitterImage,true);
+    setMeta("twitter:card","summary_large_image",true);
   }
 
-  // Funkcja zmiany języka z aktualizacją meta + treści strony
-  function setLanguage(lang) {
-    localStorage.setItem('lang', lang);
-    document.documentElement.lang = lang;
-
-    // Zmiana tekstów na stronie
-    document.querySelectorAll('[data-en]').forEach(el => {
-      el.textContent = el.dataset[lang];
-    });
-
-    // Aktualizacja meta tagów
+  function setLanguage(lang){
+    localStorage.setItem('lang',lang);
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);
     updateMetaTags(lang);
   }
 
-  // Wczytanie języka przy starcie strony
-  const savedLang = localStorage.getItem('lang') || 'en';
+  const savedLang=localStorage.getItem('lang')||'en';
   setLanguage(savedLang);
 </script>
 
-  
 </body>
 </html>
