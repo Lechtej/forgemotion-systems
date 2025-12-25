@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- English version -->
+  <url>
+    <loc>https://forgemotionsystems.com/en</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/en#hero</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/en#products</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/en#about</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/en#contact</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Polish version -->
+  <url>
+    <loc>https://forgemotionsystems.com/pl</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/pl#hero</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/pl#products</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/pl#about</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/pl#contact</loc>
+    <lastmod>2025-12-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
