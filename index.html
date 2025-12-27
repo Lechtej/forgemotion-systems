@@ -47,36 +47,27 @@
     }
 
     /*
-      HERO BG — wracamy do cover (duże tło)
-      Najważniejsze:
-      - desktop: NIE UCINA góry ani lewej: background-position: left top
-      - mobile: lekko przesunięte jak wcześniej (możesz zmienić 55% jeśli chcesz)
-      - overlay rozjaśniony
+      HERO BG — kluczowe wymagania:
+      1) TOP i LEFT tła NIGDY nie mogą być obcięte (MOBILE + DESKTOP)
+         -> background-position: left top (bez wyjątków)
+      2) Tło może być przycięte ewentualnie tylko od PRAWEJ / OD DOŁU (przy cover)
+      3) Mocniejsze przyciemnienie na DOLE, bo opis schodzi na dół
     */
     .hero-bg {
       background-image:
-        radial-gradient(circle at 28% 30%, rgba(59,130,246,0.16), rgba(17,24,39,0) 55%),
-        linear-gradient(to bottom, rgba(6,10,18,0.56), rgba(6,10,18,0.66)),
+        radial-gradient(circle at 28% 30%, rgba(59,130,246,0.14), rgba(17,24,39,0) 55%),
+        linear-gradient(to bottom, rgba(6,10,18,0.22) 0%, rgba(6,10,18,0.55) 55%, rgba(6,10,18,0.82) 100%),
         url('/images/hero-forge.png');
 
       background-repeat: no-repeat;
       background-size: cover;
-      background-position: left top; /* <-- klucz: top + left nigdy nie znikają */
+      background-position: left top; /* <-- TOP + LEFT zawsze widoczne */
       background-color: #0b1220;
     }
 
-    /* MOBILE: zostawiamy jak było "OK" — delikatne kadrowanie, żeby nie było za duże */
-    @media (max-width: 768px) {
-      .hero-bg {
-        background-position: 55% 25%;
-      }
-    }
-
-    /* DESKTOP/4K: pewność, że top/left trzyma (i nie "odpływa" przy szerokościach) */
+    /* Opcjonalnie: na bardzo dużych ekranach nie pozwalamy “odpłynąć” tłu */
     @media (min-width: 1024px) {
-      .hero-bg {
-        background-position: left top;
-      }
+      .hero-bg { background-position: left top; }
     }
   </style>
 </head>
@@ -154,27 +145,26 @@
 <!-- HERO SECTION -->
 <section id="hero"
   class="hero-bg fade-in
-         min-h-[82vh] lg:min-h-[88vh]
+         min-h-[86vh] lg:min-h-[92vh]
          flex flex-col items-center text-center
-         justify-center lg:justify-end
+         justify-end
          p-4 pt-24 md:pt-28
-         pb-10 lg:pb-24">
-  <!-- ↑↑↑
-     - mobile: justify-center (jest OK)
-     - desktop: lg:justify-end + lg:pb-24 (opis schodzi w dół)
-  -->
+         pb-14 md:pb-16 lg:pb-24">
 
-  <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
-      data-en="Precision Motion Systems for Racing & Flight Simulators"
-      data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+  <!-- Dodatkowy “bezpieczny” margines na dół, żeby overlay był tylko na dolnej części -->
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
+        data-en="Precision Motion Systems for Racing & Flight Simulators"
+        data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
 
-  <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
-     data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
-     data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+    <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
+       data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
+       data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
 
-  <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
-    <span data-en="View products" data-pl="Zobacz produkty"></span>
-  </a>
+    <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+      <span data-en="View products" data-pl="Zobacz produkty"></span>
+    </a>
+  </div>
 </section>
 
 <!-- PRODUCTS SECTION -->
