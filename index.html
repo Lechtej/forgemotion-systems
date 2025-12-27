@@ -34,52 +34,36 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    /* Smooth anchor scrolling with fixed header */
     html { scroll-padding-top: 90px; }
 
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeInUp 0.9s forwards;
+      animation: fadeInUp 1s forwards;
     }
     @keyframes fadeInUp {
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /*
-      HERO - docelowo:
-      - duże zdjęcie w tle (cover)
-      - NIGDY nie chowa góry i lewej strony (left top)
-      - czytelność tekstu (delikatny gradient, nie za ciemny)
-    */
-    .hero-bg {
-      background-image:
-        radial-gradient(circle at 30% 25%, rgba(59,130,246,0.16), rgba(17,24,39,0.0) 55%),
-        linear-gradient(to bottom, rgba(10,16,28,0.60), rgba(10,16,28,0.40)),
-        url('/images/hero-forge.png');
-
-      background-repeat: no-repeat;
-      background-size: cover;            /* <-- klucz: duże zdjęcie */
-      background-position: left top;     /* <-- klucz: nie ucinaj góry i lewej */
-      background-color: #0b1220;
+    /* HERO background via <img> (NO cropping of TOP/LEFT) */
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left top; /* <-- najważniejsze: góra i lewa ZAWSZE widoczne */
+      transform: translateZ(0);
     }
 
-    /* Mobile: pilnujemy, żeby było jak wcześniej OK */
-    @media (max-width: 768px) {
-      .hero-bg {
-        background-position: 50% 28%;
-        background-size: cover;
-        background-image:
-          radial-gradient(circle at 35% 30%, rgba(59,130,246,0.14), rgba(17,24,39,0.0) 55%),
-          linear-gradient(to bottom, rgba(10,16,28,0.55), rgba(10,16,28,0.38)),
-          url('/images/hero-forge.png');
-      }
-    }
-
-    /* Desktop: obniżamy content (opis) żeby mniej zasłaniał fotel */
-    @media (min-width: 1024px) {
-      .hero-content-shift {
-        margin-top: clamp(70px, 8vh, 140px);
-      }
+    /* Overlay – trochę jaśniej niż wcześniej */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(59,130,246,0.16), rgba(17,24,39,0) 55%),
+        linear-gradient(to bottom, rgba(6,10,18,0.62), rgba(6,10,18,0.72));
     }
   </style>
 </head>
@@ -155,19 +139,33 @@
 </header>
 
 <!-- HERO SECTION -->
-<section id="hero" class="min-h-[82vh] lg:min-h-[88vh] flex items-center justify-center text-center p-4 pt-24 md:pt-28 fade-in hero-bg">
-  <div class="hero-content-shift max-w-5xl">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
-        data-en="Precision Motion Systems for Racing & Flight Simulators"
-        data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+<section id="hero" class="relative min-h-[82vh] lg:min-h-[88vh] overflow-hidden">
+  <!-- background image -->
+  <img src="/images/hero-forge.png" alt="" class="hero-media" aria-hidden="true">
 
-    <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
-       data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
-       data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+  <!-- overlay -->
+  <div class="hero-overlay" aria-hidden="true"></div>
 
-    <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold inline-block">
-      <span data-en="View products" data-pl="Zobacz produkty"></span>
-    </a>
+  <!-- content -->
+  <div class="relative z-[1] container mx-auto px-4
+              min-h-[82vh] lg:min-h-[88vh]
+              flex flex-col items-center text-center
+              justify-center lg:justify-end
+              pt-24 md:pt-28
+              pb-10 lg:pb-20">
+    <div class="max-w-5xl fade-in">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
+          data-en="Precision Motion Systems for Racing & Flight Simulators"
+          data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+
+      <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
+         data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
+         data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+
+      <a href="#products" class="inline-flex bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+        <span data-en="View products" data-pl="Zobacz produkty"></span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -225,18 +223,15 @@
 
     <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
        data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
-       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię."></p>
+       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię.">
+    </p>
 
     <p class="text-gray-300 text-lg md:text-xl"
        data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
-       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą."></p>
+       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą.">
+    </p>
   </div>
 </section>
-
-<style>
-  .relative { position: relative; width: 100%; }
-  .relative iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-</style>
 
 <!-- TRUST & EXPERIENCE -->
 <section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
@@ -247,9 +242,10 @@
   <div class="max-w-3xl mx-auto text-left md:text-center">
     <p class="text-gray-300 text-lg md:text-xl mb-6"
        data-en="With real-world aviation experience, Leszek Tejwan brings unmatched insight into the design of motion simulators. His work at LOT Polish Airlines on digital aviation tools inspires every platform we build."
-       data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy."></p>
+       data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy.">
+    </p>
 
-    <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6" data-en="" data-pl="">
+    <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6">
       <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
           data-pl="Realistyczne doświadczenie: platformy motion projektowane z uwzględnieniem wiedzy lotniczej."></li>
       <li data-en="Immersive training: inspired by digital tools used by professional pilots."
@@ -262,11 +258,12 @@
 
     <p class="text-gray-300 text-lg md:text-xl"
        data-en="This combination of aviation expertise and motion platform innovation ensures every simulation is engaging, educational, and unforgettable."
-       data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana."></p>
+       data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana.">
+    </p>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT SECTION -->
 <section id="contact" class="container mx-auto py-16 px-4">
   <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
   <p class="text-center text-gray-300 mb-6"
