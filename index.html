@@ -52,7 +52,7 @@
       background-image: url('/images/hero-forge.png');
       background-repeat: no-repeat;
       background-position: left top;
-      background-size: contain; /* nie ucina dołu na desktop */
+      background-size: contain; /* nie ucina dołu */
       overflow: hidden;
     }
 
@@ -88,11 +88,14 @@
       z-index: 1;
     }
 
-    /* ✅ MOBILE: obniżamy kadr + lekko stabilizujemy zoom */
+    /*
+      ✅ MOBILE: obniżamy kadr (żeby nie wyglądało jak ucięte od góry)
+      + delikatny zoom
+    */
     @media (max-width: 768px) {
       .bg-wrap {
-        background-size: 145% auto;     /* było 155% */
-        background-position: left 14%;  /* było left top -> teraz “niżej” */
+        background-size: 145% auto;
+        background-position: left 18%; /* <- niżej niż było 14% */
       }
       .bg-wrap::before {
         background: linear-gradient(
@@ -111,10 +114,48 @@
       }
     }
 
+    /*
+      ✅ DESKTOP: obniżamy tło, bo w poziomie “ucina” głowę.
+      Uwaga: to jest tylko przesunięcie tła w dół – zdjęcie nie jest powielane.
+    */
     @media (min-width: 1024px) {
       .bg-wrap {
         background-size: contain;
-        background-position: left top;
+        background-position: left 6%;
+      }
+    }
+
+    /* Desktop + niski viewport (często “poziomo” / mniejsza wysokość okna) -> jeszcze niżej */
+    @media (min-width: 1024px) and (max-height: 820px) {
+      .bg-wrap {
+        background-position: left 10%;
+      }
+    }
+
+    /*
+      ✅ Klucz do zoomowania: panel z opisem ma trzymać POZIOM GÓRNEJ krawędzi.
+      Dlatego pozycjonujemy go od góry (top), a nie od dołu (bottom) i nie używamy flex-1.
+    */
+    .hero-panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: min(980px, calc(100% - 2rem));
+    }
+
+    /* Desktop: wariant B – panel ~ max 10% wyżej niż dół */
+    @media (min-width: 1024px) {
+      .hero-panel {
+        top: 62vh; /* <- trzyma górną krawędź; przy zoom-out nie “spada” */
+      }
+    }
+
+    /* Mobile: panel trochę niżej, bo ekran mniejszy */
+    @media (max-width: 768px) {
+      .hero-panel {
+        top: 56vh;
       }
     }
   </style>
@@ -186,17 +227,14 @@
 <div class="bg-wrap">
   <div class="bg-inner">
 
-    <!-- ✅ HERO: jeszcze niżej na DESKTOP -->
+    <!-- ✅ HERO: relative, panel absolutnie pozycjonowany od góry -->
     <section id="hero"
-      class="fade-in
-             min-h-[92vh] lg:min-h-[128vh]
-             flex flex-col items-center text-center
-             p-4 pt-24 md:pt-28 pb-6 lg:pb-4">
+      class="fade-in relative
+             min-h-[100vh] lg:min-h-[110vh]
+             p-4 pt-24 md:pt-28">
 
-      <div class="flex-1"></div>
-
-      <div class="w-full max-w-5xl mx-auto">
-        <div class="mx-auto rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
+      <div class="hero-panel">
+        <div class="rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
           <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
               data-en="Precision Motion Systems for Racing & Flight Simulators"
               data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
@@ -212,6 +250,7 @@
       </div>
     </section>
 
+    <!-- PRODUCTS (korzysta z tego samego tła wrappera) -->
     <section id="products" class="py-16 px-4">
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
@@ -247,6 +286,7 @@
   </div>
 </div>
 
+<!-- Reszta sekcji bez zmian -->
 <section id="about" class="bg-gray-800 py-16 px-4">
   <div class="container mx-auto text-center">
     <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
