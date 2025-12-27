@@ -48,6 +48,21 @@
         transform: translateY(0);
       }
     }
+
+    /* HERO background image */
+    .hero-bg {
+      background-image:
+        linear-gradient(to bottom, rgba(17,24,39,0.82), rgba(17,24,39,0.55)),
+        url('/images/hero-forge.png');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+    }
+
+    /* Optional: lepsze kadrowanie na mobile */
+    @media (max-width: 768px) {
+      .hero-bg { background-position: 60% center; }
+    }
   </style>
 </head>
 
@@ -122,10 +137,18 @@
 </header>
 
 <!-- HERO SECTION (SEO) -->
-<section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
-  <h1 class="text-4xl md:text-6xl font-bold mb-4" data-en="Precision Motion Systems for Racing & Flight Simulators" data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
-  <p class="text-lg md:text-2xl mb-6" data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations." data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
-  <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold" data-en="View products" data-pl="Zobacz produkty"></a>
+<section id="hero" class="h-screen flex flex-col justify-center items-center text-center p-4 fade-in hero-bg">
+  <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
+      data-en="Precision Motion Systems for Racing & Flight Simulators"
+      data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+
+  <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
+     data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
+     data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+
+  <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+    <span data-en="View products" data-pl="Zobacz produkty"></span>
+  </a>
 </section>
 
 <!-- PRODUCTS SECTION (SEO) -->
