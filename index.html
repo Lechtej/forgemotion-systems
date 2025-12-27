@@ -44,56 +44,53 @@
     }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* HERO background */
-    .hero-bg {
+    /*
+      HERO – nowa struktura:
+      1) .hero-banner = tylko obraz + gradient (bez tekstu)
+      2) .hero-content = tekst POD bannerem (tak jak chcesz)
+    */
+
+    .hero-banner {
       position: relative;
       background-color: #0b1220;
-      background-image: url('/images/hero-forge.png');
       background-repeat: no-repeat;
-      background-position: 60% center;
-      background-size: cover; /* desktop: cover wygląda najlepiej */
+      background-image:
+        radial-gradient(circle at 35% 35%, rgba(59,130,246,0.14), rgba(17,24,39,0.0) 55%),
+        linear-gradient(to bottom, rgba(17,24,39,0.55), rgba(17,24,39,0.35)),
+        url('/images/hero-forge.png');
+
+      /* DESKTOP: “normalnie” = cover (ładnie wypełnia banner) */
+      background-size: cover;
+      background-position: 62% 30%;
+
+      /* wysokość banneru (desktop) */
+      height: clamp(360px, 58vh, 680px);
       overflow: hidden;
     }
 
-    /* Overlay: desktop mocniejszy dla czytelności */
-    .hero-bg::before {
+    /* Delikatne przyciemnienie (opcjonalnie), ale bez panelu tekstowego */
+    .hero-banner::after {
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 35% 35%, rgba(59,130,246,0.16), rgba(17,24,39,0.0) 55%),
-        linear-gradient(to bottom, rgba(17,24,39,0.78), rgba(17,24,39,0.55));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.25));
       pointer-events: none;
-      z-index: 0;
     }
 
-    /* Panel na tekście w hero (żeby tekst był czytelny i żeby odsłonić obraz nad nim) */
-    .hero-panel {
-      background: rgba(11,18,32,0.58);
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
-    }
-
-    /* MOBILE: kluczowe poprawki widoczności zdjęcia */
+    /* MOBILE: nie ucinamy lewo/prawo -> contain */
     @media (max-width: 768px) {
-      .hero-bg {
-        /* Na mobile cover + lepszy kadr: pokaż więcej sceny nad tekstem */
-        background-size: cover;
-        background-position: 55% 22%;
-      }
-
-      /* Overlay na mobile wyraźnie lżejszy, żeby nie „zabić” zdjęcia */
-      .hero-bg::before {
-        background:
+      .hero-banner {
+        background-size: contain;         /* klucz: zero ucinania boków */
+        background-position: center 22%;  /* kadr trochę wyżej */
+        height: 46vh;                     /* banner niższy na telefonie */
+        background-image:
           radial-gradient(circle at 35% 35%, rgba(59,130,246,0.10), rgba(17,24,39,0.0) 55%),
-          linear-gradient(to bottom, rgba(17,24,39,0.58), rgba(17,24,39,0.32));
+          linear-gradient(to bottom, rgba(17,24,39,0.45), rgba(17,24,39,0.25)),
+          url('/images/hero-forge.png');
       }
 
-      /* Panel minimalnie mocniejszy dla czytelności, ale nadal pokazuje tło */
-      .hero-panel {
-        background: rgba(11,18,32,0.62);
+      .hero-banner::after {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.18));
       }
     }
   </style>
@@ -104,6 +101,7 @@
   <!-- HEADER (DESKTOP + MOBILE) -->
   <header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
     <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+
       <!-- LOGO (fluid scaling) -->
       <a href="#hero" class="flex items-center" aria-label="Go to home section">
         <img
@@ -168,21 +166,23 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <!-- Mobile: treść przyklejona do dołu w panelu => więcej obrazu widać nad tekstem -->
-  <section id="hero" class="hero-bg min-h-[92vh] md:min-h-[88vh] pt-24 md:pt-28 flex items-end md:items-center justify-center text-center px-4 fade-in">
-    <!-- Warstwa treści nad overlay -->
-    <div class="relative z-[1] w-full max-w-3xl pb-10 md:pb-0">
-      <div class="hero-panel rounded-2xl px-5 py-6 md:px-8 md:py-8">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
+  <!-- HERO (banner + content below) -->
+  <section id="hero" class="pt-24 md:pt-28 fade-in">
+    <!-- 1) Banner z obrazem (bez tekstu) -->
+    <div class="hero-banner"></div>
+
+    <!-- 2) Tekst POD bannerem (jak wcześniej) -->
+    <div class="bg-gradient-to-b from-gray-900 to-gray-800">
+      <div class="container mx-auto px-4 py-12 md:py-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4"
             data-en="Precision Motion Systems for Racing & Flight Simulators"
             data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
 
-        <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
+        <p class="text-lg md:text-2xl mb-8 text-gray-200"
            data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
            data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
 
-        <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-7 py-3 rounded font-semibold">
+        <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
           <span data-en="View products" data-pl="Zobacz produkty"></span>
         </a>
       </div>
@@ -242,7 +242,7 @@
 
       <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
          data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
-         data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynieryję."></p>
+         data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię."></p>
 
       <p class="text-gray-300 text-lg md:text-xl"
          data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
