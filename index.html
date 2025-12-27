@@ -30,7 +30,7 @@
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
-  <!-- Tailwind CDN (zostaje, bo chcesz bez komplikacji) -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -214,30 +214,41 @@
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- ZMIANA: 5 produktów => 5 kolumn na dużych ekranach -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
+
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
             <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
-            <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+            <img src="/images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+          </div>
+
+          <!-- NOWY PRODUKT: RAMA 6DOF + NOWE ZDJĘCIE -->
+          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
+            <h3 class="text-xl font-semibold mb-2" data-en="6DOF Frame" data-pl="Rama 6DOF"></h3>
+            <p data-en="Rigid custom frame for 6DOF motion platforms and simulator rigs"
+               data-pl="Sztywna, kastomizowana rama pod platformy 6DOF i kokpity symulatorów"></p>
+            <img src="/images/rama6dof1.jpg" alt="6DOF frame / Rama 6DOF" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
 
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
             <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
-            <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+            <img src="/images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
 
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
             <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
-            <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+            <img src="/images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
 
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
             <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-            <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+            <img src="/images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
+
         </div>
       </div>
     </section>
