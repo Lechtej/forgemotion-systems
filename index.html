@@ -30,6 +30,7 @@
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
+  <!-- Tailwind CDN (zostaje, bo chcesz bez komplikacji) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -81,16 +82,10 @@
       z-index: 0;
     }
 
-    .bg-inner {
-      position: relative;
-      z-index: 1;
-    }
+    .bg-inner { position: relative; z-index: 1; }
 
     @media (max-width: 768px) {
-      .bg-wrap {
-        background-size: 145% auto;
-        background-position: left 18%;
-      }
+      .bg-wrap { background-size: 145% auto; background-position: left 18%; }
       .bg-wrap::before {
         background: linear-gradient(
           to bottom,
@@ -109,34 +104,22 @@
     }
 
     @media (min-width: 1024px) {
-      .bg-wrap {
-        background-size: contain;
-        background-position: left 6%;
-      }
+      .bg-wrap { background-size: contain; background-position: left 6%; }
     }
 
     @media (min-width: 1024px) and (max-height: 820px) {
-      .bg-wrap {
-        background-position: left 10%;
-      }
+      .bg-wrap { background-position: left 10%; }
     }
 
     .hero-panel {
       position: absolute;
-      left: 0;
-      right: 0;
-      margin-left: auto;
-      margin-right: auto;
+      left: 0; right: 0;
+      margin-left: auto; margin-right: auto;
       width: min(980px, calc(100% - 2rem));
     }
 
-    @media (min-width: 1024px) {
-      .hero-panel { top: 62vh; }
-    }
-
-    @media (max-width: 768px) {
-      .hero-panel { top: 56vh; }
-    }
+    @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
+    @media (max-width: 768px) { .hero-panel { top: 56vh; } }
   </style>
 </head>
 
@@ -208,9 +191,7 @@
   <div class="bg-inner">
 
     <section id="hero"
-      class="fade-in relative
-             min-h-[100vh] lg:min-h-[110vh]
-             p-4 pt-24 md:pt-28">
+      class="fade-in relative min-h-[100vh] lg:min-h-[110vh] p-4 pt-24 md:pt-28">
 
       <div class="hero-panel">
         <div class="rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
@@ -344,7 +325,7 @@
   © 2025 ForgeMotion Systems
 </footer>
 
-<script defer>
+<script>
   const metaData = {
     en: {
       title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
@@ -372,7 +353,6 @@
     }
   };
 
-  // Ustala meta tag po name (twitter/standard) lub po property (og)
   function setMetaTag(key, content, attr = "name") {
     let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
     if (!tag) {
@@ -431,7 +411,6 @@
     updateMetaTags(lang);
   }
 
-  // Obsługa przycisków języka bez inline onclick
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-lang]");
     if (!btn) return;
@@ -442,7 +421,7 @@
   setLanguage(savedLang);
 </script>
 
-<script defer>
+<script>
   (function () {
     const btn = document.getElementById('mobileMenuBtn');
     const menu = document.getElementById('mobileMenu');
