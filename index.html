@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
   <!-- Podstawowe meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-  <meta name="author" content="" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="" />
-  <meta property="og:description" content="" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="" />
-  <meta property="og:image" content="" />
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="" />
-  <meta name="twitter:description" content="" />
-  <meta name="twitter:image" content="" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="">
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -47,36 +47,34 @@
     }
 
     /*
-      HERO BG:
-      - Mobile: jak masz teraz (czytelność + widoczność)
-      - Desktop: przesuwamy tło w dół, żeby głowa pilota nie była pod headerem
+      HERO background:
+      - Mobile: contain (żeby nie było “za duże” i dało się zobaczyć obraz)
+      - Desktop: cover (ładne wypełnienie), ale pozycjonujemy WYŻEJ, żeby nie ucinało góry (głowy pilota)
+      - Jaśniejsze przyciemnienie (mniej ciemne o ~kilkanaście %)
     */
     .hero-bg {
       background-image:
-        radial-gradient(circle at 35% 35%, rgba(59,130,246,0.18), rgba(17,24,39,0.0) 55%),
-        linear-gradient(to bottom, rgba(17,24,39,0.78), rgba(17,24,39,0.50)),
+        radial-gradient(circle at 35% 35%, rgba(59,130,246,0.14), rgba(17,24,39,0.0) 58%),
+        linear-gradient(to bottom, rgba(17,24,39,0.72), rgba(17,24,39,0.48)),
         url('/images/hero-forge.png');
+
       background-repeat: no-repeat;
-      background-position: center 40%;
-      background-size: cover;
       background-color: #0b1220;
     }
 
-    /* Mobile – trochę jaśniej i lepsze kadrowanie */
+    /* MOBILE / TABLET: obraz “nie za duży” + lepsza widoczność */
     @media (max-width: 768px) {
       .hero-bg {
-        background-position: 50% 42%;
-        background-image:
-          radial-gradient(circle at 35% 35%, rgba(59,130,246,0.20), rgba(17,24,39,0.0) 55%),
-          linear-gradient(to bottom, rgba(17,24,39,0.70), rgba(17,24,39,0.44)),
-          url('/images/hero-forge.png');
+        background-size: contain;
+        background-position: center 30%;
       }
     }
 
-    /* Desktop – przesuwamy zdjęcie WYRAŹNIE w dół */
+    /* DESKTOP: wypełniamy (cover), ale pokazujemy więcej góry zdjęcia */
     @media (min-width: 1024px) {
       .hero-bg {
-        background-position: 50% 68%;
+        background-size: cover;
+        background-position: center 18%; /* <-- klucz: więcej góry, mniej ucięcia */
       }
     }
   </style>
@@ -84,321 +82,325 @@
 
 <body class="bg-gray-900 text-white font-sans">
 
-  <!-- HEADER (DESKTOP + MOBILE) -->
-  <header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
-    <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+<!-- HEADER (DESKTOP + MOBILE) -->
+<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
-      <!-- LOGO (fluid scaling) -->
-      <a href="#hero" class="flex items-center" aria-label="Go to home section">
-        <img
-          src="/logo.png"
-          alt="ForgeMotion Systems logo"
-          class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
-        />
-      </a>
+    <!-- LOGO (fluid scaling) -->
+    <a href="#hero" class="flex items-center" aria-label="Go to home section">
+      <img
+        src="/logo.png"
+        alt="ForgeMotion Systems logo"
+        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
+      />
+    </a>
 
-      <!-- DESKTOP NAV -->
-      <div class="hidden md:flex items-center gap-8">
-        <nav aria-label="Primary navigation">
-          <ul class="flex items-center gap-8">
-            <li><a href="#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
-            <li><a href="#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
-            <li><a href="#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
-            <li><a href="#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
-          </ul>
-        </nav>
-
-        <!-- LANGUAGE SWITCH (DESKTOP) -->
-        <div class="flex items-center gap-2 text-sm">
-          <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-          <span class="text-gray-400">|</span>
-          <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-        </div>
-      </div>
-
-      <!-- MOBILE: LANGUAGE + HAMBURGER -->
-      <div class="flex md:hidden items-center gap-3">
-        <div class="flex items-center gap-2 text-sm">
-          <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-          <span class="text-gray-400">|</span>
-          <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-        </div>
-
-        <button
-          id="mobileMenuBtn"
-          type="button"
-          class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
-          aria-controls="mobileMenu"
-          aria-expanded="false"
-          aria-label="Open menu"
-        >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- MOBILE MENU PANEL -->
-    <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
-      <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
-        <ul class="flex flex-col gap-2">
-          <li><a href="#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+    <!-- DESKTOP NAV -->
+    <div class="hidden md:flex items-center gap-8">
+      <nav aria-label="Primary navigation">
+        <ul class="flex items-center gap-8">
+          <li><a href="#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
+          <li><a href="#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
+          <li><a href="#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
         </ul>
       </nav>
-    </div>
-  </header>
 
-  <!-- HERO SECTION -->
-  <section
-    id="hero"
-    class="min-h-[82vh] lg:min-h-[88vh]
-           flex flex-col justify-end items-center
-           text-center p-4 pt-32 lg:pt-40 pb-20
-           fade-in hero-bg"
-  >
-    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
-        data-en="Precision Motion Systems for Racing & Flight Simulators"
-        data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
-
-    <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
-       data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
-       data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
-
-    <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
-      <span data-en="View products" data-pl="Zobacz produkty"></span>
-    </a>
-  </section>
-
-  <!-- PRODUCTS SECTION (SEO) -->
-  <section id="products" class="container mx-auto py-16 px-4">
-    <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
-        <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
-        <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded">
-      </div>
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
-        <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
-        <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded">
-      </div>
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
-        <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
-        <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded">
-      </div>
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
-        <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-        <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded">
+      <!-- LANGUAGE SWITCH (DESKTOP) -->
+      <div class="flex items-center gap-2 text-sm">
+        <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <span class="text-gray-400">|</span>
+        <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
     </div>
-  </section>
 
-  <!-- ABOUT SECTION (SEO) -->
-  <section id="about" class="bg-gray-800 py-16 px-4">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
-      <p class="text-gray-300 max-w-2xl mx-auto"
-         data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for the racing and aviation industries. Our solutions enhance realism and precision in training and entertainment simulators."
-         data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej. Nasze rozwiązania zwiększają realizm i precyzję w symulatorach treningowych i rozrywkowych."></p>
-    </div>
-  </section>
-
-  <!-- INSPIRATION / TEDX SECTION -->
-  <section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
-        data-en="From TEDx to Motion Platforms"
-        data-pl="Od TEDx do technologii motion"></h2>
-
-    <div class="max-w-3xl mx-auto">
-      <div class="relative" style="padding-top:56.25%;">
-        <iframe class="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/2k_porGEQZI"
-                title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
-                frameborder="0" allowfullscreen>
-        </iframe>
+    <!-- MOBILE: LANGUAGE + HAMBURGER -->
+    <div class="flex md:hidden items-center gap-3">
+      <div class="flex items-center gap-2 text-sm">
+        <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <span class="text-gray-400">|</span>
+        <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
 
-      <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
-         data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
-         data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynięrię.">
-      </p>
-
-      <p class="text-gray-300 text-lg md:text-xl"
-         data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
-         data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą.">
-      </p>
+      <button
+        id="mobileMenuBtn"
+        type="button"
+        class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
+        aria-controls="mobileMenu"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
     </div>
-  </section>
+  </div>
 
-  <!-- TRUST & EXPERIENCE / LOTNICZE INSPIRACJE -->
-  <section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
-        data-en="Why Trust ForgeMotion Systems?"
-        data-pl="Dlaczego warto zaufać ForgeMotion Systems?"></h2>
-
-    <div class="max-w-3xl mx-auto text-left md:text-center">
-      <p class="text-gray-300 text-lg md:text-xl mb-6"
-         data-en="With real-world aviation experience, Leszek Tejwan brings unmatched insight into the design of motion simulators. His work at LOT Polish Airlines on digital aviation tools inspires every platform we build."
-         data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy.">
-      </p>
-
-      <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6">
-        <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
-            data-pl="Realistyczne doświadczenie: platformy motion projektowane z uwzględnieniem wiedzy lotniczej."></li>
-        <li data-en="Immersive training: inspired by digital tools used by professional pilots."
-            data-pl="Immersywne szkolenie: inspirowane cyfrowymi narzędziami używanymi przez profesjonalnych pilotów."></li>
-        <li data-en="Precision & reliability: engineering solutions influenced by aviation standards."
-            data-pl="Precyzja i niezawodność: rozwiązania inżynieryjne inspirowane standardami lotnictwa."></li>
-        <li data-en="Innovation-driven: combining fun, realism, and technology."
-            data-pl="Napędzane innowacją: łączymy zabawę, realizm i technologię."></li>
+  <!-- MOBILE MENU PANEL -->
+  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
+    <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
+      <ul class="flex flex-col gap-2">
+        <li><a href="#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
+        <li><a href="#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+        <li><a href="#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
+        <li><a href="#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
       </ul>
+    </nav>
+  </div>
+</header>
 
-      <p class="text-gray-300 text-lg md:text-xl"
-         data-en="This combination of aviation expertise and motion platform innovation ensures every simulation is engaging, educational, and unforgettable."
-         data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana.">
-      </p>
+<!-- HERO SECTION -->
+<section
+  id="hero"
+  class="min-h-[82vh] lg:min-h-[88vh]
+         flex flex-col
+         justify-center lg:justify-end
+         items-center text-center
+         p-4 pt-24 md:pt-28 lg:pt-28 lg:pb-24
+         fade-in hero-bg"
+>
+  <h1
+    class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_22px_rgba(0,0,0,0.45)]"
+    data-en="Precision Motion Systems for Racing & Flight Simulators"
+    data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"
+  ></h1>
+
+  <p
+    class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)] max-w-5xl"
+    data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
+    data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."
+  ></p>
+
+  <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+    <span data-en="View products" data-pl="Zobacz produkty"></span>
+  </a>
+</section>
+
+<!-- PRODUCTS SECTION (SEO) -->
+<section id="products" class="container mx-auto py-16 px-4">
+  <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
+      <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
+      <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded">
     </div>
-  </section>
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
+      <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
+      <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded">
+    </div>
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
+      <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
+      <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded">
+    </div>
+    <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
+      <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
+      <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
+      <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded">
+    </div>
+  </div>
+</section>
 
-  <!-- CONTACT SECTION (SEO) -->
-  <section id="contact" class="container mx-auto py-16 px-4">
-    <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
-    <p class="text-center text-gray-300 mb-6"
-       data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs."
-       data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
-    <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
-      <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
-      <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
-      <textarea placeholder="Message / Wiadomość" class="p-3 rounded bg-gray-700"></textarea>
-      <button class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold" data-en="Send message" data-pl="Wyślij wiadomość"></button>
-    </form>
-  </section>
+<!-- ABOUT SECTION (SEO) -->
+<section id="about" class="bg-gray-800 py-16 px-4">
+  <div class="container mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
+    <p class="text-gray-300 max-w-2xl mx-auto" data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for the racing and aviation industries. Our solutions enhance realism and precision in training and entertainment simulators." data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej. Nasze rozwiązania zwiększają realizm i precyzję w symulatorach treningowych i rozrywkowych."></p>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="bg-gray-900 py-6 text-center text-gray-400">
-    © 2025 ForgeMotion Systems
-  </footer>
+<!-- INSPIRATION / TEDX SECTION -->
+<section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
+  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
+      data-en="From TEDx to Motion Platforms"
+      data-pl="Od TEDx do technologii motion"></h2>
 
-  <!-- DYNAMIC LANGUAGE & META TAGS SCRIPT -->
-  <script>
-    const metaData = {
-      en: {
-        title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
-        description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
-        keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
-        ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-        twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-        canonical: "https://forgemotionsystems.com/en"
-      },
-      pl: {
-        title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
-        description: "ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych oraz kastomizowane ramy dla symulatorów wyścigowych i lotniczych. Zwiększ realizm i precyzję swoich symulacji.",
-        keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems",
-        ogTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
-        ogDescription: "Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych i kastomizowane ramy dla symulatorów wyścigowych i lotniczych.",
-        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-        twitterTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
-        twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-        canonical: "https://forgemotionsystems.com/pl"
-      }
-    };
+  <div class="max-w-3xl mx-auto">
+    <div class="relative" style="padding-top:56.25%;">
+      <iframe class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/2k_porGEQZI"
+              title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
+              frameborder="0" allowfullscreen>
+      </iframe>
+    </div>
 
-    function setMeta(name, content, isProperty=false){
-      let tag;
-      if(isProperty){
-        tag=document.querySelector(`meta[property="${name}"]`);
-        if(!tag){tag=document.createElement('meta');tag.setAttribute('property',name);document.head.appendChild(tag);}
-      } else {
-        tag=document.querySelector(`meta[name="${name}"]`);
-        if(!tag){tag=document.createElement('meta');tag.name=name;document.head.appendChild(tag);}
-      }
-      tag.content=content;
+    <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
+       data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
+       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynieryję.">
+    </p>
+
+    <p class="text-gray-300 text-lg md:text-xl"
+       data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
+       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą.">
+    </p>
+  </div>
+</section>
+
+<!-- TRUST & EXPERIENCE / LOTNICZE INSPIRACJE -->
+<section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
+  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
+      data-en="Why Trust ForgeMotion Systems?"
+      data-pl="Dlaczego warto zaufać ForgeMotion Systems?"></h2>
+
+  <div class="max-w-3xl mx-auto text-left md:text-center">
+    <p class="text-gray-300 text-lg md:text-xl mb-6"
+       data-en="With real-world aviation experience, Leszek Tejwan brings unmatched insight into the design of motion simulators. His work at LOT Polish Airlines on digital aviation tools inspires every platform we build."
+       data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy.">
+    </p>
+
+    <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6" data-en="" data-pl="">
+      <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
+          data-pl="Realistyczne doświadczenie: platformy motion projektowane z uwzględnieniem wiedzy lotniczej."></li>
+      <li data-en="Immersive training: inspired by digital tools used by professional pilots."
+          data-pl="Immersywne szkolenie: inspirowane cyfrowymi narzędziami używanymi przez profesjonalnych pilotów."></li>
+      <li data-en="Precision & reliability: engineering solutions influenced by aviation standards."
+          data-pl="Precyzja i niezawodność: rozwiązania inżynieryjne inspirowane standardami lotnictwa."></li>
+      <li data-en="Innovation-driven: combining fun, realism, and technology."
+          data-pl="Napędzane innowacją: łączymy zabawę, realizm i technologię."></li>
+    </ul>
+
+    <p class="text-gray-300 text-lg md:text-xl"
+       data-en="This combination of aviation expertise and motion platform innovation ensures every simulation is engaging, educational, and unforgettable."
+       data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana.">
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION (SEO) -->
+<section id="contact" class="container mx-auto py-16 px-4">
+  <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
+  <p class="text-center text-gray-300 mb-6"
+     data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs."
+     data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
+  <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
+    <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
+    <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
+    <textarea placeholder="Message / Wiadomość" class="p-3 rounded bg-gray-700"></textarea>
+    <button class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold" data-en="Send message" data-pl="Wyślij wiadomość"></button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 py-6 text-center text-gray-400">
+  © 2025 ForgeMotion Systems
+</footer>
+
+<!-- DYNAMIC LANGUAGE & META TAGS SCRIPT -->
+<script>
+  const metaData = {
+    en: {
+      title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
+      description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
+      keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
+      ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
+      ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
+      ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+      twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
+      twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
+      twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+      canonical: "https://forgemotionsystems.com/en"
+    },
+    pl: {
+      title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
+      description: "ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych oraz kastomizowane ramy dla symulatorów wyścigowych i lotniczych. Zwiększ realizm i precyzję swoich symulacji.",
+      keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems",
+      ogTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
+      ogDescription: "Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych i kastomizowane ramy dla symulatorów wyścigowych i lotniczych.",
+      ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
+      twitterTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
+      twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy.",
+      twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+      canonical: "https://forgemotionsystems.com/pl"
+    }
+  };
+
+  function setMeta(name, content, isProperty=false){
+    let tag;
+    if(isProperty){
+      tag=document.querySelector(`meta[property="${name}"]`);
+      if(!tag){tag=document.createElement('meta');tag.setAttribute('property',name);document.head.appendChild(tag);}
+    } else {
+      tag=document.querySelector(`meta[name="${name}"]`);
+      if(!tag){tag=document.createElement('meta');tag.name=name;document.head.appendChild(tag);}
+    }
+    tag.content=content;
+  }
+
+  function updateMetaTags(lang){
+    const data=metaData[lang];
+    document.title=data.title;
+    setMeta("description",data.description);
+    setMeta("keywords",data.keywords);
+    setMeta("author","ForgeMotion Systems");
+    setMeta("robots","index, follow");
+    setMeta("viewport","width=device-width, initial-scale=1.0");
+
+    let canonicalTag=document.querySelector('link[rel="canonical"]');
+    if(!canonicalTag){canonicalTag=document.createElement('link');canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
+    canonicalTag.href=data.canonical;
+
+    setMeta("og:title",data.ogTitle,true);
+    setMeta("og:description",data.ogDescription,true);
+    setMeta("og:image",data.ogImage,true);
+    setMeta("og:url",data.canonical,true);
+    setMeta("og:type","website",true);
+
+    setMeta("twitter:title",data.twitterTitle,true);
+    setMeta("twitter:description",data.twitterDescription,true);
+    setMeta("twitter:image",data.twitterImage,true);
+    setMeta("twitter:card","summary_large_image",true);
+  }
+
+  function setLanguage(lang){
+    localStorage.setItem('lang',lang);
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);
+    updateMetaTags(lang);
+  }
+
+  const savedLang=localStorage.getItem('lang')||'en';
+  setLanguage(savedLang);
+</script>
+
+<!-- MOBILE MENU SCRIPT -->
+<script>
+  (function () {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
     }
 
-    function updateMetaTags(lang){
-      const data=metaData[lang];
-      document.title=data.title;
-      setMeta("description",data.description);
-      setMeta("keywords",data.keywords);
-      setMeta("author","ForgeMotion Systems");
-      setMeta("robots","index, follow");
-      setMeta("viewport","width=device-width, initial-scale=1.0");
-
-      let canonicalTag=document.querySelector('link[rel="canonical"]');
-      if(!canonicalTag){canonicalTag=document.createElement('link');canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
-      canonicalTag.href=data.canonical;
-
-      setMeta("og:title",data.ogTitle,true);
-      setMeta("og:description",data.ogDescription,true);
-      setMeta("og:image",data.ogImage,true);
-      setMeta("og:url",data.canonical,true);
-      setMeta("og:type","website",true);
-
-      setMeta("twitter:title",data.twitterTitle,true);
-      setMeta("twitter:description",data.twitterDescription,true);
-      setMeta("twitter:image",data.twitterImage,true);
-      setMeta("twitter:card","summary_large_image",true);
+    function toggleMenu() {
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) closeMenu();
+      else {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     }
 
-    function setLanguage(lang){
-      localStorage.setItem('lang',lang);
-      document.documentElement.lang=lang;
-      document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);
-      updateMetaTags(lang);
-    }
+    btn.addEventListener('click', toggleMenu);
 
-    const savedLang=localStorage.getItem('lang')||'en';
-    setLanguage(savedLang);
-  </script>
+    document.querySelectorAll('.mobile-link').forEach(a => {
+      a.addEventListener('click', closeMenu);
+    });
 
-  <!-- MOBILE MENU SCRIPT -->
-  <script>
-    (function () {
-      const btn = document.getElementById('mobileMenuBtn');
-      const menu = document.getElementById('mobileMenu');
-      if (!btn || !menu) return;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
 
-      function closeMenu() {
-        menu.classList.add('hidden');
-        btn.setAttribute('aria-expanded', 'false');
-      }
-
-      function toggleMenu() {
-        const isOpen = !menu.classList.contains('hidden');
-        if (isOpen) closeMenu();
-        else {
-          menu.classList.remove('hidden');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      }
-
-      btn.addEventListener('click', toggleMenu);
-
-      document.querySelectorAll('.mobile-link').forEach(a => {
-        a.addEventListener('click', closeMenu);
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeMenu();
-      });
-
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) closeMenu();
-      });
-    })();
-  </script>
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) closeMenu();
+    });
+  })();
+</script>
 
 </body>
 </html>
