@@ -43,9 +43,43 @@
       animation: fadeInUp 1s forwards;
     }
     @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /*
+      HERO:
+      - Desktop: cover (żeby wyglądało jak klasyczny hero), ale przesunięte w dół (żeby nie ucinało góry / głowy).
+      - Mobile: wracamy do „starego dobrego” zachowania (cover + sensowny kadr),
+               plus delikatnie jaśniejsze overlaye (żeby nie było za ciemno).
+    */
+    .hero-bg {
+      background-image:
+        radial-gradient(circle at 35% 35%, rgba(59,130,246,0.16), rgba(17,24,39,0.0) 55%),
+        linear-gradient(to bottom, rgba(17,24,39,0.70), rgba(17,24,39,0.40)),
+        url('/images/hero-forge.png');
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 60% 55%; /* default (tablet / mniejsze desktopy) */
+      background-color: #0b1220;
+    }
+
+    /* Mobile: kadr + trochę jaśniej (żeby zdjęcie było widoczne) */
+    @media (max-width: 768px) {
+      .hero-bg {
+        background-image:
+          radial-gradient(circle at 45% 30%, rgba(59,130,246,0.14), rgba(17,24,39,0.0) 60%),
+          linear-gradient(to bottom, rgba(17,24,39,0.58), rgba(17,24,39,0.32)),
+          url('/images/hero-forge.png');
+
+        background-position: 58% 42%;
+      }
+    }
+
+    /* Desktop: przesuń tło w dół, żeby pokazać górę zdjęcia (głowa pilota) */
+    @media (min-width: 1024px) {
+      .hero-bg {
+        background-position: 60% 78%; /* <- KLUCZ: obniżenie kadru na desktop */
       }
     }
   </style>
@@ -122,10 +156,23 @@
 </header>
 
 <!-- HERO SECTION (SEO) -->
-<section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
-  <h1 class="text-4xl md:text-6xl font-bold mb-4" data-en="Precision Motion Systems for Racing & Flight Simulators" data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
-  <p class="text-lg md:text-2xl mb-6" data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations." data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
-  <a href="#products" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold" data-en="View products" data-pl="Zobacz produkty"></a>
+<section id="hero"
+  class="min-h-[82vh] lg:min-h-[88vh] flex flex-col justify-end items-center text-center p-4 pt-24 md:pt-28 lg:pt-36 pb-14 fade-in hero-bg">
+
+  <!-- Treść przyklejona niżej na desktop (żeby nie zasłaniała fotela) -->
+  <div class="w-full max-w-5xl mx-auto">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
+        data-en="Precision Motion Systems for Racing & Flight Simulators"
+        data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+
+    <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
+       data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
+       data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+
+    <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+      <span data-en="View products" data-pl="Zobacz produkty"></span>
+    </a>
+  </div>
 </section>
 
 <!-- PRODUCTS SECTION (SEO) -->
@@ -159,7 +206,9 @@
 <section id="about" class="bg-gray-800 py-16 px-4">
   <div class="container mx-auto text-center">
     <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
-    <p class="text-gray-300 max-w-2xl mx-auto" data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for the racing and aviation industries. Our solutions enhance realism and precision in training and entertainment simulators." data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej. Nasze rozwiązania zwiększają realizm i precyzję w symulatorach treningowych i rozrywkowych."></p>
+    <p class="text-gray-300 max-w-2xl mx-auto"
+       data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for the racing and aviation industries. Our solutions enhance realism and precision in training and entertainment simulators."
+       data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej. Nasze rozwiązania zwiększają realizm i precyzję w symulatorach treningowych i rozrywkowych."></p>
   </div>
 </section>
 
@@ -180,7 +229,7 @@
 
     <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
        data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
-       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię.">
+       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynieryję.">
     </p>
 
     <p class="text-gray-300 text-lg md:text-xl"
@@ -189,25 +238,6 @@
     </p>
   </div>
 </section>
-
-<!-- Simple fade-in animation (kept from your code) -->
-<style>
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s forwards;
-  }
-
-  @keyframes fadeInUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .relative { position: relative; width: 100%; }
-  .relative iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-</style>
 
 <!-- TRUST & EXPERIENCE / LOTNICZE INSPIRACJE -->
 <section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
@@ -308,19 +338,16 @@
     setMeta("robots","index, follow");
     setMeta("viewport","width=device-width, initial-scale=1.0");
 
-    // Canonical
     let canonicalTag=document.querySelector('link[rel="canonical"]');
     if(!canonicalTag){canonicalTag=document.createElement('link');canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
     canonicalTag.href=data.canonical;
 
-    // Open Graph
     setMeta("og:title",data.ogTitle,true);
     setMeta("og:description",data.ogDescription,true);
     setMeta("og:image",data.ogImage,true);
     setMeta("og:url",data.canonical,true);
     setMeta("og:type","website",true);
 
-    // Twitter Cards
     setMeta("twitter:title",data.twitterTitle,true);
     setMeta("twitter:description",data.twitterDescription,true);
     setMeta("twitter:image",data.twitterImage,true);
@@ -361,19 +388,16 @@
 
     btn.addEventListener('click', toggleMenu);
 
-    // Close after clicking any mobile link
     document.querySelectorAll('.mobile-link').forEach(a => {
       a.addEventListener('click', closeMenu);
     });
 
-    // Close on ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
 
-    // Close when switching to desktop breakpoint
     window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768) closeMenu(); // md breakpoint
+      if (window.innerWidth >= 768) closeMenu();
     });
   })();
 </script>
