@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
   <!-- Podstawowe meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <meta name="author" content="">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="">
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="">
-  <meta name="twitter:description" content="">
-  <meta name="twitter:image" content="">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image" content="" />
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -47,47 +47,96 @@
     }
 
     /*
-      HERO BG — kluczowe:
-      - tło zawsze zaczyna się od lewej i od góry: left top
-      - krótsza, lżejsza nakładka, żeby było jaśniej
-      - gradient nakierowany od góry lekko transparentny do ciemniejszego na dole
+      JEDNO CIĄGŁE TŁO dla HERO + PRODUCTS:
+      - obrazek nie jest powielany (no-repeat)
+      - zawsze kotwica: left top
+      - na desktop: contain -> NIE UCINA dołu (koniec z obciętym dołem)
+      - na mobile: przybliżamy (większy "zoom"), ale nadal left/top jest kotwicą
     */
-    .hero-bg {
-      background-image:
-        linear-gradient(to bottom, rgba(6,10,18,0.16) 0%, rgba(6,10,18,0.45) 50%, rgba(6,10,18,0.75) 100%),
-        url('/images/hero-forge.png');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: left top; /* góra + lewo zawsze widoczne */
+    .bg-wrap {
+      position: relative;
       background-color: #0b1220;
-    }
-
-    /* PRODUKTY: to samo tło, ale jeszcze nieco jaśniejsze, by nie przytłaczać tekstu */
-    .products-bg {
-      background-image:
-        linear-gradient(to bottom, rgba(6,10,18,0.26) 0%, rgba(6,10,18,0.56) 80%),
-        url('/images/hero-forge.png');
+      background-image: url('/images/hero-forge.png');
       background-repeat: no-repeat;
-      background-size: cover;
       background-position: left top;
-      background-color: #0b1220;
+      background-size: contain; /* <- klucz: nie ucina dołu */
+      overflow: hidden;
     }
 
-    /* W razie bardzo szerokich ekranów: nadal trzymamy top/left */
+    /* Overlay robimy warstwami, żeby było czytelnie, ale nie za ciemno */
+    .bg-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      /* góra jaśniej, dół ciemniej (czytelność tekstu na dole) */
+      background: linear-gradient(
+        to bottom,
+        rgba(6,10,18,0.08) 0%,
+        rgba(6,10,18,0.26) 40%,
+        rgba(6,10,18,0.62) 100%
+      );
+      z-index: 0;
+    }
+
+    /* Dodatkowe przyciemnienie tylko na samym dole (żeby tekst na dole nie ginął) */
+    .bg-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        circle at 50% 100%,
+        rgba(6,10,18,0.58),
+        rgba(6,10,18,0.0) 55%
+      );
+      z-index: 0;
+    }
+
+    .bg-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* MOBILE: wcześniej było "w prawo" i za ciemno:
+       - nadal kotwica left/top
+       - robimy zoom (większy background-size), żeby kadr był bliżej i nie wyglądał jak odsunięty
+       - overlay jest jaśniejszy niż wcześniej (żeby nie było czarno) */
+    @media (max-width: 768px) {
+      .bg-wrap {
+        background-size: 155% auto;  /* <- “przesuń to bardziej” bez ruszania left/top */
+      }
+      .bg-wrap::before {
+        background: linear-gradient(
+          to bottom,
+          rgba(6,10,18,0.04) 0%,
+          rgba(6,10,18,0.18) 40%,
+          rgba(6,10,18,0.52) 100%
+        );
+      }
+      .bg-wrap::after {
+        background: radial-gradient(
+          circle at 50% 100%,
+          rgba(6,10,18,0.46),
+          rgba(6,10,18,0.0) 60%
+        );
+      }
+    }
+
+    /* DESKTOP: dopinamy, żeby obrazek ciągnął się “w dół” i był tłem niższych sekcji:
+       - wrapper obejmuje hero+products, więc tło naturalnie schodzi niżej
+       - contain zostaje, dzięki temu dół obrazka nie jest ucinany */
     @media (min-width: 1024px) {
-      .hero-bg { background-position: left top; }
-      .products-bg { background-position: left top; }
+      .bg-wrap { background-size: contain; }
     }
   </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
 
-<!-- HEADER (DESKTOP + MOBILE) -->
+<!-- HEADER -->
 <header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-
-    <!-- LOGO -->
     <a href="#hero" class="flex items-center" aria-label="Go to home section">
       <img
         src="/logo.png"
@@ -96,7 +145,6 @@
       />
     </a>
 
-    <!-- DESKTOP NAV -->
     <div class="hidden md:flex items-center gap-8">
       <nav aria-label="Primary navigation">
         <ul class="flex items-center gap-8">
@@ -107,7 +155,6 @@
         </ul>
       </nav>
 
-      <!-- LANGUAGE SWITCH (DESKTOP) -->
       <div class="flex items-center gap-2 text-sm">
         <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
@@ -115,7 +162,6 @@
       </div>
     </div>
 
-    <!-- MOBILE: LANGUAGE + HAMBURGER -->
     <div class="flex md:hidden items-center gap-3">
       <div class="flex items-center gap-2 text-sm">
         <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
@@ -138,7 +184,6 @@
     </div>
   </div>
 
-  <!-- MOBILE MENU PANEL -->
   <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
     <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
       <ul class="flex flex-col gap-2">
@@ -151,58 +196,73 @@
   </div>
 </header>
 
-<!-- HERO SECTION -->
-<section id="hero"
-  class="hero-bg fade-in
-         min-h-[86vh] lg:min-h-[92vh]
-         flex flex-col items-center text-center
-         justify-end
-         p-4 pt-24 md:pt-28
-         pb-14 md:pb-16 lg:pb-24">
+<!-- ✅ WRAPPER Z JEDNYM TŁEM dla HERO + PRODUCTS -->
+<div class="bg-wrap">
+  <div class="bg-inner">
 
-  <div class="max-w-5xl mx-auto">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
-        data-en="Precision Motion Systems for Racing & Flight Simulators"
-        data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+    <!-- HERO -->
+    <section id="hero"
+      class="fade-in
+             min-h-[92vh] lg:min-h-[110vh]
+             flex flex-col items-center text-center
+             p-4 pt-24 md:pt-28 pb-12 lg:pb-16">
 
-    <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
-       data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
-       data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+      <!-- Spacer, który REALNIE spycha opis na dół (desktop i mobile) -->
+      <div class="flex-1"></div>
 
-    <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
-      <span data-en="View products" data-pl="Zobacz produkty"></span>
-    </a>
+      <!-- Panel na dole (opis ma być pod fotelem, nie na nim) -->
+      <div class="w-full max-w-5xl mx-auto">
+        <div class="mx-auto rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
+          <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
+              data-en="Precision Motion Systems for Racing & Flight Simulators"
+              data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
+
+          <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
+             data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
+             data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+
+          <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+            <span data-en="View products" data-pl="Zobacz produkty"></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS (bez własnego tła – korzysta z tła wrappera) -->
+    <section id="products" class="py-16 px-4">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
+            <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
+            <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
+            <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded">
+          </div>
+
+          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
+            <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
+            <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
+            <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded">
+          </div>
+
+          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
+            <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
+            <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
+            <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded">
+          </div>
+
+          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
+            <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
+            <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
+            <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded">
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
-</section>
-
-<!-- PRODUCTS SECTION -->
-<section id="products" class="products-bg py-16 px-4">
-  <div class="container mx-auto">
-    <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
-        <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
-        <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded">
-      </div>
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
-        <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
-        <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded">
-      </div>
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
-        <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
-        <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded">
-      </div>
-      <div class="bg-gray-800 rounded p-4 text-center hover:scale-105 transition">
-        <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
-        <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-        <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded">
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ABOUT SECTION -->
 <section id="about" class="bg-gray-800 py-16 px-4">
