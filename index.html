@@ -34,7 +34,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Smooth anchor scrolling with fixed header */
     html { scroll-padding-top: 90px; }
 
     .fade-in {
@@ -46,30 +45,22 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /*
-      JEDNO CIĄGŁE TŁO dla HERO + PRODUCTS:
-      - obrazek nie jest powielany (no-repeat)
-      - zawsze kotwica: left top
-      - na desktop: contain -> NIE UCINA dołu (koniec z obciętym dołem)
-      - na mobile: przybliżamy (większy "zoom"), ale nadal left/top jest kotwicą
-    */
+    /* Jedno ciągłe tło dla HERO + PRODUCTS */
     .bg-wrap {
       position: relative;
       background-color: #0b1220;
       background-image: url('/images/hero-forge.png');
       background-repeat: no-repeat;
       background-position: left top;
-      background-size: contain; /* <- klucz: nie ucina dołu */
+      background-size: contain; /* nie ucina dołu na desktop */
       overflow: hidden;
     }
 
-    /* Overlay robimy warstwami, żeby było czytelnie, ale nie za ciemno */
     .bg-wrap::before {
       content: "";
       position: absolute;
       inset: 0;
       pointer-events: none;
-      /* góra jaśniej, dół ciemniej (czytelność tekstu na dole) */
       background: linear-gradient(
         to bottom,
         rgba(6,10,18,0.08) 0%,
@@ -79,7 +70,6 @@
       z-index: 0;
     }
 
-    /* Dodatkowe przyciemnienie tylko na samym dole (żeby tekst na dole nie ginął) */
     .bg-wrap::after {
       content: "";
       position: absolute;
@@ -98,13 +88,11 @@
       z-index: 1;
     }
 
-    /* MOBILE: wcześniej było "w prawo" i za ciemno:
-       - nadal kotwica left/top
-       - robimy zoom (większy background-size), żeby kadr był bliżej i nie wyglądał jak odsunięty
-       - overlay jest jaśniejszy niż wcześniej (żeby nie było czarno) */
+    /* ✅ MOBILE: obniżamy kadr + lekko stabilizujemy zoom */
     @media (max-width: 768px) {
       .bg-wrap {
-        background-size: 155% auto;  /* <- “przesuń to bardziej” bez ruszania left/top */
+        background-size: 145% auto;     /* było 155% */
+        background-position: left 14%;  /* było left top -> teraz “niżej” */
       }
       .bg-wrap::before {
         background: linear-gradient(
@@ -123,18 +111,17 @@
       }
     }
 
-    /* DESKTOP: dopinamy, żeby obrazek ciągnął się “w dół” i był tłem niższych sekcji:
-       - wrapper obejmuje hero+products, więc tło naturalnie schodzi niżej
-       - contain zostaje, dzięki temu dół obrazka nie jest ucinany */
     @media (min-width: 1024px) {
-      .bg-wrap { background-size: contain; }
+      .bg-wrap {
+        background-size: contain;
+        background-position: left top;
+      }
     }
   </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
 
-<!-- HEADER -->
 <header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
     <a href="#hero" class="flex items-center" aria-label="Go to home section">
@@ -196,21 +183,18 @@
   </div>
 </header>
 
-<!-- ✅ WRAPPER Z JEDNYM TŁEM dla HERO + PRODUCTS -->
 <div class="bg-wrap">
   <div class="bg-inner">
 
-    <!-- HERO -->
+    <!-- ✅ HERO: jeszcze niżej na DESKTOP -->
     <section id="hero"
       class="fade-in
-             min-h-[92vh] lg:min-h-[110vh]
+             min-h-[92vh] lg:min-h-[128vh]
              flex flex-col items-center text-center
-             p-4 pt-24 md:pt-28 pb-12 lg:pb-16">
+             p-4 pt-24 md:pt-28 pb-6 lg:pb-4">
 
-      <!-- Spacer, który REALNIE spycha opis na dół (desktop i mobile) -->
       <div class="flex-1"></div>
 
-      <!-- Panel na dole (opis ma być pod fotelem, nie na nim) -->
       <div class="w-full max-w-5xl mx-auto">
         <div class="mx-auto rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
           <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
@@ -228,7 +212,6 @@
       </div>
     </section>
 
-    <!-- PRODUCTS (bez własnego tła – korzysta z tła wrappera) -->
     <section id="products" class="py-16 px-4">
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
@@ -264,7 +247,6 @@
   </div>
 </div>
 
-<!-- ABOUT SECTION -->
 <section id="about" class="bg-gray-800 py-16 px-4">
   <div class="container mx-auto text-center">
     <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
@@ -274,7 +256,6 @@
   </div>
 </section>
 
-<!-- INSPIRATION / TEDX SECTION -->
 <section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
   <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
       data-en="From TEDx to Motion Platforms"
@@ -285,23 +266,19 @@
       <iframe class="absolute top-0 left-0 w-full h-full"
               src="https://www.youtube.com/embed/2k_porGEQZI"
               title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
-              frameborder="0" allowfullscreen>
-      </iframe>
+              frameborder="0" allowfullscreen></iframe>
     </div>
 
     <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
        data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
-       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię.">
-    </p>
+       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię."></p>
 
     <p class="text-gray-300 text-lg md:text-xl"
        data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
-       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą.">
-    </p>
+       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą."></p>
   </div>
 </section>
 
-<!-- TRUST & EXPERIENCE -->
 <section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
   <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
       data-en="Why Trust ForgeMotion Systems?"
@@ -310,8 +287,7 @@
   <div class="max-w-3xl mx-auto text-left md:text-center">
     <p class="text-gray-300 text-lg md:text-xl mb-6"
        data-en="With real-world aviation experience, Leszek Tejwan brings unmatched insight into the design of motion simulators. His work at LOT Polish Airlines on digital aviation tools inspires every platform we build."
-       data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy.">
-    </p>
+       data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy."></p>
 
     <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6">
       <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
@@ -326,12 +302,10 @@
 
     <p class="text-gray-300 text-lg md:text-xl"
        data-en="This combination of aviation expertise and motion platform innovation ensures every simulation is engaging, educational, and unforgettable."
-       data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana.">
-    </p>
+       data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana."></p>
   </div>
 </section>
 
-<!-- CONTACT SECTION -->
 <section id="contact" class="container mx-auto py-16 px-4">
   <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
   <p class="text-center text-gray-300 mb-6"
@@ -345,12 +319,10 @@
   </form>
 </section>
 
-<!-- FOOTER -->
 <footer class="bg-gray-900 py-6 text-center text-gray-400">
   © 2025 ForgeMotion Systems
 </footer>
 
-<!-- DYNAMIC LANGUAGE & META TAGS SCRIPT -->
 <script>
   const metaData = {
     en: {
@@ -397,8 +369,6 @@
     setMeta("description",data.description);
     setMeta("keywords",data.keywords);
     setMeta("author","ForgeMotion Systems");
-    setMeta("robots","index, follow");
-    setMeta("viewport","width=device-width, initial-scale=1.0");
 
     let canonicalTag=document.querySelector('link[rel="canonical"]');
     if(!canonicalTag){canonicalTag=document.createElement('link');canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
@@ -427,7 +397,6 @@
   setLanguage(savedLang);
 </script>
 
-<!-- MOBILE MENU SCRIPT -->
 <script>
   (function () {
     const btn = document.getElementById('mobileMenuBtn');
