@@ -50,20 +50,22 @@
 <body class="bg-gray-900 text-white font-sans">
 
 <!-- HEADER -->
-<!-- HEADER -->
-<header class="bg-gray-800 p-4 fixed w-full z-10 shadow-md">
+<header class="bg-gray-800/90 backdrop-blur p-3 md:p-4 fixed w-full z-10 shadow-md">
   <div class="container mx-auto flex justify-between items-center gap-4">
 
-    <!-- LOGO (responsive) -->
-    <img
-      src="/logo.png"
-      alt="ForgeMotion Systems logo"
-      class="h-9 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto object-contain shrink-0"
-    >
+    <!-- LOGO (fluid scaling) -->
+    <a href="#hero" class="flex items-center">
+      <img
+        src="/logo.png"
+        alt="ForgeMotion Systems logo"
+        class="w-auto object-contain shrink-0
+               h-[clamp(32px,4vw,64px)]"
+      />
+    </a>
 
-    <div class="flex items-center space-x-6 flex-wrap justify-end">
+    <div class="flex items-center gap-6 flex-wrap justify-end">
       <nav>
-        <ul class="flex space-x-6">
+        <ul class="flex items-center gap-6">
           <li><a href="#hero" class="hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
           <li><a href="#products" class="hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
           <li><a href="#about" class="hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
@@ -72,9 +74,9 @@
       </nav>
 
       <!-- LANGUAGE SWITCH -->
-      <div class="flex space-x-2 text-sm">
+      <div class="flex items-center gap-2 text-sm">
         <button onclick="setLanguage('en')" class="hover:text-blue-400">EN</button>
-        <span>|</span>
+        <span class="text-gray-400">|</span>
         <button onclick="setLanguage('pl')" class="hover:text-blue-400">PL</button>
       </div>
     </div>
