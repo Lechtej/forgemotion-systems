@@ -8,7 +8,6 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
   <!-- Podstawowe meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
@@ -45,14 +44,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Jedno ciągłe tło dla HERO + PRODUCTS */
     .bg-wrap {
       position: relative;
       background-color: #0b1220;
       background-image: url('/images/hero-forge.png');
       background-repeat: no-repeat;
       background-position: left top;
-      background-size: contain; /* nie ucina dołu */
+      background-size: contain;
       overflow: hidden;
     }
 
@@ -88,14 +86,10 @@
       z-index: 1;
     }
 
-    /*
-      ✅ MOBILE: obniżamy kadr (żeby nie wyglądało jak ucięte od góry)
-      + delikatny zoom
-    */
     @media (max-width: 768px) {
       .bg-wrap {
         background-size: 145% auto;
-        background-position: left 18%; /* <- niżej niż było 14% */
+        background-position: left 18%;
       }
       .bg-wrap::before {
         background: linear-gradient(
@@ -114,10 +108,6 @@
       }
     }
 
-    /*
-      ✅ DESKTOP: obniżamy tło, bo w poziomie “ucina” głowę.
-      Uwaga: to jest tylko przesunięcie tła w dół – zdjęcie nie jest powielane.
-    */
     @media (min-width: 1024px) {
       .bg-wrap {
         background-size: contain;
@@ -125,17 +115,12 @@
       }
     }
 
-    /* Desktop + niski viewport (często “poziomo” / mniejsza wysokość okna) -> jeszcze niżej */
     @media (min-width: 1024px) and (max-height: 820px) {
       .bg-wrap {
         background-position: left 10%;
       }
     }
 
-    /*
-      ✅ Klucz do zoomowania: panel z opisem ma trzymać POZIOM GÓRNEJ krawędzi.
-      Dlatego pozycjonujemy go od góry (top), a nie od dołu (bottom) i nie używamy flex-1.
-    */
     .hero-panel {
       position: absolute;
       left: 0;
@@ -145,18 +130,12 @@
       width: min(980px, calc(100% - 2rem));
     }
 
-    /* Desktop: wariant B – panel ~ max 10% wyżej niż dół */
     @media (min-width: 1024px) {
-      .hero-panel {
-        top: 62vh; /* <- trzyma górną krawędź; przy zoom-out nie “spada” */
-      }
+      .hero-panel { top: 62vh; }
     }
 
-    /* Mobile: panel trochę niżej, bo ekran mniejszy */
     @media (max-width: 768px) {
-      .hero-panel {
-        top: 56vh;
-      }
+      .hero-panel { top: 56vh; }
     }
   </style>
 </head>
@@ -170,6 +149,7 @@
         src="/logo.png"
         alt="ForgeMotion Systems logo"
         class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
+        loading="eager"
       />
     </a>
 
@@ -184,17 +164,17 @@
       </nav>
 
       <div class="flex items-center gap-2 text-sm">
-        <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
-        <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
     </div>
 
     <div class="flex md:hidden items-center gap-3">
       <div class="flex items-center gap-2 text-sm">
-        <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
-        <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
 
       <button
@@ -227,7 +207,6 @@
 <div class="bg-wrap">
   <div class="bg-inner">
 
-    <!-- ✅ HERO: relative, panel absolutnie pozycjonowany od góry -->
     <section id="hero"
       class="fade-in relative
              min-h-[100vh] lg:min-h-[110vh]
@@ -250,7 +229,6 @@
       </div>
     </section>
 
-    <!-- PRODUCTS (korzysta z tego samego tła wrappera) -->
     <section id="products" class="py-16 px-4">
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
@@ -259,25 +237,25 @@
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
             <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
-            <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded">
+            <img src="images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
 
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
             <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
-            <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded">
+            <img src="images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
 
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
             <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
-            <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded">
+            <img src="images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
 
           <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
             <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
             <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-            <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded">
+            <img src="images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -286,7 +264,6 @@
   </div>
 </div>
 
-<!-- Reszta sekcji bez zmian -->
 <section id="about" class="bg-gray-800 py-16 px-4">
   <div class="container mx-auto text-center">
     <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
@@ -304,9 +281,13 @@
   <div class="max-w-3xl mx-auto">
     <div class="relative" style="padding-top:56.25%;">
       <iframe class="absolute top-0 left-0 w-full h-full"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
               src="https://www.youtube.com/embed/2k_porGEQZI"
               title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
-              frameborder="0" allowfullscreen></iframe>
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
     </div>
 
     <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
@@ -363,7 +344,7 @@
   © 2025 ForgeMotion Systems
 </footer>
 
-<script>
+<script defer>
   const metaData = {
     en: {
       title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
@@ -391,53 +372,77 @@
     }
   };
 
-  function setMeta(name, content, isProperty=false){
-    let tag;
-    if(isProperty){
-      tag=document.querySelector(`meta[property="${name}"]`);
-      if(!tag){tag=document.createElement('meta');tag.setAttribute('property',name);document.head.appendChild(tag);}
-    } else {
-      tag=document.querySelector(`meta[name="${name}"]`);
-      if(!tag){tag=document.createElement('meta');tag.name=name;document.head.appendChild(tag);}
+  // Ustala meta tag po name (twitter/standard) lub po property (og)
+  function setMetaTag(key, content, attr = "name") {
+    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.setAttribute(attr, key);
+      document.head.appendChild(tag);
     }
-    tag.content=content;
+    tag.setAttribute("content", content);
   }
 
-  function updateMetaTags(lang){
-    const data=metaData[lang];
-    document.title=data.title;
-    setMeta("description",data.description);
-    setMeta("keywords",data.keywords);
-    setMeta("author","ForgeMotion Systems");
-
-    let canonicalTag=document.querySelector('link[rel="canonical"]');
-    if(!canonicalTag){canonicalTag=document.createElement('link');canonicalTag.rel="canonical";document.head.appendChild(canonicalTag);}
-    canonicalTag.href=data.canonical;
-
-    setMeta("og:title",data.ogTitle,true);
-    setMeta("og:description",data.ogDescription,true);
-    setMeta("og:image",data.ogImage,true);
-    setMeta("og:url",data.canonical,true);
-    setMeta("og:type","website",true);
-
-    setMeta("twitter:title",data.twitterTitle,true);
-    setMeta("twitter:description",data.twitterDescription,true);
-    setMeta("twitter:image",data.twitterImage,true);
-    setMeta("twitter:card","summary_large_image",true);
+  function setCanonical(href) {
+    let tag = document.head.querySelector('link[rel="canonical"]');
+    if (!tag) {
+      tag = document.createElement("link");
+      tag.rel = "canonical";
+      document.head.appendChild(tag);
+    }
+    tag.href = href;
   }
 
-  function setLanguage(lang){
-    localStorage.setItem('lang',lang);
-    document.documentElement.lang=lang;
-    document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);
+  const i18nNodes = Array.from(document.querySelectorAll("[data-en]"));
+
+  function applyTexts(lang) {
+    for (const el of i18nNodes) {
+      const val = el.dataset[lang];
+      if (typeof val === "string") el.textContent = val;
+    }
+  }
+
+  function updateMetaTags(lang) {
+    const data = metaData[lang];
+    document.title = data.title;
+
+    setMetaTag("description", data.description, "name");
+    setMetaTag("keywords", data.keywords, "name");
+    setMetaTag("author", "ForgeMotion Systems", "name");
+
+    setCanonical(data.canonical);
+
+    setMetaTag("og:title", data.ogTitle, "property");
+    setMetaTag("og:description", data.ogDescription, "property");
+    setMetaTag("og:image", data.ogImage, "property");
+    setMetaTag("og:url", data.canonical, "property");
+    setMetaTag("og:type", "website", "property");
+
+    setMetaTag("twitter:title", data.twitterTitle, "name");
+    setMetaTag("twitter:description", data.twitterDescription, "name");
+    setMetaTag("twitter:image", data.twitterImage, "name");
+    setMetaTag("twitter:card", "summary_large_image", "name");
+  }
+
+  function setLanguage(lang) {
+    localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang;
+    applyTexts(lang);
     updateMetaTags(lang);
   }
 
-  const savedLang=localStorage.getItem('lang')||'en';
+  // Obsługa przycisków języka bez inline onclick
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-lang]");
+    if (!btn) return;
+    setLanguage(btn.getAttribute("data-lang"));
+  });
+
+  const savedLang = localStorage.getItem("lang") || "en";
   setLanguage(savedLang);
 </script>
 
-<script>
+<script defer>
   (function () {
     const btn = document.getElementById('mobileMenuBtn');
     const menu = document.getElementById('mobileMenu');
