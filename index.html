@@ -34,6 +34,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    /* Smooth anchor scrolling with fixed header */
+    html { scroll-padding-top: 90px; }
+
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
@@ -47,43 +50,77 @@
     }
   </style>
 </head>
+
 <body class="bg-gray-900 text-white font-sans">
 
-<!-- HEADER -->
-<header class="bg-gray-800/90 backdrop-blur p-3 md:p-4 fixed w-full z-10 shadow-md">
-  <div class="container mx-auto flex justify-between items-center gap-4">
+<!-- HEADER (DESKTOP + MOBILE) -->
+<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
     <!-- LOGO (fluid scaling) -->
-    <a href="#hero" class="flex items-center">
+    <a href="#hero" class="flex items-center" aria-label="Go to home section">
       <img
         src="/logo.png"
         alt="ForgeMotion Systems logo"
-        class="w-auto object-contain shrink-0
-               h-[clamp(32px,4vw,64px)]"
+        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
       />
     </a>
 
-    <div class="flex items-center gap-6 flex-wrap justify-end">
-      <nav>
-        <ul class="flex items-center gap-6">
-          <li><a href="#hero" class="hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="#products" class="hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="#about" class="hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="#contact" class="hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+    <!-- DESKTOP NAV -->
+    <div class="hidden md:flex items-center gap-8">
+      <nav aria-label="Primary navigation">
+        <ul class="flex items-center gap-8">
+          <li><a href="#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
+          <li><a href="#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
+          <li><a href="#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
         </ul>
       </nav>
 
-      <!-- LANGUAGE SWITCH -->
+      <!-- LANGUAGE SWITCH (DESKTOP) -->
       <div class="flex items-center gap-2 text-sm">
-        <button onclick="setLanguage('en')" class="hover:text-blue-400">EN</button>
+        <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
-        <button onclick="setLanguage('pl')" class="hover:text-blue-400">PL</button>
+        <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
     </div>
 
+    <!-- MOBILE: LANGUAGE + HAMBURGER -->
+    <div class="flex md:hidden items-center gap-3">
+      <div class="flex items-center gap-2 text-sm">
+        <button onclick="setLanguage('en')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <span class="text-gray-400">|</span>
+        <button onclick="setLanguage('pl')" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+      </div>
+
+      <button
+        id="mobileMenuBtn"
+        type="button"
+        class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
+        aria-controls="mobileMenu"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU PANEL -->
+  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
+    <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
+      <ul class="flex flex-col gap-2">
+        <li><a href="#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
+        <li><a href="#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+        <li><a href="#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
+        <li><a href="#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+      </ul>
+    </nav>
   </div>
 </header>
-  
+
 <!-- HERO SECTION (SEO) -->
 <section id="hero" class="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center p-4 fade-in">
   <h1 class="text-4xl md:text-6xl font-bold mb-4" data-en="Precision Motion Systems for Racing & Flight Simulators" data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
@@ -126,36 +163,34 @@
   </div>
 </section>
 
-  <!-- INSPIRATION / TEDX SECTION -->
+<!-- INSPIRATION / TEDX SECTION -->
 <section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
-  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" 
-      data-en="From TEDx to Motion Platforms" 
+  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
+      data-en="From TEDx to Motion Platforms"
       data-pl="Od TEDx do technologii motion"></h2>
-  
+
   <div class="max-w-3xl mx-auto">
-    <!-- Embedded TEDx Video -->
     <div class="relative" style="padding-top:56.25%;">
-      <iframe class="absolute top-0 left-0 w-full h-full" 
-              src="https://www.youtube.com/embed/2k_porGEQZI" 
-              title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska" 
+      <iframe class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/2k_porGEQZI"
+              title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
               frameborder="0" allowfullscreen>
       </iframe>
     </div>
 
-    <!-- Description Text -->
-    <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl" 
-       data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering." 
+    <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
+       data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
        data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię.">
     </p>
 
-    <p class="text-gray-300 text-lg md:text-xl" 
-       data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging." 
+    <p class="text-gray-300 text-lg md:text-xl"
+       data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
        data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą.">
     </p>
   </div>
 </section>
 
-<!-- Simple fade-in animation -->
+<!-- Simple fade-in animation (kept from your code) -->
 <style>
   .fade-in {
     opacity: 0;
@@ -170,18 +205,8 @@
     }
   }
 
-  /* Responsive iframe container */
-  .relative {
-    position: relative;
-    width: 100%;
-  }
-  .relative iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+  .relative { position: relative; width: 100%; }
+  .relative iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 </style>
 
 <!-- TRUST & EXPERIENCE / LOTNICZE INSPIRACJE -->
@@ -196,7 +221,6 @@
        data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy.">
     </p>
 
-    <!-- Bullet points with value propositions -->
     <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6" data-en="" data-pl="">
       <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
           data-pl="Realistyczne doświadczenie: platformy motion projektowane z uwzględnieniem wiedzy lotniczej."></li>
@@ -215,11 +239,12 @@
   </div>
 </section>
 
-  
 <!-- CONTACT SECTION (SEO) -->
 <section id="contact" class="container mx-auto py-16 px-4">
   <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
-  <p class="text-center text-gray-300 mb-6" data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs." data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
+  <p class="text-center text-gray-300 mb-6"
+     data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs."
+     data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
   <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
     <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
     <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
@@ -311,6 +336,46 @@
 
   const savedLang=localStorage.getItem('lang')||'en';
   setLanguage(savedLang);
+</script>
+
+<!-- MOBILE MENU SCRIPT (add-on) -->
+<script>
+  (function () {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleMenu() {
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) closeMenu();
+      else {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    btn.addEventListener('click', toggleMenu);
+
+    // Close after clicking any mobile link
+    document.querySelectorAll('.mobile-link').forEach(a => {
+      a.addEventListener('click', closeMenu);
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    // Close when switching to desktop breakpoint
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) closeMenu(); // md breakpoint
+    });
+  })();
 </script>
 
 </body>
