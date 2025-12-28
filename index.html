@@ -37,9 +37,6 @@
   <script src="/assets/site-layout.js" defer></script>
 
   <style>
-    /* UWAGA: globalne (scroll-padding + fade-in + modal styles) są już w site-layout.js */
-    /* Zostawiamy tutaj tylko Twoje style specyficzne dla strony głównej */
-
     .bg-wrap {
       position: relative;
       background-color: #0b1220;
@@ -174,14 +171,12 @@
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
-  <!-- Layout -->
   <div id="siteHeader"></div>
 
   <main class="pt-24">
     <div class="bg-wrap">
       <div class="bg-inner">
 
-        <!-- HERO -->
         <section id="hero" class="fade-in relative min-h-[100vh] lg:min-h-[110vh] p-4 pt-24 md:pt-28">
           <div class="hero-panel">
             <div class="rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
@@ -200,14 +195,12 @@
           </div>
         </section>
 
-        <!-- PRODUCTS -->
         <section id="products" class="py-16 px-4">
           <div class="container mx-auto">
             <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
 
-              <!-- 1) 6DOF -->
               <div class="product-card">
                 <h3 class="product-title">6DOF Platform</h3>
                 <p class="product-desc"
@@ -227,7 +220,6 @@
                 </div>
               </div>
 
-              <!-- 2) 3DOF / 2DOF -->
               <div class="product-card">
                 <h3 class="product-title">3DOF / 2DOF Platform</h3>
                 <p class="product-desc"
@@ -247,7 +239,6 @@
                 </div>
               </div>
 
-              <!-- 3) MK14 -->
               <div class="product-card">
                 <h3 class="product-title">Ejection Seat Replica</h3>
                 <p class="product-desc"
@@ -268,7 +259,6 @@
                 </div>
               </div>
 
-              <!-- 4) Belt tensioner -->
               <div class="product-card">
                 <h3 class="product-title">Seat Belt Tensioner</h3>
                 <p class="product-desc"
@@ -288,7 +278,6 @@
                 </div>
               </div>
 
-              <!-- 5) Accessories -->
               <div class="product-card">
                 <h3 class="product-title">Simulator Accessories</h3>
                 <p class="product-desc"
@@ -315,7 +304,6 @@
       </div>
     </div>
 
-    <!-- ABOUT -->
     <section id="about" class="bg-gray-800 py-16 px-4">
       <div class="container mx-auto text-center">
         <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
@@ -325,7 +313,6 @@
       </div>
     </section>
 
-    <!-- INSPIRATION -->
     <section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
       <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
           data-en="From TEDx to Motion Platforms"
@@ -353,7 +340,6 @@
       </div>
     </section>
 
-    <!-- TRUST / EXPERIENCE -->
     <section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
       <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
           data-en="Why Trust ForgeMotion Systems?"
@@ -381,13 +367,13 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="container mx-auto py-16 px-4">
       <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
       <p class="text-center text-gray-300 mb-6"
          data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs."
          data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
-      <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
+
+      <form id="contactForm" class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
         <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
         <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
         <textarea placeholder="Message / Wiadomość" class="p-3 rounded bg-gray-700"></textarea>
@@ -396,7 +382,6 @@
     </section>
   </main>
 
-  <!-- Layout -->
   <div id="siteFooter"></div>
   <div id="siteModal"></div>
 
@@ -431,8 +416,8 @@
     window.addEventListener("DOMContentLoaded", () => {
       SiteLayout.init({
         metaData,
-        includeModal: true,       // żeby zoom na zdjęciach produktów działał
-        injectOtherProducts: false // na indexie nie pokazujemy sekcji "Other products"
+        includeModal: true,
+        injectOtherProducts: false
       });
     });
   </script>
