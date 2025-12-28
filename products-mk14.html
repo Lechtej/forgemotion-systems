@@ -27,408 +27,159 @@
   <meta name="twitter:image" content="" />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/assets/site-layout.js" defer></script>
 
   <style>
-    html { scroll-padding-top: 90px; }
-    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp .9s forwards; }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-
     .thumb-contain { object-fit: contain !important; background: rgba(0,0,0,0.12); padding: 10px; }
-
-    /* Modal */
-    .modal-hidden { display: none; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 50; display:flex; align-items:center; justify-content:center; padding:1rem; }
-    .modal-panel { width:min(1100px,96vw); max-height:90vh; background: rgba(17,24,39,0.96); border:1px solid rgba(255,255,255,0.08); border-radius:1rem; overflow:hidden; box-shadow:0 20px 70px rgba(0,0,0,0.5); position:relative;}
-    .modal-close { position:absolute; top:10px; right:10px; background: rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.18); border-radius:999px; width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
-    .modal-close:hover { background: rgba(255,255,255,0.18); }
-    .modal-img-wrap { padding:0.75rem; }
-    .modal-img { width:100%; height:auto; max-height:calc(90vh - 1.5rem); object-fit:contain; border-radius:0.75rem; display:block; }
-    .modal-hint { padding: 0 0.95rem 0.95rem 0.95rem; color: rgba(255,255,255,0.75); font-size: 0.95rem; text-align: center; }
-    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
   </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
+  <div id="siteHeader"></div>
 
-<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
-  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="/index.html#products" class="flex items-center" aria-label="Go to products">
-      <img src="/logo.png" alt="ForgeMotion Systems logo" class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]" loading="eager" />
-    </a>
+  <main class="pt-24">
+    <section class="container mx-auto px-4 py-10 fade-in">
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <div>
+          <p class="text-sm text-white/70 mb-2">
+            <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          </p>
 
-    <div class="hidden md:flex items-center gap-8">
-      <nav aria-label="Primary navigation">
-        <ul class="flex items-center gap-8">
-          <li><a href="/index.html#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="/index.html#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="/index.html#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="/index.html#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
-        </ul>
-      </nav>
+          <h1 class="text-4xl md:text-5xl font-bold mb-4"
+              data-en="Ejection Seat MK14 Replica"
+              data-pl="Replika fotela katapultowego MK14"></h1>
 
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-      </div>
-    </div>
+          <p class="text-xl text-white/90 mb-6"
+             data-en="Not just a seat — it’s the moment you step into the cockpit. The detail and presence instantly raise the realism of any flight sim build."
+             data-pl="To nie tylko fotel — to moment wejścia do kokpitu. Detal i „obecność” natychmiast podnoszą realizm każdego flight sim buildu."></p>
 
-    <div class="flex md:hidden items-center gap-3">
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-      </div>
+          <div class="flex flex-wrap gap-3 mb-6">
+            <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+               data-en="Request a quote"
+               data-pl="Poproś o wycenę"></a>
+            <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
+               data-en="Ask about customization"
+               data-pl="Zapytaj o personalizację"></a>
+          </div>
 
-      <button
-        id="mobileMenuBtn"
-        type="button"
-        class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
-        aria-controls="mobileMenu"
-        aria-expanded="false"
-        aria-label="Open menu"
-      >
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
-    <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
-      <ul class="flex flex-col gap-2">
-        <li><a href="/index.html#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-        <li><a href="/index.html#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-        <li><a href="/index.html#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-        <li><a href="/index.html#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main class="pt-24">
-  <section class="container mx-auto px-4 py-10 fade-in">
-    <div class="grid lg:grid-cols-2 gap-8 items-start">
-      <div>
-        <p class="text-sm text-white/70 mb-2">
-          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
-        </p>
-
-        <h1 class="text-4xl md:text-5xl font-bold mb-4"
-            data-en="Ejection Seat MK14 Replica"
-            data-pl="Replika fotela katapultowego MK14"></h1>
-
-        <p class="text-xl text-white/90 mb-6"
-           data-en="Not just a seat — it’s the moment you step into the cockpit. The detail and presence instantly raise the realism of any flight sim build."
-           data-pl="To nie tylko fotel — to moment wejścia do kokpitu. Detal i „obecność” natychmiast podnoszą realizm każdego flight sim buildu."></p>
-
-        <div class="flex flex-wrap gap-3 mb-6">
-          <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-             data-en="Request a quote"
-             data-pl="Poproś o wycenę"></a>
-          <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
-             data-en="Ask about customization"
-             data-pl="Zapytaj o personalizację"></a>
+          <div class="bg-gray-800/70 border border-white/5 rounded-xl p-5">
+            <h2 class="text-xl font-semibold mb-3" data-en="Why it’s worth it" data-pl="Dlaczego warto"></h2>
+            <ul class="list-disc list-inside text-white/85 space-y-2">
+              <li data-en="Instant wow-effect — the cockpit finally looks and feels “real”."
+                  data-pl="Natychmiastowy efekt wow — kokpit zaczyna wyglądać i „czuć się” prawdziwie."></li>
+              <li data-en="Perfect for home cockpits, exhibitions, content creators and events."
+                  data-pl="Idealna do kokpitów domowych, ekspozycji, twórców i eventów."></li>
+              <li data-en="A premium centerpiece that upgrades the whole build."
+                  data-pl="Element premium, który podnosi wartość całego stanowiska."></li>
+            </ul>
+          </div>
         </div>
 
-        <div class="bg-gray-800/70 border border-white/5 rounded-xl p-5">
-          <h2 class="text-xl font-semibold mb-3" data-en="Why it’s worth it" data-pl="Dlaczego warto"></h2>
+        <div class="bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
+          <img
+            class="w-full h-[320px] md:h-[420px] object-cover cursor-zoom-in thumb-contain"
+            src="/images/mk14seat1.jpg"
+            data-full="/images/mk14seat1-large.jpg"
+            alt="Ejection seat replica (MK14)"
+            loading="eager"
+            decoding="async"
+          />
+          <div class="p-4 text-white/75 text-sm" data-en="Click the image to zoom." data-pl="Kliknij zdjęcie, aby powiększyć."></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto px-4 pb-12">
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3" data-en="Made for immersion" data-pl="Zrobiona pod immersję"></h3>
+          <p class="text-white/85"
+             data-en="It’s the details that sell the illusion: proportions, silhouette and the cockpit vibe. Great for anyone who wants the build to feel complete."
+             data-pl="To detale sprzedają iluzję: proporcje, sylwetka i klimat kokpitu. Świetna dla osób, które chcą, żeby stanowisko było „domknięte”."></p>
+        </div>
+
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3" data-en="Use cases" data-pl="Zastosowania"></h3>
           <ul class="list-disc list-inside text-white/85 space-y-2">
-            <li data-en="Instant wow-effect — the cockpit finally looks and feels “real”."
-                data-pl="Natychmiastowy efekt wow — kokpit zaczyna wyglądać i „czuć się” prawdziwie."></li>
-            <li data-en="Perfect for home cockpits, exhibitions, content creators and events."
-                data-pl="Idealna do kokpitów domowych, ekspozycji, twórców i eventów."></li>
-            <li data-en="A premium centerpiece that upgrades the whole build."
-                data-pl="Element premium, który podnosi wartość całego stanowiska."></li>
+            <li data-en="Home flight sim cockpits (premium builds)."
+                data-pl="Domowe kokpity flight sim (projekty premium)."></li>
+            <li data-en="Museums, showrooms, exhibitions and events."
+                data-pl="Muzea, showroomy, ekspozycje i eventy."></li>
+            <li data-en="Streamers, creators and commercial sim rooms."
+                data-pl="Streamerzy, twórcy i komercyjne sim roomy."></li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3" data-en="Customization" data-pl="Personalizacja"></h3>
+          <ul class="list-disc list-inside text-white/85 space-y-2">
+            <li data-en="Finish and visual style options."
+                data-pl="Opcje wykończenia i stylu wizualnego."></li>
+            <li data-en="Mounting and integration with your cockpit."
+                data-pl="Mocowania i integracja z kokpitem."></li>
+            <li data-en="Add-ons depending on your build goals."
+                data-pl="Dodatki zależnie od celu projektu."></li>
           </ul>
         </div>
       </div>
+    </section>
 
-      <div class="bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
-        <img
-          class="w-full h-[320px] md:h-[420px] object-cover cursor-zoom-in thumb-contain"
-          src="/images/mk14seat1.jpg"
-          data-full="/images/mk14seat1-large.jpg"
-          alt="Ejection seat replica (MK14)"
-          loading="eager"
-          decoding="async"
-        />
-        <div class="p-4 text-white/75 text-sm" data-en="Click the image to zoom." data-pl="Kliknij zdjęcie, aby powiększyć."></div>
+    <section class="container mx-auto px-4 pb-10">
+      <div class="bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3"
+            data-en="Make your cockpit unforgettable"
+            data-pl="Zrób kokpit, który zapada w pamięć"></h2>
+        <p class="text-white/85 mb-6"
+           data-en="If you want a build that looks like it belongs in a real aircraft — this is the piece that changes everything."
+           data-pl="Jeśli chcesz stanowisko, które wygląda jak z prawdziwego samolotu — to element, który zmienia wszystko."></p>
+        <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+           data-en="Contact us"
+           data-pl="Skontaktuj się"></a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="container mx-auto px-4 pb-12">
-    <div class="grid lg:grid-cols-3 gap-6">
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h3 class="text-xl font-semibold mb-3" data-en="Made for immersion" data-pl="Zrobiona pod immersję"></h3>
-        <p class="text-white/85"
-           data-en="It’s the details that sell the illusion: proportions, silhouette and the cockpit vibe. Great for anyone who wants the build to feel complete."
-           data-pl="To detale sprzedają iluzję: proporcje, sylwetka i klimat kokpitu. Świetna dla osób, które chcą, żeby stanowisko było „domknięte”."></p>
-      </div>
+    <div id="otherProducts"></div>
+  </main>
 
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h3 class="text-xl font-semibold mb-3" data-en="Use cases" data-pl="Zastosowania"></h3>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="Home flight sim cockpits (premium builds)."
-              data-pl="Domowe kokpity flight sim (projekty premium)."></li>
-          <li data-en="Museums, showrooms, exhibitions and events."
-              data-pl="Muzea, showroomy, ekspozycje i eventy."></li>
-          <li data-en="Streamers, creators and commercial sim rooms."
-              data-pl="Streamerzy, twórcy i komercyjne sim roomy."></li>
-        </ul>
-      </div>
+  <div id="siteFooter"></div>
+  <div id="siteModal"></div>
 
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h3 class="text-xl font-semibold mb-3" data-en="Customization" data-pl="Personalizacja"></h3>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="Finish and visual style options."
-              data-pl="Opcje wykończenia i stylu wizualnego."></li>
-          <li data-en="Mounting and integration with your cockpit."
-              data-pl="Mocowania i integracja z kokpitem."></li>
-          <li data-en="Add-ons depending on your build goals."
-              data-pl="Dodatki zależnie od celu projektu."></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="container mx-auto px-4 pb-14">
-    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
-      <h2 class="text-2xl font-bold mb-6" data-en="FAQ" data-pl="FAQ"></h2>
-
-      <div class="space-y-5">
-        <div>
-          <h3 class="font-semibold mb-1" data-en="Is it good for a home cockpit?" data-pl="Czy to ma sens do domowego kokpitu?"></h3>
-          <p class="text-white/85"
-             data-en="Yes — especially if you want the build to feel premium and authentic. It’s a visual and emotional upgrade as much as a functional one."
-             data-pl="Tak — szczególnie jeśli chcesz premium i autentyczności. To upgrade wizualny i „emocjonalny” tak samo, jak funkcjonalny."></p>
-        </div>
-        <div>
-          <h3 class="font-semibold mb-1" data-en="Can it be customized?" data-pl="Czy da się ją spersonalizować?"></h3>
-          <p class="text-white/85"
-             data-en="Yes. Tell us your cockpit concept and we’ll suggest finish and mounting options."
-             data-pl="Tak. Opisz koncepcję kokpitu, a zaproponujemy wykończenie i mocowania."></p>
-        </div>
-        <div>
-          <h3 class="font-semibold mb-1" data-en="How do I order?" data-pl="Jak zamówić?"></h3>
-          <p class="text-white/85"
-             data-en="Send a message with your build idea and any reference photos — we’ll respond with options and a quote."
-             data-pl="Napisz, jaki masz pomysł i podeślij inspiracje/zdjęcia — odezwiemy się z opcjami i wyceną."></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="container mx-auto px-4 pb-10">
-    <div class="bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
-      <h2 class="text-2xl md:text-3xl font-bold mb-3"
-          data-en="Make your cockpit unforgettable"
-          data-pl="Zrób kokpit, który zapada w pamięć"></h2>
-      <p class="text-white/85 mb-6"
-         data-en="If you want a build that looks like it belongs in a real aircraft — this is the piece that changes everything."
-         data-pl="Jeśli chcesz stanowisko, które wygląda jak z prawdziwego samolotu — to element, który zmienia wszystko."></p>
-      <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-         data-en="Contact us"
-         data-pl="Skontaktuj się"></a>
-    </div>
-  </section>
-
-  <!-- Other products -->
-  <section class="container mx-auto px-4 pb-16">
-    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
-      <h2 class="text-2xl font-bold mb-5" data-en="Other products" data-pl="Pozostałe produkty"></h2>
-      <div class="flex flex-wrap gap-3">
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-6dof.html">6DOF</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-3dof.html">3DOF / 2DOF</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-belt-tensioner.html" data-en="Belt tensioner" data-pl="Napinacz pasów"></a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-accessories.html" data-en="Accessories" data-pl="Akcesoria"></a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="bg-gray-900 py-6 text-center text-gray-400">
-  © 2025 ForgeMotion Systems
-</footer>
-
-<!-- Modal -->
-<div id="imgModal" class="modal-hidden" aria-hidden="true">
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
-    <div class="modal-panel">
-      <button id="imgModalClose" class="modal-close" type="button" aria-label="Close image">
-        <span aria-hidden="true">✕</span>
-      </button>
-      <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
-      <div class="modal-img-wrap">
-        <img id="imgModalImg" class="modal-img" src="" alt="">
-      </div>
-      <div class="modal-hint"
-           data-en="Tip: click outside the image or press ESC to close."
-           data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
-    </div>
-  </div>
-</div>
-
-<script>
-  const metaData = {
-    en: {
-      title: "Ejection Seat MK14 Replica – ForgeMotion Systems",
-      description: "High-fidelity ejection seat replica (MK14) for flight sim cockpits. Instant authenticity and wow effect for premium builds.",
-      keywords: "ejection seat replica, MK14 seat, flight sim cockpit seat, simulator cockpit, ForgeMotion Systems",
-      ogTitle: "Ejection Seat MK14 Replica – ForgeMotion Systems",
-      ogDescription: "Cockpit centerpiece: premium realism and presence for flight sim builds.",
-      ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-      twitterTitle: "Ejection Seat MK14 Replica – ForgeMotion Systems",
-      twitterDescription: "Cockpit centerpiece: premium realism and presence for flight sim builds.",
-      twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-      canonical: "https://forgemotionsystems.com/products-mk14"
-    },
-    pl: {
-      title: "Replika fotela katapultowego MK14 – ForgeMotion Systems",
-      description: "Wysokiej jakości replika fotela (MK14) do kokpitów flight sim. Autentyczność i efekt wow dla projektów premium.",
-      keywords: "replika fotela katapultowego, fotel MK14, kokpit flight sim, fotel do symulatora, ForgeMotion Systems",
-      ogTitle: "Replika fotela MK14 – ForgeMotion Systems",
-      ogDescription: "Serce kokpitu: premium realizm i „obecność” dla flight sim.",
-      ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-      twitterTitle: "Replika fotela MK14 – ForgeMotion Systems",
-      twitterDescription: "Serce kokpitu: premium realizm i „obecność” dla flight sim.",
-      twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-      canonical: "https://forgemotionsystems.com/products-mk14"
-    }
-  };
-
-  function setMetaTag(key, content, attr = "name") {
-    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
-    if (!tag) {
-      tag = document.createElement("meta");
-      tag.setAttribute(attr, key);
-      document.head.appendChild(tag);
-    }
-    tag.setAttribute("content", content);
-  }
-
-  function setCanonical(href) {
-    let tag = document.head.querySelector('link[rel="canonical"]');
-    if (!tag) {
-      tag = document.createElement("link");
-      tag.rel = "canonical";
-      document.head.appendChild(tag);
-    }
-    tag.href = href;
-  }
-
-  const i18nNodes = Array.from(document.querySelectorAll("[data-en]"));
-
-  function applyTexts(lang) {
-    for (const el of i18nNodes) {
-      const val = el.dataset[lang];
-      if (typeof val === "string") el.textContent = val;
-    }
-  }
-
-  function updateMetaTags(lang) {
-    const data = metaData[lang];
-    document.title = data.title;
-
-    setMetaTag("description", data.description, "name");
-    setMetaTag("keywords", data.keywords, "name");
-    setMetaTag("author", "ForgeMotion Systems", "name");
-
-    setCanonical(data.canonical);
-
-    setMetaTag("og:title", data.ogTitle, "property");
-    setMetaTag("og:description", data.ogDescription, "property");
-    setMetaTag("og:image", data.ogImage, "property");
-    setMetaTag("og:url", data.canonical, "property");
-    setMetaTag("og:type", "website", "property");
-
-    setMetaTag("twitter:title", data.twitterTitle, "name");
-    setMetaTag("twitter:description", data.twitterDescription, "name");
-    setMetaTag("twitter:image", data.twitterImage, "name");
-    setMetaTag("twitter:card", "summary_large_image", "name");
-  }
-
-  function setLanguage(lang) {
-    localStorage.setItem("lang", lang);
-    document.documentElement.lang = lang;
-    applyTexts(lang);
-    updateMetaTags(lang);
-  }
-
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-lang]");
-    if (!btn) return;
-    setLanguage(btn.getAttribute("data-lang"));
-  });
-
-  const savedLang = localStorage.getItem("lang") || "en";
-  setLanguage(savedLang);
-</script>
-
-<script>
-  (function () {
-    const btn = document.getElementById('mobileMenuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (!btn || !menu) return;
-
-    function closeMenu() {
-      menu.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-
-    function toggleMenu() {
-      const isOpen = !menu.classList.contains('hidden');
-      if (isOpen) closeMenu();
-      else {
-        menu.classList.remove('hidden');
-        btn.setAttribute('aria-expanded', 'true');
+  <script>
+    const metaData = {
+      en: {
+        title: "Ejection Seat MK14 Replica – ForgeMotion Systems",
+        description: "High-fidelity ejection seat replica (MK14) for flight sim cockpits. Instant authenticity and wow effect for premium builds.",
+        keywords: "ejection seat replica, MK14 seat, flight sim cockpit seat, simulator cockpit, ForgeMotion Systems",
+        ogTitle: "Ejection Seat MK14 Replica – ForgeMotion Systems",
+        ogDescription: "Cockpit centerpiece: premium realism and presence for flight sim builds.",
+        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+        twitterTitle: "Ejection Seat MK14 Replica – ForgeMotion Systems",
+        twitterDescription: "Cockpit centerpiece: premium realism and presence for flight sim builds.",
+        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+        canonical: "https://forgemotionsystems.com/products-mk14"
+      },
+      pl: {
+        title: "Replika fotela katapultowego MK14 – ForgeMotion Systems",
+        description: "Wysokiej jakości replika fotela (MK14) do kokpitów flight sim. Autentyczność i efekt wow dla projektów premium.",
+        keywords: "replika fotela katapultowego, fotel MK14, kokpit flight sim, fotel do symulatora, ForgeMotion Systems",
+        ogTitle: "Replika fotela MK14 – ForgeMotion Systems",
+        ogDescription: "Serce kokpitu: premium realizm i „obecność” dla flight sim.",
+        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
+        twitterTitle: "Replika fotela MK14 – ForgeMotion Systems",
+        twitterDescription: "Serce kokpitu: premium realizm i „obecność” dla flight sim.",
+        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+        canonical: "https://forgemotionsystems.com/products-mk14"
       }
-    }
+    };
 
-    btn.addEventListener('click', toggleMenu);
-    document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
-    window.addEventListener('resize', () => { if (window.innerWidth >= 768) closeMenu(); });
-  })();
-</script>
-
-<script>
-  (function () {
-    const modal = document.getElementById('imgModal');
-    const modalImg = document.getElementById('imgModalImg');
-    const closeBtn = document.getElementById('imgModalClose');
-    if (!modal || !modalImg || !closeBtn) return;
-
-    function openModal(src, alt) {
-      modalImg.src = src;
-      modalImg.alt = alt || "Image preview";
-      modal.classList.remove('modal-hidden');
-      modal.setAttribute('aria-hidden', 'false');
-      closeBtn.focus();
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.add('modal-hidden');
-      modal.setAttribute('aria-hidden', 'true');
-      modalImg.src = "";
-      modalImg.alt = "";
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('click', (e) => {
-      const img = e.target.closest('img[data-full]');
-      if (!img) return;
-      openModal(img.getAttribute('data-full') || img.getAttribute('src'), img.getAttribute('alt') || '');
+    window.addEventListener("DOMContentLoaded", () => {
+      SiteLayout.init({
+        metaData,
+        includeModal: true,
+        activeProductKey: "mk14",
+        injectOtherProducts: true
+      });
     });
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target.classList.contains('modal-overlay')) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal(); });
-  })();
-</script>
-
+  </script>
 </body>
 </html>
