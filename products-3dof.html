@@ -28,6 +28,24 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/assets/site-layout.js" defer></script>
+
+  <style>
+    .product-photo {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .photo-frame {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(31, 41, 55, 0.55);
+    }
+    .thumb {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
@@ -48,65 +66,47 @@
            data-en="Big immersion in a compact setup. A smart choice when you want motion — but also want to keep your room practical."
            data-pl="Duża immersja w kompaktowej formie. Świetny wybór, gdy chcesz motion — ale nadal chcesz mieć „normalny” pokój."></p>
 
-        <!-- HERO IMAGE -->
+        <!-- PRODUCT IMAGES (click to zoom) -->
         <div class="mb-10">
-          <div class="rounded-2xl border border-white/5 bg-gray-800/40 p-4 md:p-6">
+          <div class="rounded-2xl photo-frame overflow-hidden">
             <img
-              src="/images/rama3dof2.jpg"
-              data-full="/images/rama3dof2.jpg"
+              class="product-photo cursor-zoom-in"
+              src="/images/rama3dof1.jpg"
+              data-full="/images/rama3dof1-large.jpg"
               alt="3DOF / 2DOF motion platform"
-              class="w-full h-auto max-h-[520px] object-contain rounded-xl cursor-zoom-in"
               loading="lazy"
               decoding="async"
             />
-            <p class="text-white/55 text-sm mt-3 text-center"
-               data-en="Click the photo to enlarge."
-               data-pl="Kliknij zdjęcie, aby powiększyć."></p>
-          </div>
-        </div>
-
-        <!-- GALLERY -->
-        <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
-          <h2 class="text-2xl font-bold mb-4" data-en="Gallery" data-pl="Galeria"></h2>
-
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <div class="rounded-2xl border border-white/5 bg-gray-900/20 p-3">
-              <img
-                src="/images/rama3dof1.jpg"
-                data-full="/images/rama3dof1-large.jpg"
-                alt="3DOF platform (frame) – view 1"
-                class="w-full h-[220px] object-cover rounded-xl cursor-zoom-in"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-
-            <div class="rounded-2xl border border-white/5 bg-gray-900/20 p-3">
-              <img
-                src="/images/rama3dof2.jpg"
-                data-full="/images/rama3dof2.jpg"
-                alt="3DOF platform – view 2"
-                class="w-full h-[220px] object-cover rounded-xl cursor-zoom-in"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-
-            <div class="rounded-2xl border border-white/5 bg-gray-900/20 p-3">
-              <img
-                src="/images/rama3dof3.jpg"
-                data-full="/images/rama3dof3.jpg"
-                alt="3DOF platform – view 3"
-                class="w-full h-[220px] object-cover rounded-xl cursor-zoom-in"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
           </div>
 
-          <p class="text-white/60 text-sm mt-5"
-             data-en="More photos will be added here soon."
-             data-pl="Wkrótce dodamy tu kolejne zdjęcia."></p>
+          <div class="grid grid-cols-3 gap-3 mt-3">
+            <img
+              class="thumb rounded-xl photo-frame cursor-zoom-in"
+              src="/images/rama3dof1.jpg"
+              data-full="/images/rama3dof1-large.jpg"
+              alt="3DOF motion platform photo 1"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              class="thumb rounded-xl photo-frame cursor-zoom-in"
+              src="/images/rama3dof2.jpg"
+              data-full="/images/rama3dof2.jpg"
+              alt="3DOF motion platform photo 2"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              class="thumb rounded-xl photo-frame cursor-zoom-in"
+              src="/images/rama3dof3.jpg"
+              data-full="/images/rama3dof3.jpg"
+              alt="3DOF motion platform photo 3"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6 mb-10">
@@ -129,7 +129,6 @@
           </div>
         </div>
 
-        <!-- CTA -->
         <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
           <h2 class="text-2xl font-bold mb-3" data-en="Let’s match it to your space" data-pl="Dopasujmy to do Twojej przestrzeni"></h2>
           <p class="text-white/85 mb-5"
@@ -149,7 +148,6 @@
           </div>
         </div>
 
-        <!-- FAQ -->
         <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
           <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
 
@@ -183,6 +181,7 @@
   </main>
 
   <div id="siteFooter"></div>
+  <div id="siteModal"></div>
 
   <script>
     const metaData = {
