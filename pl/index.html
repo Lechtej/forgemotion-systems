@@ -185,6 +185,26 @@
     .product-card:hover .product-image img.mk14-thumb {
       transform: scale(1.22) translateY(10px) !important;
     }
+
+    /* ========= STORY BLOCK ========= */
+    .story-card {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.20);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .story-kicker {
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.88);
+      font-weight: 600;
+      font-size: .9rem;
+    }
   </style>
 </head>
 
@@ -322,101 +342,103 @@
       </div>
     </div>
 
-    <!-- ===== UPDATED ABOUT ===== -->
-    <section id="about" class="bg-gray-800 py-16 px-4">
-      <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6"
-            data-en="About ForgeMotion Systems"
-            data-pl="O ForgeMotion Systems"></h2>
+    <!-- =========================
+         STORY BLOCK (ONE SECTION)
+    ========================== -->
+    <section id="story" class="bg-gray-800 py-16 px-4">
+      <div class="container mx-auto">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-10">
+            <span class="story-kicker"
+                  data-en="Our story"
+                  data-pl="Nasza historia"></span>
 
-        <div class="max-w-3xl mx-auto text-gray-300 text-lg leading-relaxed space-y-4">
-          <p
-            data-en="ForgeMotion Systems designs and builds simulation systems for people who want more than just another piece of hardware."
-            data-pl="ForgeMotion Systems projektuje i buduje systemy symulacyjne dla ludzi, którzy chcą czegoś więcej niż tylko kolejnego sprzętu."></p>
+            <h2 class="text-3xl md:text-5xl font-bold mt-4"
+                data-en="From Aviation Discipline to Motion Platforms"
+                data-pl="Od lotniczej dyscypliny do platform motion"></h2>
 
-          <p
-            data-en="We create solutions for both individual users and business clients — from home simulators to advanced training and demonstration rigs."
-            data-pl="Tworzymy rozwiązania zarówno dla klientów indywidualnych, jak i biznesowych — od domowych symulatorów po zaawansowane stanowiska szkoleniowe i demonstracyjne."></p>
+            <p class="text-gray-300 text-lg md:text-xl mt-5 max-w-3xl mx-auto leading-relaxed"
+               data-en="Motion has been around for decades — historically reserved for airline and military training. Today, accessible components and modern digital workflows opened the door for smaller teams and enthusiasts. ForgeMotion Systems is built right in that gap: professional engineering brought to real people and real projects."
+               data-pl="Motion istnieje od dekad — historycznie zarezerwowany dla szkoleń lotnictwa pasażerskiego i wojska. Dziś dostępność komponentów i nowoczesne procesy cyfrowe otworzyły drzwi dla mniejszych zespołów i pasjonatów. ForgeMotion Systems działa właśnie w tej luce: profesjonalna inżynieria dla zwykłych ludzi i realnych projektów."></p>
+          </div>
 
-          <p
-            data-en="Our B2C product line focuses on affordable motion platforms and cockpit components that can be genuinely adapted to your space, driving or flying style, and budget."
-            data-pl="Nasza linia produktowa B2C to przystępne cenowo platformy motion i elementy kokpitów, które można realnie dopasować do przestrzeni, stylu jazdy lub latania oraz budżetu."></p>
+          <div class="grid lg:grid-cols-2 gap-8 items-start">
+            <div class="story-card">
+              <div class="p-6">
+                <h3 class="text-2xl font-semibold mb-3"
+                    data-en="Designed & built end-to-end"
+                    data-pl="Projekt i wykonanie end-to-end"></h3>
 
-          <p
-            data-en="We don’t sell boxed products — we help you build a setup that actually makes sense."
-            data-pl="Nie sprzedajemy gotowych „pudełek” — pomagamy zbudować setup, który naprawdę ma sens."></p>
+                <p class="text-gray-300 text-lg leading-relaxed mb-5"
+                   data-en="We build hands-on: CAD design, rapid prototyping, and production using 3D printing and CNC — then assembly, tuning, and testing. This is how we control precision, reliability, and the final feel."
+                   data-pl="Budujemy „od zera” w ręcznym procesie: projekt w CAD, szybkie prototypowanie i produkcja z użyciem druku 3D oraz CNC — a potem montaż, strojenie i testy. Dzięki temu kontrolujemy precyzję, niezawodność i finalne odczucia."></p>
 
-          <p
-            data-en="Every product is created from scratch: from CAD design, through prototyping, to hands-on manufacturing and testing. No mass production. No shortcuts."
-            data-pl="Każdy produkt powstaje od zera: od projektu w CAD, przez prototypowanie, aż po ręczne wykonanie i testy. Bez masowej produkcji. Bez skrótów."></p>
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
+                    <img src="/images/modul-napedowy6dof-underconstruction.jpg"
+                         alt="6DOF drive module under construction"
+                         loading="lazy" decoding="async"
+                         class="w-full h-auto block">
+                    <figcaption class="px-4 py-3 text-sm text-gray-300"
+                                data-en="Real hardware: 6DOF drive module on the workbench."
+                                data-pl="Realny hardware: moduł napędowy 6DOF na warsztacie."></figcaption>
+                  </figure>
 
-          <p
-            data-en="Our focus is on natural motion cues, ergonomics, and overall coherence — so the simulator feels like a tool, not a gadget."
-            data-pl="Skupiamy się na naturalnym czuciu ruchu, ergonomii i spójności całego stanowiska — tak, aby symulator był narzędziem, a nie gadżetem."></p>
+                  <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
+                    <img src="/images/modul-napedowy6dof-cad.jpg"
+                         alt="CAD view of 6DOF drive module"
+                         loading="lazy" decoding="async"
+                         class="w-full h-auto block">
+                    <figcaption class="px-4 py-3 text-sm text-gray-300"
+                                data-en="CAD validation: same module before manufacturing."
+                                data-pl="Walidacja w CAD: ten sam moduł przed wykonaniem."></figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="p-6">
+                <h3 class="text-2xl font-semibold mb-3"
+                    data-en="The spark: TEDx and a full-scale cockpit"
+                    data-pl="Iskra: TEDx i full-scale kokpit"></h3>
+
+                <p class="text-gray-300 text-lg leading-relaxed mb-5"
+                   data-en="At TEDx, Leszek Tejwan shared the “Dream Simulator” story — turning a personal idea into engineering reality. Years earlier, he started a full-scale CRJ200 home cockpit project, publicly documented since 2013."
+                   data-pl="Na TEDx Leszek Tejwan opowiedział historię „Dream Simulator” — o zamianie osobnej idei w inżynieryjną rzeczywistość. Wcześniej rozpoczął pełnowymiarowy projekt home cockpit CRJ200, publicznie dokumentowany od 2013 roku."></p>
+
+                <div class="relative rounded-xl overflow-hidden border border-white/10" style="padding-top:56.25%;">
+                  <iframe class="absolute top-0 left-0 w-full h-full"
+                          loading="lazy"
+                          referrerpolicy="strict-origin-when-cross-origin"
+                          src="https://www.youtube.com/embed/2k_porGEQZI"
+                          title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen></iframe>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mt-6">
+                  <a href="https://crj200athome.wordpress.com/"
+                     target="_blank" rel="noopener noreferrer"
+                     class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
+                    <span data-en="See CRJ200 project" data-pl="Zobacz projekt CRJ200"></span>
+                  </a>
+
+                  <a href="#contact"
+                     class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+                    <span data-en="Contact us" data-pl="Kontakt"></span>
+                  </a>
+                </div>
+
+                <p class="text-gray-300 text-lg leading-relaxed mt-6"
+                   data-en="That mix — aviation mindset, ergonomics, and digital tooling — shapes every ForgeMotion platform: built for enthusiasts and business, tuned for realism, and engineered to be repeatable and reliable."
+                   data-pl="To połączenie — lotniczy „mindset”, ergonomia i narzędzia cyfrowe — kształtuje każdą platformę ForgeMotion: dla pasjonatów i biznesu, z naciskiem na realizm, powtarzalność i niezawodność."></p>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </div>
-    </section>
-
-    <!-- ===== UPDATED INSPIRATION ===== -->
-    <section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
-          data-en="From Aviation Digitalization to Motion Systems"
-          data-pl="Od cyfryzacji lotnictwa do systemów motion"></h2>
-
-      <div class="max-w-3xl mx-auto text-gray-300 text-lg leading-relaxed space-y-6">
-        <p
-          data-en="Before motion platforms, there were years of work on aviation digitalization, cockpit workflows, and operational training tools."
-          data-pl="Zanim powstały platformy motion, były lata pracy przy cyfryzacji operacji lotniczych, ergonomii kokpitów i narzędziach szkoleniowych."></p>
-
-        <p
-          data-en="Real-world aviation experience — from procedures and human factors to cockpit ergonomics — became the foundation for designing simulators that make sense, not just look impressive."
-          data-pl="Doświadczenie z realnego lotnictwa — od procedur i human factors po ergonomię kokpitu — stało się fundamentem projektowania symulatorów, które mają sens, a nie tylko efekt wizualny."></p>
-
-        <div class="relative" style="padding-top:56.25%;">
-          <iframe class="absolute top-0 left-0 w-full h-full"
-                  loading="lazy"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  src="https://www.youtube.com/embed/2k_porGEQZI"
-                  title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
-        </div>
-
-        <p
-          data-en="The TEDx talk marked an important moment — but it was only one step in a longer journey that connects aviation expertise with simulation technology."
-          data-pl="Wystąpienie TEDx było ważnym momentem — ale tylko jednym z etapów dłuższej drogi łączącej wiedzę lotniczą z technologią symulacyjną."></p>
-
-        <p
-          data-en="Today, this experience directly shapes how ForgeMotion Systems designs motion platforms: realistic, predictable, and grounded in how people actually perceive motion."
-          data-pl="Dziś to doświadczenie bezpośrednio wpływa na sposób projektowania platform motion ForgeMotion Systems: realistycznych, przewidywalnych i opartych na tym, jak człowiek naprawdę odbiera ruch."></p>
-      </div>
-    </section>
-
-    <section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
-          data-en="Why Trust ForgeMotion Systems?"
-          data-pl="Dlaczego warto zaufać ForgeMotion Systems?"></h2>
-
-      <div class="max-w-3xl mx-auto text-left md:text-center">
-        <p class="text-gray-300 text-lg md:text-xl mb-6"
-           data-en="With real-world aviation experience, Leszek Tejwan brings unmatched insight into the design of motion simulators. His work at LOT Polish Airlines on digital aviation tools inspires every platform we build."
-           data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy."></p>
-
-        <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6">
-          <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
-              data-pl="Realistyczne doświadczenie: platformy motion projektowane z uwzględnieniem wiedzy lotniczej."></li>
-          <li data-en="Immersive training: inspired by digital tools used by professional pilots."
-              data-pl="Immersywne szkolenie: inspirowane cyfrowymi narzędziami używanymi przez profesjonalnych pilotów."></li>
-          <li data-en="Precision & reliability: engineering solutions influenced by aviation standards."
-              data-pl="Precyzja i niezawodność: rozwiązania inżynieryjne inspirowane standardami lotnictwa."></li>
-          <li data-en="Innovation-driven: combining fun, realism, and technology."
-              data-pl="Napędzane innowacją: łączymy zabawę, realizm i technologię."></li>
-        </ul>
-
-        <p class="text-gray-300 text-lg md:text-xl"
-           data-en="This combination of aviation expertise and motion platform innovation ensures every simulation is engaging, educational, and unforgettable."
-           data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana."></p>
       </div>
     </section>
 
