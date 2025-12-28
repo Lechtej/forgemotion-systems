@@ -113,6 +113,28 @@
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
 
+    /* =========================
+       MOBILE HERO FIX (ONLY)
+       - removes large empty gap on mobile
+       - does NOT affect desktop layout
+    ========================== */
+    @media (max-width: 768px) {
+      /* stop forcing full viewport height on mobile */
+      #hero {
+        min-height: auto !important;  /* overrides min-h-[100vh] from Tailwind */
+      }
+
+      /* put the hero text back into normal document flow */
+      .hero-panel {
+        position: static !important;  /* overrides position:absolute */
+        top: auto !important;         /* neutralize top:56vh */
+        left: auto !important;
+        right: auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+
     .product-card {
       background: rgba(31, 41, 55, 0.9);
       border-radius: 0.75rem;
