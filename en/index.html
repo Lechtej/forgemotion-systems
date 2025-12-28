@@ -119,15 +119,10 @@
        - does NOT affect desktop layout
     ========================== */
     @media (max-width: 768px) {
-      /* stop forcing full viewport height on mobile */
-      #hero {
-        min-height: auto !important;  /* overrides min-h-[100vh] from Tailwind */
-      }
-
-      /* put the hero text back into normal document flow */
+      #hero { min-height: auto !important; }
       .hero-panel {
-        position: static !important;  /* overrides position:absolute */
-        top: auto !important;         /* neutralize top:56vh */
+        position: static !important;
+        top: auto !important;
         left: auto !important;
         right: auto !important;
         margin-left: auto !important;
