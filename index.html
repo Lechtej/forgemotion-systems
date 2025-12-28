@@ -139,13 +139,54 @@
     .product-title {
       font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
-    .product-desc {
-      color: rgba(255,255,255,0.9);
+
+    .product-subtitle {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
       margin-bottom: 0.75rem;
-      flex-grow: 1;
     }
+
+    .product-desc {
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 0.75rem;
+    }
+
+    .product-points {
+      text-align: left;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      margin: 0.25rem 0 0.9rem 0;
+      padding-left: 1.1rem;
+      list-style: disc;
+    }
+
+    .product-cta {
+      margin-top: auto;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .product-cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      padding: 0.55rem 0.85rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .cta-primary { background: rgba(59,130,246,0.95); }
+    .cta-primary:hover { background: rgba(37,99,235,0.98); transform: translateY(-1px); }
+
+    .cta-secondary { background: rgba(255,255,255,0.06); }
+    .cta-secondary:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
 
     .product-image {
       width: 100%;
@@ -153,6 +194,7 @@
       overflow: hidden;
       border-radius: 0.5rem;
       background: rgba(0,0,0,0.18);
+      margin-top: 0.4rem;
     }
     .product-image img {
       width: 100%;
@@ -330,10 +372,29 @@
 
           <!-- 1) 6DOF -->
           <div class="product-card">
-            <h3 class="product-title">6DOF Platform</h3>
+            <h3 class="product-title" data-en="6DOF Motion Platform" data-pl="Platforma Motion 6DOF"></h3>
+            <div class="product-subtitle"
+                 data-en="Full-immersion motion for racing, flight & VR"
+                 data-pl="Pełna immersja ruchu do racingu, lotnictwa i VR"></div>
+
             <p class="product-desc"
-               data-en="A rock-solid 6DOF motion platform built to feel natural and predictable in every movement. Designed as the backbone of serious racing and flight simulator rigs — stable, precise, and ready for long sessions."
-               data-pl="Solidna platforma motion 6DOF zaprojektowana tak, by każdy ruch był naturalny i przewidywalny. To mocna baza do zaawansowanych symulatorów wyścigowych i lotniczych — stabilna, precyzyjna i gotowa na długie sesje."></p>
+               data-en="Built as the backbone of serious simulator rigs — smooth, predictable motion that feels natural in long sessions. Ideal when you want maximum realism, repeatability and confidence in every cue."
+               data-pl="Zaprojektowana jako fundament profesjonalnych stanowisk — płynny, przewidywalny ruch, który „czyta się” naturalnie nawet podczas długich sesji. Wybór dla tych, którzy chcą maksymalnego realizmu i powtarzalności."></p>
+
+            <ul class="product-points">
+              <li data-en="6 degrees of freedom: pitch/roll/yaw + surge/sway/heave"
+                  data-pl="6 stopni swobody: pitch/roll/yaw + surge/sway/heave"></li>
+              <li data-en="Rigid frame for precise response and stable mounting"
+                  data-pl="Sztywna rama = precyzyjna reakcja i stabilny montaż"></li>
+              <li data-en="Great for training, showcases and premium commercial sims"
+                  data-pl="Świetna do treningu, pokazów i symulatorów komercyjnych premium"></li>
+            </ul>
+
+            <div class="product-cta">
+              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
+              <a class="cta-secondary" href="#contact" data-en="Ask about integration" data-pl="Zapytaj o integrację"></a>
+            </div>
+
             <div class="product-image">
               <img src="/images/rama6dof1.jpg"
                    data-full="/images/rama6dof1-large.jpg"
@@ -344,10 +405,29 @@
 
           <!-- 2) 3DOF -->
           <div class="product-card">
-            <h3 class="product-title">3DOF / 2DOF Platform</h3>
+            <h3 class="product-title" data-en="3DOF / 2DOF Platform" data-pl="Platforma 3DOF / 2DOF"></h3>
+            <div class="product-subtitle"
+                 data-en="Compact, modular motion — big feel, smart footprint"
+                 data-pl="Kompaktowy motion modułowy — duże wrażenia, rozsądny rozmiar"></div>
+
             <p class="product-desc"
-               data-en="Compact and modular motion systems"
-               data-pl="Kompaktowe i modułowe systemy motion"></p>
+               data-en="A practical step into motion simulation: strong immersion with a simpler setup. Perfect for home cockpits, sim centers and projects where space, budget and serviceability matter."
+               data-pl="Praktyczny start w świat motion: mocna immersja przy prostszym układzie. Idealna do kokpitów domowych, sim centerów oraz projektów, gdzie liczy się miejsce, budżet i łatwy serwis."></p>
+
+            <ul class="product-points">
+              <li data-en="Key motion cues for racing & flight without the complexity of 6DOF"
+                  data-pl="Kluczowe bodźce ruchu bez złożoności pełnego 6DOF"></li>
+              <li data-en="Modular design: easy upgrades and configuration changes"
+                  data-pl="Modułowa konstrukcja: proste rozbudowy i zmiana konfiguracji"></li>
+              <li data-en="Great balance of cost, performance and maintenance"
+                  data-pl="Świetny balans koszt–efekt–utrzymanie"></li>
+            </ul>
+
+            <div class="product-cta">
+              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
+              <a class="cta-secondary" href="#contact" data-en="Help me choose 2DOF vs 3DOF" data-pl="Pomóż wybrać 2DOF vs 3DOF"></a>
+            </div>
+
             <div class="product-image">
               <img src="/images/rama3dof1.jpg"
                    data-full="/images/rama3dof1-large.jpg"
@@ -356,12 +436,31 @@
             </div>
           </div>
 
-          <!-- 3) Ejection Seat (zamienione miejsce + contain miniatura) -->
+          <!-- 3) Ejection Seat -->
           <div class="product-card">
-            <h3 class="product-title">Ejection Seat Replica</h3>
+            <h3 class="product-title" data-en="Ejection Seat MK14 Replica" data-pl="Replika fotela katapultowego MK14"></h3>
+            <div class="product-subtitle"
+                 data-en="High-fidelity cockpit centerpiece"
+                 data-pl="Centralny element kokpitu — wysoka wierność detali"></div>
+
             <p class="product-desc"
-               data-en="High-fidelity aircraft ejection seat replica for simulators"
-               data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
+               data-en="A show-stopping seat replica designed for flight simulators, exhibitions and premium builds. Adds instant authenticity — from the first glance to the first minute in the cockpit."
+               data-pl="Efektowna replika do symulatorów lotniczych, ekspozycji i projektów premium. Dodaje autentyczności od pierwszego spojrzenia — a w kokpicie buduje klimat „prawdziwej” maszyny."></p>
+
+            <ul class="product-points">
+              <li data-en="Built for realism: proportions, details and presence"
+                  data-pl="Wrażenie realizmu: proporcje, detale i „obecność” w kokpicie"></li>
+              <li data-en="Perfect for VR/AR, training setups, museums and events"
+                  data-pl="Idealna do VR/AR, treningów, muzeów i eventów"></li>
+              <li data-en="Custom options available (finish, mounts, integration)"
+                  data-pl="Możliwe opcje personalizacji (wykończenie, mocowania, integracja)"></li>
+            </ul>
+
+            <div class="product-cta">
+              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
+              <a class="cta-secondary" href="#contact" data-en="Ask about customization" data-pl="Zapytaj o personalizację"></a>
+            </div>
+
             <div class="product-image">
               <img class="thumb-contain"
                    src="/images/mk14seat1.jpg"
@@ -371,12 +470,31 @@
             </div>
           </div>
 
-          <!-- 4) Seat Belt (zamienione miejsce) -->
+          <!-- 4) Seat Belt -->
           <div class="product-card">
-            <h3 class="product-title">Seat Belt Tensioner</h3>
+            <h3 class="product-title" data-en="Seat Belt Tensioner" data-pl="Napinacz pasów"></h3>
+            <div class="product-subtitle"
+                 data-en="Feel braking, acceleration and G-cues"
+                 data-pl="Poczuj hamowanie, przyspieszenie i bodźce przeciążeń"></div>
+
             <p class="product-desc"
-               data-en="Realistic braking and acceleration forces through seat belt feedback"
-               data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
+               data-en="Add a missing layer of realism: belt feedback makes braking and acceleration instantly believable. A small upgrade that delivers a big jump in immersion."
+               data-pl="Dodaj brakującą warstwę realizmu: feedback na pasach sprawia, że hamowanie i przyspieszenie „siadają” od razu. Niewielki dodatek, a efekt w immersji ogromny."></p>
+
+            <ul class="product-points">
+              <li data-en="Clear, physical cues that improve control and perception"
+                  data-pl="Czytelne bodźce fizyczne poprawiające kontrolę i odczucia"></li>
+              <li data-en="Great match for motion rigs and static cockpits"
+                  data-pl="Działa świetnie z motion i ze statycznymi kokpitami"></li>
+              <li data-en="Ideal for sim racing and flight simulation"
+                  data-pl="Idealny do sim racingu i symulacji lotniczej"></li>
+            </ul>
+
+            <div class="product-cta">
+              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
+              <a class="cta-secondary" href="#contact" data-en="Ask about compatibility" data-pl="Zapytaj o kompatybilność"></a>
+            </div>
+
             <div class="product-image">
               <img src="/images/seatbelt.jpg"
                    data-full="/images/seatbelt.jpg"
@@ -387,10 +505,29 @@
 
           <!-- 5) Accessories -->
           <div class="product-card">
-            <h3 class="product-title">Simulator Accessories</h3>
+            <h3 class="product-title" data-en="Simulator Accessories" data-pl="Akcesoria do symulatorów"></h3>
+            <div class="product-subtitle"
+                 data-en="Mounts, add-ons and custom solutions"
+                 data-pl="Mocowania, dodatki i rozwiązania „pod rig”"></div>
+
             <p class="product-desc"
-               data-en="Custom add-ons and mounts tailored to your rig"
-               data-pl="Dodatki i mocowania dopasowane do Twojego stanowiska"></p>
+               data-en="From smart mounting to custom add-ons — we help you finish the rig like a product, not a prototype. Clean integration, solid hardware, and details that matter."
+               data-pl="Od przemyślanych mocowań po dodatki pod konkretny projekt — pomagamy domknąć rig jak produkt, a nie prototyp. Czysta integracja, solidne elementy i detale, które robią różnicę."></p>
+
+            <ul class="product-points">
+              <li data-en="Custom brackets, mounts and structural components"
+                  data-pl="Dedykowane uchwyty, mocowania i elementy konstrukcyjne"></li>
+              <li data-en="Better ergonomics, cable management and service access"
+                  data-pl="Lepsza ergonomia, porządek w okablowaniu i łatwiejszy serwis"></li>
+              <li data-en="Designed to match your setup and goals"
+                  data-pl="Projekt pod Twoje stanowisko i cel (dom, sim center, B2B)"></li>
+            </ul>
+
+            <div class="product-cta">
+              <a class="cta-primary" href="#contact" data-en="Describe your project" data-pl="Opisz swój projekt"></a>
+              <a class="cta-secondary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
+            </div>
+
             <div class="product-image">
               <img src="/images/ejection-seat.jpg"
                    data-full="/images/ejection-seat.jpg"
