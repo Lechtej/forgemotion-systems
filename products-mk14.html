@@ -48,11 +48,20 @@
            data-en="The centerpiece that turns a simulator into a cockpit. Built to impress — and to feel right when you sit in."
            data-pl="Element, który robi z symulatora kokpit. Robi wrażenie — i daje świetne „czucie miejsca”, gdy siadasz."></p>
 
-        <!-- IMAGE PLACEHOLDER (Version B) -->
+        <!-- HERO IMAGE -->
         <div class="mb-10">
-          <div class="rounded-2xl border border-white/5 bg-gray-800/50 p-10 text-center">
-            <p class="text-white/70 text-lg" data-en="Product photo coming soon" data-pl="Zdjęcie produktu wkrótce"></p>
-            <p class="text-white/50 mt-2" data-en="Want a preview? Message us." data-pl="Chcesz podgląd? Napisz do nas."></p>
+          <div class="rounded-2xl border border-white/5 bg-gray-800/40 p-4 md:p-6">
+            <img
+              src="/images/mk14seat1.jpg"
+              data-full="/images/mk14seat1-large.jpg"
+              alt="Ejection seat replica (MK14)"
+              class="w-full h-auto max-h-[520px] object-contain rounded-xl cursor-zoom-in"
+              loading="lazy"
+              decoding="async"
+            />
+            <p class="text-white/55 text-sm mt-3 text-center"
+               data-en="Click the photo to enlarge."
+               data-pl="Kliknij zdjęcie, aby powiększyć.">Click the photo to enlarge.</p>
           </div>
         </div>
 
@@ -130,6 +139,7 @@
   </main>
 
   <div id="siteFooter"></div>
+  <div id="siteModal"></div>
 
   <script>
     const metaData = {
@@ -162,7 +172,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       SiteLayout.init({
         metaData,
-        includeModal: false,
+        includeModal: true,
         activeProductKey: "mk14",
         injectOtherProducts: true
       });
