@@ -171,15 +171,20 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
-    .product-image img.thumb-contain {
+    /* ========= MK14 THUMB FIX (HOMEPAGE CARD ONLY) ========= */
+    .product-image.mk14-image { height: 210px; }
+
+    .product-image img.mk14-thumb {
       object-fit: contain !important;
-      object-position: center 90%;
-      transform: scale(0.94) !important;
-      background: rgba(0,0,0,0.12);
-      padding: 6px;
+      object-position: center 78%;
+      transform: scale(1.22) !important;
+      background: transparent !important;
+      padding: 0 !important;
       cursor: zoom-in;
     }
-    .product-card:hover .product-image img.thumb-contain { transform: scale(0.94) !important; }
+    .product-card:hover .product-image img.mk14-thumb {
+      transform: scale(1.22) !important;
+    }
   </style>
 </head>
 
@@ -263,8 +268,8 @@
                    data-en="Learn more"
                    data-pl="Zobacz więcej"></a>
 
-                <div class="product-image">
-                  <img class="thumb-contain"
+                <div class="product-image mk14-image">
+                  <img class="mk14-thumb"
                        src="/images/mk14seat1.jpg"
                        data-full="/images/mk14seat1-large.jpg"
                        alt="Ejection seat replica (MK14)"
@@ -411,18 +416,6 @@
         twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy.",
         twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
         canonical: "https://forgemotionsystems.com/pl/"
-      },
-      en: {
-        title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
-        description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
-        keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
-        ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simululators.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-        twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-        canonical: "https://forgemotionsystems.com/en/"
       }
     };
 
