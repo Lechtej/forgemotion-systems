@@ -48,11 +48,20 @@
            data-en="Full-body motion for people who want the real “wow”. Smooth, predictable movement that makes every lap and maneuver feel more alive."
            data-pl="Motion „na całe ciało” dla tych, którzy chcą prawdziwego efektu wow. Płynny, przewidywalny ruch, dzięki któremu każde okrążenie i każdy manewr stają się bardziej „żywe”."></p>
 
-        <!-- IMAGE PLACEHOLDER (Version B) -->
+        <!-- HERO IMAGE -->
         <div class="mb-10">
-          <div class="rounded-2xl border border-white/5 bg-gray-800/50 p-10 text-center">
-            <p class="text-white/70 text-lg" data-en="Product photo coming soon" data-pl="Zdjęcie produktu wkrótce"></p>
-            <p class="text-white/50 mt-2" data-en="Want a preview? Message us." data-pl="Chcesz podgląd? Napisz do nas."></p>
+          <div class="rounded-2xl border border-white/5 bg-gray-800/40 p-4 md:p-6">
+            <img
+              src="/images/rama6dof1.jpg"
+              data-full="/images/rama6dof1-large.jpg"
+              alt="6DOF motion platform (frame)"
+              class="w-full h-auto max-h-[520px] object-contain rounded-xl cursor-zoom-in"
+              loading="lazy"
+              decoding="async"
+            />
+            <p class="text-white/55 text-sm mt-3 text-center"
+               data-en="Click the photo to enlarge."
+               data-pl="Kliknij zdjęcie, aby powiększyć.">Click the photo to enlarge.</p>
           </div>
         </div>
 
@@ -130,6 +139,7 @@
   </main>
 
   <div id="siteFooter"></div>
+  <div id="siteModal"></div>
 
   <script>
     const metaData = {
@@ -162,7 +172,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       SiteLayout.init({
         metaData,
-        includeModal: false,
+        includeModal: true,
         activeProductKey: "6dof",
         injectOtherProducts: true
       });
