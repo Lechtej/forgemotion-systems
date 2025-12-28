@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+
+  <!-- Meta (nadpisywane przez JS) -->
+  <title>ForgeMotion Systems</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image" content="" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html { scroll-padding-top: 90px; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeInUp 0.9s forwards;
+    }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+
+<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <a href="/index.html#products" class="flex items-center" aria-label="Go to products">
+      <img
+        src="/logo.png"
+        alt="ForgeMotion Systems logo"
+        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
+        loading="eager"
+      />
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <nav aria-label="Primary navigation">
+        <ul class="flex items-center gap-8">
+          <li><a href="/index.html#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
+          <li><a href="/index.html#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="/index.html#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
+          <li><a href="/index.html#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-2 text-sm">
+        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <span class="text-gray-400">|</span>
+        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+      </div>
+    </div>
+
+    <div class="flex md:hidden items-center gap-3">
+      <div class="flex items-center gap-2 text-sm">
+        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <span class="text-gray-400">|</span>
+        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+      </div>
+
+      <button
+        id="mobileMenuBtn"
+        type="button"
+        class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
+        aria-controls="mobileMenu"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
+    <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
+      <ul class="flex flex-col gap-2">
+        <li><a href="/index.html#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
+        <li><a href="/index.html#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+        <li><a href="/index.html#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
+        <li><a href="/index.html#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-24">
+  <section class="container mx-auto px-4 py-12 fade-in">
+    <p class="text-sm text-white/70 mb-3">
+      <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+    </p>
+
+    <h1 class="text-4xl md:text-5xl font-bold mb-4"
+        data-en="Simulator Accessories"
+        data-pl="Akcesoria do symulatorów"></h1>
+
+    <p class="text-xl text-white/90 mb-7 max-w-3xl"
+       data-en="The details make the rig. We create mounts and add-ons that improve comfort, stability, and the “finished product” feel."
+       data-pl="Detale robią riga. Tworzymy mocowania i dodatki, które poprawiają wygodę, stabilność i poczucie „gotowego produktu”."></p>
+
+    <div class="flex flex-wrap gap-3 mb-10">
+      <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+         data-en="Describe your rig"
+         data-pl="Opisz rig"></a>
+      <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
+         data-en="Request a quote"
+         data-pl="Poproś o wycenę"></a>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+        <h2 class="text-xl font-semibold mb-3" data-en="What we can build" data-pl="Co możemy zrobić"></h2>
+        <ul class="list-disc list-inside text-white/85 space-y-2">
+          <li data-en="Custom mounts for screens, controls and peripherals."
+              data-pl="Mocowania pod ekrany, sterowanie i peryferia."></li>
+          <li data-en="Rig reinforcements and stability upgrades."
+              data-pl="Wzmocnienia riga i poprawa sztywności."></li>
+          <li data-en="Finishing parts that improve comfort and usability."
+              data-pl="Elementy „wykończeniowe” poprawiające ergonomię."></li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+        <h2 class="text-xl font-semibold mb-3" data-en="Best for" data-pl="Najlepsze dla"></h2>
+        <ul class="list-disc list-inside text-white/85 space-y-2">
+          <li data-en="People who want a clean, professional-looking build."
+              data-pl="Osób, które chcą czysty, profesjonalny wygląd stanowiska."></li>
+          <li data-en="Rigs that evolve over time (new wheels, pedals, upgrades)."
+              data-pl="Rigów rozwijanych w czasie (nowe kierownice, pedały, upgrade)."></li>
+          <li data-en="Sim rooms and commercial setups that need durability."
+              data-pl="Sim roomów i stanowisk komercyjnych, gdzie liczy się trwałość."></li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+        <h2 class="text-xl font-semibold mb-3" data-en="How it works" data-pl="Jak to działa"></h2>
+        <ol class="list-decimal list-inside text-white/85 space-y-2">
+          <li data-en="You send a short description (and photos if possible)."
+              data-pl="Wysyłasz krótki opis (i zdjęcia, jeśli możesz)."></li>
+          <li data-en="We propose options and confirm dimensions/fit."
+              data-pl="Proponujemy opcje i potwierdzamy dopasowanie."></li>
+          <li data-en="You get a quote and a clear delivery plan."
+              data-pl="Dostajesz wycenę i jasny plan realizacji."></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Miejsce na przyszłą galerię / zdjęcia -->
+    <div class="mt-10 bg-gray-800/60 border border-white/5 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold mb-3" data-en="Examples (coming soon)" data-pl="Przykłady (wkrótce)"></h2>
+      <p class="text-white/80"
+         data-en="We’ll add photos and ready-made accessory packs here soon. For now, tell us what you need and we’ll recommend the best solution."
+         data-pl="Wkrótce dodamy tu zdjęcia i gotowe pakiety. Na razie opisz czego potrzebujesz — dobierzemy najlepsze rozwiązanie."></p>
+    </div>
+
+    <div class="mt-10 bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
+      <h2 class="text-2xl md:text-3xl font-bold mb-3"
+          data-en="Want your rig to feel “complete”?"
+          data-pl="Chcesz, żeby rig był „domknięty”?"></h2>
+      <p class="text-white/85 mb-6"
+         data-en="Send a short message with your setup and goals — we’ll propose accessories that actually improve the experience."
+         data-pl="Wyślij krótko swój setup i cel — zaproponujemy akcesoria, które realnie poprawią doświadczenie."></p>
+      <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+         data-en="Contact us"
+         data-pl="Skontaktuj się"></a>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-gray-900 py-6 text-center text-gray-400">
+  © 2025 ForgeMotion Systems
+</footer>
+
+<script>
+  const metaData = {
+    en: {
+      title: "Simulator Accessories – ForgeMotion Systems",
+      description: "Custom simulator accessories, mounts and add-ons tailored to your rig. Make your setup feel complete and professional.",
+      keywords: "simulator accessories, sim rig mounts, custom add-ons, ForgeMotion Systems",
+      canonical: "https://forgemotionsystems.com/products-accessories"
+    },
+    pl: {
+      title: "Akcesoria do symulatorów – ForgeMotion Systems",
+      description: "Akcesoria do symulatorów, mocowania i dodatki dopasowane do Twojego riga. Domknij projekt i podnieś ergonomię.",
+      keywords: "akcesoria do symulatorów, mocowania do riga, dodatki do symulatora, ForgeMotion Systems",
+      canonical: "https://forgemotionsystems.com/products-accessories"
+    }
+  };
+
+  function setMetaTag(key, content, attr = "name") {
+    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.setAttribute(attr, key);
+      document.head.appendChild(tag);
+    }
+    tag.setAttribute("content", content);
+  }
+
+  function setCanonical(href) {
+    let tag = document.head.querySelector('link[rel="canonical"]');
+    if (!tag) {
+      tag = document.createElement("link");
+      tag.rel = "canonical";
+      document.head.appendChild(tag);
+    }
+    tag.href = href;
+  }
+
+  const i18nNodes = Array.from(document.querySelectorAll("[data-en]"));
+
+  function applyTexts(lang) {
+    for (const el of i18nNodes) {
+      const val = el.dataset[lang];
+      if (typeof val === "string") el.textContent = val;
+    }
+  }
+
+  function updateMetaTags(lang) {
+    const data = metaData[lang];
+    document.title = data.title;
+    setMetaTag("description", data.description, "name");
+    setMetaTag("keywords", data.keywords, "name");
+    setMetaTag("author", "ForgeMotion Systems", "name");
+    setCanonical(data.canonical);
+  }
+
+  function setLanguage(lang) {
+    localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang;
+    applyTexts(lang);
+    updateMetaTags(lang);
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-lang]");
+    if (!btn) return;
+    setLanguage(btn.getAttribute("data-lang"));
+  });
+
+  const savedLang = localStorage.getItem("lang") || "en";
+  setLanguage(savedLang);
+</script>
+
+<script>
+  (function () {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleMenu() {
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) closeMenu();
+      else {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth >= 768) closeMenu(); });
+  })();
+</script>
+
+</body>
+</html>
