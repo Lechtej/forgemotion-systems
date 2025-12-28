@@ -481,14 +481,14 @@
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
 
-      // Na indexach (/, /en/, /pl/) przejdź do odpowiedniego URL językowego
+      // On index pages: navigate to /{lang}/ keeping hash
       if (isIndexLikePath(path) || getPathLang(path)) {
         localStorage.setItem("lang", targetLang);
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
 
-      // Na stronach produktowych: zostań na tej samej stronie, zmień tylko język
+      // On product pages: stay, only switch language + meta/text
       const wasMobileOpen = isMobileMenuOpen();
       setLanguage(targetLang, metaData);
       if (wasMobileOpen) closeMobileMenu();
