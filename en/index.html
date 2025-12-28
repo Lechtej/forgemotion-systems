@@ -1,3 +1,6 @@
+<!-- =========================
+     index EN (FULL FILE)
+========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -185,26 +188,6 @@
     .product-card:hover .product-image img.mk14-thumb {
       transform: scale(1.22) translateY(10px) !important;
     }
-
-    /* ========= STORY BLOCK ========= */
-    .story-card {
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.20);
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-    .story-kicker {
-      display:inline-flex;
-      align-items:center;
-      gap:.5rem;
-      padding:.35rem .7rem;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.88);
-      font-weight: 600;
-      font-size: .9rem;
-    }
   </style>
 </head>
 
@@ -343,35 +326,30 @@
     </div>
 
     <!-- =========================
-         STORY BLOCK (ONE SECTION)
+         ONE STORY BLOCK (ABOUT+TED+TRUST)
+         keeps anchors: #about, #inspiration, #trust-experience
     ========================== -->
-    <section id="story" class="bg-gray-800 py-16 px-4">
+    <section id="about" class="bg-gray-800 py-16 px-4">
       <div class="container mx-auto">
         <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-10">
-            <span class="story-kicker"
-                  data-en="Our story"
-                  data-pl="Nasza historia"></span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 text-center"
+              data-en="Built from Aviation Discipline. Made for Modern Simulation."
+              data-pl="Z lotniczej dyscypliny. Dla współczesnej symulacji."></h2>
 
-            <h2 class="text-3xl md:text-5xl font-bold mt-4"
-                data-en="From Aviation Discipline to Motion Platforms"
-                data-pl="Od lotniczej dyscypliny do platform motion"></h2>
+          <p class="text-gray-300 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto text-center mb-10"
+             data-en="Motion technology has existed for decades — historically reserved for airline and military training. Today, accessible components and digital engineering opened the door for smaller teams and enthusiasts. ForgeMotion Systems brings that “big aviation” mindset into platforms you can own, customize, and trust."
+             data-pl="Technologia motion istnieje od dekad — historycznie zarezerwowana dla szkoleń lotnictwa pasażerskiego i wojska. Dziś, dzięki dostępności komponentów i inżynierii cyfrowej, drzwi otworzyły się dla mniejszych zespołów i pasjonatów. ForgeMotion Systems przenosi „lotniczy mindset” do platform, które możesz mieć, personalizować i którym możesz zaufać."></p>
 
-            <p class="text-gray-300 text-lg md:text-xl mt-5 max-w-3xl mx-auto leading-relaxed"
-               data-en="Motion has been around for decades — historically reserved for airline and military training. Today, accessible components and modern digital workflows opened the door for smaller teams and enthusiasts. ForgeMotion Systems is built right in that gap: professional engineering brought to real people and real projects."
-               data-pl="Motion istnieje od dekad — historycznie zarezerwowany dla szkoleń lotnictwa pasażerskiego i wojska. Dziś dostępność komponentów i nowoczesne procesy cyfrowe otworzyły drzwi dla mniejszych zespołów i pasjonatów. ForgeMotion Systems działa właśnie w tej luce: profesjonalna inżynieria dla zwykłych ludzi i realnych projektów."></p>
-          </div>
-
-          <div class="grid lg:grid-cols-2 gap-8 items-start">
-            <div class="story-card">
+          <div class="grid lg:grid-cols-2 gap-10 items-start">
+            <div class="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
               <div class="p-6">
                 <h3 class="text-2xl font-semibold mb-3"
-                    data-en="Designed & built end-to-end"
-                    data-pl="Projekt i wykonanie end-to-end"></h3>
+                    data-en="From CAD to Real Hardware"
+                    data-pl="Od CAD do realnego hardware"></h3>
 
                 <p class="text-gray-300 text-lg leading-relaxed mb-5"
-                   data-en="We build hands-on: CAD design, rapid prototyping, and production using 3D printing and CNC — then assembly, tuning, and testing. This is how we control precision, reliability, and the final feel."
-                   data-pl="Budujemy „od zera” w ręcznym procesie: projekt w CAD, szybkie prototypowanie i produkcja z użyciem druku 3D oraz CNC — a potem montaż, strojenie i testy. Dzięki temu kontrolujemy precyzję, niezawodność i finalne odczucia."></p>
+                   data-en="We design and build solutions for people and business — from affordable, personalizable B2C platforms to robust setups for training and events. Every product is developed hands-on: CAD design, rapid prototyping, and manufacturing using 3D printing and CNC — then assembly, tuning, and testing."
+                   data-pl="Projektujemy i budujemy rozwiązania dla pasjonatów i biznesu — od przystępnych, personalizowanych platform B2C po wytrzymałe konfiguracje do szkoleń i eventów. Każdy produkt rozwijamy „od zera”: projekt w CAD, szybkie prototypowanie oraz produkcja z użyciem druku 3D i CNC — a potem montaż, strojenie i testy."></p>
 
                 <div class="grid sm:grid-cols-2 gap-4">
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
@@ -380,8 +358,8 @@
                          loading="lazy" decoding="async"
                          class="w-full h-auto block">
                     <figcaption class="px-4 py-3 text-sm text-gray-300"
-                                data-en="Real hardware: 6DOF drive module on the workbench."
-                                data-pl="Realny hardware: moduł napędowy 6DOF na warsztacie."></figcaption>
+                                data-en="Workbench stage: 6DOF drive module."
+                                data-pl="Etap warsztatowy: moduł napędowy 6DOF."></figcaption>
                   </figure>
 
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
@@ -390,22 +368,23 @@
                          loading="lazy" decoding="async"
                          class="w-full h-auto block">
                     <figcaption class="px-4 py-3 text-sm text-gray-300"
-                                data-en="CAD validation: same module before manufacturing."
-                                data-pl="Walidacja w CAD: ten sam moduł przed wykonaniem."></figcaption>
+                                data-en="CAD validation before manufacturing."
+                                data-pl="Weryfikacja w CAD przed wykonaniem."></figcaption>
                   </figure>
                 </div>
               </div>
             </div>
 
-            <div class="story-card">
+            <div class="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
               <div class="p-6">
+                <div id="inspiration"></div>
                 <h3 class="text-2xl font-semibold mb-3"
-                    data-en="The spark: TEDx and a full-scale cockpit"
-                    data-pl="Iskra: TEDx i full-scale kokpit"></h3>
+                    data-en="From TEDx to Motion Platforms"
+                    data-pl="Od TEDx do platform motion"></h3>
 
                 <p class="text-gray-300 text-lg leading-relaxed mb-5"
-                   data-en="At TEDx, Leszek Tejwan shared the “Dream Simulator” story — turning a personal idea into engineering reality. Years earlier, he started a full-scale CRJ200 home cockpit project, publicly documented since 2013."
-                   data-pl="Na TEDx Leszek Tejwan opowiedział historię „Dream Simulator” — o zamianie osobnej idei w inżynieryjną rzeczywistość. Wcześniej rozpoczął pełnowymiarowy projekt home cockpit CRJ200, publicznie dokumentowany od 2013 roku."></p>
+                   data-en="At TEDx, the “Dream Simulator” story showed how a personal idea becomes engineering reality. That mindset fuels ForgeMotion Systems: build precise, reliable motion that feels authentic — for racing, flight, training, and pure passion."
+                   data-pl="Na TEDx historia „Dream Simulator” pokazała, jak osobna idea staje się inżynieryjną rzeczywistością. To podejście napędza ForgeMotion Systems: budować precyzyjny, niezawodny motion, który daje autentyczne odczucia — w simracingu, lotnictwie, szkoleniach i projektach „z pasji”."></p>
 
                 <div class="relative rounded-xl overflow-hidden border border-white/10" style="padding-top:56.25%;">
                   <iframe class="absolute top-0 left-0 w-full h-full"
@@ -417,24 +396,57 @@
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                           allowfullscreen></iframe>
                 </div>
-
-                <div class="flex flex-wrap gap-3 mt-6">
-                  <a href="https://crj200athome.wordpress.com/"
-                     target="_blank" rel="noopener noreferrer"
-                     class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
-                    <span data-en="See CRJ200 project" data-pl="Zobacz projekt CRJ200"></span>
-                  </a>
-
-                  <a href="#contact"
-                     class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
-                    <span data-en="Contact us" data-pl="Kontakt"></span>
-                  </a>
-                </div>
-
-                <p class="text-gray-300 text-lg leading-relaxed mt-6"
-                   data-en="That mix — aviation mindset, ergonomics, and digital tooling — shapes every ForgeMotion platform: built for enthusiasts and business, tuned for realism, and engineered to be repeatable and reliable."
-                   data-pl="To połączenie — lotniczy „mindset”, ergonomia i narzędzia cyfrowe — kształtuje każdą platformę ForgeMotion: dla pasjonatów i biznesu, z naciskiem na realizm, powtarzalność i niezawodność."></p>
               </div>
+            </div>
+          </div>
+
+          <div class="mt-10 rounded-2xl border border-white/10 bg-black/20 p-6">
+            <div id="trust-experience"></div>
+            <h3 class="text-2xl font-semibold mb-4 text-center"
+                data-en="Why Trust ForgeMotion Systems?"
+                data-pl="Dlaczego warto zaufać ForgeMotion Systems?"></h3>
+
+            <p class="text-gray-300 text-lg md:text-xl leading-relaxed max-w-5xl mx-auto text-center mb-6"
+               data-en="Our approach is grounded in real aviation practice: digitalizing operational processes, cockpit ergonomics, and training tooling — then translating that discipline into motion systems built for modern simulation."
+               data-pl="Nasze podejście wynika z praktyki lotniczej: cyfryzacji procesów operacyjnych, ergonomii kokpitów i narzędzi szkoleniowych — a następnie przeniesienia tej dyscypliny na systemy motion dla współczesnej symulacji."></p>
+
+            <div class="grid md:grid-cols-2 gap-4 text-gray-300 text-lg">
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5">
+                <div class="font-semibold mb-1" data-en="Engineering discipline" data-pl="Dyscyplina inżynierska"></div>
+                <div data-en="End-to-end process: design → prototype → manufacture → assemble → tune → test."
+                     data-pl="Proces end-to-end: projekt → prototyp → wykonanie → montaż → strojenie → testy."></div>
+              </div>
+
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5">
+                <div class="font-semibold mb-1" data-en="Built for people & business" data-pl="Dla pasjonatów i biznesu"></div>
+                <div data-en="Affordable, customizable B2C line plus professional setups for training and events."
+                     data-pl="Przystępna i personalizowana linia B2C oraz konfiguracje do szkoleń i eventów."></div>
+              </div>
+
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5">
+                <div class="font-semibold mb-1" data-en="Aviation mindset" data-pl="Lotniczy „mindset”"></div>
+                <div data-en="Reliability, repeatability, and clarity inspired by aviation standards."
+                     data-pl="Niezawodność, powtarzalność i czytelność inspirowane standardami lotnictwa."></div>
+              </div>
+
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5">
+                <div class="font-semibold mb-1" data-en="Full-scale cockpit heritage" data-pl="Dziedzictwo full-scale kokpitu"></div>
+                <div data-en="A long-running CRJ200 home cockpit build documented publicly since 2013."
+                     data-pl="Wieloletni projekt home cockpit CRJ200, publicznie dokumentowany od 2013."></div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-3 justify-center">
+              <a href="https://crj200athome.wordpress.com/"
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
+                <span data-en="See CRJ200 project" data-pl="Zobacz projekt CRJ200"></span>
+              </a>
+
+              <a href="#contact"
+                 class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
+                <span data-en="Contact us" data-pl="Kontakt"></span>
+              </a>
             </div>
           </div>
 
