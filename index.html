@@ -121,7 +121,7 @@
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
 
-    /* ====== Równy wygląd kafelków + identyczna wysokość zdjęć ====== */
+    /* ====== Product cards ====== */
     .product-card {
       background: rgba(31, 41, 55, 0.9);
       border-radius: 0.75rem;
@@ -134,59 +134,43 @@
       flex-direction: column;
       height: 100%;
     }
-    .product-card:hover { transform: scale(1.05); }
+    .product-card:hover { transform: scale(1.03); }
 
     .product-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .product-subtitle {
-      color: rgba(255,255,255,0.8);
-      font-size: 0.95rem;
-      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: 650;
+      margin-bottom: 0.35rem;
     }
 
     .product-desc {
-      color: rgba(255,255,255,0.92);
+      color: rgba(255,255,255,0.9);
       margin-bottom: 0.75rem;
+      min-height: 3.4rem;
     }
 
-    .product-points {
-      text-align: left;
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.85);
-      margin: 0.25rem 0 0.9rem 0;
-      padding-left: 1.1rem;
-      list-style: disc;
-    }
-
-    .product-cta {
-      margin-top: auto;
+    .product-cta-row {
       display: flex;
       gap: 0.5rem;
       justify-content: center;
       flex-wrap: wrap;
+      margin-bottom: 0.75rem;
     }
-
-    .product-cta a {
+    .product-cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 0.5rem;
+      border-radius: 0.55rem;
       padding: 0.55rem 0.85rem;
-      font-weight: 600;
+      font-weight: 650;
       font-size: 0.95rem;
       border: 1px solid rgba(255,255,255,0.12);
       transition: background 0.2s ease, transform 0.2s ease;
+      background: rgba(255,255,255,0.06);
     }
+    .product-cta:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
 
-    .cta-primary { background: rgba(59,130,246,0.95); }
-    .cta-primary:hover { background: rgba(37,99,235,0.98); transform: translateY(-1px); }
-
-    .cta-secondary { background: rgba(255,255,255,0.06); }
-    .cta-secondary:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
+    .product-cta.primary { background: rgba(59,130,246,0.95); border-color: rgba(59,130,246,0.95); }
+    .product-cta.primary:hover { background: rgba(37,99,235,0.98); }
 
     .product-image {
       width: 100%;
@@ -194,7 +178,7 @@
       overflow: hidden;
       border-radius: 0.5rem;
       background: rgba(0,0,0,0.18);
-      margin-top: 0.4rem;
+      margin-top: auto;
     }
     .product-image img {
       width: 100%;
@@ -207,7 +191,7 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
-    /* ====== Ejection Seat: miniatura ma być w całości widoczna ====== */
+    /* Ejection Seat thumb contain */
     .product-image img.thumb-contain {
       object-fit: contain !important;
       object-position: center bottom;
@@ -216,11 +200,9 @@
       padding: 6px;
       cursor: zoom-in;
     }
-    .product-card:hover .product-image img.thumb-contain {
-      transform: none !important;
-    }
+    .product-card:hover .product-image img.thumb-contain { transform: none !important; }
 
-    /* ====== Modal (klik → duże zdjęcie) ====== */
+    /* ====== Modal ====== */
     .modal-hidden { display: none; }
     .modal-overlay {
       position: fixed;
@@ -283,7 +265,7 @@
 
 <header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="#hero" class="flex items-center" aria-label="Go to home section">
+    <a href="/index.html#hero" class="flex items-center" aria-label="Go to home section">
       <img
         src="/logo.png"
         alt="ForgeMotion Systems logo"
@@ -354,8 +336,8 @@
               data-pl="Precyzyjne systemy motion do symulatorów wyścigowych i lotniczych"></h1>
 
           <p class="text-lg md:text-2xl mb-6 text-white/90 drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
-             data-en="Professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, and ejection seat replicas to bring realism and precision to your simulations."
-             data-pl="Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów oraz repliki foteli katapultowych zapewniające realizm i precyzję w Twoich symulacjach."></p>
+             data-en="Motion platforms and simulator gear built for immersion — from the first lap to the final approach."
+             data-pl="Platformy motion i osprzęt do symulatorów — immersja od pierwszego okrążenia po ostatnie podejście."></p>
 
           <a href="#products" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
             <span data-en="View products" data-pl="Zobacz produkty"></span>
@@ -373,26 +355,13 @@
           <!-- 1) 6DOF -->
           <div class="product-card">
             <h3 class="product-title" data-en="6DOF Motion Platform" data-pl="Platforma Motion 6DOF"></h3>
-            <div class="product-subtitle"
-                 data-en="Full-immersion motion for racing, flight & VR"
-                 data-pl="Pełna immersja ruchu do racingu, lotnictwa i VR"></div>
-
             <p class="product-desc"
-               data-en="Built as the backbone of serious simulator rigs — smooth, predictable motion that feels natural in long sessions. Ideal when you want maximum realism, repeatability and confidence in every cue."
-               data-pl="Zaprojektowana jako fundament profesjonalnych stanowisk — płynny, przewidywalny ruch, który „czyta się” naturalnie nawet podczas długich sesji. Wybór dla tych, którzy chcą maksymalnego realizmu i powtarzalności."></p>
+               data-en="Full-immersion motion — smooth, natural cues for premium sims."
+               data-pl="Pełna immersja ruchu — płynne, naturalne bodźce dla topowych simów."></p>
 
-            <ul class="product-points">
-              <li data-en="6 degrees of freedom: pitch/roll/yaw + surge/sway/heave"
-                  data-pl="6 stopni swobody: pitch/roll/yaw + surge/sway/heave"></li>
-              <li data-en="Rigid frame for precise response and stable mounting"
-                  data-pl="Sztywna rama = precyzyjna reakcja i stabilny montaż"></li>
-              <li data-en="Great for training, showcases and premium commercial sims"
-                  data-pl="Świetna do treningu, pokazów i symulatorów komercyjnych premium"></li>
-            </ul>
-
-            <div class="product-cta">
-              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
-              <a class="cta-secondary" href="#contact" data-en="Ask about integration" data-pl="Zapytaj o integrację"></a>
+            <div class="product-cta-row">
+              <a class="product-cta primary" href="/products-6dof.html" data-en="Learn more" data-pl="Zobacz więcej"></a>
+              <a class="product-cta" href="/index.html#contact" data-en="Get a quote" data-pl="Wycena"></a>
             </div>
 
             <div class="product-image">
@@ -403,29 +372,16 @@
             </div>
           </div>
 
-          <!-- 2) 3DOF -->
+          <!-- 2) 3DOF / 2DOF -->
           <div class="product-card">
             <h3 class="product-title" data-en="3DOF / 2DOF Platform" data-pl="Platforma 3DOF / 2DOF"></h3>
-            <div class="product-subtitle"
-                 data-en="Compact, modular motion — big feel, smart footprint"
-                 data-pl="Kompaktowy motion modułowy — duże wrażenia, rozsądny rozmiar"></div>
-
             <p class="product-desc"
-               data-en="A practical step into motion simulation: strong immersion with a simpler setup. Perfect for home cockpits, sim centers and projects where space, budget and serviceability matter."
-               data-pl="Praktyczny start w świat motion: mocna immersja przy prostszym układzie. Idealna do kokpitów domowych, sim centerów oraz projektów, gdzie liczy się miejsce, budżet i łatwy serwis."></p>
+               data-en="Big immersion in a compact setup — ideal for home rigs and sim centers."
+               data-pl="Mocne wrażenia w kompaktowym układzie — do domowych rigów i sim centerów."></p>
 
-            <ul class="product-points">
-              <li data-en="Key motion cues for racing & flight without the complexity of 6DOF"
-                  data-pl="Kluczowe bodźce ruchu bez złożoności pełnego 6DOF"></li>
-              <li data-en="Modular design: easy upgrades and configuration changes"
-                  data-pl="Modułowa konstrukcja: proste rozbudowy i zmiana konfiguracji"></li>
-              <li data-en="Great balance of cost, performance and maintenance"
-                  data-pl="Świetny balans koszt–efekt–utrzymanie"></li>
-            </ul>
-
-            <div class="product-cta">
-              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
-              <a class="cta-secondary" href="#contact" data-en="Help me choose 2DOF vs 3DOF" data-pl="Pomóż wybrać 2DOF vs 3DOF"></a>
+            <div class="product-cta-row">
+              <a class="product-cta primary" href="/products-3dof.html" data-en="Learn more" data-pl="Zobacz więcej"></a>
+              <a class="product-cta" href="/index.html#contact" data-en="Get a quote" data-pl="Wycena"></a>
             </div>
 
             <div class="product-image">
@@ -436,29 +392,16 @@
             </div>
           </div>
 
-          <!-- 3) Ejection Seat -->
+          <!-- 3) MK14 -->
           <div class="product-card">
-            <h3 class="product-title" data-en="Ejection Seat MK14 Replica" data-pl="Replika fotela katapultowego MK14"></h3>
-            <div class="product-subtitle"
-                 data-en="High-fidelity cockpit centerpiece"
-                 data-pl="Centralny element kokpitu — wysoka wierność detali"></div>
-
+            <h3 class="product-title" data-en="Ejection Seat MK14 Replica" data-pl="Replika fotela MK14"></h3>
             <p class="product-desc"
-               data-en="A show-stopping seat replica designed for flight simulators, exhibitions and premium builds. Adds instant authenticity — from the first glance to the first minute in the cockpit."
-               data-pl="Efektowna replika do symulatorów lotniczych, ekspozycji i projektów premium. Dodaje autentyczności od pierwszego spojrzenia — a w kokpicie buduje klimat „prawdziwej” maszyny."></p>
+               data-en="Cockpit centerpiece — instant authenticity and wow effect."
+               data-pl="Serce kokpitu — autentyczność i efekt „wow” od pierwszej sekundy."></p>
 
-            <ul class="product-points">
-              <li data-en="Built for realism: proportions, details and presence"
-                  data-pl="Wrażenie realizmu: proporcje, detale i „obecność” w kokpicie"></li>
-              <li data-en="Perfect for VR/AR, training setups, museums and events"
-                  data-pl="Idealna do VR/AR, treningów, muzeów i eventów"></li>
-              <li data-en="Custom options available (finish, mounts, integration)"
-                  data-pl="Możliwe opcje personalizacji (wykończenie, mocowania, integracja)"></li>
-            </ul>
-
-            <div class="product-cta">
-              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
-              <a class="cta-secondary" href="#contact" data-en="Ask about customization" data-pl="Zapytaj o personalizację"></a>
+            <div class="product-cta-row">
+              <a class="product-cta primary" href="/products-mk14.html" data-en="Learn more" data-pl="Zobacz więcej"></a>
+              <a class="product-cta" href="/index.html#contact" data-en="Get a quote" data-pl="Wycena"></a>
             </div>
 
             <div class="product-image">
@@ -473,26 +416,13 @@
           <!-- 4) Seat Belt -->
           <div class="product-card">
             <h3 class="product-title" data-en="Seat Belt Tensioner" data-pl="Napinacz pasów"></h3>
-            <div class="product-subtitle"
-                 data-en="Feel braking, acceleration and G-cues"
-                 data-pl="Poczuj hamowanie, przyspieszenie i bodźce przeciążeń"></div>
-
             <p class="product-desc"
-               data-en="Add a missing layer of realism: belt feedback makes braking and acceleration instantly believable. A small upgrade that delivers a big jump in immersion."
-               data-pl="Dodaj brakującą warstwę realizmu: feedback na pasach sprawia, że hamowanie i przyspieszenie „siadają” od razu. Niewielki dodatek, a efekt w immersji ogromny."></p>
+               data-en="Feel braking and acceleration through physical belt feedback."
+               data-pl="Poczuj hamowanie i przyspieszenie dzięki feedbackowi na pasach."></p>
 
-            <ul class="product-points">
-              <li data-en="Clear, physical cues that improve control and perception"
-                  data-pl="Czytelne bodźce fizyczne poprawiające kontrolę i odczucia"></li>
-              <li data-en="Great match for motion rigs and static cockpits"
-                  data-pl="Działa świetnie z motion i ze statycznymi kokpitami"></li>
-              <li data-en="Ideal for sim racing and flight simulation"
-                  data-pl="Idealny do sim racingu i symulacji lotniczej"></li>
-            </ul>
-
-            <div class="product-cta">
-              <a class="cta-primary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
-              <a class="cta-secondary" href="#contact" data-en="Ask about compatibility" data-pl="Zapytaj o kompatybilność"></a>
+            <div class="product-cta-row">
+              <a class="product-cta primary" href="/index.html#contact" data-en="Ask for details" data-pl="Zapytaj o szczegóły"></a>
+              <a class="product-cta" href="/index.html#contact" data-en="Get a quote" data-pl="Wycena"></a>
             </div>
 
             <div class="product-image">
@@ -505,27 +435,14 @@
 
           <!-- 5) Accessories -->
           <div class="product-card">
-            <h3 class="product-title" data-en="Simulator Accessories" data-pl="Akcesoria do symulatorów"></h3>
-            <div class="product-subtitle"
-                 data-en="Mounts, add-ons and custom solutions"
-                 data-pl="Mocowania, dodatki i rozwiązania „pod rig”"></div>
-
+            <h3 class="product-title" data-en="Simulator Accessories" data-pl="Akcesoria"></h3>
             <p class="product-desc"
-               data-en="From smart mounting to custom add-ons — we help you finish the rig like a product, not a prototype. Clean integration, solid hardware, and details that matter."
-               data-pl="Od przemyślanych mocowań po dodatki pod konkretny projekt — pomagamy domknąć rig jak produkt, a nie prototyp. Czysta integracja, solidne elementy i detale, które robią różnicę."></p>
+               data-en="Mounts and add-ons that make your rig feel like a finished product."
+               data-pl="Mocowania i dodatki, dzięki którym rig wygląda jak gotowy produkt."></p>
 
-            <ul class="product-points">
-              <li data-en="Custom brackets, mounts and structural components"
-                  data-pl="Dedykowane uchwyty, mocowania i elementy konstrukcyjne"></li>
-              <li data-en="Better ergonomics, cable management and service access"
-                  data-pl="Lepsza ergonomia, porządek w okablowaniu i łatwiejszy serwis"></li>
-              <li data-en="Designed to match your setup and goals"
-                  data-pl="Projekt pod Twoje stanowisko i cel (dom, sim center, B2B)"></li>
-            </ul>
-
-            <div class="product-cta">
-              <a class="cta-primary" href="#contact" data-en="Describe your project" data-pl="Opisz swój projekt"></a>
-              <a class="cta-secondary" href="#contact" data-en="Request a quote" data-pl="Poproś o wycenę"></a>
+            <div class="product-cta-row">
+              <a class="product-cta primary" href="/index.html#contact" data-en="Describe your build" data-pl="Opisz rig"></a>
+              <a class="product-cta" href="/index.html#contact" data-en="Get a quote" data-pl="Wycena"></a>
             </div>
 
             <div class="product-image">
@@ -547,70 +464,16 @@
   <div class="container mx-auto text-center">
     <h2 class="text-3xl font-bold mb-6" data-en="About Us" data-pl="O nas"></h2>
     <p class="text-gray-300 max-w-2xl mx-auto"
-       data-en="ForgeMotion Systems designs and manufactures professional motion platforms and simulator equipment for the racing and aviation industries. Our solutions enhance realism and precision in training and entertainment simulators."
-       data-pl="ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion oraz wyposażenie symulatorów dla branży wyścigowej i lotniczej. Nasze rozwiązania zwiększają realizm i precyzję w symulatorach treningowych i rozrywkowych."></p>
-  </div>
-</section>
-
-<section id="inspiration" class="px-4 py-16 bg-gray-800 text-center fade-in">
-  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
-      data-en="From TEDx to Motion Platforms"
-      data-pl="Od TEDx do technologii motion"></h2>
-
-  <div class="max-w-3xl mx-auto">
-    <div class="relative" style="padding-top:56.25%;">
-      <iframe class="absolute top-0 left-0 w-full h-full"
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin"
-              src="https://www.youtube.com/embed/2k_porGEQZI"
-              title="Leszek Tejwan – Dream Simulator | TEDxMarszałkowska"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
-    </div>
-
-    <p class="text-gray-300 mt-6 mb-4 text-lg md:text-xl"
-       data-en="At TEDx, Leszek Tejwan shared his 'Dream Simulator' — a project born from his own dreams. It became a source of inspiration for creating advanced motion platforms that blend excitement, immersion, and precise engineering."
-       data-pl="Na TEDx Leszek Tejwan przedstawił swój 'Dream Simulator' — projekt powstały z jego własnych marzeń. Stał się inspiracją do tworzenia zaawansowanych platform motion, które łączą emocje, immersję i precyzyjną inżynierię."></p>
-
-    <p class="text-gray-300 text-lg md:text-xl"
-       data-en="This idea inspires ForgeMotion Systems: we design motion platforms that deliver exciting and realistic experiences in racing and flight simulators, making every moment truly engaging."
-       data-pl="Ta idea inspiruje ForgeMotion Systems: projektujemy platformy motion, które dostarczają ekscytujących i realistycznych doświadczeń w symulatorach wyścigowych i lotniczych, czyniąc każdą chwilę naprawdę angażującą."></p>
-  </div>
-</section>
-
-<section id="trust-experience" class="px-4 py-16 bg-gray-800 text-center fade-in">
-  <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
-      data-en="Why Trust ForgeMotion Systems?"
-      data-pl="Dlaczego warto zaufać ForgeMotion Systems?"></h2>
-
-  <div class="max-w-3xl mx-auto text-left md:text-center">
-    <p class="text-gray-300 text-lg md:text-xl mb-6"
-       data-en="With real-world aviation experience, Leszek Tejwan brings unmatched insight into the design of motion simulators. His work at LOT Polish Airlines on digital aviation tools inspires every platform we build."
-       data-pl="Dzięki doświadczeniu w prawdziwej branży lotniczej, Leszek Tejwan wnosi bezcenną wiedzę przy projektowaniu platform motion. Jego praca w LOT Polish Airlines nad cyfrowymi narzędziami lotniczymi inspiruje każdą platformę, którą tworzymy."></p>
-
-    <ul class="text-gray-300 text-lg md:text-xl list-disc list-inside mb-6">
-      <li data-en="Realistic experience: motion platforms designed with real aviation knowledge."
-          data-pl="Realistyczne doświadczenie: platformy motion projektowane z uwzględnieniem wiedzy lotniczej."></li>
-      <li data-en="Immersive training: inspired by digital tools used by professional pilots."
-          data-pl="Immersywne szkolenie: inspirowane cyfrowymi narzędziami używanymi przez profesjonalnych pilotów."></li>
-      <li data-en="Precision & reliability: engineering solutions influenced by aviation standards."
-          data-pl="Precyzja i niezawodność: rozwiązania inżynieryjne inspirowane standardami lotnictwa."></li>
-      <li data-en="Innovation-driven: combining fun, realism, and technology."
-          data-pl="Napędzane innowacją: łączymy zabawę, realizm i technologię."></li>
-    </ul>
-
-    <p class="text-gray-300 text-lg md:text-xl"
-       data-en="This combination of aviation expertise and motion platform innovation ensures every simulation is engaging, educational, and unforgettable."
-       data-pl="To połączenie wiedzy lotniczej i innowacji w platformach motion zapewnia, że każda symulacja jest angażująca, edukacyjna i niezapomniana."></p>
+       data-en="ForgeMotion Systems designs and manufactures motion platforms and simulator equipment for racing and aviation enthusiasts."
+       data-pl="ForgeMotion Systems projektuje i produkuje platformy motion oraz osprzęt do symulatorów dla fanów wyścigów i lotnictwa."></p>
   </div>
 </section>
 
 <section id="contact" class="container mx-auto py-16 px-4">
   <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
   <p class="text-center text-gray-300 mb-6"
-     data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs."
-     data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
+     data-en="Tell us what you’re building — we’ll help you choose the right setup and prepare a quote."
+     data-pl="Opisz, co budujesz — pomożemy dobrać zestaw i przygotujemy wycenę."></p>
   <form class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
     <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
     <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
@@ -623,7 +486,7 @@
   © 2025 ForgeMotion Systems
 </footer>
 
-<!-- ===== Modal HTML ===== -->
+<!-- ===== Modal HTML (image preview) ===== -->
 <div id="imgModal" class="modal-hidden" aria-hidden="true">
   <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
     <div class="modal-panel">
@@ -644,26 +507,26 @@
 <script>
   const metaData = {
     en: {
-      title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
-      description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
-      keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
-      ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-      ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
+      title: "ForgeMotion Systems – Motion platforms & simulator gear",
+      description: "Motion platforms and simulator gear for racing & flight enthusiasts: 6DOF, 3DOF/2DOF, ejection seat replicas and more.",
+      keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, ejection seat replica, simulator accessories",
+      ogTitle: "ForgeMotion Systems – Motion platforms & simulator gear",
+      ogDescription: "Motion platforms and simulator gear for racing & flight enthusiasts.",
       ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-      twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-      twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
+      twitterTitle: "ForgeMotion Systems – Motion platforms & simulator gear",
+      twitterDescription: "Motion platforms and simulator gear for racing & flight enthusiasts.",
       twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
       canonical: "https://forgemotionsystems.com/en"
     },
     pl: {
-      title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
-      description: "ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych oraz kastomizowane ramy dla symulatorów wyścigowych i lotniczych. Zwiększ realizm i precyzję swoich symulacji.",
-      keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, napinacz pasów, replika fotela katapultowego, kastomizowane ramy, osprzęt do symulatorów, ForgeMotion Systems",
+      title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
+      description: "Platformy motion i osprzęt do symulatorów dla fanów wyścigów i lotnictwa: 6DOF, 3DOF/2DOF, repliki foteli katapultowych i więcej.",
+      keywords: "platforma motion, 6DOF, 3DOF, 2DOF, symulator wyścigowy, symulator lotniczy, replika fotela katapultowego, akcesoria do symulatorów",
       ogTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
-      ogDescription: "Profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych i kastomizowane ramy dla symulatorów wyścigowych i lotniczych.",
+      ogDescription: "Platformy motion i osprzęt do symulatorów dla fanów wyścigów i lotnictwa.",
       ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
       twitterTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
-      twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy.",
+      twitterDescription: "Platformy motion i osprzęt do symulatorów dla fanów wyścigów i lotnictwa.",
       twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
       canonical: "https://forgemotionsystems.com/pl"
     }
