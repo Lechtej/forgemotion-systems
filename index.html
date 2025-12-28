@@ -120,6 +120,103 @@
 
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
+
+    /* ====== KROK 4: równy wygląd kafelków + identyczna wysokość zdjęć ====== */
+    .product-card {
+      background: rgba(31, 41, 55, 0.9);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.25s ease;
+      backdrop-filter: blur(1px);
+      border: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .product-card:hover { transform: scale(1.05); }
+
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .product-desc {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 0.75rem;
+      flex-grow: 1;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 190px;
+      overflow: hidden;
+      border-radius: 0.5rem;
+      background: rgba(0,0,0,0.18);
+    }
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: zoom-in;
+      transform: scale(1.01);
+      transition: transform 0.25s ease;
+      display: block;
+    }
+    .product-card:hover .product-image img { transform: scale(1.05); }
+
+    /* ====== Modal ====== */
+    .modal-hidden { display: none; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-panel {
+      width: min(1100px, 96vw);
+      max-height: 90vh;
+      background: rgba(17, 24, 39, 0.96);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.18); }
+    .modal-img-wrap {
+      padding: 0.75rem;
+    }
+    .modal-img {
+      width: 100%;
+      height: auto;
+      max-height: calc(90vh - 1.5rem);
+      object-fit: contain;
+      border-radius: 0.75rem;
+      display: block;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
   </style>
 </head>
 
@@ -214,39 +311,78 @@
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
 
-        <!-- ZMIANA: 5 produktów => 5 kolumn na dużych ekranach -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <!-- KROK 1: brak nowego kafelka => wracamy do 4 kolumn -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
-            <h3 class="text-xl font-semibold mb-2">6DOF Platform</h3>
-            <p data-en="Full-motion platform for high-end racing and flight simulators" data-pl="Platforma pełnego ruchu do zaawansowanych symulatorów wyścigowych i lotniczych"></p>
-            <img src="/images/6dof.jpg" alt="6DOF motion platform for racing simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+          <!-- KROK 2: istniejący kafelek 6DOF -> podmienione zdjęcie + życiowy opis -->
+          <div class="product-card">
+            <h3 class="product-title">6DOF Platform</h3>
+
+            <p class="product-desc"
+               data-en="A rock-solid 6DOF motion platform built to feel natural and predictable in every movement. Designed as the backbone of serious racing and flight simulator rigs — stable, precise, and ready for long sessions."
+               data-pl="Solidna platforma motion 6DOF zaprojektowana tak, by każdy ruch był naturalny i przewidywalny. To mocna baza do zaawansowanych symulatorów wyścigowych i lotniczych — stabilna, precyzyjna i gotowa na długie sesje."></p>
+
+            <div class="product-image">
+              <img
+                src="/images/rama6dof1.jpg"
+                data-full="/images/rama6dof1.jpg"
+                alt="6DOF motion platform frame"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
           </div>
 
-          <!-- NOWY PRODUKT: RAMA 6DOF + NOWE ZDJĘCIE -->
-          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
-            <h3 class="text-xl font-semibold mb-2" data-en="6DOF Frame" data-pl="Rama 6DOF"></h3>
-            <p data-en="Rigid custom frame for 6DOF motion platforms and simulator rigs"
-               data-pl="Sztywna, kastomizowana rama pod platformy 6DOF i kokpity symulatorów"></p>
-            <img src="/images/rama6dof1.jpg" alt="6DOF frame / Rama 6DOF" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+          <!-- KROK 3: 3DOF/2DOF -> nowe zdjęcie, opis bez zmian -->
+          <div class="product-card">
+            <h3 class="product-title">3DOF / 2DOF Platform</h3>
+            <p class="product-desc"
+               data-en="Compact and modular motion systems"
+               data-pl="Kompaktowe i modułowe systemy motion"></p>
+
+            <div class="product-image">
+              <img
+                src="/images/rama3dof1.jpg"
+                data-full="/images/rama3dof1.jpg"
+                alt="3DOF motion platform frame"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
           </div>
 
-          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
-            <h3 class="text-xl font-semibold mb-2">3DOF / 2DOF Platform</h3>
-            <p data-en="Compact and modular motion systems" data-pl="Kompaktowe i modułowe systemy motion"></p>
-            <img src="/images/3dof-2dof.jpg" alt="3DOF and 2DOF motion platforms" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+          <div class="product-card">
+            <h3 class="product-title">Seat Belt Tensioner</h3>
+            <p class="product-desc"
+               data-en="Realistic braking and acceleration forces through seat belt feedback"
+               data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
+
+            <div class="product-image">
+              <img
+                src="/images/seatbelt.jpg"
+                data-full="/images/seatbelt.jpg"
+                alt="Seat belt tensioner for simulator"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
           </div>
 
-          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
-            <h3 class="text-xl font-semibold mb-2">Seat Belt Tensioner</h3>
-            <p data-en="Realistic braking and acceleration forces through seat belt feedback" data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
-            <img src="/images/seatbelt.jpg" alt="Seat belt tensioner for simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
-          </div>
+          <div class="product-card">
+            <h3 class="product-title">Ejection Seat Replica</h3>
+            <p class="product-desc"
+               data-en="High-fidelity aircraft ejection seat replica for simulators"
+               data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
 
-          <div class="bg-gray-800/90 rounded p-4 text-center hover:scale-105 transition backdrop-blur-[1px] border border-white/5">
-            <h3 class="text-xl font-semibold mb-2">Ejection Seat Replica</h3>
-            <p data-en="High-fidelity aircraft ejection seat replica for simulators" data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-            <img src="/images/ejection-seat.jpg" alt="Ejection seat replica for flight simulator" class="mx-auto mt-2 rounded" loading="lazy" decoding="async">
+            <div class="product-image">
+              <img
+                src="/images/ejection-seat.jpg"
+                data-full="/images/ejection-seat.jpg"
+                alt="Ejection seat replica for flight simulator"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
           </div>
 
         </div>
@@ -335,6 +471,21 @@
 <footer class="bg-gray-900 py-6 text-center text-gray-400">
   © 2025 ForgeMotion Systems
 </footer>
+
+<!-- ===== Modal HTML (klik → duże zdjęcie) ===== -->
+<div id="imgModal" class="modal-hidden" aria-hidden="true">
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
+    <div class="modal-panel">
+      <button id="imgModalClose" class="modal-close" type="button" aria-label="Close image">
+        <span aria-hidden="true">✕</span>
+      </button>
+      <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
+      <div class="modal-img-wrap">
+        <img id="imgModalImg" class="modal-img" src="" alt="">
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   const metaData = {
@@ -464,6 +615,61 @@
 
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 768) closeMenu();
+    });
+  })();
+</script>
+
+<!-- ===== KROK 5: klik → modal z dużym zdjęciem ===== -->
+<script>
+  (function () {
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('imgModalImg');
+    const closeBtn = document.getElementById('imgModalClose');
+
+    if (!modal || !modalImg || !closeBtn) return;
+
+    function openModal(src, alt) {
+      modalImg.src = src;
+      modalImg.alt = alt || "Image preview";
+      modal.classList.remove('modal-hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      // Focus na przycisku zamykania dla dostępności
+      closeBtn.focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.add('modal-hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImg.src = "";
+      modalImg.alt = "";
+      document.body.style.overflow = '';
+    }
+
+    // Klik w miniaturę (zdjęcia produktów)
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest('.product-image img');
+      if (!img) return;
+
+      const full = img.getAttribute('data-full') || img.getAttribute('src');
+      const alt = img.getAttribute('alt') || '';
+      openModal(full, alt);
+    });
+
+    // Zamknięcie: X
+    closeBtn.addEventListener('click', closeModal);
+
+    // Zamknięcie: klik w tło (overlay)
+    modal.addEventListener('click', (e) => {
+      const clickedOverlay = e.target.classList.contains('modal-overlay');
+      if (clickedOverlay) closeModal();
+    });
+
+    // Zamknięcie: ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
     });
   })();
 </script>
