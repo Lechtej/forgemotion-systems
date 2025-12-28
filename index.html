@@ -165,6 +165,19 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
+    /* ====== Ejection Seat: miniatura ma być w całości widoczna ====== */
+    .product-image img.thumb-contain {
+      object-fit: contain !important;
+      object-position: center bottom;
+      transform: none !important;
+      background: rgba(0,0,0,0.12);
+      padding: 6px;
+      cursor: zoom-in;
+    }
+    .product-card:hover .product-image img.thumb-contain {
+      transform: none !important;
+    }
+
     /* ====== Modal (klik → duże zdjęcie) ====== */
     .modal-hidden { display: none; }
     .modal-overlay {
@@ -313,9 +326,9 @@
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
 
-        <!-- 5 produktów -> 5 kolumn na dużych ekranach -->
         <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
 
+          <!-- 1) 6DOF -->
           <div class="product-card">
             <h3 class="product-title">6DOF Platform</h3>
             <p class="product-desc"
@@ -329,6 +342,7 @@
             </div>
           </div>
 
+          <!-- 2) 3DOF -->
           <div class="product-card">
             <h3 class="product-title">3DOF / 2DOF Platform</h3>
             <p class="product-desc"
@@ -342,6 +356,22 @@
             </div>
           </div>
 
+          <!-- 3) Ejection Seat (zamienione miejsce + contain miniatura) -->
+          <div class="product-card">
+            <h3 class="product-title">Ejection Seat Replica</h3>
+            <p class="product-desc"
+               data-en="High-fidelity aircraft ejection seat replica for simulators"
+               data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
+            <div class="product-image">
+              <img class="thumb-contain"
+                   src="/images/mk14seat1.jpg"
+                   data-full="/images/mk14seat1-large.jpg"
+                   alt="Ejection seat replica (MK14)"
+                   loading="lazy" decoding="async">
+            </div>
+          </div>
+
+          <!-- 4) Seat Belt (zamienione miejsce) -->
           <div class="product-card">
             <h3 class="product-title">Seat Belt Tensioner</h3>
             <p class="product-desc"
@@ -355,22 +385,7 @@
             </div>
           </div>
 
-          <!-- NOWY PRODUKT -->
-          <div class="product-card">
-            <h3 class="product-title">Ejection Seat Replica</h3>
-            <p class="product-desc"
-               data-en="High-fidelity aircraft ejection seat replica for simulators"
-               data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-            <div class="product-image">
-              <img src="/images/mk14seat1.jpg"
-                   data-full="/images/mk14seat1-large.jpg"
-                   alt="Ejection seat replica (MK14)"
-                   loading="lazy" decoding="async">
-            </div>
-          </div>
-
-          <!-- jeśli masz jeszcze stary ejection-seat.jpg i chcesz go zachować jako osobny produkt, to tutaj możemy dodać kolejny kafelek.
-               Jeśli nie, zostawiamy 5 produktów jak wyżej. -->
+          <!-- 5) Accessories -->
           <div class="product-card">
             <h3 class="product-title">Simulator Accessories</h3>
             <p class="product-desc"
