@@ -115,19 +115,12 @@
 
     /* =========================
        MOBILE HERO FIX (ONLY)
-       - removes large empty gap on mobile
-       - does NOT affect desktop layout
     ========================== */
     @media (max-width: 768px) {
-      /* stop forcing full viewport height on mobile */
-      #hero {
-        min-height: auto !important;  /* overrides min-h-[100vh] from Tailwind */
-      }
-
-      /* put the hero text back into normal document flow */
+      #hero { min-height: auto !important; }
       .hero-panel {
-        position: static !important;  /* overrides position:absolute */
-        top: auto !important;         /* neutralize top:56vh */
+        position: static !important;
+        top: auto !important;
         left: auto !important;
         right: auto !important;
         margin-left: auto !important;
@@ -180,13 +173,13 @@
 
     .product-image img.thumb-contain {
       object-fit: contain !important;
-      object-position: center bottom;
-      transform: none !important;
+      object-position: center 90%;
+      transform: scale(0.94) !important;
       background: rgba(0,0,0,0.12);
       padding: 6px;
       cursor: zoom-in;
     }
-    .product-card:hover .product-image img.thumb-contain { transform: none !important; }
+    .product-card:hover .product-image img.thumb-contain { transform: scale(0.94) !important; }
   </style>
 </head>
 
@@ -291,8 +284,8 @@
                    data-pl="Zobacz więcej"></a>
 
                 <div class="product-image">
-                  <img src="/images/seatbelt.jpg"
-                       data-full="/images/seatbelt.jpg"
+                  <img src="/images/belttensioner1.jpg"
+                       data-full="/images/belttensioner1-large.jpg"
                        alt="Seat belt tensioner for simulator"
                        loading="lazy" decoding="async">
                 </div>
@@ -310,8 +303,8 @@
                    data-pl="Zobacz więcej"></a>
 
                 <div class="product-image">
-                  <img src="/images/ejection-seat.jpg"
-                       data-full="/images/ejection-seat.jpg"
+                  <img src="/images/accessories1.jpg"
+                       data-full="/images/accessories1-large.jpg"
                        alt="Simulator accessories"
                        loading="lazy" decoding="async">
                 </div>
