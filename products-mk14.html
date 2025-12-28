@@ -30,7 +30,11 @@
   <script src="/assets/site-layout.js" defer></script>
 
   <style>
-    .thumb-contain { object-fit: contain !important; background: rgba(0,0,0,0.12); padding: 10px; }
+    /* Żeby MK14 było w całości widoczne w hero obrazku */
+    .img-contain {
+      object-fit: contain;
+      background: rgba(0,0,0,0.18);
+    }
   </style>
 </head>
 
@@ -38,103 +42,76 @@
   <div id="siteHeader"></div>
 
   <main class="pt-24">
-    <section class="container mx-auto px-4 py-10 fade-in">
-      <div class="grid lg:grid-cols-2 gap-8 items-start">
-        <div>
-          <p class="text-sm text-white/70 mb-2">
-            <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
-          </p>
+    <section class="container mx-auto px-4 py-14">
+      <div class="max-w-4xl mx-auto">
+        <p class="text-white/70 mb-3">
+          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+        </p>
 
-          <h1 class="text-4xl md:text-5xl font-bold mb-4"
-              data-en="Ejection Seat MK14 Replica"
-              data-pl="Replika fotela katapultowego MK14"></h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-5"
+            data-en="Ejection Seat Replica (MK14)"
+            data-pl="Replika fotela katapultowego (MK14)"></h1>
 
-          <p class="text-xl text-white/90 mb-6"
-             data-en="Not just a seat — it’s the moment you step into the cockpit. The detail and presence instantly raise the realism of any flight sim build."
-             data-pl="To nie tylko fotel — to moment wejścia do kokpitu. Detal i „obecność” natychmiast podnoszą realizm każdego flight sim buildu."></p>
+        <p class="text-lg md:text-xl text-white/85 mb-8"
+           data-en="The centerpiece that turns a simulator into a cockpit. Built to impress — and to feel right when you sit in."
+           data-pl="Ten element robi „kokpit” z symulatora. Robi wrażenie — i daje poczucie, że siedzisz we właściwym miejscu."></p>
 
-          <div class="flex flex-wrap gap-3 mb-6">
-            <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-               data-en="Request a quote"
-               data-pl="Poproś o wycenę"></a>
-            <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
-               data-en="Ask about customization"
-               data-pl="Zapytaj o personalizację"></a>
+        <!-- IMAGE -->
+        <div class="mb-10">
+          <div class="rounded-2xl overflow-hidden border border-white/5 bg-black/20">
+            <img
+              src="/images/mk14seat1.jpg"
+              data-full="/images/mk14seat1-large.jpg"
+              alt="Ejection seat replica (MK14)"
+              class="w-full h-[260px] md:h-[380px] img-contain cursor-zoom-in"
+              loading="lazy" decoding="async"
+            />
+          </div>
+          <p class="text-white/60 text-sm mt-2" data-en="Tip: click the image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-10">
+          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-3" data-en="Why it’s special" data-pl="Co jest w tym wyjątkowego"></h2>
+            <ul class="list-disc list-inside text-white/85 space-y-2">
+              <li data-en="Instant “wow” factor for any flight sim setup." data-pl="Natychmiastowy efekt „wow” w każdej kabinie."></li>
+              <li data-en="Comfortable and solid — made for real usage, not only display." data-pl="Wygodny i solidny — do realnego używania, nie tylko „na półkę”."></li>
+              <li data-en="A cockpit feel you can’t get from a standard sim seat." data-pl="Poczucie kokpitu, którego nie da zwykły fotel simracingowy."></li>
+            </ul>
           </div>
 
-          <div class="bg-gray-800/70 border border-white/5 rounded-xl p-5">
-            <h2 class="text-xl font-semibold mb-3" data-en="Why it’s worth it" data-pl="Dlaczego warto"></h2>
+          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-3" data-en="Perfect for" data-pl="Idealne do"></h2>
             <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Instant wow-effect — the cockpit finally looks and feels “real”."
-                  data-pl="Natychmiastowy efekt wow — kokpit zaczyna wyglądać i „czuć się” prawdziwie."></li>
-              <li data-en="Perfect for home cockpits, exhibitions, content creators and events."
-                  data-pl="Idealna do kokpitów domowych, ekspozycji, twórców i eventów."></li>
-              <li data-en="A premium centerpiece that upgrades the whole build."
-                  data-pl="Element premium, który podnosi wartość całego stanowiska."></li>
+              <li data-en="Flight sim enthusiasts who want a true cockpit atmosphere." data-pl="Flight sim, gdy chcesz prawdziwej atmosfery kabiny."></li>
+              <li data-en="Showroom / streaming setups that must look premium." data-pl="Showroom / stream, gdy ma wyglądać premium."></li>
+              <li data-en="Collectors building a unique home cockpit." data-pl="Kolekcjonerzy budujący wyjątkowy kokpit w domu."></li>
             </ul>
           </div>
         </div>
 
-        <div class="bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
-          <img
-            class="w-full h-[320px] md:h-[420px] object-cover cursor-zoom-in thumb-contain"
-            src="/images/mk14seat1.jpg"
-            data-full="/images/mk14seat1-large.jpg"
-            alt="Ejection seat replica (MK14)"
-            loading="eager"
-            decoding="async"
-          />
-          <div class="p-4 text-white/75 text-sm" data-en="Click the image to zoom." data-pl="Kliknij zdjęcie, aby powiększyć."></div>
-        </div>
-      </div>
-    </section>
+        <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
+          <h2 class="text-2xl font-bold mb-3" data-en="Make it yours" data-pl="Dopasuj pod siebie"></h2>
+          <p class="text-white/85 mb-4"
+             data-en="We can help you integrate the seat into your cockpit layout: mounting, positioning and compatibility with your rig. If you want extra elements around it (panels, mounts, accessories) — we can plan it as a coherent build."
+             data-pl="Pomożemy w integracji z Twoim kokpitem: montaż, pozycja, dopasowanie do riga. Jeśli chcesz do tego dodatkowe elementy (panele, mocowania, akcesoria) — zaplanujemy to jako spójną całość."></p>
 
-    <section class="container mx-auto px-4 pb-12">
-      <div class="grid lg:grid-cols-3 gap-6">
-        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-          <h3 class="text-xl font-semibold mb-3" data-en="Made for immersion" data-pl="Zrobiona pod immersję"></h3>
-          <p class="text-white/85"
-             data-en="It’s the details that sell the illusion: proportions, silhouette and the cockpit vibe. Great for anyone who wants the build to feel complete."
-             data-pl="To detale sprzedają iluzję: proporcje, sylwetka i klimat kokpitu. Świetna dla osób, które chcą, żeby stanowisko było „domknięte”."></p>
+          <p class="text-white/75"
+             data-en="Tell us what you fly and how you want it to look — we’ll propose the best layout."
+             data-pl="Powiedz, na czym latasz i jak ma wyglądać — zaproponujemy najlepszy układ."></p>
         </div>
 
-        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-          <h3 class="text-xl font-semibold mb-3" data-en="Use cases" data-pl="Zastosowania"></h3>
-          <ul class="list-disc list-inside text-white/85 space-y-2">
-            <li data-en="Home flight sim cockpits (premium builds)."
-                data-pl="Domowe kokpity flight sim (projekty premium)."></li>
-            <li data-en="Museums, showrooms, exhibitions and events."
-                data-pl="Muzea, showroomy, ekspozycje i eventy."></li>
-            <li data-en="Streamers, creators and commercial sim rooms."
-                data-pl="Streamerzy, twórcy i komercyjne sim roomy."></li>
-          </ul>
-        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/index.html#contact"
+             class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+             data-en="Request a quote"
+             data-pl="Poproś o wycenę"></a>
 
-        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-          <h3 class="text-xl font-semibold mb-3" data-en="Customization" data-pl="Personalizacja"></h3>
-          <ul class="list-disc list-inside text-white/85 space-y-2">
-            <li data-en="Finish and visual style options."
-                data-pl="Opcje wykończenia i stylu wizualnego."></li>
-            <li data-en="Mounting and integration with your cockpit."
-                data-pl="Mocowania i integracja z kokpitem."></li>
-            <li data-en="Add-ons depending on your build goals."
-                data-pl="Dodatki zależnie od celu projektu."></li>
-          </ul>
+          <a href="/index.html#products"
+             class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+             data-en="Compare other products"
+             data-pl="Porównaj inne produkty"></a>
         </div>
-      </div>
-    </section>
-
-    <section class="container mx-auto px-4 pb-10">
-      <div class="bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3"
-            data-en="Make your cockpit unforgettable"
-            data-pl="Zrób kokpit, który zapada w pamięć"></h2>
-        <p class="text-white/85 mb-6"
-           data-en="If you want a build that looks like it belongs in a real aircraft — this is the piece that changes everything."
-           data-pl="Jeśli chcesz stanowisko, które wygląda jak z prawdziwego samolotu — to element, który zmienia wszystko."></p>
-        <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-           data-en="Contact us"
-           data-pl="Skontaktuj się"></a>
       </div>
     </section>
 
@@ -147,28 +124,28 @@
   <script>
     const metaData = {
       en: {
-        title: "Ejection Seat MK14 Replica – ForgeMotion Systems",
-        description: "High-fidelity ejection seat replica (MK14) for flight sim cockpits. Instant authenticity and wow effect for premium builds.",
-        keywords: "ejection seat replica, MK14 seat, flight sim cockpit seat, simulator cockpit, ForgeMotion Systems",
-        ogTitle: "Ejection Seat MK14 Replica – ForgeMotion Systems",
-        ogDescription: "Cockpit centerpiece: premium realism and presence for flight sim builds.",
+        title: "MK14 Ejection Seat Replica – ForgeMotion Systems",
+        description: "High-impact ejection seat replica (MK14) for flight simulators. A premium cockpit centerpiece with a true aviation vibe.",
+        keywords: "ejection seat replica, MK14 seat, flight simulator cockpit seat, ForgeMotion Systems",
+        ogTitle: "MK14 Ejection Seat Replica – ForgeMotion Systems",
+        ogDescription: "Turn your sim into a cockpit. Premium look, solid build, real vibe.",
         ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-        twitterTitle: "Ejection Seat MK14 Replica – ForgeMotion Systems",
-        twitterDescription: "Cockpit centerpiece: premium realism and presence for flight sim builds.",
+        twitterTitle: "MK14 Ejection Seat Replica – ForgeMotion Systems",
+        twitterDescription: "A cockpit centerpiece with instant wow-effect.",
         twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-        canonical: "https://forgemotionsystems.com/products-mk14"
+        canonical: "https://forgemotionsystems.com/products-mk14.html"
       },
       pl: {
         title: "Replika fotela katapultowego MK14 – ForgeMotion Systems",
-        description: "Wysokiej jakości replika fotela (MK14) do kokpitów flight sim. Autentyczność i efekt wow dla projektów premium.",
-        keywords: "replika fotela katapultowego, fotel MK14, kokpit flight sim, fotel do symulatora, ForgeMotion Systems",
+        description: "Replika fotela katapultowego (MK14) do symulatorów lotniczych. Premium element kokpitu z efektem wow.",
+        keywords: "replika fotela katapultowego, MK14, fotel do symulatora lotniczego, ForgeMotion Systems",
         ogTitle: "Replika fotela MK14 – ForgeMotion Systems",
-        ogDescription: "Serce kokpitu: premium realizm i „obecność” dla flight sim.",
+        ogDescription: "Zamień symulator w kokpit. Premium wygląd, solidna konstrukcja, klimat lotniczy.",
         ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
         twitterTitle: "Replika fotela MK14 – ForgeMotion Systems",
-        twitterDescription: "Serce kokpitu: premium realizm i „obecność” dla flight sim.",
+        twitterDescription: "Element kokpitu z natychmiastowym efektem wow.",
         twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-        canonical: "https://forgemotionsystems.com/products-mk14"
+        canonical: "https://forgemotionsystems.com/products-mk14.html"
       }
     };
 
