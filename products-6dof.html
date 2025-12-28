@@ -4,12 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <!-- Podstawowe meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -17,475 +15,167 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="" />
   <meta property="og:description" content="" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="" />
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    html { scroll-padding-top: 90px; }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeInUp 0.9s forwards;
-    }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-
-    /* ===== Modal (klik → duże zdjęcie) ===== */
-    .modal-hidden { display: none; }
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.72);
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .modal-panel {
-      width: min(1100px, 96vw);
-      max-height: 90vh;
-      background: rgba(17, 24, 39, 0.96);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.5);
-      position: relative;
-    }
-    .modal-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 999px;
-      width: 40px;
-      height: 40px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    .modal-close:hover { background: rgba(255,255,255,0.18); }
-    .modal-img-wrap { padding: 0.75rem; }
-    .modal-img {
-      width: 100%;
-      height: auto;
-      max-height: calc(90vh - 1.5rem);
-      object-fit: contain;
-      border-radius: 0.75rem;
-      display: block;
-    }
-    .modal-hint {
-      padding: 0 0.95rem 0.95rem 0.95rem;
-      color: rgba(255,255,255,0.75);
-      font-size: 0.95rem;
-      text-align: center;
-    }
-    .sr-only {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-  </style>
+  <script src="/assets/site-layout.js" defer></script>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
+  <div id="siteHeader"></div>
 
-<!-- ===== HEADER (spójny z index + innymi podstronami) ===== -->
-<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
-  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="/index.html#products" class="flex items-center" aria-label="Go to products">
-      <img
-        src="/logo.png"
-        alt="ForgeMotion Systems logo"
-        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
-        loading="eager"
-      />
-    </a>
+  <main class="pt-24">
+    <section class="container mx-auto px-4 py-10 fade-in">
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <div>
+          <p class="text-sm text-white/70 mb-2">
+            <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          </p>
 
-    <div class="hidden md:flex items-center gap-8">
-      <nav aria-label="Primary navigation">
-        <ul class="flex items-center gap-8">
-          <li><a href="/index.html#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="/index.html#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="/index.html#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="/index.html#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
-        </ul>
-      </nav>
+          <h1 class="text-4xl md:text-5xl font-bold mb-4"
+              data-en="6DOF Motion Platform"
+              data-pl="Platforma Motion 6DOF"></h1>
 
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-      </div>
-    </div>
+          <p class="text-xl text-white/90 mb-6"
+             data-en="The closest thing to being in the car / cockpit — motion cues that feel natural, readable and addictive."
+             data-pl="Najbliżej tego, co daje prawdziwy samochód / kokpit — ruch, który jest naturalny, czytelny i wciągający."></p>
 
-    <div class="flex md:hidden items-center gap-3">
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-      </div>
+          <div class="flex flex-wrap gap-3 mb-6">
+            <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+               data-en="Request a quote"
+               data-pl="Poproś o wycenę"></a>
+            <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
+               data-en="Ask about your build"
+               data-pl="Zapytaj o dopasowanie do riga"></a>
+          </div>
 
-      <button
-        id="mobileMenuBtn"
-        type="button"
-        class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
-        aria-controls="mobileMenu"
-        aria-expanded="false"
-        aria-label="Open menu"
-      >
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
-    <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
-      <ul class="flex flex-col gap-2">
-        <li><a href="/index.html#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-        <li><a href="/index.html#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-        <li><a href="/index.html#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-        <li><a href="/index.html#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main class="pt-24">
-  <section class="container mx-auto px-4 py-10 fade-in">
-    <div class="grid lg:grid-cols-2 gap-8 items-start">
-      <div>
-        <p class="text-sm text-white/70 mb-2">
-          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
-        </p>
-
-        <h1 class="text-4xl md:text-5xl font-bold mb-4"
-            data-en="6DOF Motion Platform"
-            data-pl="Platforma Motion 6DOF"></h1>
-
-        <p class="text-xl text-white/90 mb-6"
-           data-en="The closest thing to being in the car / cockpit — motion cues that feel natural, readable and addictive."
-           data-pl="Najbliżej tego, co daje prawdziwy samochód / kokpit — ruch, który jest naturalny, czytelny i wciągający."></p>
-
-        <div class="flex flex-wrap gap-3 mb-6">
-          <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-             data-en="Request a quote"
-             data-pl="Poproś o wycenę"></a>
-          <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
-             data-en="Ask about your build"
-             data-pl="Zapytaj o dopasowanie do riga"></a>
+          <div class="bg-gray-800/70 border border-white/5 rounded-xl p-5">
+            <h2 class="text-xl font-semibold mb-3" data-en="Why people choose 6DOF" data-pl="Dlaczego ludzie wybierają 6DOF"></h2>
+            <ul class="list-disc list-inside text-white/85 space-y-2">
+              <li data-en="You feel weight transfer: braking, turn-in, curbs, landing and turbulence cues."
+                  data-pl="Czujesz przeniesienie masy: hamowanie, wejście w zakręt, tarki, lądowanie, turbulencje."></li>
+              <li data-en="More immersion without thinking about it — the body just believes it."
+                  data-pl="Więcej immersji bez „myślenia” — ciało po prostu w to wierzy."></li>
+              <li data-en="Perfect for premium home rigs, events, and high-end sim rooms."
+                  data-pl="Idealna do domowych rigów premium, eventów i topowych sim roomów."></li>
+            </ul>
+          </div>
         </div>
 
-        <div class="bg-gray-800/70 border border-white/5 rounded-xl p-5">
-          <h2 class="text-xl font-semibold mb-3" data-en="Why people choose 6DOF" data-pl="Dlaczego ludzie wybierają 6DOF"></h2>
+        <div class="bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
+          <img
+            class="w-full h-[320px] md:h-[420px] object-cover cursor-zoom-in"
+            src="/images/rama6dof1.jpg"
+            data-full="/images/rama6dof1-large.jpg"
+            alt="6DOF motion platform (frame)"
+            loading="eager"
+            decoding="async"
+          />
+          <div class="p-4 text-white/75 text-sm" data-en="Click the image to zoom." data-pl="Kliknij zdjęcie, aby powiększyć."></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto px-4 pb-12">
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3" data-en="What it changes" data-pl="Co to zmienia"></h3>
+          <p class="text-white/85"
+             data-en="You stop “watching” the sim and start feeling it. Drifting becomes intuitive, braking is more believable, and flight cues are easier to read."
+             data-pl="Przestajesz „oglądać” symulator, a zaczynasz go czuć. Drift jest bardziej intuicyjny, hamowanie bardziej wiarygodne, a bodźce lotnicze czytelniejsze."></p>
+        </div>
+
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3" data-en="Best for" data-pl="Najlepsza dla"></h3>
           <ul class="list-disc list-inside text-white/85 space-y-2">
-            <li data-en="You feel weight transfer: braking, turn-in, curbs, landing and turbulence cues."
-                data-pl="Czujesz przeniesienie masy: hamowanie, wejście w zakręt, tarki, lądowanie, turbulencje."></li>
-            <li data-en="More immersion without thinking about it — the body just believes it."
-                data-pl="Więcej immersji bez „myślenia” — ciało po prostu w to wierzy."></li>
-            <li data-en="Perfect for premium home rigs, events, and high-end sim rooms."
-                data-pl="Idealna do domowych rigów premium, eventów i topowych sim roomów."></li>
+            <li data-en="Sim racing: GT / formula / rally fans who want the full body experience."
+                data-pl="Sim racing: GT / formuła / rajdy — gdy chcesz „pełne ciało” w jeździe."></li>
+            <li data-en="Flight sims: takeoff/landing, turbulence and approach cues."
+                data-pl="Flight sim: start/lądowanie, turbulencje, podejścia."></li>
+            <li data-en="Show setups: events, demo stations, premium gaming rooms."
+                data-pl="Stanowiska pokazowe: eventy, demo, gaming roomy premium."></li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-3" data-en="What you get" data-pl="Co otrzymujesz"></h3>
+          <ul class="list-disc list-inside text-white/85 space-y-2">
+            <li data-en="Rigid platform frame designed for stable mounting."
+                data-pl="Sztywną ramę platformy zaprojektowaną pod stabilny montaż."></li>
+            <li data-en="Configuration options to match your rig and space."
+                data-pl="Opcje konfiguracji dopasowane do riga i miejsca."></li>
+            <li data-en="Support with choosing add-ons and finishing the setup."
+                data-pl="Wsparcie w doborze dodatków i „domknięciu” stanowiska."></li>
           </ul>
         </div>
       </div>
+    </section>
 
-      <div class="bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
-        <img
-          class="w-full h-[320px] md:h-[420px] object-cover cursor-zoom-in"
-          src="/images/rama6dof1.jpg"
-          data-full="/images/rama6dof1-large.jpg"
-          alt="6DOF motion platform (frame)"
-          loading="eager"
-          decoding="async"
-        />
-        <div class="p-4 text-white/75 text-sm" data-en="Click the image to zoom." data-pl="Kliknij zdjęcie, aby powiększyć."></div>
+    <section class="container mx-auto px-4 pb-10">
+      <div class="bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3"
+            data-en="Want it matched to your rig?"
+            data-pl="Chcesz dopasować to do swojego riga?"></h2>
+        <p class="text-white/85 mb-6"
+           data-en="Tell us what you’re building (space, seat, pedals, usage). We’ll suggest a configuration and prepare a quote."
+           data-pl="Napisz, co budujesz (miejsce, fotel, pedały, zastosowanie). Zaproponujemy konfigurację i przygotujemy wycenę."></p>
+        <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+           data-en="Contact us"
+           data-pl="Skontaktuj się"></a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="container mx-auto px-4 pb-12">
-    <div class="grid lg:grid-cols-3 gap-6">
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h3 class="text-xl font-semibold mb-3" data-en="What it changes" data-pl="Co to zmienia"></h3>
-        <p class="text-white/85"
-           data-en="You stop “watching” the sim and start feeling it. Drifting becomes intuitive, braking is more believable, and flight cues are easier to read."
-           data-pl="Przestajesz „oglądać” symulator, a zaczynasz go czuć. Drift jest bardziej intuicyjny, hamowanie bardziej wiarygodne, a bodźce lotnicze czytelniejsze."></p>
-      </div>
+    <div id="otherProducts"></div>
+  </main>
 
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h3 class="text-xl font-semibold mb-3" data-en="Best for" data-pl="Najlepsza dla"></h3>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="Sim racing: GT / formula / rally fans who want the full body experience."
-              data-pl="Sim racing: GT / formuła / rajdy — gdy chcesz „pełne ciało” w jeździe."></li>
-          <li data-en="Flight sims: takeoff/landing, turbulence and approach cues."
-              data-pl="Flight sim: start/lądowanie, turbulencje, podejścia."></li>
-          <li data-en="Show setups: events, demo stations, premium gaming rooms."
-              data-pl="Stanowiska pokazowe: eventy, demo, gaming roomy premium."></li>
-        </ul>
-      </div>
+  <div id="siteFooter"></div>
+  <div id="siteModal"></div>
 
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h3 class="text-xl font-semibold mb-3" data-en="What you get" data-pl="Co otrzymujesz"></h3>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="Rigid platform frame designed for stable mounting."
-              data-pl="Sztywną ramę platformy zaprojektowaną pod stabilny montaż."></li>
-          <li data-en="Configuration options to match your rig and space."
-              data-pl="Opcje konfiguracji dopasowane do riga i miejsca."></li>
-          <li data-en="Support with choosing add-ons and finishing the setup."
-              data-pl="Wsparcie w doborze dodatków i „domknięciu” stanowiska."></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="container mx-auto px-4 pb-14">
-    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
-      <h2 class="text-2xl font-bold mb-6" data-en="Gallery" data-pl="Galeria"></h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <img class="w-full h-48 object-cover rounded-xl cursor-zoom-in"
-             src="/images/rama6dof1.jpg" data-full="/images/rama6dof1-large.jpg" alt="6DOF platform photo 1" loading="lazy" decoding="async">
-        <img class="w-full h-48 object-cover rounded-xl cursor-zoom-in"
-             src="/images/rama6dof1.jpg" data-full="/images/rama6dof1-large.jpg" alt="6DOF platform photo 2" loading="lazy" decoding="async">
-        <img class="w-full h-48 object-cover rounded-xl cursor-zoom-in"
-             src="/images/rama6dof1.jpg" data-full="/images/rama6dof1-large.jpg" alt="6DOF platform photo 3" loading="lazy" decoding="async">
-      </div>
-      <p class="text-white/60 text-sm mt-3"
-         data-en="(Replace duplicates with more photos when you have them.)"
-         data-pl="(Podmień duplikaty, gdy dodasz więcej zdjęć.)"></p>
-    </div>
-  </section>
-
-  <section class="container mx-auto px-4 pb-10">
-    <div class="bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
-      <h2 class="text-2xl md:text-3xl font-bold mb-3"
-          data-en="Want it matched to your rig?"
-          data-pl="Chcesz dopasować to do swojego riga?"></h2>
-      <p class="text-white/85 mb-6"
-         data-en="Tell us what you’re building (space, seat, pedals, usage). We’ll suggest a configuration and prepare a quote."
-         data-pl="Napisz, co budujesz (miejsce, fotel, pedały, zastosowanie). Zaproponujemy konfigurację i przygotujemy wycenę."></p>
-      <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-         data-en="Contact us"
-         data-pl="Skontaktuj się"></a>
-    </div>
-  </section>
-
-  <!-- Other products -->
-  <section class="container mx-auto px-4 pb-16">
-    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
-      <h2 class="text-2xl font-bold mb-5" data-en="Other products" data-pl="Pozostałe produkty"></h2>
-      <div class="flex flex-wrap gap-3">
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-3dof.html">3DOF / 2DOF</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-mk14.html">MK14</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-belt-tensioner.html" data-en="Belt tensioner" data-pl="Napinacz pasów"></a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-accessories.html" data-en="Accessories" data-pl="Akcesoria"></a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="bg-gray-900 py-6 text-center text-gray-400">
-  © 2025 ForgeMotion Systems
-</footer>
-
-<!-- ===== Modal HTML ===== -->
-<div id="imgModal" class="modal-hidden" aria-hidden="true">
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
-    <div class="modal-panel">
-      <button id="imgModalClose" class="modal-close" type="button" aria-label="Close image">
-        <span aria-hidden="true">✕</span>
-      </button>
-      <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
-      <div class="modal-img-wrap">
-        <img id="imgModalImg" class="modal-img" src="" alt="">
-      </div>
-      <div class="modal-hint"
-           data-en="Tip: click outside the image or press ESC to close."
-           data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
-    </div>
-  </div>
-</div>
-
-<script>
-  const metaData = {
-    en: {
-      title: "6DOF Motion Platform – ForgeMotion Systems",
-      description: "6DOF motion platform for racing & flight simulation enthusiasts. Natural motion cues, premium immersion, made for serious rigs.",
-      keywords: "6DOF motion platform, motion simulator, sim racing motion, flight sim motion, ForgeMotion Systems",
-      ogTitle: "6DOF Motion Platform – ForgeMotion Systems",
-      ogDescription: "Premium 6DOF motion for racing & flight sim rigs.",
-      ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-      twitterTitle: "6DOF Motion Platform – ForgeMotion Systems",
-      twitterDescription: "Premium 6DOF motion for racing & flight sim rigs.",
-      twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-      canonical: "https://forgemotionsystems.com/products-6dof"
-    },
-    pl: {
-      title: "Platforma Motion 6DOF – ForgeMotion Systems",
-      description: "Platforma motion 6DOF dla fanów sim racingu i symulacji lotniczej. Naturalne bodźce ruchu i immersja premium.",
-      keywords: "platforma motion 6DOF, motion simulator, sim racing motion, symulator lotniczy motion, ForgeMotion Systems",
-      ogTitle: "Platforma Motion 6DOF – ForgeMotion Systems",
-      ogDescription: "Platforma 6DOF — immersja premium dla sim racingu i flight sim.",
-      ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-      twitterTitle: "Platforma Motion 6DOF – ForgeMotion Systems",
-      twitterDescription: "Platforma 6DOF — immersja premium dla sim racingu i flight sim.",
-      twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-      canonical: "https://forgemotionsystems.com/products-6dof"
-    }
-  };
-
-  function setMetaTag(key, content, attr = "name") {
-    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
-    if (!tag) {
-      tag = document.createElement("meta");
-      tag.setAttribute(attr, key);
-      document.head.appendChild(tag);
-    }
-    tag.setAttribute("content", content);
-  }
-
-  function setCanonical(href) {
-    let tag = document.head.querySelector('link[rel="canonical"]');
-    if (!tag) {
-      tag = document.createElement("link");
-      tag.rel = "canonical";
-      document.head.appendChild(tag);
-    }
-    tag.href = href;
-  }
-
-  const i18nNodes = Array.from(document.querySelectorAll("[data-en]"));
-
-  function applyTexts(lang) {
-    for (const el of i18nNodes) {
-      const val = el.dataset[lang];
-      if (typeof val === "string") el.textContent = val;
-    }
-  }
-
-  function updateMetaTags(lang) {
-    const data = metaData[lang];
-    document.title = data.title;
-
-    setMetaTag("description", data.description, "name");
-    setMetaTag("keywords", data.keywords, "name");
-    setMetaTag("author", "ForgeMotion Systems", "name");
-
-    setCanonical(data.canonical);
-
-    setMetaTag("og:title", data.ogTitle, "property");
-    setMetaTag("og:description", data.ogDescription, "property");
-    setMetaTag("og:image", data.ogImage, "property");
-    setMetaTag("og:url", data.canonical, "property");
-    setMetaTag("og:type", "website", "property");
-
-    setMetaTag("twitter:title", data.twitterTitle, "name");
-    setMetaTag("twitter:description", data.twitterDescription, "name");
-    setMetaTag("twitter:image", data.twitterImage, "name");
-    setMetaTag("twitter:card", "summary_large_image", "name");
-  }
-
-  function setLanguage(lang) {
-    localStorage.setItem("lang", lang);
-    document.documentElement.lang = lang;
-    applyTexts(lang);
-    updateMetaTags(lang);
-  }
-
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-lang]");
-    if (!btn) return;
-    setLanguage(btn.getAttribute("data-lang"));
-  });
-
-  const savedLang = localStorage.getItem("lang") || "en";
-  setLanguage(savedLang);
-</script>
-
-<script>
-  (function () {
-    const btn = document.getElementById('mobileMenuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (!btn || !menu) return;
-
-    function closeMenu() {
-      menu.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-
-    function toggleMenu() {
-      const isOpen = !menu.classList.contains('hidden');
-      if (isOpen) closeMenu();
-      else {
-        menu.classList.remove('hidden');
-        btn.setAttribute('aria-expanded', 'true');
+  <script>
+    const metaData = {
+      en: {
+        title: "6DOF Motion Platform – ForgeMotion Systems",
+        description: "6DOF motion platform for racing & flight simulation enthusiasts. Natural motion cues, premium immersion, made for serious rigs.",
+        keywords: "6DOF motion platform, motion simulator, sim racing motion, flight sim motion, ForgeMotion Systems",
+        ogTitle: "6DOF Motion Platform – ForgeMotion Systems",
+        ogDescription: "Premium 6DOF motion for racing & flight sim rigs.",
+        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+        twitterTitle: "6DOF Motion Platform – ForgeMotion Systems",
+        twitterDescription: "Premium 6DOF motion for racing & flight sim rigs.",
+        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+        canonical: "https://forgemotionsystems.com/products-6dof"
+      },
+      pl: {
+        title: "Platforma Motion 6DOF – ForgeMotion Systems",
+        description: "Platforma motion 6DOF dla fanów sim racingu i symulacji lotniczej. Naturalne bodźce ruchu i immersja premium.",
+        keywords: "platforma motion 6DOF, motion simulator, sim racing motion, symulator lotniczy motion, ForgeMotion Systems",
+        ogTitle: "Platforma Motion 6DOF – ForgeMotion Systems",
+        ogDescription: "Platforma 6DOF — immersja premium dla sim racingu i flight sim.",
+        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
+        twitterTitle: "Platforma Motion 6DOF – ForgeMotion Systems",
+        twitterDescription: "Platforma 6DOF — immersja premium dla sim racingu i flight sim.",
+        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+        canonical: "https://forgemotionsystems.com/products-6dof"
       }
-    }
+    };
 
-    btn.addEventListener('click', toggleMenu);
-    document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
-    window.addEventListener('resize', () => { if (window.innerWidth >= 768) closeMenu(); });
-  })();
-</script>
-
-<script>
-  (function () {
-    const modal = document.getElementById('imgModal');
-    const modalImg = document.getElementById('imgModalImg');
-    const closeBtn = document.getElementById('imgModalClose');
-
-    if (!modal || !modalImg || !closeBtn) return;
-
-    function openModal(src, alt) {
-      modalImg.src = src;
-      modalImg.alt = alt || "Image preview";
-      modal.classList.remove('modal-hidden');
-      modal.setAttribute('aria-hidden', 'false');
-      closeBtn.focus();
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.add('modal-hidden');
-      modal.setAttribute('aria-hidden', 'true');
-      modalImg.src = "";
-      modalImg.alt = "";
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('click', (e) => {
-      const img = e.target.closest('img[data-full]');
-      if (!img) return;
-      openModal(img.getAttribute('data-full') || img.getAttribute('src'), img.getAttribute('alt') || '');
+    window.addEventListener("DOMContentLoaded", () => {
+      SiteLayout.init({
+        metaData,
+        includeModal: true,
+        activeProductKey: "6dof",
+        injectOtherProducts: true
+      });
     });
-
-    closeBtn.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal-overlay')) closeModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
-    });
-  })();
-</script>
-
+  </script>
 </body>
 </html>
