@@ -4,12 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <!-- Meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -17,30 +15,22 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="" />
   <meta property="og:description" content="" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="" />
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     html { scroll-padding-top: 90px; }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeInUp 0.9s forwards;
-    }
+    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp 0.9s forwards; }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
@@ -170,7 +160,6 @@
       </div>
     </div>
 
-    <!-- Miejsce na przyszłą galerię / zdjęcia -->
     <div class="mt-10 bg-gray-800/60 border border-white/5 rounded-2xl p-8">
       <h2 class="text-2xl font-bold mb-3" data-en="Examples (coming soon)" data-pl="Przykłady (wkrótce)"></h2>
       <p class="text-white/80"
@@ -190,6 +179,19 @@
          data-pl="Skontaktuj się"></a>
     </div>
   </section>
+
+  <!-- Other products -->
+  <section class="container mx-auto px-4 pb-16">
+    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold mb-5" data-en="Other products" data-pl="Pozostałe produkty"></h2>
+      <div class="flex flex-wrap gap-3">
+        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-6dof.html">6DOF</a>
+        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-3dof.html">3DOF / 2DOF</a>
+        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-mk14.html">MK14</a>
+        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-belt-tensioner.html" data-en="Belt tensioner" data-pl="Napinacz pasów"></a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="bg-gray-900 py-6 text-center text-gray-400">
@@ -202,12 +204,24 @@
       title: "Simulator Accessories – ForgeMotion Systems",
       description: "Custom simulator accessories, mounts and add-ons tailored to your rig. Make your setup feel complete and professional.",
       keywords: "simulator accessories, sim rig mounts, custom add-ons, ForgeMotion Systems",
+      ogTitle: "Simulator Accessories – ForgeMotion Systems",
+      ogDescription: "Custom mounts and add-ons tailored to your rig.",
+      ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+      twitterTitle: "Simulator Accessories – ForgeMotion Systems",
+      twitterDescription: "Custom mounts and add-ons tailored to your rig.",
+      twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
       canonical: "https://forgemotionsystems.com/products-accessories"
     },
     pl: {
       title: "Akcesoria do symulatorów – ForgeMotion Systems",
       description: "Akcesoria do symulatorów, mocowania i dodatki dopasowane do Twojego riga. Domknij projekt i podnieś ergonomię.",
       keywords: "akcesoria do symulatorów, mocowania do riga, dodatki do symulatora, ForgeMotion Systems",
+      ogTitle: "Akcesoria do symulatorów – ForgeMotion Systems",
+      ogDescription: "Mocowania i dodatki dopasowane do Twojego stanowiska.",
+      ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
+      twitterTitle: "Akcesoria do symulatorów – ForgeMotion Systems",
+      twitterDescription: "Mocowania i dodatki dopasowane do Twojego stanowiska.",
+      twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
       canonical: "https://forgemotionsystems.com/products-accessories"
     }
   };
@@ -244,10 +258,23 @@
   function updateMetaTags(lang) {
     const data = metaData[lang];
     document.title = data.title;
+
     setMetaTag("description", data.description, "name");
     setMetaTag("keywords", data.keywords, "name");
     setMetaTag("author", "ForgeMotion Systems", "name");
+
     setCanonical(data.canonical);
+
+    setMetaTag("og:title", data.ogTitle, "property");
+    setMetaTag("og:description", data.ogDescription, "property");
+    setMetaTag("og:image", data.ogImage, "property");
+    setMetaTag("og:url", data.canonical, "property");
+    setMetaTag("og:type", "website", "property");
+
+    setMetaTag("twitter:title", data.twitterTitle, "name");
+    setMetaTag("twitter:description", data.twitterDescription, "name");
+    setMetaTag("twitter:image", data.twitterImage, "name");
+    setMetaTag("twitter:card", "summary_large_image", "name");
   }
 
   function setLanguage(lang) {
