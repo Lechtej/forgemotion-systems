@@ -1,9 +1,10 @@
 /* /assets/site-layout.js
    Shared layout + i18n + meta + mobile menu + (optional) image modal + other products
-   + scrollspy (index) + smooth anchor scroll + close mobile menu on language change (mobile)
+   + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
 */
 (function () {
   const DEFAULT_LANG = "en";
+  const SUPPORTED_LANGS = ["en", "pl"];
 
   const PRODUCT_LINKS = [
     { key: "6dof", href: "/products-6dof.html", label: { en: "6DOF", pl: "6DOF" } },
@@ -22,6 +23,24 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
+
+  function stripTrailingSlash(pathname) {
+    return String(pathname || "").replace(/\/+$/, "") || "/";
+  }
+
+  function getPathLang(pathname) {
+    const p = stripTrailingSlash(pathname);
+    if (p === "/pl" || p.startsWith("/pl/")) return "pl";
+    if (p === "/en" || p.startsWith("/en/")) return "en";
+    return null;
+  }
+
+  function isIndexLikePath(pathname) {
+    const p = stripTrailingSlash(pathname);
+    if (p === "/" || p === "/index.html") return true;
+    if (p === "/en" || p === "/pl") return true;
+    return false;
   }
 
   function setMetaTag(key, content, attr = "name") {
@@ -51,14 +70,11 @@
     style.id = "siteLayoutStyles";
     style.textContent = `
       html { scroll-padding-top: 90px; scroll-behavior: smooth; }
-      @media (prefers-reduced-motion: reduce) {
-        html { scroll-behavior: auto; }
-      }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
       .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp .9s forwards; }
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-      /* Scrollspy active link */
       .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
 
       ${includeModal ? `
@@ -86,10 +102,8 @@
       .modal-close:hover{ background: rgba(255,255,255,0.18); }
       .modal-img-wrap{ padding:.75rem; }
       .modal-img{
-        width:100%; height:auto;
-        max-height: calc(90vh - 1.5rem);
-        object-fit: contain;
-        border-radius:.75rem; display:block;
+        width:100%; height:auto; max-height: calc(90vh - 1.5rem);
+        object-fit: contain; border-radius:.75rem; display:block;
       }
       .modal-hint{
         padding: 0 .95rem .95rem .95rem;
@@ -104,26 +118,46 @@
     document.head.appendChild(style);
   }
 
-  function renderHeader() {
+  function langBasePath(lang) {
+    const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
+    return `/${safe}/`;
+  }
+
+  function buildIndexUrl(lang, hash = "") {
+    const base = langBasePath(lang);
+    const h = hash ? (String(hash).startsWith("#") ? hash : `#${hash}`) : "";
+    return `${base}${h}`;
+  }
+
+  function buildCanonicalForCurrent(lang) {
+    const origin = window.location.origin;
+    const path = stripTrailingSlash(window.location.pathname);
+    if (isIndexLikePath(path) || getPathLang(path)) return `${origin}${langBasePath(lang)}`;
+    return `${origin}${window.location.pathname}`;
+  }
+
+  function renderHeader(lang) {
+    const heroHref = buildIndexUrl(lang, "hero");
+    const productsHref = buildIndexUrl(lang, "products");
+    const aboutHref = buildIndexUrl(lang, "about");
+    const contactHref = buildIndexUrl(lang, "contact");
+    const logoHref = productsHref;
+
     return `
 <header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="/index.html#products" class="flex items-center" aria-label="Go to products">
-      <img
-        src="/logo.png"
-        alt="ForgeMotion Systems logo"
-        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
-        loading="eager"
-      />
+    <a href="${escapeHtml(logoHref)}" class="flex items-center" aria-label="Go to products">
+      <img src="/logo.png" alt="ForgeMotion Systems logo"
+        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]" loading="eager" />
     </a>
 
     <div class="hidden md:flex items-center gap-8">
       <nav aria-label="Primary navigation">
         <ul class="flex items-center gap-8">
-          <li><a href="/index.html#hero" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="/index.html#products" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="/index.html#about" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="/index.html#contact" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
+          <li><a href="${escapeHtml(heroHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
+          <li><a href="${escapeHtml(productsHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="${escapeHtml(aboutHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
+          <li><a href="${escapeHtml(contactHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
         </ul>
       </nav>
 
@@ -141,14 +175,9 @@
         <button type="button" data-lang="pl" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
 
-      <button
-        id="mobileMenuBtn"
-        type="button"
+      <button id="mobileMenuBtn" type="button"
         class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
-        aria-controls="mobileMenu"
-        aria-expanded="false"
-        aria-label="Open menu"
-      >
+        aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
@@ -159,10 +188,10 @@
   <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
     <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
       <ul class="flex flex-col gap-2">
-        <li><a href="/index.html#hero" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-        <li><a href="/index.html#products" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-        <li><a href="/index.html#about" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-        <li><a href="/index.html#contact" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+        <li><a href="${escapeHtml(heroHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
+        <li><a href="${escapeHtml(productsHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+        <li><a href="${escapeHtml(aboutHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
+        <li><a href="${escapeHtml(contactHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
       </ul>
     </nav>
   </div>
@@ -182,11 +211,8 @@
         <span aria-hidden="true">✕</span>
       </button>
       <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
-      <div class="modal-img-wrap">
-        <img id="imgModalImg" class="modal-img" src="" alt="">
-      </div>
-      <div class="modal-hint"
-           data-en="Tip: click outside the image or press ESC to close."
+      <div class="modal-img-wrap"><img id="imgModalImg" class="modal-img" src="" alt=""></div>
+      <div class="modal-hint" data-en="Tip: click outside the image or press ESC to close."
            data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
     </div>
   </div>
@@ -220,31 +246,57 @@
   }
 
   function updateMetaTags(lang, metaData) {
-    const data = metaData?.[lang] || metaData?.[DEFAULT_LANG];
-    if (!data) return;
+    const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
 
-    document.title = data.title || document.title;
+    if (data?.title) document.title = data.title;
 
-    setMetaTag("description", data.description || "", "name");
-    setMetaTag("keywords", data.keywords || "", "name");
-    setMetaTag("author", data.author || "ForgeMotion Systems", "name");
+    setMetaTag("description", data?.description || "", "name");
+    setMetaTag("keywords", data?.keywords || "", "name");
+    setMetaTag("author", data?.author || "ForgeMotion Systems", "name");
 
-    setCanonical(data.canonical || "");
+    const canonical = (data?.canonical && String(data.canonical).trim())
+      ? data.canonical
+      : buildCanonicalForCurrent(lang);
 
-    if (data.ogTitle || data.ogDescription || data.ogImage || data.canonical) {
-      setMetaTag("og:title", data.ogTitle || data.title || "", "property");
-      setMetaTag("og:description", data.ogDescription || data.description || "", "property");
-      setMetaTag("og:image", data.ogImage || "", "property");
-      setMetaTag("og:url", data.canonical || "", "property");
-      setMetaTag("og:type", "website", "property");
-    }
+    setCanonical(canonical);
 
-    if (data.twitterTitle || data.twitterDescription || data.twitterImage) {
-      setMetaTag("twitter:title", data.twitterTitle || data.title || "", "name");
-      setMetaTag("twitter:description", data.twitterDescription || data.description || "", "name");
-      setMetaTag("twitter:image", data.twitterImage || "", "name");
-      setMetaTag("twitter:card", "summary_large_image", "name");
-    }
+    setMetaTag("og:title", data?.ogTitle || data?.title || "", "property");
+    setMetaTag("og:description", data?.ogDescription || data?.description || "", "property");
+    setMetaTag("og:image", data?.ogImage || "", "property");
+    setMetaTag("og:url", canonical || "", "property");
+    setMetaTag("og:type", "website", "property");
+
+    setMetaTag("twitter:title", data?.twitterTitle || data?.title || "", "name");
+    setMetaTag("twitter:description", data?.twitterDescription || data?.description || "", "name");
+    setMetaTag("twitter:image", data?.twitterImage || "", "name");
+    setMetaTag("twitter:card", "summary_large_image", "name");
+  }
+
+  function detectLang() {
+    const fromPath = getPathLang(window.location.pathname);
+    if (fromPath) return fromPath;
+
+    const stored = localStorage.getItem("lang");
+    if (SUPPORTED_LANGS.includes(stored)) return stored;
+
+    return DEFAULT_LANG;
+  }
+
+  function setLanguage(lang, metaData) {
+    const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
+
+    localStorage.setItem("lang", safe);
+    document.documentElement.lang = safe;
+
+    applyTexts(safe);
+    updateMetaTags(safe, metaData);
+
+    document.querySelectorAll("[data-lang]").forEach(btn => {
+      const isActive = btn.getAttribute("data-lang") === safe;
+      btn.classList.toggle("nav-active", isActive);
+    });
+
+    return safe;
   }
 
   function isMobileMenuOpen() {
@@ -265,16 +317,15 @@
     const menu = document.getElementById("mobileMenu");
     if (!btn || !menu) return;
 
-    function toggleMenu() {
+    btn.addEventListener("click", () => {
       const open = !menu.classList.contains("hidden");
       if (open) closeMobileMenu();
       else {
         menu.classList.remove("hidden");
         btn.setAttribute("aria-expanded", "true");
       }
-    }
+    });
 
-    btn.addEventListener("click", toggleMenu);
     document.querySelectorAll(".mobile-link").forEach(a => a.addEventListener("click", closeMobileMenu));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMobileMenu(); });
     window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
@@ -322,34 +373,11 @@
     });
   }
 
-  function detectLang() {
-    return localStorage.getItem("lang") || DEFAULT_LANG;
-  }
-
-  function setLanguage(lang, metaData) {
-    localStorage.setItem("lang", lang);
-    document.documentElement.lang = lang;
-    applyTexts(lang);
-    updateMetaTags(lang, metaData);
-  }
-
-  function bindLangButtons(metaData) {
-    document.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-lang]");
-      if (!btn) return;
-
-      const wasMobileOpen = isMobileMenuOpen();
-      setLanguage(btn.getAttribute("data-lang"), metaData);
-
-      // Ultra polish: jeśli mobile menu było otwarte (mały ekran), zamknij po zmianie języka
-      if (wasMobileOpen) closeMobileMenu();
-    });
-  }
-
-  function injectLayout({ includeModal }) {
+  function injectLayout({ includeModal, lang }) {
     const headerSlot = document.getElementById("siteHeader");
-    if (headerSlot) headerSlot.innerHTML = renderHeader();
-    else document.body.insertAdjacentHTML("afterbegin", renderHeader());
+    const headerHtml = renderHeader(lang);
+    if (headerSlot) headerSlot.innerHTML = headerHtml;
+    else document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
     const footerSlot = document.getElementById("siteFooter");
     if (footerSlot) footerSlot.innerHTML = renderFooter();
@@ -362,7 +390,6 @@
     }
   }
 
-  /* ===== Smooth anchor scroll (only same-page anchors) ===== */
   function bindSmoothAnchorScroll() {
     document.addEventListener("click", (e) => {
       const a = e.target.closest('a[href*="#"]');
@@ -371,18 +398,15 @@
       const href = a.getAttribute("href");
       if (!href) return;
 
-      // tylko normalne kliknięcie
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
-      // rozpoznaj URL + hash
       let url;
       try { url = new URL(href, window.location.href); }
       catch { return; }
 
-      // Smooth scroll tylko jeśli to ten sam dokument (ten sam pathname)
       if (url.origin !== window.location.origin) return;
 
-      const samePath = (url.pathname.replace(/\/+$/, "") === window.location.pathname.replace(/\/+$/, ""));
+      const samePath = (stripTrailingSlash(url.pathname) === stripTrailingSlash(window.location.pathname));
       if (!samePath) return;
 
       const id = (url.hash || "").replace("#", "");
@@ -393,21 +417,14 @@
 
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      // aktualizuj hash (bez skoku)
       history.pushState(null, "", `#${id}`);
 
-      // na mobile po kliknięciu w link zamknij menu (jeśli było otwarte)
       if (isMobileMenuOpen()) closeMobileMenu();
     });
   }
 
-  /* ===== Scrollspy (index.html) ===== */
   function bindScrollSpy() {
-    const sectionEls = SCROLLSPY_SECTIONS
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
-
+    const sectionEls = SCROLLSPY_SECTIONS.map(id => document.getElementById(id)).filter(Boolean);
     if (sectionEls.length < 2) return;
 
     const links = Array.from(document.querySelectorAll('a.site-nav-link[href*="#"]'));
@@ -437,13 +454,8 @@
     else setActive("hero");
 
     const obs = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (visible && visible.target && visible.target.id) {
-        setActive(visible.target.id);
-      }
+      const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible?.target?.id) setActive(visible.target.id);
     }, {
       root: null,
       rootMargin: "-30% 0px -55% 0px",
@@ -458,38 +470,61 @@
     });
   }
 
+  function bindLangButtons(metaData) {
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-lang]");
+      if (!btn) return;
+
+      const targetLang = btn.getAttribute("data-lang");
+      if (!SUPPORTED_LANGS.includes(targetLang)) return;
+
+      const path = stripTrailingSlash(window.location.pathname);
+      const hash = window.location.hash || "";
+
+      // Na indexach (/, /en/, /pl/) przejdź do odpowiedniego URL językowego
+      if (isIndexLikePath(path) || getPathLang(path)) {
+        localStorage.setItem("lang", targetLang);
+        window.location.href = buildIndexUrl(targetLang, hash);
+        return;
+      }
+
+      // Na stronach produktowych: zostań na tej samej stronie, zmień tylko język
+      const wasMobileOpen = isMobileMenuOpen();
+      setLanguage(targetLang, metaData);
+      if (wasMobileOpen) closeMobileMenu();
+    });
+  }
+
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
         metaData: options?.metaData || null,
         includeModal: Boolean(options?.includeModal),
         activeProductKey: options?.activeProductKey || null,
-        injectOtherProducts: options?.injectOtherProducts !== false, // default true
+        injectOtherProducts: options?.injectOtherProducts !== false,
       };
 
+      const lang = detectLang();
+
       ensureGlobalStyles(cfg.includeModal);
-      injectLayout({ includeModal: cfg.includeModal });
+      injectLayout({ includeModal: cfg.includeModal, lang });
 
       bindMobileMenu();
       bindLangButtons(cfg.metaData);
-
-      // smooth anchor scroll (dla wszystkich stron)
       bindSmoothAnchorScroll();
 
-      const lang = detectLang();
-      setLanguage(lang, cfg.metaData);
+      const appliedLang = setLanguage(lang, cfg.metaData);
 
       if (cfg.includeModal) bindModal();
 
       if (cfg.injectOtherProducts) {
         const otherSlot = document.getElementById("otherProducts");
         if (otherSlot) {
-          otherSlot.innerHTML = renderOtherProducts(cfg.activeProductKey, lang);
-          applyTexts(lang);
+          otherSlot.innerHTML = renderOtherProducts(cfg.activeProductKey, appliedLang);
+          applyTexts(appliedLang);
         }
       }
 
-      // scrollspy tylko gdy są sekcje (index)
       bindScrollSpy();
     }
   };
