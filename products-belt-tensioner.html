@@ -4,12 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <!-- Meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -17,324 +15,139 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="" />
   <meta property="og:description" content="" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="" />
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    html { scroll-padding-top: 90px; }
-    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp 0.9s forwards; }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-  </style>
+  <script src="/assets/site-layout.js" defer></script>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
+  <div id="siteHeader"></div>
 
-<!-- ===== HEADER (spójny) ===== -->
-<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
-  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="/index.html#products" class="flex items-center" aria-label="Go to products">
-      <img
-        src="/logo.png"
-        alt="ForgeMotion Systems logo"
-        class="w-auto object-contain shrink-0 h-[clamp(34px,4.5vw,64px)]"
-        loading="eager"
-      />
-    </a>
+  <main class="pt-24">
+    <section class="container mx-auto px-4 py-12 fade-in">
+      <p class="text-sm text-white/70 mb-3">
+        <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+      </p>
 
-    <div class="hidden md:flex items-center gap-8">
-      <nav aria-label="Primary navigation">
-        <ul class="flex items-center gap-8">
-          <li><a href="/index.html#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="/index.html#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="/index.html#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="/index.html#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
-        </ul>
-      </nav>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4"
+          data-en="Seat Belt Tensioner"
+          data-pl="Napinacz pasów"></h1>
 
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
-      </div>
-    </div>
+      <p class="text-xl text-white/90 mb-7 max-w-3xl"
+         data-en="A simple upgrade that makes a huge difference. Feel braking, acceleration and load changes through your body — not only through the screen."
+         data-pl="Prosty upgrade, który robi ogromną różnicę. Poczuj hamowanie, przyspieszenie i zmiany obciążeń na ciele — nie tylko na ekranie."></p>
 
-    <div class="flex md:hidden items-center gap-3">
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+      <div class="flex flex-wrap gap-3 mb-10">
+        <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+           data-en="Request a quote"
+           data-pl="Poproś o wycenę"></a>
+        <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
+           data-en="Ask if it fits your rig"
+           data-pl="Zapytaj o kompatybilność"></a>
       </div>
 
-      <button
-        id="mobileMenuBtn"
-        type="button"
-        class="inline-flex items-center justify-center rounded p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60"
-        aria-controls="mobileMenu"
-        aria-expanded="false"
-        aria-label="Open menu"
-      >
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
-    <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
-      <ul class="flex flex-col gap-2">
-        <li><a href="/index.html#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-        <li><a href="/index.html#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-        <li><a href="/index.html#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-        <li><a href="/index.html#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main class="pt-24">
-  <section class="container mx-auto px-4 py-12 fade-in">
-    <p class="text-sm text-white/70 mb-3">
-      <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
-    </p>
-
-    <h1 class="text-4xl md:text-5xl font-bold mb-4"
-        data-en="Seat Belt Tensioner"
-        data-pl="Napinacz pasów"></h1>
-
-    <p class="text-xl text-white/90 mb-7 max-w-3xl"
-       data-en="A simple upgrade that makes a huge difference. Feel braking, acceleration and load changes through your body — not only through the screen."
-       data-pl="Prosty upgrade, który robi ogromną różnicę. Poczuj hamowanie, przyspieszenie i zmiany obciążeń na ciele — nie tylko na ekranie."></p>
-
-    <div class="flex flex-wrap gap-3 mb-10">
-      <a href="/index.html#contact" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-         data-en="Request a quote"
-         data-pl="Poproś o wycenę"></a>
-      <a href="/index.html#contact" class="bg-white/10 hover:bg-white/15 px-6 py-3 rounded font-semibold border border-white/10"
-         data-en="Ask if it fits your rig"
-         data-pl="Zapytaj o kompatybilność"></a>
-    </div>
-
-    <div class="grid lg:grid-cols-3 gap-6">
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-3" data-en="What you’ll feel" data-pl="Co poczujesz"></h2>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="Braking pressure that actually tightens the belts."
-              data-pl="Docisk przy hamowaniu, który realnie napina pasy."></li>
-          <li data-en="Acceleration pull that makes launches more exciting."
-              data-pl="Szarpnięcie przy przyspieszeniu, które dodaje emocji."></li>
-          <li data-en="More immersion with minimal space and setup changes."
-              data-pl="Więcej immersji bez dużych zmian w stanowisku."></li>
-        </ul>
-      </div>
-
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-3" data-en="Best for" data-pl="Najlepszy dla"></h2>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="Sim racing: stronger sense of speed and braking points."
-              data-pl="Sim racing: lepsze wyczucie prędkości i punktów hamowania."></li>
-          <li data-en="Compact rigs: when you want “more” without a full motion platform."
-              data-pl="Kompaktowe rigi: gdy chcesz „więcej” bez pełnej platformy motion."></li>
-          <li data-en="Motion setups: a great addition to 2DOF/3DOF/6DOF."
-              data-pl="Setupy motion: świetny dodatek do 2DOF/3DOF/6DOF."></li>
-        </ul>
-      </div>
-
-      <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-3" data-en="How we deliver it" data-pl="Jak to robimy"></h2>
-        <ul class="list-disc list-inside text-white/85 space-y-2">
-          <li data-en="We help you choose the right configuration for your seat/belts."
-              data-pl="Pomagamy dobrać konfigurację do fotela i pasów."></li>
-          <li data-en="Clear installation guidance (so it’s not a “project for weeks”)."
-              data-pl="Jasne wskazówki montażu (żeby to nie był projekt na tygodnie)."></li>
-          <li data-en="Options tailored to your rig and usage style."
-              data-pl="Opcje dopasowane do riga i stylu użytkowania."></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mt-10 bg-gray-800/60 border border-white/5 rounded-2xl p-8">
-      <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
-      <div class="space-y-5 text-white/85">
-        <div>
-          <h3 class="font-semibold mb-1" data-en="Is it worth it without motion?" data-pl="Czy ma sens bez motion?"></h3>
-          <p data-en="Yes. It’s one of the fastest ways to add physical feedback to a static rig."
-             data-pl="Tak. To jeden z najszybszych sposobów na fizyczny feedback w statycznym rigi."></p>
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h2 class="text-xl font-semibold mb-3" data-en="What you’ll feel" data-pl="Co poczujesz"></h2>
+          <ul class="list-disc list-inside text-white/85 space-y-2">
+            <li data-en="Braking pressure that actually tightens the belts."
+                data-pl="Docisk przy hamowaniu, który realnie napina pasy."></li>
+            <li data-en="Acceleration pull that makes launches more exciting."
+                data-pl="Szarpnięcie przy przyspieszeniu, które dodaje emocji."></li>
+            <li data-en="More immersion with minimal space and setup changes."
+                data-pl="Więcej immersji bez dużych zmian w stanowisku."></li>
+          </ul>
         </div>
-        <div>
-          <h3 class="font-semibold mb-1" data-en="Will it fit my setup?" data-pl="Czy pasuje do mojego setupu?"></h3>
-          <p data-en="Most likely yes — tell us what seat and belts you use, and we’ll advise."
-             data-pl="Najczęściej tak — napisz jaki masz fotel i pasy, a doradzimy."></p>
+
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h2 class="text-xl font-semibold mb-3" data-en="Best for" data-pl="Najlepszy dla"></h2>
+          <ul class="list-disc list-inside text-white/85 space-y-2">
+            <li data-en="Sim racing: stronger sense of speed and braking points."
+                data-pl="Sim racing: lepsze wyczucie prędkości i punktów hamowania."></li>
+            <li data-en="Compact rigs: when you want “more” without a full motion platform."
+                data-pl="Kompaktowe rigi: gdy chcesz „więcej” bez pełnej platformy motion."></li>
+            <li data-en="Motion setups: a great addition to 2DOF/3DOF/6DOF."
+                data-pl="Setupy motion: świetny dodatek do 2DOF/3DOF/6DOF."></li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-800/60 border border-white/5 rounded-xl p-6">
+          <h2 class="text-xl font-semibold mb-3" data-en="How we deliver it" data-pl="Jak to robimy"></h2>
+          <ul class="list-disc list-inside text-white/85 space-y-2">
+            <li data-en="We help you choose the right configuration for your seat/belts."
+                data-pl="Pomagamy dobrać konfigurację do fotela i pasów."></li>
+            <li data-en="Clear installation guidance (so it’s not a “project for weeks”)."
+                data-pl="Jasne wskazówki montażu (żeby to nie był projekt na tygodnie)."></li>
+            <li data-en="Options tailored to your rig and usage style."
+                data-pl="Opcje dopasowane do riga i stylu użytkowania."></li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <div class="mt-10 bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
-      <h2 class="text-2xl md:text-3xl font-bold mb-3"
-          data-en="Want a stronger “in-cockpit” feeling?"
-          data-pl="Chcesz mocniejszego feelingu „w kokpicie”?"></h2>
-      <p class="text-white/85 mb-6"
-         data-en="Send a short message about your rig — we’ll suggest the best belt feedback setup and prepare a quote."
-         data-pl="Napisz krótko o swoim rigi — dobierzemy najlepszy napinacz i przygotujemy wycenę."></p>
-      <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
-         data-en="Contact us"
-         data-pl="Skontaktuj się"></a>
-    </div>
-  </section>
-
-  <!-- Other products -->
-  <section class="container mx-auto px-4 pb-16">
-    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
-      <h2 class="text-2xl font-bold mb-5" data-en="Other products" data-pl="Pozostałe produkty"></h2>
-      <div class="flex flex-wrap gap-3">
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-6dof.html">6DOF</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-3dof.html">3DOF / 2DOF</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-mk14.html">MK14</a>
-        <a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="/products-accessories.html" data-en="Accessories" data-pl="Akcesoria"></a>
+      <div class="mt-10 bg-gradient-to-r from-blue-600/30 to-white/5 border border-white/10 rounded-2xl p-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3"
+            data-en="Want a stronger “in-cockpit” feeling?"
+            data-pl="Chcesz mocniejszego feelingu „w kokpicie”?"></h2>
+        <p class="text-white/85 mb-6"
+           data-en="Send a short message about your rig — we’ll suggest the best belt feedback setup and prepare a quote."
+           data-pl="Napisz krótko o swoim rigi — dobierzemy najlepszy napinacz i przygotujemy wycenę."></p>
+        <a href="/index.html#contact" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold"
+           data-en="Contact us"
+           data-pl="Skontaktuj się"></a>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
 
-<footer class="bg-gray-900 py-6 text-center text-gray-400">
-  © 2025 ForgeMotion Systems
-</footer>
+    <div id="otherProducts"></div>
+  </main>
 
-<script>
-  const metaData = {
-    en: {
-      title: "Seat Belt Tensioner – ForgeMotion Systems",
-      description: "Seat belt tensioner for simulator rigs. Feel braking and acceleration through real belt feedback.",
-      keywords: "seat belt tensioner, simulator belt feedback, sim racing immersion, ForgeMotion Systems",
-      ogTitle: "Seat Belt Tensioner – ForgeMotion Systems",
-      ogDescription: "Feel braking and acceleration through physical belt feedback.",
-      ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-      twitterTitle: "Seat Belt Tensioner – ForgeMotion Systems",
-      twitterDescription: "Feel braking and acceleration through physical belt feedback.",
-      twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-      canonical: "https://forgemotionsystems.com/products-belt-tensioner"
-    },
-    pl: {
-      title: "Napinacz pasów – ForgeMotion Systems",
-      description: "Napinacz pasów do symulatorów. Poczuj hamowanie i przyspieszenie dzięki fizycznemu napięciu pasów.",
-      keywords: "napinacz pasów, pasy do symulatora, sim racing immersja, ForgeMotion Systems",
-      ogTitle: "Napinacz pasów – ForgeMotion Systems",
-      ogDescription: "Poczuj hamowanie i przyspieszenie dzięki fizycznemu napięciu pasów.",
-      ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-      twitterTitle: "Napinacz pasów – ForgeMotion Systems",
-      twitterDescription: "Poczuj hamowanie i przyspieszenie dzięki fizycznemu napięciu pasów.",
-      twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-      canonical: "https://forgemotionsystems.com/products-belt-tensioner"
-    }
-  };
+  <div id="siteFooter"></div>
 
-  function setMetaTag(key, content, attr = "name") {
-    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
-    if (!tag) {
-      tag = document.createElement("meta");
-      tag.setAttribute(attr, key);
-      document.head.appendChild(tag);
-    }
-    tag.setAttribute("content", content);
-  }
-
-  function setCanonical(href) {
-    let tag = document.head.querySelector('link[rel="canonical"]');
-    if (!tag) {
-      tag = document.createElement("link");
-      tag.rel = "canonical";
-      document.head.appendChild(tag);
-    }
-    tag.href = href;
-  }
-
-  const i18nNodes = Array.from(document.querySelectorAll("[data-en]"));
-
-  function applyTexts(lang) {
-    for (const el of i18nNodes) {
-      const val = el.dataset[lang];
-      if (typeof val === "string") el.textContent = val;
-    }
-  }
-
-  function updateMetaTags(lang) {
-    const data = metaData[lang];
-    document.title = data.title;
-
-    setMetaTag("description", data.description, "name");
-    setMetaTag("keywords", data.keywords, "name");
-    setMetaTag("author", "ForgeMotion Systems", "name");
-
-    setCanonical(data.canonical);
-
-    setMetaTag("og:title", data.ogTitle, "property");
-    setMetaTag("og:description", data.ogDescription, "property");
-    setMetaTag("og:image", data.ogImage, "property");
-    setMetaTag("og:url", data.canonical, "property");
-    setMetaTag("og:type", "website", "property");
-
-    setMetaTag("twitter:title", data.twitterTitle, "name");
-    setMetaTag("twitter:description", data.twitterDescription, "name");
-    setMetaTag("twitter:image", data.twitterImage, "name");
-    setMetaTag("twitter:card", "summary_large_image", "name");
-  }
-
-  function setLanguage(lang) {
-    localStorage.setItem("lang", lang);
-    document.documentElement.lang = lang;
-    applyTexts(lang);
-    updateMetaTags(lang);
-  }
-
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-lang]");
-    if (!btn) return;
-    setLanguage(btn.getAttribute("data-lang"));
-  });
-
-  const savedLang = localStorage.getItem("lang") || "en";
-  setLanguage(savedLang);
-</script>
-
-<script>
-  (function () {
-    const btn = document.getElementById('mobileMenuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (!btn || !menu) return;
-
-    function closeMenu() {
-      menu.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-
-    function toggleMenu() {
-      const isOpen = !menu.classList.contains('hidden');
-      if (isOpen) closeMenu();
-      else {
-        menu.classList.remove('hidden');
-        btn.setAttribute('aria-expanded', 'true');
+  <script>
+    const metaData = {
+      en: {
+        title: "Seat Belt Tensioner – ForgeMotion Systems",
+        description: "Seat belt tensioner for simulator rigs. Feel braking and acceleration through real belt feedback.",
+        keywords: "seat belt tensioner, simulator belt feedback, sim racing immersion, ForgeMotion Systems",
+        ogTitle: "Seat Belt Tensioner – ForgeMotion Systems",
+        ogDescription: "Feel braking and acceleration through physical belt feedback.",
+        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+        twitterTitle: "Seat Belt Tensioner – ForgeMotion Systems",
+        twitterDescription: "Feel braking and acceleration through physical belt feedback.",
+        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+        canonical: "https://forgemotionsystems.com/products-belt-tensioner"
+      },
+      pl: {
+        title: "Napinacz pasów – ForgeMotion Systems",
+        description: "Napinacz pasów do symulatorów. Poczuj hamowanie i przyspieszenie dzięki fizycznemu napięciu pasów.",
+        keywords: "napinacz pasów, pasy do symulatora, sim racing immersja, ForgeMotion Systems",
+        ogTitle: "Napinacz pasów – ForgeMotion Systems",
+        ogDescription: "Poczuj hamowanie i przyspieszenie dzięki fizycznemu napięciu pasów.",
+        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
+        twitterTitle: "Napinacz pasów – ForgeMotion Systems",
+        twitterDescription: "Poczuj hamowanie i przyspieszenie dzięki fizycznemu napięciu pasów.",
+        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+        canonical: "https://forgemotionsystems.com/products-belt-tensioner"
       }
-    }
+    };
 
-    btn.addEventListener('click', toggleMenu);
-    document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
-    window.addEventListener('resize', () => { if (window.innerWidth >= 768) closeMenu(); });
-  })();
-</script>
-
+    window.addEventListener("DOMContentLoaded", () => {
+      SiteLayout.init({
+        metaData,
+        includeModal: false,
+        activeProductKey: "belt",
+        injectOtherProducts: true
+      });
+    });
+  </script>
 </body>
 </html>
