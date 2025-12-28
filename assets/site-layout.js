@@ -1,5 +1,5 @@
 /* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + (optional) image modal + other products
+   Shared layout + i18n + meta + mobile menu + (optional) image modal + other products + scrollspy (index)
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -11,6 +11,8 @@
     { key: "belt", href: "/products-belt-tensioner.html", label: { en: "Belt tensioner", pl: "Napinacz pasów" } },
     { key: "acc", href: "/products-accessories.html", label: { en: "Accessories", pl: "Akcesoria" } },
   ];
+
+  const SCROLLSPY_SECTIONS = ["hero", "products", "about", "contact"];
 
   function escapeHtml(str) {
     return String(str)
@@ -50,6 +52,12 @@
       html { scroll-padding-top: 90px; }
       .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp .9s forwards; }
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+      /* Scrollspy: aktywny link */
+      .nav-active {
+        color: rgb(96 165 250) !important; /* tailwind blue-400 */
+      }
+      .nav-active:focus { outline: none; }
 
       ${includeModal ? `
       .modal-hidden { display: none; }
@@ -110,10 +118,10 @@
     <div class="hidden md:flex items-center gap-8">
       <nav aria-label="Primary navigation">
         <ul class="flex items-center gap-8">
-          <li><a href="/index.html#hero" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
-          <li><a href="/index.html#products" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
-          <li><a href="/index.html#about" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
-          <li><a href="/index.html#contact" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
+          <li><a href="/index.html#hero" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
+          <li><a href="/index.html#products" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="/index.html#about" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
+          <li><a href="/index.html#contact" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
         </ul>
       </nav>
 
@@ -149,10 +157,10 @@
   <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-gray-800/95 backdrop-blur">
     <nav class="container mx-auto px-4 py-3" aria-label="Mobile navigation">
       <ul class="flex flex-col gap-2">
-        <li><a href="/index.html#hero" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
-        <li><a href="/index.html#products" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
-        <li><a href="/index.html#about" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
-        <li><a href="/index.html#contact" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+        <li><a href="/index.html#hero" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
+        <li><a href="/index.html#products" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+        <li><a href="/index.html#about" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
+        <li><a href="/index.html#contact" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
       </ul>
     </nav>
   </div>
@@ -221,7 +229,6 @@
 
     setCanonical(data.canonical || "");
 
-    // OG (optional)
     if (data.ogTitle || data.ogDescription || data.ogImage || data.canonical) {
       setMetaTag("og:title", data.ogTitle || data.title || "", "property");
       setMetaTag("og:description", data.ogDescription || data.description || "", "property");
@@ -230,7 +237,6 @@
       setMetaTag("og:type", "website", "property");
     }
 
-    // Twitter (optional)
     if (data.twitterTitle || data.twitterDescription || data.twitterImage) {
       setMetaTag("twitter:title", data.twitterTitle || data.title || "", "name");
       setMetaTag("twitter:description", data.twitterDescription || data.description || "", "name");
@@ -325,7 +331,7 @@
     });
   }
 
-  function injectLayout({ includeModal, injectOtherProducts }) {
+  function injectLayout({ includeModal }) {
     const headerSlot = document.getElementById("siteHeader");
     if (headerSlot) headerSlot.innerHTML = renderHeader();
     else document.body.insertAdjacentHTML("afterbegin", renderHeader());
@@ -339,13 +345,69 @@
       if (modalSlot) modalSlot.innerHTML = renderModal();
       else document.body.insertAdjacentHTML("beforeend", renderModal());
     }
+  }
 
-    if (injectOtherProducts) {
-      const otherSlot = document.getElementById("otherProducts");
-      if (otherSlot) {
-        // placeholder; content is injected later (after lang known)
+  /* ===== Scrollspy (index.html) ===== */
+  function bindScrollSpy() {
+    const sectionEls = SCROLLSPY_SECTIONS
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    // tylko jeśli faktycznie jesteśmy na stronie z sekcjami
+    if (sectionEls.length < 2) return;
+
+    const links = Array.from(document.querySelectorAll('a.site-nav-link[href*="#"]'));
+    if (!links.length) return;
+
+    const hrefToId = (href) => {
+      try {
+        const u = new URL(href, window.location.origin);
+        return (u.hash || "").replace("#", "");
+      } catch {
+        const idx = String(href).indexOf("#");
+        return idx >= 0 ? String(href).slice(idx + 1) : "";
+      }
+    };
+
+    function setActive(id) {
+      for (const a of links) {
+        const isMatch = hrefToId(a.getAttribute("href")) === id;
+        a.classList.toggle("nav-active", isMatch);
+        if (isMatch) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
       }
     }
+
+    // Start: jeśli jesteśmy na #hash, ustaw od razu
+    const initialHash = (window.location.hash || "").replace("#", "");
+    if (SCROLLSPY_SECTIONS.includes(initialHash)) setActive(initialHash);
+    else setActive("hero");
+
+    // Observer: aktywna sekcja = ta, która jest "najbardziej w centrum"
+    const obs = new IntersectionObserver((entries) => {
+      // wybierz entry o najwyższym intersectionRatio
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible && visible.target && visible.target.id) {
+        setActive(visible.target.id);
+      }
+    }, {
+      // górny margines uwzględnia header
+      root: null,
+      rootMargin: "-30% 0px -55% 0px",
+      threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
+    });
+
+    sectionEls.forEach(el => obs.observe(el));
+
+    // Przy kliknięciu w menu na stronach produktów (link do /index.html#...)
+    // highlight też zadziała po wejściu na index; tu tylko update na hashchange:
+    window.addEventListener("hashchange", () => {
+      const id = (window.location.hash || "").replace("#", "");
+      if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
+    });
   }
 
   window.SiteLayout = {
@@ -358,11 +420,7 @@
       };
 
       ensureGlobalStyles(cfg.includeModal);
-
-      injectLayout({
-        includeModal: cfg.includeModal,
-        injectOtherProducts: cfg.injectOtherProducts,
-      });
+      injectLayout({ includeModal: cfg.includeModal });
 
       bindMobileMenu();
       bindLangButtons(cfg.metaData);
@@ -372,15 +430,16 @@
 
       if (cfg.includeModal) bindModal();
 
-      // Other products
       if (cfg.injectOtherProducts) {
         const otherSlot = document.getElementById("otherProducts");
         if (otherSlot) {
           otherSlot.innerHTML = renderOtherProducts(cfg.activeProductKey, lang);
-          // po wstrzyknięciu trzeba jeszcze raz przepuścić i18n (bo nagłówki sekcji mają data-en/pl)
           applyTexts(lang);
         }
       }
+
+      // scrollspy tylko gdy są sekcje (index)
+      bindScrollSpy();
     }
   };
 })();
