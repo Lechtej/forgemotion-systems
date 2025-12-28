@@ -1,5 +1,6 @@
 /* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + (optional) image modal + other products + scrollspy (index)
+   Shared layout + i18n + meta + mobile menu + (optional) image modal + other products
+   + scrollspy (index) + smooth anchor scroll + close mobile menu on language change (mobile)
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -49,15 +50,16 @@
     const style = document.createElement("style");
     style.id = "siteLayoutStyles";
     style.textContent = `
-      html { scroll-padding-top: 90px; }
+      html { scroll-padding-top: 90px; scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+
       .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp .9s forwards; }
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-      /* Scrollspy: aktywny link */
-      .nav-active {
-        color: rgb(96 165 250) !important; /* tailwind blue-400 */
-      }
-      .nav-active:focus { outline: none; }
+      /* Scrollspy active link */
+      .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
 
       ${includeModal ? `
       .modal-hidden { display: none; }
@@ -126,17 +128,17 @@
       </nav>
 
       <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <button type="button" data-lang="en" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+        <button type="button" data-lang="pl" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
     </div>
 
     <div class="flex md:hidden items-center gap-3">
       <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+        <button type="button" data-lang="en" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+        <button type="button" data-lang="pl" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
       </div>
 
       <button
@@ -245,19 +247,27 @@
     }
   }
 
+  function isMobileMenuOpen() {
+    const menu = document.getElementById("mobileMenu");
+    return menu ? !menu.classList.contains("hidden") : false;
+  }
+
+  function closeMobileMenu() {
+    const btn = document.getElementById("mobileMenuBtn");
+    const menu = document.getElementById("mobileMenu");
+    if (!btn || !menu) return;
+    menu.classList.add("hidden");
+    btn.setAttribute("aria-expanded", "false");
+  }
+
   function bindMobileMenu() {
     const btn = document.getElementById("mobileMenuBtn");
     const menu = document.getElementById("mobileMenu");
     if (!btn || !menu) return;
 
-    function closeMenu() {
-      menu.classList.add("hidden");
-      btn.setAttribute("aria-expanded", "false");
-    }
-
     function toggleMenu() {
-      const isOpen = !menu.classList.contains("hidden");
-      if (isOpen) closeMenu();
+      const open = !menu.classList.contains("hidden");
+      if (open) closeMobileMenu();
       else {
         menu.classList.remove("hidden");
         btn.setAttribute("aria-expanded", "true");
@@ -265,9 +275,9 @@
     }
 
     btn.addEventListener("click", toggleMenu);
-    document.querySelectorAll(".mobile-link").forEach(a => a.addEventListener("click", closeMenu));
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
-    window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMenu(); });
+    document.querySelectorAll(".mobile-link").forEach(a => a.addEventListener("click", closeMobileMenu));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMobileMenu(); });
+    window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
   }
 
   function bindModal() {
@@ -327,7 +337,12 @@
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-lang]");
       if (!btn) return;
+
+      const wasMobileOpen = isMobileMenuOpen();
       setLanguage(btn.getAttribute("data-lang"), metaData);
+
+      // Ultra polish: jeśli mobile menu było otwarte (mały ekran), zamknij po zmianie języka
+      if (wasMobileOpen) closeMobileMenu();
     });
   }
 
@@ -347,13 +362,52 @@
     }
   }
 
+  /* ===== Smooth anchor scroll (only same-page anchors) ===== */
+  function bindSmoothAnchorScroll() {
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href*="#"]');
+      if (!a) return;
+
+      const href = a.getAttribute("href");
+      if (!href) return;
+
+      // tylko normalne kliknięcie
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      // rozpoznaj URL + hash
+      let url;
+      try { url = new URL(href, window.location.href); }
+      catch { return; }
+
+      // Smooth scroll tylko jeśli to ten sam dokument (ten sam pathname)
+      if (url.origin !== window.location.origin) return;
+
+      const samePath = (url.pathname.replace(/\/+$/, "") === window.location.pathname.replace(/\/+$/, ""));
+      if (!samePath) return;
+
+      const id = (url.hash || "").replace("#", "");
+      if (!id) return;
+
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // aktualizuj hash (bez skoku)
+      history.pushState(null, "", `#${id}`);
+
+      // na mobile po kliknięciu w link zamknij menu (jeśli było otwarte)
+      if (isMobileMenuOpen()) closeMobileMenu();
+    });
+  }
+
   /* ===== Scrollspy (index.html) ===== */
   function bindScrollSpy() {
     const sectionEls = SCROLLSPY_SECTIONS
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
-    // tylko jeśli faktycznie jesteśmy na stronie z sekcjami
     if (sectionEls.length < 2) return;
 
     const links = Array.from(document.querySelectorAll('a.site-nav-link[href*="#"]'));
@@ -378,14 +432,11 @@
       }
     }
 
-    // Start: jeśli jesteśmy na #hash, ustaw od razu
     const initialHash = (window.location.hash || "").replace("#", "");
     if (SCROLLSPY_SECTIONS.includes(initialHash)) setActive(initialHash);
     else setActive("hero");
 
-    // Observer: aktywna sekcja = ta, która jest "najbardziej w centrum"
     const obs = new IntersectionObserver((entries) => {
-      // wybierz entry o najwyższym intersectionRatio
       const visible = entries
         .filter(e => e.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -394,7 +445,6 @@
         setActive(visible.target.id);
       }
     }, {
-      // górny margines uwzględnia header
       root: null,
       rootMargin: "-30% 0px -55% 0px",
       threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
@@ -402,8 +452,6 @@
 
     sectionEls.forEach(el => obs.observe(el));
 
-    // Przy kliknięciu w menu na stronach produktów (link do /index.html#...)
-    // highlight też zadziała po wejściu na index; tu tylko update na hashchange:
     window.addEventListener("hashchange", () => {
       const id = (window.location.hash || "").replace("#", "");
       if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
@@ -424,6 +472,9 @@
 
       bindMobileMenu();
       bindLangButtons(cfg.metaData);
+
+      // smooth anchor scroll (dla wszystkich stron)
+      bindSmoothAnchorScroll();
 
       const lang = detectLang();
       setLanguage(lang, cfg.metaData);
