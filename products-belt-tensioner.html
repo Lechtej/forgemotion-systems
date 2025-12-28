@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
+  <!-- Podstawowe meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -15,29 +17,41 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="" />
 
+  <!-- Open Graph -->
   <meta property="og:title" content="" />
   <meta property="og:description" content="" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
 
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="" />
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/assets/site-layout.js" defer></script>
+
+  <!-- Shared layout + i18n + modal (assets) -->
+  <script defer src="/assets/site-layout.js"></script>
+
+  <style>
+    html { scroll-padding-top: 90px; }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
+
+  <!-- Header injected by /assets/site-layout.js -->
   <div id="siteHeader"></div>
 
   <main class="pt-24">
     <section class="container mx-auto px-4 py-14">
       <div class="max-w-4xl mx-auto">
         <p class="text-white/70 mb-3">
-          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          <a href="/index.html#products" class="hover:text-blue-400"
+             data-en="← Back to products" data-pl="← Wróć do produktów"></a>
         </p>
 
         <h1 class="text-4xl md:text-5xl font-bold mb-5"
@@ -48,11 +62,19 @@
            data-en="The fastest way to add “body realism”. You feel braking and acceleration through the belts — and it changes everything."
            data-pl="Najszybszy sposób na „realizm dla ciała”. Czujesz hamowanie i przyspieszenie przez pasy — i nagle wszystko ma więcej sensu."></p>
 
-        <!-- IMAGE PLACEHOLDER (Version B) -->
+        <!-- IMAGE -->
         <div class="mb-10">
-          <div class="rounded-2xl border border-white/5 bg-gray-800/50 p-10 text-center">
-            <p class="text-white/70 text-lg" data-en="Product photo coming soon" data-pl="Zdjęcie produktu wkrótce"></p>
-            <p class="text-white/50 mt-2" data-en="Want a preview? Message us." data-pl="Chcesz podgląd? Napisz do nas."></p>
+          <div class="rounded-2xl border border-white/5 bg-gray-800/50 p-4 md:p-5">
+            <div class="rounded-xl overflow-hidden bg-black/20">
+              <img
+                src="/images/Belttensioner1.jpg"
+                data-full="/images/Belttensioner1-large.jpg"
+                alt="Seat belt tensioner (ForgeMotion Systems)"
+                class="w-full h-[320px] md:h-[420px] object-contain cursor-zoom-in"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
 
@@ -60,113 +82,56 @@
           <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
             <h2 class="text-2xl font-bold mb-3" data-en="What you feel" data-pl="Co poczujesz"></h2>
             <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Braking becomes physical — you instinctively react." data-pl="Hamowanie staje się fizyczne — reagujesz instynktownie."></li>
-              <li data-en="Acceleration and grip changes are easier to read." data-pl="Przyspieszenie i zmiany przyczepności łatwiej wyczuć."></li>
-              <li data-en="More immersion even without motion." data-pl="Więcej immersji nawet bez platformy motion."></li>
+              <li data-en="Braking becomes physical — you instinctively react."
+                  data-pl="Hamowanie staje się fizyczne — reagujesz instynktownie."></li>
+              <li data-en="Acceleration and grip changes are easier to read."
+                  data-pl="Przyspieszenie i zmiany przyczepności łatwiej wyczuć."></li>
+              <li data-en="More immersion even without motion."
+                  data-pl="Więcej immersji nawet bez platformy motion."></li>
             </ul>
           </div>
 
           <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
             <h2 class="text-2xl font-bold mb-3" data-en="Who it’s for" data-pl="Dla kogo"></h2>
             <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Sim racers who want a big upgrade without changing the whole rig." data-pl="Simracerów, którzy chcą dużego efektu bez przebudowy riga."></li>
-              <li data-en="People who want more realism at a sensible budget." data-pl="Osób, które chcą realizmu w rozsądnej cenie."></li>
-              <li data-en="Anyone building a more “premium” feel." data-pl="Każdego, kto chce „premium feelingu”."></li>
+              <li data-en="Sim racers who want a big upgrade without rebuilding the rig."
+                  data-pl="Simracerów, którzy chcą dużego efektu bez przebudowy riga."></li>
+              <li data-en="Motion users who want extra realism in braking/acceleration cues."
+                  data-pl="Użytkowników motion, którzy chcą dodatkowego realizmu w hamowaniu i przyspieszeniu."></li>
+              <li data-en="Anyone who wants “seat of the pants” feedback."
+                  data-pl="Każdego, kto chce poczuć feedback „na ciele”."></li>
             </ul>
           </div>
         </div>
 
-        <!-- CTA -->
         <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
-          <h2 class="text-2xl font-bold mb-3" data-en="Want it on your rig?" data-pl="Chcesz to u siebie?"></h2>
-          <p class="text-white/85 mb-5"
-             data-en="Send a message with your seat type and belts. We’ll suggest the cleanest installation."
-             data-pl="Napisz, jaki masz fotel i pasy. Podpowiemy najczystszy montaż."></p>
-
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/index.html#contact"
-               class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
-               data-en="Ask for details"
-               data-pl="Zapytaj o szczegóły"></a>
-
-            <a href="/index.html#products"
-               class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
-               data-en="See all products"
-               data-pl="Zobacz wszystkie produkty"></a>
-          </div>
+          <h2 class="text-2xl font-bold mb-3" data-en="Key highlights" data-pl="Najważniejsze cechy"></h2>
+          <ul class="list-disc list-inside text-white/85 space-y-2">
+            <li data-en="Strong, smooth belt pull with fast response."
+                data-pl="Mocne i płynne napinanie pasów z szybkim czasem reakcji."></li>
+            <li data-en="Designed for sim racing and flight setups."
+                data-pl="Zaprojektowany pod simracing i symulatory lotnicze."></li>
+            <li data-en="Easy to integrate into your simulator build."
+                data-pl="Łatwy do integracji z Twoim stanowiskiem."></li>
+          </ul>
         </div>
 
-        <!-- FAQ -->
-        <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-          <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
+        <div class="rounded-2xl border border-white/5 bg-gray-800/60 p-6">
+          <h2 class="text-2xl font-bold mb-3" data-en="Interested?" data-pl="Zainteresowany?"></h2>
+          <p class="text-white/85 mb-4"
+             data-en="Tell us what rig you use and what belts you have — we’ll recommend the best configuration."
+             data-pl="Napisz, jakiego riga używasz i jakie masz pasy — zaproponujemy najlepszą konfigurację."></p>
 
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Is it worth it without a motion platform?" data-pl="Czy to ma sens bez platformy motion?"></h3>
-              <p class="text-white/80"
-                 data-en="Yes — for many people it’s the biggest “feel” upgrade per money spent."
-                 data-pl="Tak — dla wielu osób to największy upgrade „czucia” w relacji do ceny."></p>
-            </div>
-
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Will it work with my seat?" data-pl="Czy zadziała z moim fotelem?"></h3>
-              <p class="text-white/80"
-                 data-en="In most cases yes. Send a photo and we’ll advise a clean mounting option."
-                 data-pl="W większości przypadków tak. Wyślij zdjęcie, a podpowiemy czysty montaż."></p>
-            </div>
-
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Is it loud?" data-pl="Czy to jest głośne?"></h3>
-              <p class="text-white/80"
-                 data-en="We aim for a tidy, stable setup. Tell us your environment (apartment/house) and we’ll recommend a sensible configuration."
-                 data-pl="Stawiamy na stabilną, uporządkowaną konfigurację. Napisz, czy masz mieszkanie/dom — dobierzemy sensowne rozwiązanie."></p>
-            </div>
-          </div>
-        </section>
+          <a href="/index.html#contact"
+             class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold"
+             data-en="Contact us" data-pl="Skontaktuj się"></a>
+        </div>
       </div>
     </section>
-
-    <div id="otherProducts"></div>
   </main>
 
+  <!-- Footer injected by /assets/site-layout.js -->
   <div id="siteFooter"></div>
 
-  <script>
-    const metaData = {
-      en: {
-        title: "Seat Belt Tensioner – ForgeMotion Systems",
-        description: "Seat belt tensioner for simulators. Feel braking and acceleration through belt feedback — a fast immersion upgrade.",
-        keywords: "seat belt tensioner, belt feedback, sim racing immersion, ForgeMotion Systems",
-        ogTitle: "Seat Belt Tensioner – ForgeMotion Systems",
-        ogDescription: "Feel braking and acceleration through belt feedback. Instant realism boost.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-        twitterTitle: "Seat Belt Tensioner – ForgeMotion Systems",
-        twitterDescription: "Feel braking and acceleration through belt feedback.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-        canonical: "https://forgemotionsystems.com/products-belt-tensioner.html"
-      },
-      pl: {
-        title: "Napinacz pasów – ForgeMotion Systems",
-        description: "Napinacz pasów do symulatorów. Poczuj hamowanie i przyspieszenie przez pasy — szybki upgrade immersji.",
-        keywords: "napinacz pasów, feedback pasów, immersja simracing, ForgeMotion Systems",
-        ogTitle: "Napinacz pasów – ForgeMotion Systems",
-        ogDescription: "Poczuj hamowanie i przyspieszenie przez pasy. Natychmiastowy realizm.",
-        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-        twitterTitle: "Napinacz pasów – ForgeMotion Systems",
-        twitterDescription: "Hamowanie i przyspieszenie poczujesz przez pasy.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-        canonical: "https://forgemotionsystems.com/products-belt-tensioner.html"
-      }
-    };
-
-    window.addEventListener("DOMContentLoaded", () => {
-      SiteLayout.init({
-        metaData,
-        includeModal: false,
-        activeProductKey: "belt",
-        injectOtherProducts: true
-      });
-    });
-  </script>
 </body>
 </html>
