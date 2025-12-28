@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
+  <!-- Podstawowe meta (nadpisywane przez JS) -->
   <title>ForgeMotion Systems</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -15,29 +17,43 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="" />
 
+  <!-- Open Graph -->
   <meta property="og:title" content="" />
   <meta property="og:description" content="" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
 
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="" />
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/assets/site-layout.js" defer></script>
+
+  <!-- Shared layout + i18n + modal (assets) -->
+  <script defer src="/assets/site-layout.js"></script>
+
+  <style>
+    html { scroll-padding-top: 90px; }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
+
+  <!-- Header injected by /assets/site-layout.js -->
   <div id="siteHeader"></div>
 
   <main class="pt-24">
     <section class="container mx-auto px-4 py-14">
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-5xl mx-auto">
+
         <p class="text-white/70 mb-3">
-          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          <a href="/index.html#products" class="hover:text-blue-400"
+             data-en="← Back to products"
+             data-pl="← Wróć do produktów"></a>
         </p>
 
         <h1 class="text-4xl md:text-5xl font-bold mb-5"
@@ -45,128 +61,121 @@
             data-pl="Akcesoria do symulatorów"></h1>
 
         <p class="text-lg md:text-xl text-white/85 mb-8"
-           data-en="The small things that make a rig feel finished. Mounts, brackets and custom parts tailored to your setup."
-           data-pl="Te rzeczy, które sprawiają, że rig wygląda na skończony. Mocowania, uchwyty i customy dopasowane do Twojego stanowiska."></p>
+           data-en="A growing set of add-ons and mounting solutions — from panels and brackets to custom parts tailored to your rig."
+           data-pl="Rozwijany zestaw dodatków i rozwiązań montażowych — od paneli i uchwytów po elementy dopasowane do Twojego stanowiska."></p>
 
-        <!-- IMAGE PLACEHOLDER (Version B) -->
+        <!-- HERO IMAGE -->
         <div class="mb-10">
-          <div class="rounded-2xl border border-white/5 bg-gray-800/50 p-10 text-center">
-            <p class="text-white/70 text-lg" data-en="Product photo coming soon" data-pl="Zdjęcie produktu wkrótce"></p>
-            <p class="text-white/50 mt-2" data-en="Want a preview? Message us." data-pl="Chcesz podgląd? Napisz do nas."></p>
+          <div class="rounded-2xl border border-white/5 bg-gray-800/50 p-4 md:p-5">
+            <div class="rounded-xl overflow-hidden bg-black/20">
+              <img
+                src="/images/accessories1.jpg"
+                data-full="/images/accessories1-large.jpg"
+                alt="Simulator accessories (ForgeMotion Systems)"
+                class="w-full h-[340px] md:h-[460px] object-cover cursor-zoom-in"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6 mb-10">
-          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="What we can make" data-pl="Co możemy wykonać"></h2>
-            <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Mounts and adapters for your gear." data-pl="Mocowania i adaptery pod Twój sprzęt."></li>
-              <li data-en="Brackets and tidy solutions to keep it clean." data-pl="Uchwyty i sprytne rozwiązania, żeby było „czysto”."></li>
-              <li data-en="Custom parts to match your cockpit layout." data-pl="Custom części dopasowane do Twojego kokpitu."></li>
-            </ul>
-          </div>
+        <!-- GALLERY -->
+        <div class="mb-10">
+          <h2 class="text-2xl md:text-3xl font-bold mb-4"
+              data-en="Examples & components"
+              data-pl="Przykłady i komponenty"></h2>
 
-          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="Why it matters" data-pl="Dlaczego to ma znaczenie"></h2>
-            <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Better comfort and ergonomics." data-pl="Lepszy komfort i ergonomia."></li>
-              <li data-en="Cleaner look — less wobble, less mess." data-pl="Czystszy wygląd — mniej luzów, mniej bałaganu."></li>
-              <li data-en="A premium finish that ties everything together." data-pl="Premium wykończenie, które spina całość."></li>
-            </ul>
+          <p class="text-white/80 mb-6"
+             data-en="Below are examples of accessories and modules that can be part of your build. We’ll keep expanding this section as new parts are ready."
+             data-pl="Poniżej przykłady akcesoriów i modułów, które mogą wejść w skład Twojej konstrukcji. Tę sekcję będziemy rozbudowywać wraz z kolejnymi elementami."></p>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Frontpanel 1 -->
+            <div class="rounded-2xl border border-white/5 bg-gray-800/60 overflow-hidden">
+              <div class="bg-black/20">
+                <img
+                  src="/images/frontpanel-fa18-1.jpg"
+                  data-full="/images/frontpanel-fa18-1.jpg"
+                  alt="Front panel FA-18 (accessory)"
+                  class="w-full h-[230px] object-cover cursor-zoom-in"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-lg mb-1"
+                    data-en="Front Panel Mount (FA-18 style)"
+                    data-pl="Uchwyt / Front Panel (styl FA-18)"></h3>
+                <p class="text-white/80 text-sm"
+                   data-en="A sturdy front panel solution for mounting displays and controls."
+                   data-pl="Solidne rozwiązanie do montażu wyświetlaczy i elementów sterowania."></p>
+              </div>
+            </div>
+
+            <!-- Frontpanel 2 -->
+            <div class="rounded-2xl border border-white/5 bg-gray-800/60 overflow-hidden">
+              <div class="bg-black/20">
+                <img
+                  src="/images/frontpanel-fa18-2.png"
+                  data-full="/images/frontpanel-fa18-2.png"
+                  alt="Front panel FA-18 (rig example)"
+                  class="w-full h-[230px] object-cover cursor-zoom-in"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-lg mb-1"
+                    data-en="Rig Integration Example"
+                    data-pl="Przykład integracji na stanowisku"></h3>
+                <p class="text-white/80 text-sm"
+                   data-en="Example view of how accessories can look in a complete simulator setup."
+                   data-pl="Przykładowy widok, jak akcesoria prezentują się w kompletnym stanowisku."></p>
+              </div>
+            </div>
+
+            <!-- Placeholder slot (future accessories) -->
+            <div class="rounded-2xl border border-white/5 bg-gray-800/40 overflow-hidden">
+              <div class="h-[230px] flex items-center justify-center bg-black/10">
+                <p class="text-white/60 text-center px-6"
+                   data-en="More accessories coming soon."
+                   data-pl="Więcej akcesoriów wkrótce."></p>
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold text-lg mb-1"
+                    data-en="Next items"
+                    data-pl="Kolejne elementy"></h3>
+                <p class="text-white/80 text-sm"
+                   data-en="We’ll add mounts, brackets and custom parts as they’re ready."
+                   data-pl="Dodamy mocowania, uchwyty i elementy custom, gdy będą gotowe."></p>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- CTA -->
-        <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
-          <h2 class="text-2xl font-bold mb-3" data-en="Tell us your rig" data-pl="Opisz swoje stanowisko"></h2>
-          <p class="text-white/85 mb-5"
-             data-en="Send a quick list of your gear (wheelbase, pedals, seat) and a photo. We’ll propose accessories that actually fit."
-             data-pl="Wyślij krótką listę sprzętu (baza, pedały, fotel) i zdjęcie. Zaproponujemy akcesoria, które naprawdę pasują."></p>
+        <div class="rounded-2xl border border-white/5 bg-gray-800/60 p-6">
+          <h2 class="text-2xl font-bold mb-3"
+              data-en="Need something specific?"
+              data-pl="Potrzebujesz czegoś konkretnego?"></h2>
 
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/index.html#contact"
-               class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
-               data-en="Ask for a custom plan"
-               data-pl="Poproś o plan custom"></a>
+          <p class="text-white/85 mb-4"
+             data-en="Tell us what you want to mount or upgrade — we can recommend existing parts or design a custom solution."
+             data-pl="Napisz, co chcesz zamontować lub ulepszyć — dobierzemy gotowe elementy albo zaprojektujemy rozwiązanie custom."></p>
 
-            <a href="/index.html#products"
-               class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
-               data-en="See all products"
-               data-pl="Zobacz wszystkie produkty"></a>
-          </div>
+          <a href="/index.html#contact"
+             class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold"
+             data-en="Contact us"
+             data-pl="Skontaktuj się"></a>
         </div>
 
-        <!-- FAQ -->
-        <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-          <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Can you make something for my specific rig?" data-pl="Czy zrobicie coś pod mój konkretny rig?"></h3>
-              <p class="text-white/80"
-                 data-en="Yes. The fastest way is to send a photo and your gear list — we’ll propose a clean solution."
-                 data-pl="Tak. Najszybciej: zdjęcie + lista sprzętu — zaproponujemy czyste rozwiązanie."></p>
-            </div>
-
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Is it only for ForgeMotion platforms?" data-pl="Czy to tylko pod platformy ForgeMotion?"></h3>
-              <p class="text-white/80"
-                 data-en="No — many accessories can work with other rigs too. We’ll tell you what makes sense."
-                 data-pl="Nie — wiele akcesoriów pasuje też do innych rigów. Powiemy, co ma sens."></p>
-            </div>
-
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Do accessories really change the experience?" data-pl="Czy akcesoria naprawdę zmieniają doświadczenie?"></h3>
-              <p class="text-white/80"
-                 data-en="They often do — comfort, ergonomics and a clean build matter more than people expect."
-                 data-pl="Często tak — komfort, ergonomia i porządek robią większą różnicę niż się wydaje."></p>
-            </div>
-          </div>
-        </section>
       </div>
     </section>
-
-    <div id="otherProducts"></div>
   </main>
 
+  <!-- Footer injected by /assets/site-layout.js -->
   <div id="siteFooter"></div>
 
-  <script>
-    const metaData = {
-      en: {
-        title: "Simulator Accessories – ForgeMotion Systems",
-        description: "Simulator accessories and custom mounts tailored to your rig. Cleaner build, better ergonomics, premium finish.",
-        keywords: "simulator accessories, custom mounts, sim rig brackets, ForgeMotion Systems",
-        ogTitle: "Simulator Accessories – ForgeMotion Systems",
-        ogDescription: "Custom add-ons and mounts tailored to your rig.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-        twitterTitle: "Simulator Accessories – ForgeMotion Systems",
-        twitterDescription: "Custom add-ons and mounts tailored to your rig.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-        canonical: "https://forgemotionsystems.com/products-accessories.html"
-      },
-      pl: {
-        title: "Akcesoria do symulatorów – ForgeMotion Systems",
-        description: "Akcesoria i customowe mocowania do symulatorów. Porządek, ergonomia i premium wykończenie.",
-        keywords: "akcesoria do symulatorów, mocowania do riga, uchwyty, custom części, ForgeMotion Systems",
-        ogTitle: "Akcesoria do symulatorów – ForgeMotion Systems",
-        ogDescription: "Dodatki i mocowania dopasowane do Twojego stanowiska.",
-        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-        twitterTitle: "Akcesoria do symulatorów – ForgeMotion Systems",
-        twitterDescription: "Dodatki i mocowania dopasowane do Twojego stanowiska.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-        canonical: "https://forgemotionsystems.com/products-accessories.html"
-      }
-    };
-
-    window.addEventListener("DOMContentLoaded", () => {
-      SiteLayout.init({
-        metaData,
-        includeModal: false,
-        activeProductKey: "acc",
-        injectOtherProducts: true
-      });
-    });
-  </script>
 </body>
 </html>
