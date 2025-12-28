@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -113,7 +113,6 @@
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
 
-    /* ====== Kafelki produktów ====== */
     .product-card {
       background: rgba(31, 41, 55, 0.9);
       border-radius: 0.75rem;
@@ -157,7 +156,6 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
-    /* ====== Ejection Seat miniatura "contain" ====== */
     .product-image img.thumb-contain {
       object-fit: contain !important;
       object-position: center bottom;
@@ -173,6 +171,7 @@
 <body class="bg-gray-900 text-white font-sans">
   <div id="siteHeader"></div>
 
+  <!-- UWAGA: To jest ten sam content – język tekstów przełącza się z data-pl/data-en -->
   <main class="pt-24">
     <div class="bg-wrap">
       <div class="bg-inner">
@@ -387,18 +386,6 @@
 
   <script>
     const metaData = {
-      en: {
-        title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
-        description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
-        keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
-        ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
-        twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
-        canonical: "https://forgemotionsystems.com/en"
-      },
       pl: {
         title: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów (6DOF, 3DOF, 2DOF)",
         description: "ForgeMotion Systems projektuje i produkuje profesjonalne platformy motion 6DOF, 3DOF i 2DOF, napinacze pasów, repliki foteli katapultowych oraz kastomizowane ramy dla symulatorów wyścigowych i lotniczych. Zwiększ realizm i precyzję swoich symulacji.",
@@ -409,7 +396,7 @@
         twitterTitle: "ForgeMotion Systems – Platformy motion i osprzęt do symulatorów",
         twitterDescription: "Profesjonalne platformy motion i osprzęt do symulatorów, w tym napinacze pasów, repliki foteli katapultowych i kastomizowane ramy.",
         twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
-        canonical: "https://forgemotionsystems.com/pl"
+        canonical: "https://forgemotionsystems.com/pl/"
       }
     };
 
