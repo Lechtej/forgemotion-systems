@@ -121,7 +121,7 @@
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
 
-    /* ====== KROK 4: równy wygląd kafelków + identyczna wysokość zdjęć ====== */
+    /* ====== Równy wygląd kafelków + identyczna wysokość zdjęć ====== */
     .product-card {
       background: rgba(31, 41, 55, 0.9);
       border-radius: 0.75rem;
@@ -165,7 +165,7 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
-    /* ====== Modal ====== */
+    /* ====== Modal (klik → duże zdjęcie) ====== */
     .modal-hidden { display: none; }
     .modal-overlay {
       position: fixed;
@@ -202,9 +202,7 @@
       cursor: pointer;
     }
     .modal-close:hover { background: rgba(255,255,255,0.18); }
-    .modal-img-wrap {
-      padding: 0.75rem;
-    }
+    .modal-img-wrap { padding: 0.75rem; }
     .modal-img {
       width: 100%;
       height: auto;
@@ -212,6 +210,12 @@
       object-fit: contain;
       border-radius: 0.75rem;
       display: block;
+    }
+    .modal-hint {
+      padding: 0 0.95rem 0.95rem 0.95rem;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
+      text-align: center;
     }
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -311,13 +315,11 @@
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
 
-        <!-- KROK 1: brak nowego kafelka => wracamy do 4 kolumn -->
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-          <!-- KROK 2: istniejący kafelek 6DOF -> podmienione zdjęcie + życiowy opis -->
+          <!-- 6DOF: miniatura bez logo + modal z dużą wersją -large (z logo) -->
           <div class="product-card">
             <h3 class="product-title">6DOF Platform</h3>
-
             <p class="product-desc"
                data-en="A rock-solid 6DOF motion platform built to feel natural and predictable in every movement. Designed as the backbone of serious racing and flight simulator rigs — stable, precise, and ready for long sessions."
                data-pl="Solidna platforma motion 6DOF zaprojektowana tak, by każdy ruch był naturalny i przewidywalny. To mocna baza do zaawansowanych symulatorów wyścigowych i lotniczych — stabilna, precyzyjna i gotowa na długie sesje."></p>
@@ -325,15 +327,15 @@
             <div class="product-image">
               <img
                 src="/images/rama6dof1.jpg"
-                data-full="/images/rama6dof1.jpg"
-                alt="6DOF motion platform frame"
+                data-full="/images/rama6dof1-large.jpg"
+                alt="6DOF motion platform (frame)"
                 loading="lazy"
                 decoding="async"
               >
             </div>
           </div>
 
-          <!-- KROK 3: 3DOF/2DOF -> nowe zdjęcie, opis bez zmian -->
+          <!-- 3DOF/2DOF: miniatura bez logo + modal z dużą wersją -large (z logo) -->
           <div class="product-card">
             <h3 class="product-title">3DOF / 2DOF Platform</h3>
             <p class="product-desc"
@@ -343,14 +345,15 @@
             <div class="product-image">
               <img
                 src="/images/rama3dof1.jpg"
-                data-full="/images/rama3dof1.jpg"
-                alt="3DOF motion platform frame"
+                data-full="/images/rama3dof1-large.jpg"
+                alt="3DOF motion platform (frame)"
                 loading="lazy"
                 decoding="async"
               >
             </div>
           </div>
 
+          <!-- Seat Belt: brak wersji -large na liście, więc modal otworzy ten sam plik -->
           <div class="product-card">
             <h3 class="product-title">Seat Belt Tensioner</h3>
             <p class="product-desc"
@@ -368,6 +371,7 @@
             </div>
           </div>
 
+          <!-- NOWE FOTO: Ejection Seat Replica -> mk14seat1 + mk14seat1-large -->
           <div class="product-card">
             <h3 class="product-title">Ejection Seat Replica</h3>
             <p class="product-desc"
@@ -376,9 +380,9 @@
 
             <div class="product-image">
               <img
-                src="/images/ejection-seat.jpg"
-                data-full="/images/ejection-seat.jpg"
-                alt="Ejection seat replica for flight simulator"
+                src="/images/mk14seat1.jpg"
+                data-full="/images/mk14seat1-large.jpg"
+                alt="Ejection seat replica (MK14)"
                 loading="lazy"
                 decoding="async"
               >
@@ -472,7 +476,7 @@
   © 2025 ForgeMotion Systems
 </footer>
 
-<!-- ===== Modal HTML (klik → duże zdjęcie) ===== -->
+<!-- ===== Modal HTML ===== -->
 <div id="imgModal" class="modal-hidden" aria-hidden="true">
   <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
     <div class="modal-panel">
@@ -483,6 +487,9 @@
       <div class="modal-img-wrap">
         <img id="imgModalImg" class="modal-img" src="" alt="">
       </div>
+      <div class="modal-hint"
+           data-en="Tip: click outside the image or press ESC to close."
+           data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
     </div>
   </div>
 </div>
@@ -619,7 +626,6 @@
   })();
 </script>
 
-<!-- ===== KROK 5: klik → modal z dużym zdjęciem ===== -->
 <script>
   (function () {
     const modal = document.getElementById('imgModal');
@@ -633,7 +639,6 @@
       modalImg.alt = alt || "Image preview";
       modal.classList.remove('modal-hidden');
       modal.setAttribute('aria-hidden', 'false');
-      // Focus na przycisku zamykania dla dostępności
       closeBtn.focus();
       document.body.style.overflow = 'hidden';
     }
@@ -646,7 +651,6 @@
       document.body.style.overflow = '';
     }
 
-    // Klik w miniaturę (zdjęcia produktów)
     document.addEventListener('click', (e) => {
       const img = e.target.closest('.product-image img');
       if (!img) return;
@@ -656,16 +660,12 @@
       openModal(full, alt);
     });
 
-    // Zamknięcie: X
     closeBtn.addEventListener('click', closeModal);
 
-    // Zamknięcie: klik w tło (overlay)
     modal.addEventListener('click', (e) => {
-      const clickedOverlay = e.target.classList.contains('modal-overlay');
-      if (clickedOverlay) closeModal();
+      if (e.target.classList.contains('modal-overlay')) closeModal();
     });
 
-    // Zamknięcie: ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
         closeModal();
