@@ -291,9 +291,7 @@
 <div class="bg-wrap">
   <div class="bg-inner">
 
-    <section id="hero"
-      class="fade-in relative min-h-[100vh] lg:min-h-[110vh] p-4 pt-24 md:pt-28">
-
+    <section id="hero" class="fade-in relative min-h-[100vh] lg:min-h-[110vh] p-4 pt-24 md:pt-28">
       <div class="hero-panel">
         <div class="rounded-2xl px-4 md:px-6 py-6 md:py-7 bg-black/20 backdrop-blur-[2px]">
           <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_2px_24px_rgba(0,0,0,0.55)]"
@@ -315,77 +313,74 @@
       <div class="container mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- 5 produktów -> 5 kolumn na dużych ekranach -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
 
-          <!-- 6DOF: miniatura bez logo + modal z dużą wersją -large (z logo) -->
           <div class="product-card">
             <h3 class="product-title">6DOF Platform</h3>
             <p class="product-desc"
                data-en="A rock-solid 6DOF motion platform built to feel natural and predictable in every movement. Designed as the backbone of serious racing and flight simulator rigs — stable, precise, and ready for long sessions."
                data-pl="Solidna platforma motion 6DOF zaprojektowana tak, by każdy ruch był naturalny i przewidywalny. To mocna baza do zaawansowanych symulatorów wyścigowych i lotniczych — stabilna, precyzyjna i gotowa na długie sesje."></p>
-
             <div class="product-image">
-              <img
-                src="/images/rama6dof1.jpg"
-                data-full="/images/rama6dof1-large.jpg"
-                alt="6DOF motion platform (frame)"
-                loading="lazy"
-                decoding="async"
-              >
+              <img src="/images/rama6dof1.jpg"
+                   data-full="/images/rama6dof1-large.jpg"
+                   alt="6DOF motion platform (frame)"
+                   loading="lazy" decoding="async">
             </div>
           </div>
 
-          <!-- 3DOF/2DOF: miniatura bez logo + modal z dużą wersją -large (z logo) -->
           <div class="product-card">
             <h3 class="product-title">3DOF / 2DOF Platform</h3>
             <p class="product-desc"
                data-en="Compact and modular motion systems"
                data-pl="Kompaktowe i modułowe systemy motion"></p>
-
             <div class="product-image">
-              <img
-                src="/images/rama3dof1.jpg"
-                data-full="/images/rama3dof1-large.jpg"
-                alt="3DOF motion platform (frame)"
-                loading="lazy"
-                decoding="async"
-              >
+              <img src="/images/rama3dof1.jpg"
+                   data-full="/images/rama3dof1-large.jpg"
+                   alt="3DOF motion platform (frame)"
+                   loading="lazy" decoding="async">
             </div>
           </div>
 
-          <!-- Seat Belt: brak wersji -large na liście, więc modal otworzy ten sam plik -->
           <div class="product-card">
             <h3 class="product-title">Seat Belt Tensioner</h3>
             <p class="product-desc"
                data-en="Realistic braking and acceleration forces through seat belt feedback"
                data-pl="Realistyczne odwzorowanie hamowania i przyspieszenia poprzez napięcie pasów"></p>
-
             <div class="product-image">
-              <img
-                src="/images/seatbelt.jpg"
-                data-full="/images/seatbelt.jpg"
-                alt="Seat belt tensioner for simulator"
-                loading="lazy"
-                decoding="async"
-              >
+              <img src="/images/seatbelt.jpg"
+                   data-full="/images/seatbelt.jpg"
+                   alt="Seat belt tensioner for simulator"
+                   loading="lazy" decoding="async">
             </div>
           </div>
 
-          <!-- NOWE FOTO: Ejection Seat Replica -> mk14seat1 + mk14seat1-large -->
+          <!-- NOWY PRODUKT -->
           <div class="product-card">
             <h3 class="product-title">Ejection Seat Replica</h3>
             <p class="product-desc"
                data-en="High-fidelity aircraft ejection seat replica for simulators"
                data-pl="Wysokiej jakości replika fotela katapultowego do symulatorów lotniczych"></p>
-
             <div class="product-image">
-              <img
-                src="/images/mk14seat1.jpg"
-                data-full="/images/mk14seat1-large.jpg"
-                alt="Ejection seat replica (MK14)"
-                loading="lazy"
-                decoding="async"
-              >
+              <img src="/images/mk14seat1.jpg"
+                   data-full="/images/mk14seat1-large.jpg"
+                   alt="Ejection seat replica (MK14)"
+                   loading="lazy" decoding="async">
+            </div>
+          </div>
+
+          <!-- jeśli masz jeszcze stary ejection-seat.jpg i chcesz go zachować jako osobny produkt, to tutaj możemy dodać kolejny kafelek.
+               Jeśli nie, zostawiamy 5 produktów jak wyżej. -->
+          <div class="product-card">
+            <h3 class="product-title">Simulator Accessories</h3>
+            <p class="product-desc"
+               data-en="Custom add-ons and mounts tailored to your rig"
+               data-pl="Dodatki i mocowania dopasowane do Twojego stanowiska"></p>
+            <div class="product-image">
+              <img src="/images/ejection-seat.jpg"
+                   data-full="/images/ejection-seat.jpg"
+                   alt="Simulator accessories"
+                   loading="lazy" decoding="async">
             </div>
           </div>
 
