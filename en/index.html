@@ -116,9 +116,7 @@
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
 
-    /* =========================
-       MOBILE HERO FIX (ONLY)
-    ========================== */
+    /* MOBILE HERO FIX */
     @media (max-width: 768px) {
       #hero { min-height: auto !important; }
       .hero-panel {
@@ -174,7 +172,7 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
-    /* ========= MK14 THUMB FIX (HOMEPAGE CARD ONLY) ========= */
+    /* MK14 THUMB FIX (HOMEPAGE CARD ONLY) */
     .product-image.mk14-image { height: 210px; }
 
     .product-image img.mk14-thumb {
@@ -216,24 +214,6 @@
           </div>
         </section>
 
-        <!-- =========================
-             DEMO SECTION (AUTO FROM /videos/videos.json)
-        ========================== -->
-        <section id="demo" class="py-14 px-4">
-          <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl font-bold text-center mb-3"
-                data-en="See it in action"
-                data-pl="Zobacz w akcji"></h2>
-
-            <p class="text-center text-gray-300 mb-8"
-               data-en="Real footage. No CGI. Short demos from our motion platforms."
-               data-pl="Prawdziwe ujęcia. Bez CGI. Krótkie demo naszych platform motion."></p>
-
-            <!-- JS will inject gallery here (or hide this section if no videos) -->
-            <div id="demoGallery"></div>
-          </div>
-        </section>
-
         <section id="products" class="py-16 px-4">
           <div class="container mx-auto">
             <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
@@ -246,19 +226,10 @@
                    data-en="Premium full-body motion for racing and flight sims."
                    data-pl="Motion premium „na całe ciało” do sim racingu i flight sim."></p>
 
-                <div class="flex flex-col gap-2 mb-3">
-                  <a href="/products-6dof.html"
-                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                     data-en="Learn more"
-                     data-pl="Zobacz więcej"></a>
-
-                  <!-- auto-wired from JSON -->
-                  <button type="button"
-                          class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                          data-video-key="6dof">
-                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
-                  </button>
-                </div>
+                <a href="/products-6dof.html"
+                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                   data-en="Learn more"
+                   data-pl="Zobacz więcej"></a>
 
                 <div class="product-image">
                   <img src="/images/rama6dof1.jpg"
@@ -274,19 +245,10 @@
                    data-en="Big immersion in a compact, practical setup."
                    data-pl="Duża immersja w kompaktowej, praktycznej formie."></p>
 
-                <div class="flex flex-col gap-2 mb-3">
-                  <a href="/products-3dof.html"
-                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                     data-en="Learn more"
-                     data-pl="Zobacz więcej"></a>
-
-                  <!-- auto-wired from JSON -->
-                  <button type="button"
-                          class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                          data-video-key="3dof">
-                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
-                  </button>
-                </div>
+                <a href="/products-3dof.html"
+                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                   data-en="Learn more"
+                   data-pl="Zobacz więcej"></a>
 
                 <div class="product-image">
                   <img src="/images/rama3dof1.jpg"
@@ -387,31 +349,26 @@
                    data-en="We design and build solutions for people and business — from affordable, personalizable B2C platforms to robust setups for training and events. Every product is developed hands-on: CAD design, rapid prototyping, and manufacturing using 3D printing and CNC — then assembly, tuning, and testing."
                    data-pl="Projektujemy i budujemy rozwiązania dla pasjonatów i biznesu — od przystępnych, personalizowanych platform B2C po wytrzymałe konfiguracje do szkoleń i eventów. Każdy produkt rozwijamy „od zera”: projekt w CAD, szybkie prototypowanie oraz produkcja z użyciem druku 3D i CNC — a potem montaż, strojenie i testy."></p>
 
-                <!-- swapped order + equal sizing -->
                 <div class="grid sm:grid-cols-2 gap-4">
+                  <!-- LEFT: CAD (design phase) -->
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
-                    <div class="w-full h-44 md:h-48 bg-black/10 flex items-center justify-center">
-                      <img src="/images/modul-napedowy6dof-cad.jpg"
-                           data-full="/images/modul-napedowy6dof-cad.jpg"
-                           alt="CAD view of 6DOF drive module"
-                           loading="lazy" decoding="async"
-                           class="w-full h-full object-contain block">
-                    </div>
+                    <img src="/images/modul-napedowy6dof-cad.jpg"
+                         alt="CAD view of 6DOF drive module"
+                         loading="lazy" decoding="async"
+                         class="w-full h-auto block">
                     <figcaption class="px-4 py-3 text-sm text-gray-300"
                                 data-en="Design phase: CAD validation before manufacturing."
                                 data-pl="Faza projektowa: weryfikacja w CAD przed wykonaniem."></figcaption>
                   </figure>
 
+                  <!-- RIGHT: under construction (production build) -->
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
-                    <div class="w-full h-44 md:h-48 bg-black/10 flex items-center justify-center">
-                      <img src="/images/modul-napedowy6dof-underconstruction.jpg"
-                           data-full="/images/modul-napedowy6dof-underconstruction.jpg"
-                           alt="6DOF drive module production build"
-                           loading="lazy" decoding="async"
-                           class="w-full h-full object-contain block">
-                    </div>
+                    <img src="/images/modul-napedowy6dof-underconstruction.jpg"
+                         alt="6DOF drive module under construction"
+                         loading="lazy" decoding="async"
+                         class="w-full h-auto block">
                     <figcaption class="px-4 py-3 text-sm text-gray-300"
-                                data-en="Production build: assembling the final drive module."
+                                data-en="Production build: assembling the production version of the drive module."
                                 data-pl="Wykonanie: montaż produkcyjnej wersji modułu napędowego."></figcaption>
                   </figure>
                 </div>
@@ -479,41 +436,54 @@
               </div>
             </div>
 
-            <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-6">
-              <h4 class="text-xl font-semibold mb-3 text-center"
-                  data-en="More about the story (public links)"
-                  data-pl="Więcej o historii (linki publiczne)"></h4>
-
-              <p class="text-gray-300 text-base md:text-lg leading-relaxed text-center max-w-4xl mx-auto mb-5"
-                 data-en="Selected public materials about the background behind ForgeMotion."
-                 data-pl="Wybrane publiczne materiały pokazujące tło stojące za ForgeMotion."></p>
-
-              <div class="flex flex-wrap gap-3 justify-center">
-                <a href="https://pl.linkedin.com/in/leszek-tejwan-60112614"
-                   target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold">
-                  <span data-en="LinkedIn" data-pl="LinkedIn"></span>
-                </a>
-
-                <a href="https://tejwan.wixsite.com/leszek-tejwan/home-cockpit"
-                   target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold">
-                  <span data-en="Home cockpit page" data-pl="Strona projektu kokpitu"></span>
-                </a>
-
-                <a href="https://crj200athome.wordpress.com/"
-                   target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold">
-                  <span data-en="CRJ200 project" data-pl="Projekt CRJ200"></span>
-                </a>
-              </div>
-            </div>
-
             <div class="mt-6 flex flex-wrap gap-3 justify-center">
+              <a href="https://crj200athome.wordpress.com/"
+                 target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
+                <span data-en="See CRJ200 project" data-pl="Zobacz projekt CRJ200"></span>
+              </a>
+
               <a href="#contact"
                  class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold">
                 <span data-en="Contact us" data-pl="Kontakt"></span>
               </a>
+            </div>
+
+            <!-- ✅ PUBLIC LINKS (SAME SET IN EN/PL) -->
+            <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-6">
+              <h4 class="text-xl md:text-2xl font-semibold text-center mb-2"
+                  data-en="More about the story (public links)"
+                  data-pl="Więcej o historii (publiczne linki)"></h4>
+
+              <p class="text-gray-300 text-center mb-5"
+                 data-en="Selected public materials about the background behind ForgeMotion."
+                 data-pl="Wybrane publiczne materiały o tle powstania ForgeMotion."></p>
+
+              <div class="flex flex-wrap gap-3 justify-center">
+                <a href="https://pl.linkedin.com/in/leszek-tejwan-60112614"
+                   target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
+                  LinkedIn
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=u4VKISJ_TzI"
+                   target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold"
+                   data-en="Myśli Gonitwa (interview)"
+                   data-pl="Myśli Gonitwa (wywiad)"></a>
+
+                <a href="https://tejwan.wixsite.com/leszek-tejwan/home-cockpit"
+                   target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold"
+                   data-en="Home cockpit page"
+                   data-pl="Strona home cockpit"></a>
+
+                <a href="https://crj200athome.wordpress.com/"
+                   target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
+                  CRJ200 project
+                </a>
+              </div>
             </div>
           </div>
 
