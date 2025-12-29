@@ -1,45 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Root (optional but recommended) -->
+  <url>
+    <loc>https://forgemotionsystems.com/</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
   <url>
     <loc>https://forgemotionsystems.com/en/</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://forgemotionsystems.com/pl/</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://forgemotionsystems.com/products-6dof.html</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://forgemotionsystems.com/products-3dof.html</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://forgemotionsystems.com/products-mk14.html</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://forgemotionsystems.com/products-belt-tensioner.html</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://forgemotionsystems.com/products-accessories.html</loc>
     <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
