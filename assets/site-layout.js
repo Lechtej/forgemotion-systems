@@ -1,5 +1,5 @@
 /* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + (optional) image/video modal + other products
+   Shared layout + i18n + meta + mobile menu + (optional) media modal (image/video) + other products
    + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
 */
 (function () {
@@ -15,6 +15,8 @@
   ];
 
   const SCROLLSPY_SECTIONS = ["hero", "products", "about", "contact"];
+
+  const VIDEOS_JSON_URL = "/videos/videos.json";
 
   function escapeHtml(str) {
     return String(str)
@@ -405,7 +407,7 @@
     }
 
     document.addEventListener("click", (e) => {
-      // Image click (full)
+      // Image click
       const imgEl = e.target.closest("img[data-full]");
       if (imgEl) {
         const full = imgEl.getAttribute("data-full") || imgEl.getAttribute("src");
@@ -414,7 +416,7 @@
         return;
       }
 
-      // Video button click
+      // Video button click (wired dynamically or manually)
       const vidBtn = e.target.closest("[data-video]");
       if (vidBtn) {
         const src = vidBtn.getAttribute("data-video");
@@ -555,6 +557,135 @@
     });
   }
 
+  // -------------------------
+  // Videos JSON: load + apply
+  // -------------------------
+  async function loadVideosJson() {
+    try {
+      const res = await fetch(VIDEOS_JSON_URL, { cache: "no-cache" });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data && typeof data === "object" ? data : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function getFirstClip(videosJson, key) {
+    const arr = videosJson?.[key];
+    if (!Array.isArray(arr) || arr.length === 0) return null;
+    const clip = arr[0];
+    if (!clip?.src) return null;
+    return clip;
+  }
+
+  function wireDemoButtonsFromJson(videosJson) {
+    const btns = Array.from(document.querySelectorAll("[data-video-key]"));
+    for (const btn of btns) {
+      const key = btn.getAttribute("data-video-key");
+      const clip = getFirstClip(videosJson, key);
+      if (!clip) {
+        // No video -> hide demo button
+        btn.classList.add("hidden");
+        continue;
+      }
+      btn.setAttribute("data-video", clip.src);
+      if (clip.poster) btn.setAttribute("data-video-poster", clip.poster);
+      else btn.removeAttribute("data-video-poster");
+    }
+  }
+
+  function renderDemoGallery(videosJson, lang) {
+    const host = document.getElementById("demoGallery");
+    const section = document.getElementById("demo");
+    if (!host || !section) return;
+
+    const clips6 = Array.isArray(videosJson?.["6dof"]) ? videosJson["6dof"] : [];
+    const clips3 = Array.isArray(videosJson?.["3dof"]) ? videosJson["3dof"] : [];
+
+    const all = [...clips6, ...clips3].filter(c => c && c.src);
+    if (!all.length) {
+      section.classList.add("hidden");
+      return;
+    }
+
+    // Choose hero clip: first 6dof if exists, else first of all
+    const hero = getFirstClip(videosJson, "6dof") || all[0];
+
+    const heroTitle = (lang === "pl" ? hero.title_pl : hero.title_en) || (lang === "pl" ? "Demo" : "Demo");
+    const heroPoster = hero.poster ? hero.poster : "";
+
+    // Side list: show up to 4 clips total excluding hero (keeps UI clean)
+    const side = all
+      .filter(c => c.src !== hero.src)
+      .slice(0, 4);
+
+    const sideItems = side.map((c) => {
+      const t = (lang === "pl" ? c.title_pl : c.title_en) || (lang === "pl" ? "Demo" : "Demo");
+      const poster = c.poster || "";
+      return `
+        <div class="rounded-xl border border-white/10 bg-black/20 p-4">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <div class="font-semibold">${escapeHtml(t)}</div>
+            <button type="button"
+              class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+              data-video="${escapeHtml(c.src)}"
+              ${poster ? `data-video-poster="${escapeHtml(poster)}"` : ""}>
+              <span data-en="Open" data-pl="Otwórz"></span>
+            </button>
+          </div>
+
+          <video class="w-full rounded-lg border border-white/10 bg-black/20"
+            controls playsinline preload="none"
+            ${poster ? `poster="${escapeHtml(poster)}"` : ""}>
+            <source src="${escapeHtml(c.src)}" type="video/mp4" />
+          </video>
+        </div>
+      `;
+    }).join("");
+
+    host.innerHTML = `
+      <div class="grid lg:grid-cols-3 gap-6 items-start">
+        <div class="lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <div class="font-semibold text-lg">${escapeHtml(heroTitle)}</div>
+              <button type="button"
+                class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                data-video="${escapeHtml(hero.src)}"
+                ${heroPoster ? `data-video-poster="${escapeHtml(heroPoster)}"` : ""}>
+                <span data-en="Open fullscreen" data-pl="Otwórz fullscreen"></span>
+              </button>
+            </div>
+
+            <video class="w-full rounded-xl border border-white/10 bg-black/20"
+              controls playsinline preload="none"
+              ${heroPoster ? `poster="${escapeHtml(heroPoster)}"` : ""}>
+              <source src="${escapeHtml(hero.src)}" type="video/mp4" />
+            </video>
+
+            <div class="text-sm text-gray-300 mt-3"
+              data-en="Tip: use the button above to open the video in a modal."
+              data-pl="Wskazówka: użyj przycisku powyżej, aby otworzyć wideo w modalu."></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
+          <div class="p-5">
+            <div class="font-semibold text-lg mb-3" data-en="More demos" data-pl="Więcej demo"></div>
+            <div class="flex flex-col gap-4">
+              ${sideItems || `
+                <div class="rounded-xl border border-white/10 bg-black/20 p-4 text-gray-300"
+                  data-en="More clips will appear here as you add them to videos.json."
+                  data-pl="Tutaj pojawią się kolejne klipy, gdy dodasz je do videos.json."></div>
+              `}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
@@ -586,6 +717,17 @@
       }
 
       bindScrollSpy();
+
+      // Load videos JSON and build demo + wire buttons
+      loadVideosJson().then((videosJson) => {
+        if (!videosJson) return;
+
+        wireDemoButtonsFromJson(videosJson);
+        renderDemoGallery(videosJson, appliedLang);
+
+        // apply texts for injected demo markup (buttons, hints)
+        applyTexts(appliedLang);
+      });
     }
   };
 })();
