@@ -518,18 +518,92 @@
       </div>
     </section>
 
-    <section id="contact" class="container mx-auto py-16 px-4">
-      <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
-      <p class="text-center text-gray-300 mb-6"
-         data-en="Reach out to discuss your simulator project or request a quote."
-         data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę."></p>
+    <!-- CONTACT / LEAD CAPTURE -->
+    <section id="contact" class="py-16 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-8 md:p-10">
+          <div class="grid md:grid-cols-2 gap-10 items-start">
+            <div>
+              <h2 class="text-3xl md:text-4xl font-bold tracking-tight">
+                Zapytaj o wycenę
+              </h2>
 
-      <form id="contactForm" class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
-        <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
-        <input type="email" placeholder="Email" class="p-3 rounded bg-gray-700">
-        <textarea placeholder="Message / Wiadomość" class="p-3 rounded bg-gray-700"></textarea>
-        <button class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded font-semibold" data-en="Send message" data-pl="Wyślij wiadomość"></button>
-      </form>
+              <p class="mt-3 text-white/70 leading-relaxed">
+                Podaj DOF, payload, ograniczenia gabarytowe i zastosowanie. Odezwiemy się z terminem realizacji i wstępnym dopasowaniem technicznym.
+              </p>
+
+              <ul class="mt-6 space-y-2 text-white/70 text-sm">
+                <li>• Platformy motion: 6DOF / 3DOF / 2DOF</li>
+                <li>• Real footage (MP4), bez CGI</li>
+                <li>• Integracja: interfejs sterowania + bezpieczeństwo</li>
+              </ul>
+
+              <div class="mt-6 text-sm text-white/70">
+                Wolisz e-mail?
+                <a class="underline hover:text-white"
+                   href="mailto:sales@forgemotionsystems.com?subject=Zapytanie%20-%20ForgeMotion%20Systems">
+                  sales@forgemotionsystems.com
+                </a>
+              </div>
+            </div>
+
+            <form id="leadForm" class="space-y-4">
+              <div>
+                <label class="block text-sm text-white/80 mb-1" for="lead_name">Imię i nazwisko</label>
+                <input id="lead_name" name="name" required
+                  class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  type="text" autocomplete="name" />
+              </div>
+
+              <div>
+                <label class="block text-sm text-white/80 mb-1" for="lead_email">E-mail</label>
+                <input id="lead_email" name="email" required
+                  class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  type="email" autocomplete="email" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm text-white/80 mb-1" for="lead_dof">DOF</label>
+                  <select id="lead_dof" name="dof"
+                    class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30">
+                    <option value="6DOF">6DOF</option>
+                    <option value="3DOF">3DOF</option>
+                    <option value="2DOF">2DOF</option>
+                    <option value="Nie wiem">Nie wiem</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-sm text-white/80 mb-1" for="lead_payload">Payload (kg)</label>
+                  <input id="lead_payload" name="payload"
+                    class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    type="text" inputmode="decimal" placeholder="np. 120" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm text-white/80 mb-1" for="lead_message">Szczegóły projektu</label>
+                <textarea id="lead_message" name="message" rows="5" required
+                  class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  placeholder="Zastosowanie, ograniczenia gabarytowe, zakres ruchu, termin..."></textarea>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button type="submit"
+                  class="rounded-xl bg-white text-black px-5 py-3 font-medium hover:bg-white/90 transition">
+                  Wyślij zapytanie
+                </button>
+                <span id="leadFormStatus" class="text-sm text-white/60"></span>
+              </div>
+
+              <p class="text-xs text-white/50">
+                Wysyłając formularz zgadzasz się na kontakt w sprawie zapytania. Bez spamu.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -561,6 +635,64 @@
         injectOtherProducts: false
       });
     });
+  </script>
+
+  <!-- Lead form logic (local, GitHub Pages safe) -->
+  <script>
+    (function () {
+      const form = document.getElementById("leadForm");
+      if (!form) return;
+
+      const statusEl = document.getElementById("leadFormStatus");
+
+      function setStatus(msg, isError) {
+        if (!statusEl) return;
+        statusEl.textContent = msg || "";
+        statusEl.className = "text-sm " + (isError ? "text-red-300" : "text-white/60");
+      }
+
+      function dlPush(eventName, payload) {
+        try {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: eventName, ...payload });
+        } catch (_) {}
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const fd = new FormData(form);
+        const name = (fd.get("name") || "").toString().trim();
+        const email = (fd.get("email") || "").toString().trim();
+        const dof = (fd.get("dof") || "").toString().trim();
+        const payload = (fd.get("payload") || "").toString().trim();
+        const message = (fd.get("message") || "").toString().trim();
+
+        if (!name || !email || !message) {
+          setStatus("Uzupełnij imię, e-mail i szczegóły projektu.", true);
+          return;
+        }
+
+        const subject = `Zapytanie - ${dof} - ForgeMotion Systems`;
+        const bodyLines = [
+          `Imię i nazwisko: ${name}`,
+          `E-mail: ${email}`,
+          `DOF: ${dof}`,
+          `Payload: ${payload || "-"}`,
+          "",
+          "Szczegóły projektu:",
+          message,
+          "",
+          `Strona: ${location.href}`
+        ];
+
+        dlPush("lead_submit", { dof, payload, page: location.pathname });
+
+        setStatus("Otwieram klienta poczty…", false);
+        const mailto = `mailto:sales@forgemotionsystems.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+        window.location.href = mailto;
+      });
+    })();
   </script>
 </body>
 </html>
