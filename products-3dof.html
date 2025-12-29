@@ -57,8 +57,8 @@
            data-pl="Duża immersja w kompaktowej formie. Świetny wybór, gdy chcesz motion — ale nadal chcesz mieć „normalny” pokój."></p>
 
         <p class="text-white/80 mb-8"
-           data-en="Designed for clear, readable cues in flight or vehicle simulation: acceleration, braking, and surface changes — with a predictable, comfortable feel for everyday use."
-           data-pl="Zaprojektowana pod czytelne sygnały w symulacji lotu lub pojazdu: przyspieszanie, hamowanie i zmiany nawierzchni — z przewidywalnym, komfortowym ruchem do codziennego grania."></p>
+           data-en="Designed for clear, readable cues in aircraft or vehicle simulation: acceleration, braking, and surface changes — with a predictable, comfortable feel for everyday use."
+           data-pl="Zaprojektowana pod czytelne sygnały w symulacji samolotu lub pojazdu: przyspieszanie, hamowanie i zmiany nawierzchni — z przewidywalnym, komfortowym ruchem do codziennego grania."></p>
 
         <div class="flex flex-col sm:flex-row gap-3 mb-10">
           <a href="#lead"
@@ -105,44 +105,50 @@
              data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
         </div>
 
-        <!-- Video section (auto-hydrated from /videos/videos.json) -->
+        <!-- Video section (ONLY 3DOF demo) -->
         <section id="videos" class="grid lg:grid-cols-3 gap-6 mb-10">
+          <!-- Left: inline player -->
           <div class="lg:col-span-2 bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
             <div class="p-6 pb-4">
               <h2 class="text-2xl font-bold"
                   data-en="3DOF demo"
                   data-pl="Demo 3DOF"></h2>
               <p class="text-white/80 mt-2"
-                 data-en="See how compact motion delivers readable cues without overwhelming movement."
-                 data-pl="Zobacz, jak kompaktowe motion daje czytelne sygnały bez przesadnych wychyleń."></p>
+                 data-en="A short clip showing compact motion behavior — readable cues without overwhelming movement."
+                 data-pl="Krótki klip pokazujący zachowanie kompaktowego motion — czytelne sygnały bez przesadnych wychyleń."></p>
             </div>
 
             <div class="px-6 pb-6">
               <div class="rounded-2xl overflow-hidden border border-white/10 bg-black/40">
-                <video id="heroVideoEl" class="w-full h-auto block" controls playsinline preload="metadata" poster="">
-                  <source id="heroVideoSource" src="" type="video/mp4">
+                <video class="w-full h-auto block" controls playsinline preload="metadata"
+                       poster="/videos/posters/3dof-demo1.jpg">
+                  <source src="/videos/3dof-demo1.mp4" type="video/mp4">
                 </video>
               </div>
 
               <div class="flex items-center justify-between gap-4 mt-3">
                 <div class="text-white/80 text-sm">
-                  <span class="font-semibold text-white/90" id="heroVideoTitle">Video</span>
+                  <span class="font-semibold text-white/90"
+                        data-en="3DOF – motion demo"
+                        data-pl="3DOF – demo motion"></span>
                 </div>
-
-                <button id="openHeroVideoModal"
-                  type="button"
-                  class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded-lg font-semibold">
-                  ⤢ <span data-en="Open fullscreen" data-pl="Otwórz na pełnym ekranie"></span>
-                </button>
               </div>
             </div>
           </div>
 
+          <!-- Right: small info card (no more-demos list) -->
           <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h3 class="text-xl font-bold mb-4" data-en="More demos" data-pl="Więcej demo"></h3>
-            <p class="text-white/75"
-               data-en="More clips will appear here automatically."
-               data-pl="Dodatkowe klipy pojawią się tu automatycznie."></p>
+            <h3 class="text-xl font-bold mb-4"
+                data-en="What you’re seeing"
+                data-pl="Co tu widać"></h3>
+            <ul class="list-disc list-inside text-white/80 space-y-2">
+              <li data-en="Compact motion tuned for everyday use."
+                  data-pl="Kompaktowe motion strojonne pod codzienne granie."></li>
+              <li data-en="Clear cues for acceleration, braking and balance."
+                  data-pl="Czytelne sygnały przyspieszania, hamowania i balansu."></li>
+              <li data-en="Works for aircraft or vehicle simulation."
+                  data-pl="Działa w symulacji samolotu lub pojazdu."></li>
+            </ul>
           </div>
         </section>
 
@@ -278,7 +284,7 @@
         includeVideoModal: true,
         activeProductKey: "3dof",
         injectOtherProducts: true,
-        enableVideoDemos: true
+        enableVideoDemos: false
       });
     });
   </script>
