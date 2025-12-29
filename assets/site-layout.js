@@ -1,5 +1,5 @@
 /* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + (optional) image modal + other products
+   Shared layout + i18n + meta + mobile menu + (optional) image/video modal + other products
    + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
 */
 (function () {
@@ -98,12 +98,18 @@
         border-radius:999px; width:40px; height:40px;
         display:inline-flex; align-items:center; justify-content:center;
         cursor:pointer;
+        z-index: 2;
       }
       .modal-close:hover{ background: rgba(255,255,255,0.18); }
-      .modal-img-wrap{ padding:.75rem; }
+      .modal-media-wrap{ padding:.75rem; }
       .modal-img{
         width:100%; height:auto; max-height: calc(90vh - 1.5rem);
         object-fit: contain; border-radius:.75rem; display:block;
+      }
+      .modal-video{
+        width:100%; max-height: calc(90vh - 1.5rem);
+        border-radius:.75rem; display:block;
+        background: rgba(0,0,0,0.25);
       }
       .modal-hint{
         padding: 0 .95rem .95rem .95rem;
@@ -204,16 +210,23 @@
 
   function renderModal() {
     return `
-<div id="imgModal" class="modal-hidden" aria-hidden="true">
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
+<div id="mediaModal" class="modal-hidden" aria-hidden="true">
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="mediaModalTitle">
     <div class="modal-panel">
-      <button id="imgModalClose" class="modal-close" type="button" aria-label="Close image">
+      <button id="mediaModalClose" class="modal-close" type="button" aria-label="Close">
         <span aria-hidden="true">✕</span>
       </button>
-      <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
-      <div class="modal-img-wrap"><img id="imgModalImg" class="modal-img" src="" alt=""></div>
-      <div class="modal-hint" data-en="Tip: click outside the image or press ESC to close."
-           data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
+      <h2 id="mediaModalTitle" class="sr-only">Media preview</h2>
+
+      <div class="modal-media-wrap">
+        <img id="mediaModalImg" class="modal-img" src="" alt="" style="display:none;">
+        <video id="mediaModalVideo" class="modal-video" controls playsinline preload="none" style="display:none;">
+          <source id="mediaModalVideoSrc" src="" type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="modal-hint" data-en="Tip: click outside the media or press ESC to close."
+           data-pl="Wskazówka: kliknij poza mediami lub naciśnij ESC, aby zamknąć."></div>
     </div>
   </div>
 </div>`;
@@ -332,14 +345,42 @@
   }
 
   function bindModal() {
-    const modal = document.getElementById("imgModal");
-    const modalImg = document.getElementById("imgModalImg");
-    const closeBtn = document.getElementById("imgModalClose");
-    if (!modal || !modalImg || !closeBtn) return;
+    const modal = document.getElementById("mediaModal");
+    const img = document.getElementById("mediaModalImg");
+    const video = document.getElementById("mediaModalVideo");
+    const videoSrc = document.getElementById("mediaModalVideoSrc");
+    const closeBtn = document.getElementById("mediaModalClose");
+    if (!modal || !img || !video || !videoSrc || !closeBtn) return;
 
-    function openModal(src, alt) {
-      modalImg.src = src;
-      modalImg.alt = alt || "Image preview";
+    function openImage(src, alt) {
+      video.pause();
+      video.style.display = "none";
+      video.removeAttribute("poster");
+      videoSrc.src = "";
+      video.load();
+
+      img.src = src;
+      img.alt = alt || "Image preview";
+      img.style.display = "block";
+
+      modal.classList.remove("modal-hidden");
+      modal.setAttribute("aria-hidden", "false");
+      closeBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function openVideo(src, poster) {
+      img.style.display = "none";
+      img.src = "";
+      img.alt = "";
+
+      if (poster) video.setAttribute("poster", poster);
+      else video.removeAttribute("poster");
+
+      videoSrc.src = src;
+      video.load();
+      video.style.display = "block";
+
       modal.classList.remove("modal-hidden");
       modal.setAttribute("aria-hidden", "false");
       closeBtn.focus();
@@ -349,17 +390,38 @@
     function closeModal() {
       modal.classList.add("modal-hidden");
       modal.setAttribute("aria-hidden", "true");
-      modalImg.src = "";
-      modalImg.alt = "";
+
+      img.style.display = "none";
+      img.src = "";
+      img.alt = "";
+
+      video.pause();
+      video.style.display = "none";
+      video.removeAttribute("poster");
+      videoSrc.src = "";
+      video.load();
+
       document.body.style.overflow = "";
     }
 
     document.addEventListener("click", (e) => {
-      const img = e.target.closest("img[data-full]");
-      if (!img) return;
-      const full = img.getAttribute("data-full") || img.getAttribute("src");
-      const alt = img.getAttribute("alt") || "";
-      openModal(full, alt);
+      // Image click (full)
+      const imgEl = e.target.closest("img[data-full]");
+      if (imgEl) {
+        const full = imgEl.getAttribute("data-full") || imgEl.getAttribute("src");
+        const alt = imgEl.getAttribute("alt") || "";
+        openImage(full, alt);
+        return;
+      }
+
+      // Video button click
+      const vidBtn = e.target.closest("[data-video]");
+      if (vidBtn) {
+        const src = vidBtn.getAttribute("data-video");
+        if (!src) return;
+        const poster = vidBtn.getAttribute("data-video-poster") || "";
+        openVideo(src, poster);
+      }
     });
 
     closeBtn.addEventListener("click", closeModal);
@@ -481,14 +543,12 @@
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
 
-      // On index pages: navigate to /{lang}/ keeping hash
       if (isIndexLikePath(path) || getPathLang(path)) {
         localStorage.setItem("lang", targetLang);
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
 
-      // On product pages: stay, only switch language + meta/text
       const wasMobileOpen = isMobileMenuOpen();
       setLanguage(targetLang, metaData);
       if (wasMobileOpen) closeMobileMenu();
