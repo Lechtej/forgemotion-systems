@@ -16,7 +16,7 @@
 
   const SCROLLSPY_SECTIONS = ["hero", "products", "about", "contact"];
 
-  // ✅ correct location in your repo
+  // videos.json location in your repo
   const VIDEOS_JSON_URL = "/videos/videos.json";
 
   function escapeHtml(str) {
@@ -83,6 +83,17 @@
       /* demo buttons - UX: disabled until JSON loads */
       .demo-disabled { opacity: .55; cursor: not-allowed; filter: saturate(.75); }
 
+      /* ✅ demo videos sizing (homepage) */
+      .demo-video{
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
+        max-height: 420px;
+      }
+      @media (max-width: 768px){
+        .demo-video{ max-height: 260px; }
+      }
+
       ${includeModal ? `
       .modal-hidden { display: none; }
       .modal-overlay {
@@ -116,6 +127,7 @@
         width:100%; max-height: calc(90vh - 1.5rem);
         border-radius:.75rem; display:block;
         background: rgba(0,0,0,0.25);
+        aspect-ratio: 16 / 9; /* ✅ FIX thin bar + poster */
       }
       .modal-hint{
         padding: 0 .95rem .95rem .95rem;
@@ -383,6 +395,7 @@
       if (poster) video.setAttribute("poster", poster);
       else video.removeAttribute("poster");
 
+      video.setAttribute("preload", "metadata"); // ✅ helps sizing + poster on some browsers
       videoSrc.src = src;
       video.load();
       video.style.display = "block";
@@ -608,7 +621,6 @@
       const clip = getFirstClip(videosJson, key);
 
       if (!clip) {
-        // No video -> hide demo button
         btn.classList.add("hidden");
         continue;
       }
@@ -652,7 +664,7 @@
             </button>
           </div>
 
-          <video class="w-full rounded-lg border border-white/10 bg-black/20"
+          <video class="demo-video w-full rounded-lg border border-white/10 bg-black/20"
             controls playsinline preload="none"
             ${poster ? `poster="${escapeHtml(poster)}"` : ""}>
             <source src="${escapeHtml(c.src)}" type="video/mp4" />
@@ -675,7 +687,7 @@
               </button>
             </div>
 
-            <video class="w-full rounded-xl border border-white/10 bg-black/20"
+            <video class="demo-video w-full rounded-xl border border-white/10 bg-black/20"
               controls playsinline preload="none"
               ${heroPoster ? `poster="${escapeHtml(heroPoster)}"` : ""}>
               <source src="${escapeHtml(hero.src)}" type="video/mp4" />
@@ -735,12 +747,11 @@
 
       bindScrollSpy();
 
-      // ✅ demo buttons: don't look "dead"
+      // demo buttons: don't look "dead"
       preDisableDemoButtons();
 
       loadVideosJson().then((videosJson) => {
         if (!videosJson) {
-          // JSON missing => hide all demo buttons (instead of dead ones)
           document.querySelectorAll("[data-video-key]").forEach(btn => btn.classList.add("hidden"));
           const demoSection = document.getElementById("demo");
           if (demoSection) demoSection.classList.add("hidden");
