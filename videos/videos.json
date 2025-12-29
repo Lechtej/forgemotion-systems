@@ -5,6 +5,12 @@
       "src": "/videos/6dof-demo1.mp4",
       "poster": "/videos/posters/6dof-demo1.jpg",
       "title": { "en": "6DOF demo #1", "pl": "Demo 6DOF #1" }
+    },
+    {
+      "key": "6dof",
+      "src": "/videos/6dof-adjust.mp4",
+      "poster": "/videos/posters/6dof-adjust.jpg",
+      "title": { "en": "Frame adjustment (rails)", "pl": "Regulacja elementów ramy" }
     }
   ],
   "3dof": []
