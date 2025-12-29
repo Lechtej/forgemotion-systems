@@ -740,10 +740,31 @@
     return json;
   }
 
+  // ✅ Title picker: supports:
+  // - title: {en,pl} or title: "..."
+  // - legacy: title_en / title_pl
   function pickTitle(v, lang) {
     if (!v) return "";
     if (typeof v.title === "string") return v.title;
     if (v.title && typeof v.title === "object") return v.title[lang] || v.title.en || v.title.pl || "";
+    if (lang === "pl" && typeof v.title_pl === "string") return v.title_pl;
+    if (lang === "en" && typeof v.title_en === "string") return v.title_en;
+    if (typeof v.title_en === "string") return v.title_en;
+    if (typeof v.title_pl === "string") return v.title_pl;
+    return "";
+  }
+
+  // ✅ Description picker: supports:
+  // - desc: {en,pl} or desc: "..."
+  // - legacy: desc_en / desc_pl
+  function pickDesc(v, lang) {
+    if (!v) return "";
+    if (typeof v.desc === "string") return v.desc;
+    if (v.desc && typeof v.desc === "object") return v.desc[lang] || v.desc.en || v.desc.pl || "";
+    if (lang === "pl" && typeof v.desc_pl === "string") return v.desc_pl;
+    if (lang === "en" && typeof v.desc_en === "string") return v.desc_en;
+    if (typeof v.desc_en === "string") return v.desc_en;
+    if (typeof v.desc_pl === "string") return v.desc_pl;
     return "";
   }
 
@@ -810,7 +831,7 @@
     title.textContent = pickTitle(item, lang) || "6DOF demo #1";
   }
 
-  // More demos: find the right-side card robustly, hide if no extras, otherwise render clickable list
+  // More demos: find the right-side card robustly
   function findMoreDemosCard() {
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
@@ -826,15 +847,27 @@
     const headings = Array.from(videosSection.querySelectorAll("h3"));
     const target = headings.find(x => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return t === "more demos" || t === "więcej demo";
+      return t === "more demos" || t === "więcej demo" || t === "more movies" || t === "więcej filmów";
     });
     if (target) return target.closest(".rounded-2xl");
 
     return null;
   }
 
-  function buildExtrasList(extras, lang) {
-    // extras: [{ src, poster, titleText }]
+  function setMoreDemosHeading(card, lang) {
+    if (!card) return;
+    const h = card.querySelector("h3");
+    if (!h) return;
+
+    // Force new wording regardless of HTML
+    const en = "More movies";
+    const pl = "Więcej filmów";
+    h.dataset.en = en;
+    h.dataset.pl = pl;
+    h.textContent = (lang === "pl") ? pl : en;
+  }
+
+  function buildExtrasListCards(extras, lang) {
     const wrap = document.createElement("div");
     wrap.className = "space-y-3";
 
@@ -842,13 +875,23 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className =
-        "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 transition";
+        "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 transition flex gap-3 items-center";
       btn.setAttribute("data-extra-idx", String(idx));
 
-      const t = (v.titleText || "").trim() || (lang === "pl" ? `Demo #${idx + 2}` : `Demo #${idx + 2}`);
+      const title = (v.titleText || "").trim();
+      const desc = (v.descText || "").trim();
+      const safeTitle = title || ((lang === "pl") ? `Film #${idx + 1}` : `Movie #${idx + 1}`);
+
+      const posterHtml = v.poster
+        ? `<img src="${escapeHtml(v.poster)}" alt="" class="w-20 h-14 object-cover rounded-lg bg-black/40 shrink-0" loading="lazy" decoding="async">`
+        : `<div class="w-20 h-14 rounded-lg bg-black/40 border border-white/10 shrink-0"></div>`;
+
       btn.innerHTML = `
-        <div class="font-semibold text-white/90">${escapeHtml(t)}</div>
-        <div class="text-sm text-white/60">${escapeHtml(v.src)}</div>
+        ${posterHtml}
+        <div class="min-w-0">
+          <div class="font-semibold text-white/90 leading-snug">${escapeHtml(safeTitle)}</div>
+          ${desc ? `<div class="text-sm text-white/70 mt-0.5">${escapeHtml(desc)}</div>` : ``}
+        </div>
       `;
 
       wrap.appendChild(btn);
@@ -867,8 +910,9 @@
     }
     card.classList.remove("hidden");
 
-    // Replace the placeholder text area with a list
-    // Keep the <h3> heading; clean the rest (except heading)
+    setMoreDemosHeading(card, lang);
+
+    // Keep only the heading, replace rest with our list
     const heading = card.querySelector("h3");
     const nodes = Array.from(card.childNodes);
     nodes.forEach(n => {
@@ -877,7 +921,7 @@
       card.removeChild(n);
     });
 
-    const list = buildExtrasList(extras, lang);
+    const list = buildExtrasListCards(extras, lang);
     card.appendChild(list);
 
     // click binding
@@ -887,7 +931,11 @@
       const idx = Number(btn.getAttribute("data-extra-idx"));
       const item = extras[idx];
       if (!item?.src) return;
-      openVideo({ src: item.src, poster: item.poster || "", titleText: item.titleText || "Video" });
+      openVideo({
+        src: item.src,
+        poster: item.poster || "",
+        titleText: item.titleText || "Video"
+      });
     }, { passive: true });
   }
 
@@ -908,7 +956,8 @@
       const extras = extrasRaw.map(v => ({
         src: v.src,
         poster: v.poster || "",
-        titleText: pickTitle(v, lang)
+        titleText: pickTitle(v, lang),
+        descText: pickDesc(v, lang),
       }));
 
       const card = findMoreDemosCard();
