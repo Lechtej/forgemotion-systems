@@ -1,18 +1,13 @@
-<!-- =========================
-     index EN (FULL FILE)
-========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
-  <!-- Base meta (overwritten by JS) -->
   <title>ForgeMotion Systems</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -20,23 +15,18 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="" />
   <meta property="og:description" content="" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="" />
   <meta name="twitter:description" content="" />
   <meta name="twitter:image" content="" />
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Shared layout -->
   <script src="/assets/site-layout.js" defer></script>
 
   <style>
@@ -49,7 +39,6 @@
       background-size: contain;
       overflow: hidden;
     }
-
     .bg-wrap::before {
       content: "";
       position: absolute;
@@ -63,7 +52,6 @@
       );
       z-index: 0;
     }
-
     .bg-wrap::after {
       content: "";
       position: absolute;
@@ -76,7 +64,6 @@
       );
       z-index: 0;
     }
-
     .bg-inner { position: relative; z-index: 1; }
 
     @media (max-width: 768px) {
@@ -97,11 +84,9 @@
         );
       }
     }
-
     @media (min-width: 1024px) {
       .bg-wrap { background-size: contain; background-position: left 6%; }
     }
-
     @media (min-width: 1024px) and (max-height: 820px) {
       .bg-wrap { background-position: left 10%; }
     }
@@ -112,21 +97,11 @@
       margin-left: auto; margin-right: auto;
       width: min(980px, calc(100% - 2rem));
     }
-
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
-
-    /* MOBILE HERO FIX */
     @media (max-width: 768px) {
       #hero { min-height: auto !important; }
-      .hero-panel {
-        position: static !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-      }
+      .hero-panel { position: static !important; top:auto !important; left:auto !important; right:auto !important; }
     }
 
     .product-card {
@@ -143,16 +118,8 @@
     }
     .product-card:hover { transform: scale(1.05); }
 
-    .product-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-    }
-    .product-desc {
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 0.75rem;
-      flex-grow: 1;
-    }
+    .product-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .product-desc { color: rgba(255,255,255,0.9); margin-bottom: 0.75rem; flex-grow: 1; }
 
     .product-image {
       width: 100%;
@@ -172,9 +139,7 @@
     }
     .product-card:hover .product-image img { transform: scale(1.05); }
 
-    /* MK14 THUMB FIX (HOMEPAGE CARD ONLY) */
     .product-image.mk14-image { height: 210px; }
-
     .product-image img.mk14-thumb {
       object-fit: contain !important;
       object-position: center 78%;
@@ -185,6 +150,19 @@
     }
     .product-card:hover .product-image img.mk14-thumb {
       transform: scale(1.22) translateY(10px) !important;
+    }
+
+    /* VIDEO sizing: less dominant */
+    .video-panel video {
+      width: 100%;
+      height: auto;
+      max-height: 440px;
+      border-radius: 0.75rem;
+      background: #000;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .video-panel video { max-height: 280px; }
     }
   </style>
 </head>
@@ -214,6 +192,54 @@
           </div>
         </section>
 
+        <!-- divider for spacing (prevents "stuck to hero" feeling) -->
+        <div class="h-px bg-white/10 max-w-6xl mx-auto my-16"></div>
+
+        <!-- VIDEO SECTION (restored) -->
+        <section id="videos" class="py-2 px-4">
+          <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2"
+                data-en="See it in action"
+                data-pl="Zobacz jak to działa"></h2>
+
+            <p class="text-gray-300 text-center mb-8"
+               data-en="Real footage. No CGI. Short demos from our motion platforms."
+               data-pl="Nagrania z życia. Bez CGI. Krótkie dema naszych platform motion."></p>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+              <div class="video-panel lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-5">
+                <div class="flex items-center justify-between gap-4 mb-3">
+                  <h3 class="text-xl font-semibold" id="heroVideoTitle">6DOF demo #1</h3>
+
+                  <button id="openHeroVideoModal"
+                          type="button"
+                          class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-2 rounded font-semibold"
+                          data-en="Open fullscreen"
+                          data-pl="Otwórz fullscreen"></button>
+                </div>
+
+                <video id="heroVideoEl" controls playsinline preload="metadata" poster="">
+                  <source id="heroVideoSource" src="" type="video/mp4">
+                </video>
+
+                <div class="text-gray-300 text-sm mt-3"
+                     data-en="Tip: use the button above to open the video in a modal."
+                     data-pl="Wskazówka: użyj przycisku powyżej, aby otworzyć film w modalu."></div>
+              </div>
+
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
+                <h3 class="text-xl font-semibold mb-3"
+                    data-en="More demos"
+                    data-pl="Więcej demo"></h3>
+
+                <div class="text-gray-300"
+                     data-en="More clips will appear here as you add them to videos.json."
+                     data-pl="Kolejne klipy pojawią się tutaj, gdy dodasz je do videos.json."></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="products" class="py-16 px-4">
           <div class="container mx-auto">
             <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
@@ -232,7 +258,7 @@
                      data-en="Learn more"
                      data-pl="Zobacz więcej"></a>
 
-                  <!-- VIDEO DEMO BUTTON (auto-enabled via /videos/videos.json) -->
+                  <!-- will auto-disable if missing in videos.json -->
                   <button type="button"
                           data-demo-key="6dof"
                           class="inline-block bg-blue-500/80 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold">
@@ -254,19 +280,10 @@
                    data-en="Big immersion in a compact, practical setup."
                    data-pl="Duża immersja w kompaktowej, praktycznej formie."></p>
 
-                <div class="flex flex-col gap-2 mb-3">
-                  <a href="/products-3dof.html"
-                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                     data-en="Learn more"
-                     data-pl="Zobacz więcej"></a>
-
-                  <!-- VIDEO DEMO BUTTON -->
-                  <button type="button"
-                          data-demo-key="3dof"
-                          class="inline-block bg-blue-500/80 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold">
-                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
-                  </button>
-                </div>
+                <a href="/products-3dof.html"
+                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                   data-en="Learn more"
+                   data-pl="Zobacz więcej"></a>
 
                 <div class="product-image">
                   <img src="/images/rama3dof1.jpg"
@@ -341,10 +358,7 @@
       </div>
     </div>
 
-    <!-- =========================
-         ONE STORY BLOCK (ABOUT+TED+TRUST)
-         keeps anchors: #about, #inspiration, #trust-experience
-    ========================== -->
+    <!-- STORY BLOCK -->
     <section id="about" class="bg-gray-800 py-16 px-4">
       <div class="container mx-auto">
         <div class="max-w-6xl mx-auto">
@@ -465,7 +479,7 @@
               </a>
             </div>
 
-            <!-- PUBLIC LINKS -->
+            <!-- MORE ABOUT STORY (public links) -->
             <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-6">
               <h4 class="text-xl md:text-2xl font-semibold text-center mb-2"
                   data-en="More about the story (public links)"
@@ -478,9 +492,7 @@
               <div class="flex flex-wrap gap-3 justify-center">
                 <a href="https://pl.linkedin.com/in/leszek-tejwan-60112614"
                    target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
-                  LinkedIn
-                </a>
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">LinkedIn</a>
 
                 <a href="https://www.youtube.com/watch?v=u4VKISJ_TzI"
                    target="_blank" rel="noopener noreferrer"
@@ -502,14 +514,11 @@
 
                 <a href="https://crj200athome.wordpress.com/"
                    target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">
-                  CRJ200 project
-                </a>
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold">CRJ200 project</a>
               </div>
             </div>
 
           </div>
-
         </div>
       </div>
     </section>
@@ -517,8 +526,8 @@
     <section id="contact" class="container mx-auto py-16 px-4">
       <h2 class="text-3xl font-bold mb-6 text-center" data-en="Contact" data-pl="Kontakt"></h2>
       <p class="text-center text-gray-300 mb-6"
-         data-en="Reach out to discuss your simulator project or request a quote. We deliver high-quality motion platforms and simulator equipment tailored to your needs."
-         data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę. Dostarczamy wysokiej jakości platformy motion i wyposażenie symulatorów dostosowane do Twoich potrzeb."></p>
+         data-en="Reach out to discuss your simulator project or request a quote."
+         data-pl="Skontaktuj się z nami, aby omówić projekt symulatora lub poprosić o wycenę."></p>
 
       <form id="contactForm" class="max-w-xl mx-auto bg-gray-800 rounded p-6 flex flex-col gap-4">
         <input type="text" placeholder="Name / Imię" class="p-3 rounded bg-gray-700">
@@ -536,13 +545,13 @@
     const metaData = {
       en: {
         title: "ForgeMotion Systems – Motion platforms & simulator equipment (6DOF, 3DOF, 2DOF)",
-        description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators. Enhance realism and precision of your simulations.",
-        keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, custom simulator frames, simulator equipment, ForgeMotion Systems",
+        description: "ForgeMotion Systems designs and manufactures professional 6DOF, 3DOF, and 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simulators.",
+        keywords: "motion platform, 6DOF, 3DOF, 2DOF, racing simulator, flight simulator, seat belt tensioner, ejection seat replica, simulator equipment, ForgeMotion Systems",
         ogTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        ogDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms, seat belt tensioners, ejection seat replicas, and custom frames for racing and flight simululators.",
+        ogDescription: "Professional motion platforms and simulator equipment for racing and flight simulation.",
         ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
         twitterTitle: "ForgeMotion Systems – Motion platforms & simulator equipment",
-        twitterDescription: "Professional 6DOF, 3DOF, 2DOF motion platforms and simulator accessories, including seat belt tensioners, ejection seat replicas, and custom frames.",
+        twitterDescription: "Professional motion platforms and simulator equipment for racing and flight simulation.",
         twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
         canonical: "https://forgemotionsystems.com/en/"
       }
@@ -552,8 +561,9 @@
       SiteLayout.init({
         metaData,
         includeModal: true,
-        injectOtherProducts: false,
-        enableVideoDemos: true
+        includeVideoModal: true,
+        enableVideoDemos: true,
+        injectOtherProducts: false
       });
     });
   </script>
