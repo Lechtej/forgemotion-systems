@@ -1,7 +1,6 @@
 /* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + image modal + video modal
+   Shared layout + i18n + meta + mobile menu + image modal + VIDEO modal + demos from videos.json
    + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
-   + product demo buttons driven by /videos/videos.json
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -64,7 +63,7 @@
     tag.href = href || "";
   }
 
-  function ensureGlobalStyles(includeModal) {
+  function ensureGlobalStyles(includeModal, includeVideoModal) {
     if (document.getElementById("siteLayoutStyles")) return;
 
     const style = document.createElement("style");
@@ -77,6 +76,9 @@
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
       .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
+
+      /* Fix anchors under fixed header */
+      #videos { scroll-margin-top: 110px; }
 
       ${includeModal ? `
       .modal-hidden { display: none; }
@@ -102,22 +104,11 @@
         z-index: 2;
       }
       .modal-close:hover{ background: rgba(255,255,255,0.18); }
-
       .modal-img-wrap{ padding:.75rem; }
       .modal-img{
         width:100%; height:auto; max-height: calc(90vh - 1.5rem);
         object-fit: contain; border-radius:.75rem; display:block;
       }
-
-      .modal-media-wrap{ padding:.75rem; }
-      .modal-video{
-        width:100%;
-        max-height: calc(90vh - 1.5rem);
-        border-radius:.75rem;
-        display:block;
-        background: black;
-      }
-
       .modal-hint{
         padding: 0 .95rem .95rem .95rem;
         color: rgba(255,255,255,0.75);
@@ -126,6 +117,38 @@
       .sr-only{
         position:absolute; width:1px; height:1px; padding:0; margin:-1px;
         overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+      }` : ``}
+
+      ${includeVideoModal ? `
+      .vmodal-hidden { display:none; }
+      .vmodal-overlay {
+        position: fixed; inset:0; background: rgba(0,0,0,0.76); z-index: 70;
+        display:flex; align-items:center; justify-content:center; padding:1rem;
+      }
+      .vmodal-panel{
+        width:min(1200px, 96vw);
+        background: rgba(17,24,39,0.98);
+        border:1px solid rgba(255,255,255,0.10);
+        border-radius:1rem;
+        overflow:hidden;
+        box-shadow:0 20px 70px rgba(0,0,0,0.55);
+        position:relative;
+      }
+      .vmodal-body{ padding: .75rem; }
+      .vmodal-video{
+        width:100%;
+        height:auto;
+        max-height: 75vh;
+        display:block;
+        border-radius: .75rem;
+        background:#000;
+      }
+      .vmodal-title{
+        padding: .9rem 1rem .25rem 1rem;
+        color: rgba(255,255,255,0.92);
+        font-weight: 600;
+        font-size: 1.05rem;
+        text-align:center;
       }` : ``}
     `;
     document.head.appendChild(style);
@@ -216,9 +239,7 @@
   }
 
   function renderModal() {
-    // Image modal + Video modal in one slot
     return `
-<!-- IMAGE MODAL -->
 <div id="imgModal" class="modal-hidden" aria-hidden="true">
   <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
     <div class="modal-panel">
@@ -231,27 +252,28 @@
            data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
     </div>
   </div>
-</div>
+</div>`;
+  }
 
-<!-- VIDEO MODAL -->
-<div id="videoModal" class="modal-hidden" aria-hidden="true">
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
-    <div class="modal-panel">
-      <button id="videoModalClose" class="modal-close" type="button" aria-label="Close video">
+  function renderVideoModal() {
+    return `
+<div id="vidModal" class="vmodal-hidden" aria-hidden="true">
+  <div class="vmodal-overlay" role="dialog" aria-modal="true" aria-labelledby="vidModalTitle">
+    <div class="vmodal-panel">
+      <button id="vidModalClose" class="modal-close" type="button" aria-label="Close video">
         <span aria-hidden="true">✕</span>
       </button>
-      <h2 id="videoModalTitle" class="sr-only">Video preview</h2>
-      <div class="modal-media-wrap">
-        <video id="videoModalEl" class="modal-video" controls playsinline preload="metadata" poster="">
-          <source id="videoModalSource" src="" type="video/mp4">
+      <h2 id="vidModalTitle" class="vmodal-title">Video</h2>
+      <div class="vmodal-body">
+        <video id="vidModalEl" class="vmodal-video" controls playsinline preload="metadata">
+          <source id="vidModalSource" src="" type="video/mp4">
         </video>
       </div>
       <div class="modal-hint" data-en="Tip: click outside the media or press ESC to close."
-           data-pl="Wskazówka: kliknij poza mediami lub naciśnij ESC, aby zamknąć."></div>
+           data-pl="Wskazówka: kliknij poza materiałem lub naciśnij ESC, aby zamknąć."></div>
     </div>
   </div>
-</div>
-`;
+</div>`;
   }
 
   function renderOtherProducts(activeKey, lang) {
@@ -366,7 +388,7 @@
     window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
   }
 
-  function bindImageModal() {
+  function bindModal() {
     const modal = document.getElementById("imgModal");
     const modalImg = document.getElementById("imgModalImg");
     const closeBtn = document.getElementById("imgModalClose");
@@ -409,53 +431,47 @@
   }
 
   function bindVideoModal() {
-    const modal = document.getElementById("videoModal");
-    const closeBtn = document.getElementById("videoModalClose");
-    const videoEl = document.getElementById("videoModalEl");
-    const sourceEl = document.getElementById("videoModalSource");
-    if (!modal || !closeBtn || !videoEl || !sourceEl) return;
+    const modal = document.getElementById("vidModal");
+    const video = document.getElementById("vidModalEl");
+    const source = document.getElementById("vidModalSource");
+    const title = document.getElementById("vidModalTitle");
+    const closeBtn = document.getElementById("vidModalClose");
+    if (!modal || !video || !source || !title || !closeBtn) return;
 
-    function openVideo(src, poster) {
-      sourceEl.src = src || "";
-      videoEl.poster = poster || "";
-      videoEl.load();
-      modal.classList.remove("modal-hidden");
+    function openVideo({ src, poster, titleText }) {
+      title.textContent = titleText || "Video";
+      source.src = src;
+      video.poster = poster || "";
+      video.load();
+
+      modal.classList.remove("vmodal-hidden");
       modal.setAttribute("aria-hidden", "false");
       closeBtn.focus();
       document.body.style.overflow = "hidden";
     }
 
     function closeVideo() {
-      modal.classList.add("modal-hidden");
+      try { video.pause(); } catch {}
+      modal.classList.add("vmodal-hidden");
       modal.setAttribute("aria-hidden", "true");
-      try { videoEl.pause(); } catch {}
-      sourceEl.src = "";
-      videoEl.poster = "";
-      videoEl.load();
+      source.src = "";
+      video.poster = "";
+      video.load();
       document.body.style.overflow = "";
     }
 
-    document.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-video-src]");
-      if (!btn) return;
-      const src = btn.getAttribute("data-video-src");
-      if (!src) return;
-      const poster = btn.getAttribute("data-video-poster") || "";
-      openVideo(src, poster);
-    });
-
     closeBtn.addEventListener("click", closeVideo);
-
     modal.addEventListener("click", (e) => {
-      if (e.target.classList.contains("modal-overlay")) closeVideo();
+      if (e.target.classList.contains("vmodal-overlay")) closeVideo();
     });
-
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeVideo();
     });
+
+    return { openVideo, closeVideo };
   }
 
-  function injectLayout({ includeModal, lang }) {
+  function injectLayout({ includeModal, includeVideoModal, lang }) {
     const headerSlot = document.getElementById("siteHeader");
     const headerHtml = renderHeader(lang);
     if (headerSlot) headerSlot.innerHTML = headerHtml;
@@ -465,10 +481,17 @@
     if (footerSlot) footerSlot.innerHTML = renderFooter();
     else document.body.insertAdjacentHTML("beforeend", renderFooter());
 
+    const modalSlot = document.getElementById("siteModal");
+
     if (includeModal) {
-      const modalSlot = document.getElementById("siteModal");
-      if (modalSlot) modalSlot.innerHTML = renderModal();
-      else document.body.insertAdjacentHTML("beforeend", renderModal());
+      const html = renderModal();
+      if (modalSlot) modalSlot.insertAdjacentHTML("beforeend", html);
+      else document.body.insertAdjacentHTML("beforeend", html);
+    }
+    if (includeVideoModal) {
+      const html = renderVideoModal();
+      if (modalSlot) modalSlot.insertAdjacentHTML("beforeend", html);
+      else document.body.insertAdjacentHTML("beforeend", html);
     }
   }
 
@@ -563,78 +586,127 @@
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
 
-      // On index pages: navigate to /{lang}/ keeping hash
       if (isIndexLikePath(path) || getPathLang(path)) {
         localStorage.setItem("lang", targetLang);
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
 
-      // On product pages: stay, only switch language + meta/text
       const wasMobileOpen = isMobileMenuOpen();
       setLanguage(targetLang, metaData);
       if (wasMobileOpen) closeMobileMenu();
     });
   }
 
-  // ---------- VIDEO DEMOS (buttons on product cards) ----------
-  function normalizeVideosJson(payload) {
-    // Supports either:
-    // A) { "6dof": [{src,poster,title}], "3dof": [...] }
-    // B) { "videos": [{ key:"6dof", src, poster, title }] }
-    if (!payload) return {};
-    if (payload.videos && Array.isArray(payload.videos)) {
+  // -------- VIDEO DEMOS --------
+  async function fetchVideosJson() {
+    const res = await fetch("/videos/videos.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("videos.json not found");
+    return res.json();
+  }
+
+  // Accepts BOTH formats:
+  // 1) { "videos": [ { key, src, poster, title:{en,pl} } ] }
+  // 2) { "6dof": [ ... ], "3dof": [ ... ] }
+  function normalizeVideos(json) {
+    if (!json) return {};
+    if (Array.isArray(json.videos)) {
       const out = {};
-      for (const v of payload.videos) {
-        const k = v.key || v.product || v.productKey;
-        if (!k) continue;
-        out[k] = out[k] || [];
-        out[k].push(v);
+      for (const v of json.videos) {
+        if (!v || !v.key) continue;
+        (out[v.key] ||= []).push(v);
       }
       return out;
     }
-    // If top-level keys look like product keys
-    return payload;
+    return json;
   }
 
-  async function loadVideosMap() {
-    try {
-      const res = await fetch("/videos/videos.json", { cache: "no-store" });
-      if (!res.ok) return {};
-      const json = await res.json();
-      return normalizeVideosJson(json);
-    } catch {
-      return {};
-    }
+  function pickTitle(v, lang) {
+    if (!v) return "";
+    if (typeof v.title === "string") return v.title;
+    if (v.title && typeof v.title === "object") return v.title[lang] || v.title.en || v.title.pl || "";
+    return "";
   }
 
-  function applyDemoButtons(videosMap, lang) {
-    const buttons = Array.from(document.querySelectorAll("[data-demo-key]"));
-    if (!buttons.length) return;
-
-    for (const btn of buttons) {
+  function setDemoButtonsState(map, lang) {
+    document.querySelectorAll("[data-demo-key]").forEach(btn => {
       const key = btn.getAttribute("data-demo-key");
-      const list = videosMap?.[key];
-      const first = Array.isArray(list) ? list[0] : null;
-
-      // No video => keep disabled
-      if (!first || !first.src) {
-        btn.setAttribute("disabled", "true");
-        btn.classList.add("opacity-40", "cursor-not-allowed");
-        continue;
+      const has = Boolean(map?.[key]?.length);
+      btn.disabled = !has;
+      btn.classList.toggle("opacity-50", !has);
+      btn.classList.toggle("cursor-not-allowed", !has);
+      btn.setAttribute("aria-disabled", String(!has));
+      if (!has) {
+        btn.title = (lang === "pl") ? "Demo w przygotowaniu" : "Demo coming soon";
+      } else {
+        btn.title = "";
       }
+    });
+  }
 
-      btn.removeAttribute("disabled");
-      btn.classList.remove("opacity-40", "cursor-not-allowed");
+  function bindDemoButtons(openVideo, map, lang) {
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-demo-key]");
+      if (!btn) return;
 
-      btn.setAttribute("data-video-src", first.src);
-      if (first.poster) btn.setAttribute("data-video-poster", first.poster);
+      const key = btn.getAttribute("data-demo-key");
+      const item = map?.[key]?.[0];
+      if (!item?.src) return;
 
-      // Optional text override from JSON
-      if (first.title && typeof first.title === "object") {
-        const t = first.title?.[lang] || first.title?.en;
-        if (t) btn.textContent = t;
-      }
+      openVideo({
+        src: item.src,
+        poster: item.poster || "",
+        titleText: pickTitle(item, lang) || (key.toUpperCase() + " demo")
+      });
+    });
+  }
+
+  function bindHeroFullscreenButton(openVideo, map, lang) {
+    const btn = document.getElementById("openHeroVideoModal");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+      const item = map?.["6dof"]?.[0];
+      if (!item?.src) return;
+
+      openVideo({
+        src: item.src,
+        poster: item.poster || "",
+        titleText: pickTitle(item, lang) || "6DOF demo"
+      });
+    });
+  }
+
+  function hydrateHeroVideo(map, lang) {
+    const video = document.getElementById("heroVideoEl");
+    const source = document.getElementById("heroVideoSource");
+    const title = document.getElementById("heroVideoTitle");
+    if (!video || !source || !title) return;
+
+    const item = map?.["6dof"]?.[0];
+    if (!item?.src) return;
+
+    source.src = item.src;
+    video.poster = item.poster || "";
+    video.load();
+
+    const t = pickTitle(item, lang) || "6DOF demo #1";
+    title.textContent = t;
+  }
+
+  async function initVideoDemos(videoModalApi, lang) {
+    try {
+      const json = await fetchVideosJson();
+      const map = normalizeVideos(json);
+
+      hydrateHeroVideo(map, lang);
+      setDemoButtonsState(map, lang);
+      bindDemoButtons(videoModalApi.openVideo, map, lang);
+      bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
+
+    } catch {
+      // If videos.json missing – just disable buttons silently
+      setDemoButtonsState({}, lang);
     }
   }
 
@@ -643,15 +715,16 @@
       const cfg = {
         metaData: options?.metaData || null,
         includeModal: Boolean(options?.includeModal),
+        includeVideoModal: options?.includeVideoModal !== false, // default ON
         activeProductKey: options?.activeProductKey || null,
         injectOtherProducts: options?.injectOtherProducts !== false,
-        enableVideoDemos: options?.enableVideoDemos !== false, // default true
+        enableVideoDemos: options?.enableVideoDemos !== false,   // default ON
       };
 
       const lang = detectLang();
 
-      ensureGlobalStyles(cfg.includeModal);
-      injectLayout({ includeModal: cfg.includeModal, lang });
+      ensureGlobalStyles(cfg.includeModal, cfg.includeVideoModal);
+      injectLayout({ includeModal: cfg.includeModal, includeVideoModal: cfg.includeVideoModal, lang });
 
       bindMobileMenu();
       bindLangButtons(cfg.metaData);
@@ -659,9 +732,11 @@
 
       const appliedLang = setLanguage(lang, cfg.metaData);
 
-      if (cfg.includeModal) {
-        bindImageModal();
-        bindVideoModal();
+      if (cfg.includeModal) bindModal();
+
+      const videoModalApi = cfg.includeVideoModal ? bindVideoModal() : null;
+      if (cfg.enableVideoDemos && videoModalApi) {
+        initVideoDemos(videoModalApi, appliedLang);
       }
 
       if (cfg.injectOtherProducts) {
@@ -670,11 +745,6 @@
           otherSlot.innerHTML = renderOtherProducts(cfg.activeProductKey, appliedLang);
           applyTexts(appliedLang);
         }
-      }
-
-      // Activate demo buttons if present
-      if (cfg.enableVideoDemos) {
-        loadVideosMap().then(map => applyDemoButtons(map, appliedLang));
       }
 
       bindScrollSpy();
