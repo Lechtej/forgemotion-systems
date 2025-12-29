@@ -40,20 +40,39 @@
   <div id="siteHeader"></div>
 
   <main class="pt-24">
-    <section class="container mx-auto px-4 py-14">
-      <div class="max-w-4xl mx-auto">
+    <section id="hero" class="container mx-auto px-4 py-14">
+      <div class="max-w-5xl mx-auto">
         <p class="text-white/70 mb-3">
-          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          <a href="/#products" class="hover:text-blue-400"
+             data-en="← Back to products"
+             data-pl="← Wróć do produktów"></a>
         </p>
 
         <h1 class="text-4xl md:text-5xl font-bold mb-5"
             data-en="3DOF / 2DOF Motion Platform"
-            data-pl="Platforma motion 3DOF / 2DOF"></h1>
+            data-pl="Platforma ruchu 3DOF / 2DOF"></h1>
 
-        <p class="text-lg md:text-xl text-white/85 mb-8"
+        <p class="text-lg md:text-xl text-white/85 mb-3"
            data-en="Big immersion in a compact setup. A smart choice when you want motion — but also want to keep your room practical."
            data-pl="Duża immersja w kompaktowej formie. Świetny wybór, gdy chcesz motion — ale nadal chcesz mieć „normalny” pokój."></p>
 
+        <p class="text-white/80 mb-8"
+           data-en="Designed for clear, readable cues in flight or vehicle simulation: acceleration, braking, and surface changes — with a predictable, comfortable feel for everyday use."
+           data-pl="Zaprojektowana pod czytelne sygnały w symulacji lotu lub pojazdu: przyspieszanie, hamowanie i zmiany nawierzchni — z przewidywalnym, komfortowym ruchem do codziennego grania."></p>
+
+        <div class="flex flex-col sm:flex-row gap-3 mb-10">
+          <a href="#lead"
+             class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+             data-en="Request configuration"
+             data-pl="Poproś o konfigurację"></a>
+
+          <a href="/#contact"
+             class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+             data-en="Ask a question"
+             data-pl="Zadaj pytanie"></a>
+        </div>
+
+        <!-- Photo gallery -->
         <div class="mb-10">
           <div class="rounded-2xl photo-frame overflow-hidden">
             <img class="product-photo cursor-zoom-in"
@@ -81,68 +100,134 @@
                  loading="lazy" decoding="async" />
           </div>
 
-          <p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
+          <p class="text-white/55 text-sm mt-3"
+             data-en="Tip: click an image to zoom."
+             data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
         </div>
 
+        <!-- Video section (auto-hydrated from /videos/videos.json) -->
+        <section id="videos" class="grid lg:grid-cols-3 gap-6 mb-10">
+          <div class="lg:col-span-2 bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
+            <div class="p-6 pb-4">
+              <h2 class="text-2xl font-bold"
+                  data-en="3DOF demo"
+                  data-pl="Demo 3DOF"></h2>
+              <p class="text-white/80 mt-2"
+                 data-en="See how compact motion delivers readable cues without overwhelming movement."
+                 data-pl="Zobacz, jak kompaktowe motion daje czytelne sygnały bez przesadnych wychyleń."></p>
+            </div>
+
+            <div class="px-6 pb-6">
+              <div class="rounded-2xl overflow-hidden border border-white/10 bg-black/40">
+                <video id="heroVideoEl" class="w-full h-auto block" controls playsinline preload="metadata" poster="">
+                  <source id="heroVideoSource" src="" type="video/mp4">
+                </video>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 mt-3">
+                <div class="text-white/80 text-sm">
+                  <span class="font-semibold text-white/90" id="heroVideoTitle">Video</span>
+                </div>
+
+                <button id="openHeroVideoModal"
+                  type="button"
+                  class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded-lg font-semibold">
+                  ⤢ <span data-en="Open fullscreen" data-pl="Otwórz na pełnym ekranie"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-4" data-en="More demos" data-pl="Więcej demo"></h3>
+            <p class="text-white/75"
+               data-en="More clips will appear here automatically."
+               data-pl="Dodatkowe klipy pojawią się tu automatycznie."></p>
+          </div>
+        </section>
+
+        <!-- Benefits -->
         <div class="grid md:grid-cols-2 gap-6 mb-10">
           <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="Why people love it" data-pl="Dlaczego ludzie to lubią"></h2>
+            <h2 class="text-2xl font-bold mb-3"
+                data-en="Why people choose it"
+                data-pl="Dlaczego ludzie to wybierają"></h2>
             <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Strong immersion without a huge footprint." data-pl="Mocna immersja bez gigantycznych gabarytów."></li>
-              <li data-en="Great for everyday use — comfortable and predictable." data-pl="Świetne do codziennego grania — komfort i przewidywalność."></li>
-              <li data-en="Easy to integrate into most rigs." data-pl="Łatwo dopasować do większości rigów."></li>
+              <li data-en="Strong immersion without a huge footprint."
+                  data-pl="Mocna immersja bez gigantycznych gabarytów."></li>
+              <li data-en="Comfortable, predictable motion — great for everyday use."
+                  data-pl="Komfortowy, przewidywalny ruch — świetne do codziennych sesji."></li>
+              <li data-en="Works well for both aircraft and vehicles."
+                  data-pl="Sprawdza się zarówno dla samolotu, jak i pojazdu."></li>
+              <li data-en="Easy to integrate into most rigs."
+                  data-pl="Łatwo dopasować do większości rigów."></li>
             </ul>
           </div>
 
           <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="Best for" data-pl="Najlepsze dla"></h2>
+            <h2 class="text-2xl font-bold mb-3"
+                data-en="Best for"
+                data-pl="Najlepsze dla"></h2>
             <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Home sim racing setups." data-pl="Domowych stanowisk simracingowych."></li>
-              <li data-en="Flight sim with subtle, natural cues." data-pl="Flight sim z subtelnymi, naturalnymi sygnałami."></li>
-              <li data-en="People who want motion without complexity." data-pl="Osób, które chcą motion bez „kombinowania”."></li>
+              <li data-en="Home sim racing setups."
+                  data-pl="Domowych stanowisk simracingowych."></li>
+              <li data-en="Flight sim with subtle, natural cues."
+                  data-pl="Flight sim z subtelnymi, naturalnymi sygnałami."></li>
+              <li data-en="People who want motion without complexity."
+                  data-pl="Osób, które chcą motion bez „kombinowania”."></li>
             </ul>
           </div>
         </div>
 
-        <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
-          <h2 class="text-2xl font-bold mb-3" data-en="Let’s match it to your space" data-pl="Dopasujmy to do Twojej przestrzeni"></h2>
+        <!-- CTA -->
+        <section id="lead" class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
+          <h2 class="text-2xl font-bold mb-3"
+              data-en="Let’s match it to your space"
+              data-pl="Dopasujmy to do Twojej przestrzeni"></h2>
           <p class="text-white/85 mb-5"
-             data-en="Send us a quick note: your room size and what you play. We’ll recommend a clean layout."
-             data-pl="Napisz krótko: ile masz miejsca i w co grasz. Zaproponujemy czysty układ stanowiska."></p>
+             data-en="Send us your available space and what you play (flight / vehicle). We’ll recommend a clean layout and configuration."
+             data-pl="Napisz, ile masz miejsca i w co grasz (lotniczy / pojazd). Zaproponujemy czysty układ i konfigurację."></p>
 
           <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/index.html#contact"
+            <a href="/#contact"
                class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
                data-en="Request a quote"
                data-pl="Poproś o wycenę"></a>
 
-            <a href="/index.html#products"
+            <a href="/#products"
                class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
                data-en="See all products"
                data-pl="Zobacz wszystkie produkty"></a>
           </div>
-        </div>
+        </section>
 
+        <!-- FAQ -->
         <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
           <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
 
           <div class="space-y-4">
             <div>
-              <h3 class="font-semibold text-lg" data-en="Is it enough to feel a real difference?" data-pl="Czy to wystarczy, żeby czuć realną różnicę?"></h3>
+              <h3 class="font-semibold text-lg"
+                  data-en="Is it enough to feel a real difference?"
+                  data-pl="Czy to wystarczy, żeby czuć realną różnicę?"></h3>
               <p class="text-white/80"
-                 data-en="Yes. Even a compact motion setup changes how you read braking, weight shift and grip."
-                 data-pl="Tak. Nawet kompaktowe motion zmienia odczucie hamowania, przeniesienia masy i przyczepności."></p>
+                 data-en="Yes. Even a compact motion setup changes how you read braking, acceleration and surface changes — the cues become easier to feel."
+                 data-pl="Tak. Nawet kompaktowe motion zmienia odbiór hamowania, przyspieszania i zmian nawierzchni — sygnały stają się bardziej czytelne."></p>
             </div>
 
             <div>
-              <h3 class="font-semibold text-lg" data-en="Is it good for apartments?" data-pl="Czy to dobre do mieszkania?"></h3>
+              <h3 class="font-semibold text-lg"
+                  data-en="Is it good for apartments?"
+                  data-pl="Czy to dobre do mieszkania?"></h3>
               <p class="text-white/80"
                  data-en="That’s one of the main reasons people choose it — it’s practical and easier to fit."
                  data-pl="To jeden z głównych powodów wyboru — jest praktyczne i łatwiej je wpasować."></p>
             </div>
 
             <div>
-              <h3 class="font-semibold text-lg" data-en="Can I upgrade later?" data-pl="Czy mogę rozbudować później?"></h3>
+              <h3 class="font-semibold text-lg"
+                  data-en="Can I upgrade later?"
+                  data-pl="Czy mogę rozbudować później?"></h3>
               <p class="text-white/80"
                  data-en="Yes. We can plan your setup so future upgrades stay clean and consistent."
                  data-pl="Tak. Możemy zaplanować stanowisko tak, żeby rozbudowa dalej była „czysta” i spójna."></p>
@@ -162,26 +247,26 @@
     const metaData = {
       en: {
         title: "3DOF / 2DOF Motion Platform – ForgeMotion Systems",
-        description: "Compact 3DOF/2DOF motion platform for sim racing and flight sims. Big immersion in a practical footprint.",
-        keywords: "3DOF motion platform, 2DOF motion platform, compact motion platform, ForgeMotion Systems",
+        description: "Compact 3DOF/2DOF motion platform for flight and vehicle simulation. Big immersion in a practical footprint.",
+        keywords: "3DOF motion platform, 2DOF motion platform, compact motion platform, flight sim motion, racing sim motion, ForgeMotion Systems",
         ogTitle: "3DOF / 2DOF Motion Platform – ForgeMotion Systems",
         ogDescription: "Big immersion in a compact, practical setup.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+        ogImage: "https://forgemotionsystems.com/images/rama3dof1-large.jpg",
         twitterTitle: "3DOF / 2DOF Motion Platform – ForgeMotion Systems",
         twitterDescription: "Compact motion, big immersion.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+        twitterImage: "https://forgemotionsystems.com/images/rama3dof1-large.jpg",
         canonical: "https://forgemotionsystems.com/products-3dof.html"
       },
       pl: {
-        title: "Platforma motion 3DOF / 2DOF – ForgeMotion Systems",
-        description: "Kompaktowa platforma motion 3DOF/2DOF do simracingu i flight sim. Duża immersja w praktycznych gabarytach.",
-        keywords: "platforma motion 3DOF, platforma motion 2DOF, kompaktowa platforma motion, ForgeMotion Systems",
-        ogTitle: "Platforma motion 3DOF / 2DOF – ForgeMotion Systems",
+        title: "Platforma ruchu 3DOF / 2DOF – ForgeMotion Systems",
+        description: "Kompaktowa platforma ruchu 3DOF/2DOF do symulacji lotu i pojazdów. Duża immersja w praktycznych gabarytach.",
+        keywords: "platforma 3DOF, platforma 2DOF, platforma ruchu, motion platform, symulator lotu, symulator pojazdu, ForgeMotion Systems",
+        ogTitle: "Platforma ruchu 3DOF / 2DOF – ForgeMotion Systems",
         ogDescription: "Duża immersja w kompaktowej, praktycznej formie.",
-        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-        twitterTitle: "Platforma motion 3DOF / 2DOF – ForgeMotion Systems",
+        ogImage: "https://forgemotionsystems.com/images/rama3dof1-large.jpg",
+        twitterTitle: "Platforma ruchu 3DOF / 2DOF – ForgeMotion Systems",
         twitterDescription: "Kompaktowe motion, duża immersja.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+        twitterImage: "https://forgemotionsystems.com/images/rama3dof1-large.jpg",
         canonical: "https://forgemotionsystems.com/products-3dof.html"
       }
     };
@@ -190,8 +275,10 @@
       SiteLayout.init({
         metaData,
         includeModal: true,
+        includeVideoModal: true,
         activeProductKey: "3dof",
-        injectOtherProducts: true
+        injectOtherProducts: true,
+        enableVideoDemos: true
       });
     });
   </script>
