@@ -1,6 +1,7 @@
 /* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + (optional) media modal (image/video) + other products
+   Shared layout + i18n + meta + mobile menu + image modal + video modal
    + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
+   + product demo buttons driven by /videos/videos.json
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -15,9 +16,6 @@
   ];
 
   const SCROLLSPY_SECTIONS = ["hero", "products", "about", "contact"];
-
-  // videos.json location in your repo
-  const VIDEOS_JSON_URL = "/videos/videos.json";
 
   function escapeHtml(str) {
     return String(str)
@@ -80,24 +78,10 @@
 
       .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
 
-      /* demo buttons - UX: disabled until JSON loads */
-      .demo-disabled { opacity: .55; cursor: not-allowed; filter: saturate(.75); }
-
-      /* ✅ demo videos sizing (homepage) */
-      .demo-video{
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        height: auto;
-        max-height: 420px;
-      }
-      @media (max-width: 768px){
-        .demo-video{ max-height: 260px; }
-      }
-
       ${includeModal ? `
       .modal-hidden { display: none; }
       .modal-overlay {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 50;
+        position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 60;
         display:flex; align-items:center; justify-content:center; padding:1rem;
       }
       .modal-panel {
@@ -118,17 +102,22 @@
         z-index: 2;
       }
       .modal-close:hover{ background: rgba(255,255,255,0.18); }
-      .modal-media-wrap{ padding:.75rem; }
+
+      .modal-img-wrap{ padding:.75rem; }
       .modal-img{
         width:100%; height:auto; max-height: calc(90vh - 1.5rem);
         object-fit: contain; border-radius:.75rem; display:block;
       }
+
+      .modal-media-wrap{ padding:.75rem; }
       .modal-video{
-        width:100%; max-height: calc(90vh - 1.5rem);
-        border-radius:.75rem; display:block;
-        background: rgba(0,0,0,0.25);
-        aspect-ratio: 16 / 9; /* ✅ FIX thin bar + poster */
+        width:100%;
+        max-height: calc(90vh - 1.5rem);
+        border-radius:.75rem;
+        display:block;
+        background: black;
       }
+
       .modal-hint{
         padding: 0 .95rem .95rem .95rem;
         color: rgba(255,255,255,0.75);
@@ -227,27 +216,42 @@
   }
 
   function renderModal() {
+    // Image modal + Video modal in one slot
     return `
-<div id="mediaModal" class="modal-hidden" aria-hidden="true">
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="mediaModalTitle">
+<!-- IMAGE MODAL -->
+<div id="imgModal" class="modal-hidden" aria-hidden="true">
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
     <div class="modal-panel">
-      <button id="mediaModalClose" class="modal-close" type="button" aria-label="Close">
+      <button id="imgModalClose" class="modal-close" type="button" aria-label="Close image">
         <span aria-hidden="true">✕</span>
       </button>
-      <h2 id="mediaModalTitle" class="sr-only">Media preview</h2>
+      <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
+      <div class="modal-img-wrap"><img id="imgModalImg" class="modal-img" src="" alt=""></div>
+      <div class="modal-hint" data-en="Tip: click outside the image or press ESC to close."
+           data-pl="Wskazówka: kliknij poza zdjęciem lub naciśnij ESC, aby zamknąć."></div>
+    </div>
+  </div>
+</div>
 
+<!-- VIDEO MODAL -->
+<div id="videoModal" class="modal-hidden" aria-hidden="true">
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+    <div class="modal-panel">
+      <button id="videoModalClose" class="modal-close" type="button" aria-label="Close video">
+        <span aria-hidden="true">✕</span>
+      </button>
+      <h2 id="videoModalTitle" class="sr-only">Video preview</h2>
       <div class="modal-media-wrap">
-        <img id="mediaModalImg" class="modal-img" src="" alt="" style="display:none;">
-        <video id="mediaModalVideo" class="modal-video" controls playsinline preload="none" style="display:none;">
-          <source id="mediaModalVideoSrc" src="" type="video/mp4" />
+        <video id="videoModalEl" class="modal-video" controls playsinline preload="metadata" poster="">
+          <source id="videoModalSource" src="" type="video/mp4">
         </video>
       </div>
-
       <div class="modal-hint" data-en="Tip: click outside the media or press ESC to close."
            data-pl="Wskazówka: kliknij poza mediami lub naciśnij ESC, aby zamknąć."></div>
     </div>
   </div>
-</div>`;
+</div>
+`;
   }
 
   function renderOtherProducts(activeKey, lang) {
@@ -362,44 +366,15 @@
     window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
   }
 
-  function bindModal() {
-    const modal = document.getElementById("mediaModal");
-    const img = document.getElementById("mediaModalImg");
-    const video = document.getElementById("mediaModalVideo");
-    const videoSrc = document.getElementById("mediaModalVideoSrc");
-    const closeBtn = document.getElementById("mediaModalClose");
-    if (!modal || !img || !video || !videoSrc || !closeBtn) return;
+  function bindImageModal() {
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("imgModalImg");
+    const closeBtn = document.getElementById("imgModalClose");
+    if (!modal || !modalImg || !closeBtn) return;
 
-    function openImage(src, alt) {
-      video.pause();
-      video.style.display = "none";
-      video.removeAttribute("poster");
-      videoSrc.src = "";
-      video.load();
-
-      img.src = src;
-      img.alt = alt || "Image preview";
-      img.style.display = "block";
-
-      modal.classList.remove("modal-hidden");
-      modal.setAttribute("aria-hidden", "false");
-      closeBtn.focus();
-      document.body.style.overflow = "hidden";
-    }
-
-    function openVideo(src, poster) {
-      img.style.display = "none";
-      img.src = "";
-      img.alt = "";
-
-      if (poster) video.setAttribute("poster", poster);
-      else video.removeAttribute("poster");
-
-      video.setAttribute("preload", "metadata"); // ✅ helps sizing + poster on some browsers
-      videoSrc.src = src;
-      video.load();
-      video.style.display = "block";
-
+    function openModal(src, alt) {
+      modalImg.src = src;
+      modalImg.alt = alt || "Image preview";
       modal.classList.remove("modal-hidden");
       modal.setAttribute("aria-hidden", "false");
       closeBtn.focus();
@@ -409,36 +384,17 @@
     function closeModal() {
       modal.classList.add("modal-hidden");
       modal.setAttribute("aria-hidden", "true");
-
-      img.style.display = "none";
-      img.src = "";
-      img.alt = "";
-
-      video.pause();
-      video.style.display = "none";
-      video.removeAttribute("poster");
-      videoSrc.src = "";
-      video.load();
-
+      modalImg.src = "";
+      modalImg.alt = "";
       document.body.style.overflow = "";
     }
 
     document.addEventListener("click", (e) => {
-      const imgEl = e.target.closest("img[data-full]");
-      if (imgEl) {
-        const full = imgEl.getAttribute("data-full") || imgEl.getAttribute("src");
-        const alt = imgEl.getAttribute("alt") || "";
-        openImage(full, alt);
-        return;
-      }
-
-      const vidBtn = e.target.closest("[data-video]");
-      if (vidBtn) {
-        const src = vidBtn.getAttribute("data-video");
-        if (!src) return;
-        const poster = vidBtn.getAttribute("data-video-poster") || "";
-        openVideo(src, poster);
-      }
+      const img = e.target.closest("img[data-full]");
+      if (!img) return;
+      const full = img.getAttribute("data-full") || img.getAttribute("src");
+      const alt = img.getAttribute("alt") || "";
+      openModal(full, alt);
     });
 
     closeBtn.addEventListener("click", closeModal);
@@ -449,6 +405,53 @@
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeModal();
+    });
+  }
+
+  function bindVideoModal() {
+    const modal = document.getElementById("videoModal");
+    const closeBtn = document.getElementById("videoModalClose");
+    const videoEl = document.getElementById("videoModalEl");
+    const sourceEl = document.getElementById("videoModalSource");
+    if (!modal || !closeBtn || !videoEl || !sourceEl) return;
+
+    function openVideo(src, poster) {
+      sourceEl.src = src || "";
+      videoEl.poster = poster || "";
+      videoEl.load();
+      modal.classList.remove("modal-hidden");
+      modal.setAttribute("aria-hidden", "false");
+      closeBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeVideo() {
+      modal.classList.add("modal-hidden");
+      modal.setAttribute("aria-hidden", "true");
+      try { videoEl.pause(); } catch {}
+      sourceEl.src = "";
+      videoEl.poster = "";
+      videoEl.load();
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-video-src]");
+      if (!btn) return;
+      const src = btn.getAttribute("data-video-src");
+      if (!src) return;
+      const poster = btn.getAttribute("data-video-poster") || "";
+      openVideo(src, poster);
+    });
+
+    closeBtn.addEventListener("click", closeVideo);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target.classList.contains("modal-overlay")) closeVideo();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeVideo();
     });
   }
 
@@ -560,159 +563,79 @@
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
 
+      // On index pages: navigate to /{lang}/ keeping hash
       if (isIndexLikePath(path) || getPathLang(path)) {
         localStorage.setItem("lang", targetLang);
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
 
+      // On product pages: stay, only switch language + meta/text
       const wasMobileOpen = isMobileMenuOpen();
       setLanguage(targetLang, metaData);
       if (wasMobileOpen) closeMobileMenu();
     });
   }
 
-  // -------------------------
-  // Videos JSON: load + apply
-  // -------------------------
-  async function loadVideosJson() {
+  // ---------- VIDEO DEMOS (buttons on product cards) ----------
+  function normalizeVideosJson(payload) {
+    // Supports either:
+    // A) { "6dof": [{src,poster,title}], "3dof": [...] }
+    // B) { "videos": [{ key:"6dof", src, poster, title }] }
+    if (!payload) return {};
+    if (payload.videos && Array.isArray(payload.videos)) {
+      const out = {};
+      for (const v of payload.videos) {
+        const k = v.key || v.product || v.productKey;
+        if (!k) continue;
+        out[k] = out[k] || [];
+        out[k].push(v);
+      }
+      return out;
+    }
+    // If top-level keys look like product keys
+    return payload;
+  }
+
+  async function loadVideosMap() {
     try {
-      const res = await fetch(VIDEOS_JSON_URL, { cache: "no-cache" });
-      if (!res.ok) return null;
-      const data = await res.json();
-      return data && typeof data === "object" ? data : null;
+      const res = await fetch("/videos/videos.json", { cache: "no-store" });
+      if (!res.ok) return {};
+      const json = await res.json();
+      return normalizeVideosJson(json);
     } catch {
-      return null;
+      return {};
     }
   }
 
-  function getFirstClip(videosJson, key) {
-    const arr = videosJson?.[key];
-    if (!Array.isArray(arr) || arr.length === 0) return null;
-    const clip = arr[0];
-    if (!clip?.src) return null;
-    return clip;
-  }
+  function applyDemoButtons(videosMap, lang) {
+    const buttons = Array.from(document.querySelectorAll("[data-demo-key]"));
+    if (!buttons.length) return;
 
-  // Disable demo buttons until JSON decides what to do
-  function preDisableDemoButtons() {
-    const btns = Array.from(document.querySelectorAll("[data-video-key]"));
-    for (const btn of btns) {
-      btn.disabled = true;
-      btn.classList.add("demo-disabled");
-      btn.setAttribute("aria-disabled", "true");
-    }
-  }
+    for (const btn of buttons) {
+      const key = btn.getAttribute("data-demo-key");
+      const list = videosMap?.[key];
+      const first = Array.isArray(list) ? list[0] : null;
 
-  function enableDemoButton(btn, clip) {
-    btn.disabled = false;
-    btn.classList.remove("demo-disabled");
-    btn.removeAttribute("aria-disabled");
-
-    btn.setAttribute("data-video", clip.src);
-    if (clip.poster) btn.setAttribute("data-video-poster", clip.poster);
-    else btn.removeAttribute("data-video-poster");
-  }
-
-  function wireDemoButtonsFromJson(videosJson) {
-    const btns = Array.from(document.querySelectorAll("[data-video-key]"));
-    for (const btn of btns) {
-      const key = btn.getAttribute("data-video-key");
-      const clip = getFirstClip(videosJson, key);
-
-      if (!clip) {
-        btn.classList.add("hidden");
+      // No video => keep disabled
+      if (!first || !first.src) {
+        btn.setAttribute("disabled", "true");
+        btn.classList.add("opacity-40", "cursor-not-allowed");
         continue;
       }
 
-      enableDemoButton(btn, clip);
+      btn.removeAttribute("disabled");
+      btn.classList.remove("opacity-40", "cursor-not-allowed");
+
+      btn.setAttribute("data-video-src", first.src);
+      if (first.poster) btn.setAttribute("data-video-poster", first.poster);
+
+      // Optional text override from JSON
+      if (first.title && typeof first.title === "object") {
+        const t = first.title?.[lang] || first.title?.en;
+        if (t) btn.textContent = t;
+      }
     }
-  }
-
-  function renderDemoGallery(videosJson, lang) {
-    const host = document.getElementById("demoGallery");
-    const section = document.getElementById("demo");
-    if (!host || !section) return;
-
-    const clips6 = Array.isArray(videosJson?.["6dof"]) ? videosJson["6dof"] : [];
-    const clips3 = Array.isArray(videosJson?.["3dof"]) ? videosJson["3dof"] : [];
-
-    const all = [...clips6, ...clips3].filter(c => c && c.src);
-    if (!all.length) {
-      section.classList.add("hidden");
-      return;
-    }
-
-    const hero = getFirstClip(videosJson, "6dof") || all[0];
-    const heroTitle = (lang === "pl" ? hero.title_pl : hero.title_en) || (lang === "pl" ? "Demo" : "Demo");
-    const heroPoster = hero.poster ? hero.poster : "";
-
-    const side = all.filter(c => c.src !== hero.src).slice(0, 4);
-
-    const sideItems = side.map((c) => {
-      const t = (lang === "pl" ? c.title_pl : c.title_en) || (lang === "pl" ? "Demo" : "Demo");
-      const poster = c.poster || "";
-      return `
-        <div class="rounded-xl border border-white/10 bg-black/20 p-4">
-          <div class="flex items-center justify-between gap-3 mb-3">
-            <div class="font-semibold">${escapeHtml(t)}</div>
-            <button type="button"
-              class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-              data-video="${escapeHtml(c.src)}"
-              ${poster ? `data-video-poster="${escapeHtml(poster)}"` : ""}>
-              <span data-en="Open" data-pl="Otwórz"></span>
-            </button>
-          </div>
-
-          <video class="demo-video w-full rounded-lg border border-white/10 bg-black/20"
-            controls playsinline preload="none"
-            ${poster ? `poster="${escapeHtml(poster)}"` : ""}>
-            <source src="${escapeHtml(c.src)}" type="video/mp4" />
-          </video>
-        </div>
-      `;
-    }).join("");
-
-    host.innerHTML = `
-      <div class="grid lg:grid-cols-3 gap-6 items-start">
-        <div class="lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
-          <div class="p-5">
-            <div class="flex items-center justify-between gap-3 mb-3">
-              <div class="font-semibold text-lg">${escapeHtml(heroTitle)}</div>
-              <button type="button"
-                class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                data-video="${escapeHtml(hero.src)}"
-                ${heroPoster ? `data-video-poster="${escapeHtml(heroPoster)}"` : ""}>
-                <span data-en="Open fullscreen" data-pl="Otwórz fullscreen"></span>
-              </button>
-            </div>
-
-            <video class="demo-video w-full rounded-xl border border-white/10 bg-black/20"
-              controls playsinline preload="none"
-              ${heroPoster ? `poster="${escapeHtml(heroPoster)}"` : ""}>
-              <source src="${escapeHtml(hero.src)}" type="video/mp4" />
-            </video>
-
-            <div class="text-sm text-gray-300 mt-3"
-              data-en="Tip: use the button above to open the video in a modal."
-              data-pl="Wskazówka: użyj przycisku powyżej, aby otworzyć wideo w modalu."></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
-          <div class="p-5">
-            <div class="font-semibold text-lg mb-3" data-en="More demos" data-pl="Więcej demo"></div>
-            <div class="flex flex-col gap-4">
-              ${sideItems || `
-                <div class="rounded-xl border border-white/10 bg-black/20 p-4 text-gray-300"
-                  data-en="More clips will appear here as you add them to videos.json."
-                  data-pl="Tutaj pojawią się kolejne klipy, gdy dodasz je do videos.json."></div>
-              `}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
   }
 
   window.SiteLayout = {
@@ -722,6 +645,7 @@
         includeModal: Boolean(options?.includeModal),
         activeProductKey: options?.activeProductKey || null,
         injectOtherProducts: options?.injectOtherProducts !== false,
+        enableVideoDemos: options?.enableVideoDemos !== false, // default true
       };
 
       const lang = detectLang();
@@ -735,7 +659,10 @@
 
       const appliedLang = setLanguage(lang, cfg.metaData);
 
-      if (cfg.includeModal) bindModal();
+      if (cfg.includeModal) {
+        bindImageModal();
+        bindVideoModal();
+      }
 
       if (cfg.injectOtherProducts) {
         const otherSlot = document.getElementById("otherProducts");
@@ -745,25 +672,12 @@
         }
       }
 
+      // Activate demo buttons if present
+      if (cfg.enableVideoDemos) {
+        loadVideosMap().then(map => applyDemoButtons(map, appliedLang));
+      }
+
       bindScrollSpy();
-
-      // demo buttons: don't look "dead"
-      preDisableDemoButtons();
-
-      loadVideosJson().then((videosJson) => {
-        if (!videosJson) {
-          document.querySelectorAll("[data-video-key]").forEach(btn => btn.classList.add("hidden"));
-          const demoSection = document.getElementById("demo");
-          if (demoSection) demoSection.classList.add("hidden");
-          return;
-        }
-
-        wireDemoButtonsFromJson(videosJson);
-        renderDemoGallery(videosJson, appliedLang);
-
-        // apply texts for injected demo markup
-        applyTexts(appliedLang);
-      });
     }
   };
 })();
