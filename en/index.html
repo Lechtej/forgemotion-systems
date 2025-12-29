@@ -217,7 +217,7 @@
         </section>
 
         <!-- =========================
-             VIDEO SECTION (MP4)
+             DEMO SECTION (AUTO FROM /videos/videos.json)
         ========================== -->
         <section id="demo" class="py-14 px-4">
           <div class="container mx-auto max-w-6xl">
@@ -229,71 +229,8 @@
                data-en="Real footage. No CGI. Short demos from our motion platforms."
                data-pl="Prawdziwe ujęcia. Bez CGI. Krótkie demo naszych platform motion."></p>
 
-            <div class="grid lg:grid-cols-3 gap-6 items-start">
-              <!-- Main video -->
-              <div class="lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
-                <div class="p-5">
-                  <div class="flex items-center justify-between gap-3 mb-3">
-                    <div class="font-semibold text-lg"
-                         data-en="6DOF platform demo"
-                         data-pl="Demo platformy 6DOF"></div>
-
-                    <button type="button"
-                            class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                            data-video="/videos/6dof-demo1.mp4"
-                            data-video-poster="/images/rama6dof1.jpg">
-                      <span data-en="Open fullscreen" data-pl="Otwórz fullscreen"></span>
-                    </button>
-                  </div>
-
-                  <video class="w-full rounded-xl border border-white/10 bg-black/20"
-                         controls playsinline preload="none"
-                         poster="/images/rama6dof1.jpg">
-                    <source src="/videos/6dof-demo1.mp4" type="video/mp4" />
-                  </video>
-
-                  <div class="text-sm text-gray-300 mt-3"
-                       data-en="Tip: use the button above to open the video in a modal."
-                       data-pl="Wskazówka: użyj przycisku powyżej, aby otworzyć wideo w modalu."></div>
-                </div>
-              </div>
-
-              <!-- Side video -->
-              <div class="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
-                <div class="p-5">
-                  <div class="font-semibold text-lg mb-3"
-                       data-en="More demos"
-                       data-pl="Więcej demo"></div>
-
-                  <div class="rounded-xl border border-white/10 bg-black/20 p-4">
-                    <div class="flex items-center justify-between gap-3 mb-3">
-                      <div class="font-semibold"
-                           data-en="3DOF / 2DOF demo"
-                           data-pl="Demo 3DOF / 2DOF"></div>
-
-                      <button type="button"
-                              class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                              data-video="/videos/3dof-demo1.mp4"
-                              data-video-poster="/images/rama3dof1.jpg">
-                        <span data-en="Open" data-pl="Otwórz"></span>
-                      </button>
-                    </div>
-
-                    <video class="w-full rounded-lg border border-white/10 bg-black/20"
-                           controls playsinline preload="none"
-                           poster="/images/rama3dof1.jpg">
-                      <source src="/videos/3dof-demo1.mp4" type="video/mp4" />
-                    </video>
-
-                    <div class="text-sm text-gray-300 mt-3"
-                         data-en="You can later add more clips like 6dof-demo2.mp4."
-                         data-pl="Później możesz dodać kolejne klipy np. 6dof-demo2.mp4."></div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
+            <!-- JS will inject gallery here (or hide this section if no videos) -->
+            <div id="demoGallery"></div>
           </div>
         </section>
 
@@ -315,10 +252,10 @@
                      data-en="Learn more"
                      data-pl="Zobacz więcej"></a>
 
+                  <!-- auto-wired from JSON -->
                   <button type="button"
                           class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                          data-video="/videos/6dof-demo1.mp4"
-                          data-video-poster="/images/rama6dof1.jpg">
+                          data-video-key="6dof">
                     <span data-en="Watch demo" data-pl="Zobacz demo"></span>
                   </button>
                 </div>
@@ -343,10 +280,10 @@
                      data-en="Learn more"
                      data-pl="Zobacz więcej"></a>
 
+                  <!-- auto-wired from JSON -->
                   <button type="button"
                           class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                          data-video="/videos/3dof-demo1.mp4"
-                          data-video-poster="/images/rama3dof1.jpg">
+                          data-video-key="3dof">
                     <span data-en="Watch demo" data-pl="Zobacz demo"></span>
                   </button>
                 </div>
@@ -450,7 +387,7 @@
                    data-en="We design and build solutions for people and business — from affordable, personalizable B2C platforms to robust setups for training and events. Every product is developed hands-on: CAD design, rapid prototyping, and manufacturing using 3D printing and CNC — then assembly, tuning, and testing."
                    data-pl="Projektujemy i budujemy rozwiązania dla pasjonatów i biznesu — od przystępnych, personalizowanych platform B2C po wytrzymałe konfiguracje do szkoleń i eventów. Każdy produkt rozwijamy „od zera”: projekt w CAD, szybkie prototypowanie oraz produkcja z użyciem druku 3D i CNC — a potem montaż, strojenie i testy."></p>
 
-                <!-- Equal-size tiles + swapped order (CAD left, build right) -->
+                <!-- swapped order + equal sizing -->
                 <div class="grid sm:grid-cols-2 gap-4">
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
                     <div class="w-full h-44 md:h-48 bg-black/10 flex items-center justify-center">
@@ -542,7 +479,6 @@
               </div>
             </div>
 
-            <!-- Public links (no private YT profile) -->
             <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-6">
               <h4 class="text-xl font-semibold mb-3 text-center"
                   data-en="More about the story (public links)"
