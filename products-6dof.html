@@ -33,6 +33,8 @@
     .product-photo { width: 100%; height: auto; display: block; }
     .photo-frame { border: 1px solid rgba(255,255,255,0.08); background: rgba(31, 41, 55, 0.55); }
     .thumb { width: 100%; height: 110px; object-fit: cover; display: block; }
+    .video-9x16 { aspect-ratio: 9 / 16; }
+    .video-16x9 { aspect-ratio: 16 / 9; }
   </style>
 </head>
 
@@ -40,119 +42,361 @@
   <div id="siteHeader"></div>
 
   <main class="pt-24">
-    <section class="container mx-auto px-4 py-14">
-      <div class="max-w-4xl mx-auto">
+    <section id="hero" class="container mx-auto px-4 py-14">
+      <div class="max-w-5xl mx-auto">
         <p class="text-white/70 mb-3">
-          <a href="/en/#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          <a href="/#products" class="hover:text-blue-400"
+             data-en="← Back to products"
+             data-pl="← Wróć do produktów"></a>
         </p>
 
-        <h1 class="text-4xl md:text-5xl font-bold mb-5"
-            data-en="6DOF Motion Platform"
-            data-pl="Platforma motion 6DOF"></h1>
-
-        <p class="text-lg md:text-xl text-white/85 mb-8"
-           data-en="Full-body motion for people who want the real “wow”. Smooth, predictable movement that makes every lap and maneuver feel more alive."
-           data-pl="Motion „na całe ciało” dla tych, którzy chcą prawdziwego efektu wow. Płynny, przewidywalny ruch, dzięki któremu każde okrążenie i każdy manewr stają się bardziej „żywe”."></p>
-
-        <div class="mb-10">
-          <div class="rounded-2xl photo-frame overflow-hidden">
-            <img class="product-photo cursor-zoom-in"
-              src="/images/rama6dof1.jpg"
-              data-full="/images/rama6dof1-large.jpg"
-              alt="6DOF motion platform"
-              loading="lazy"
-              decoding="async" />
-          </div>
-
-          <div class="grid grid-cols-3 gap-3 mt-3">
-            <img class="thumb rounded-xl photo-frame cursor-zoom-in"
-              src="/images/rama6dof1.jpg"
-              data-full="/images/rama6dof1-large.jpg"
-              alt="6DOF motion platform photo 1"
-              loading="lazy"
-              decoding="async" />
-            <img class="thumb rounded-xl photo-frame cursor-zoom-in"
-              src="/images/rama6dof2.jpg"
-              data-full="/images/rama6dof2.jpg"
-              alt="6DOF motion platform photo 2"
-              loading="lazy"
-              decoding="async" />
-            <img class="thumb rounded-xl photo-frame cursor-zoom-in"
-              src="/images/rama6dof3.jpg"
-              data-full="/images/rama6dof3.jpg"
-              alt="6DOF motion platform photo 3"
-              loading="lazy"
-              decoding="async" />
-          </div>
-
-          <p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6 mb-10">
-          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="What you get" data-pl="Co zyskujesz"></h2>
-            <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="More immersion: braking, curbs and weight transfer feel natural." data-pl="Większa immersja: hamowanie, tarki i przeniesienie masy czujesz naturalnie."></li>
-              <li data-en="More confidence: consistent, predictable motion cues." data-pl="Więcej pewności: powtarzalne, przewidywalne „sygnały” ruchu."></li>
-              <li data-en="A premium base for a serious sim rig." data-pl="Premium baza pod poważne stanowisko."></li>
-            </ul>
-          </div>
-
-          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="Best for" data-pl="Najlepsze dla"></h2>
-            <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Sim racers who want maximum realism." data-pl="Simracerów, którzy chcą maksimum realizmu."></li>
-              <li data-en="Flight sim pilots building a cockpit vibe." data-pl="Flight sim — gdy budujesz klimat kabiny."></li>
-              <li data-en="Home premium setups and show rigs." data-pl="Domowych premium setupów i stanowisk pokazowych."></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
-          <h2 class="text-2xl font-bold mb-3" data-en="Interested?" data-pl="Brzmi dobrze?"></h2>
-          <p class="text-white/85 mb-5"
-             data-en="Tell us what you play (racing or flight) and how much space you have. We’ll suggest the cleanest way to build your motion rig."
-             data-pl="Napisz, w co grasz (racing czy flight) i ile masz miejsca. Podpowiemy najczystszy sposób zbudowania motion riga."></p>
-
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/en/#contact"
-               class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
-               data-en="Request a quote"
-               data-pl="Poproś o wycenę"></a>
-
-            <a href="/en/#products"
-               class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
-               data-en="See all products"
-               data-pl="Zobacz wszystkie produkty"></a>
-          </div>
-        </div>
-
-        <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-          <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Is 6DOF only for flight sims?" data-pl="Czy 6DOF jest tylko do flight sim?"></h3>
-              <p class="text-white/80"
-                 data-en="No — it’s great for both racing and flight. The point is full-body cues that feel believable."
-                 data-pl="Nie — sprawdza się i w racing, i w flight. Chodzi o sygnały „dla ciała”, które brzmią i czują się naturalnie."></p>
+        <div class="flex flex-col gap-8">
+          <!-- Title + intro -->
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase text-blue-300/90">
+              <span class="px-2 py-1 rounded-full bg-white/5 border border-white/10">6DOF</span>
+              <span data-en="Motion platform" data-pl="Platforma ruchu"></span>
             </div>
 
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Will it fit in a normal room?" data-pl="Czy to zmieści się w normalnym pokoju?"></h3>
-              <p class="text-white/80"
-                 data-en="Usually yes. Tell us your available space and we’ll recommend a layout that makes sense."
-                 data-pl="Zwykle tak. Podaj wymiary dostępnej przestrzeni, a zaproponujemy układ, który ma sens."></p>
+            <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4"
+                data-en="6DOF Motion Platform"
+                data-pl="Platforma ruchu 6DOF"></h1>
+
+            <p class="text-lg md:text-xl text-white/85"
+               data-en="Realistic 6DOF motion delivering aircraft or vehicle dynamics directly to the user."
+               data-pl="Realistyczny ruch platformy 6DOF, który przekazuje dynamikę samolotu lub pojazdu bezpośrednio na użytkownika."></p>
+
+            <p class="text-white/80 mt-3 max-w-4xl"
+               data-en="Smooth, repeatable motion cues make control inputs and maneuvers feel physically believable — from pitch/roll changes in flight to weight transfer, braking and acceleration in driving."
+               data-pl="Płynne, powtarzalne „sygnały” ruchu sprawiają, że sterowanie i manewry są fizycznie wiarygodne — od zmian pitch/roll w locie po przeniesienie masy, hamowanie i przyspieszenia w jeździe."></p>
+
+            <div class="flex flex-col sm:flex-row gap-3 mt-7">
+              <a href="#lead"
+                 class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+                 data-en="Request configuration"
+                 data-pl="Poproś o konfigurację"></a>
+
+              <a href="#videos"
+                 class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+                 data-en="See videos"
+                 data-pl="Zobacz wideo"></a>
             </div>
 
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Do I need a “perfect” rig to start?" data-pl="Czy muszę mieć „idealny” rig, żeby zacząć?"></h3>
-              <p class="text-white/80"
-                 data-en="Not at all. We can adapt the platform to your current setup and plan upgrades over time."
-                 data-pl="Nie. Możemy dopasować platformę do Twojego aktualnego stanowiska i zaplanować rozwój krok po kroku."></p>
+            <div class="grid sm:grid-cols-3 gap-3 mt-8 text-sm">
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-4">
+                <div class="font-semibold" data-en="Modular build" data-pl="Modułowa budowa"></div>
+                <div class="text-white/75 mt-1" data-en="3 identical drive modules" data-pl="3 identyczne moduły napędowe"></div>
+              </div>
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-4">
+                <div class="font-semibold" data-en="Fast adjustment" data-pl="Szybka regulacja"></div>
+                <div class="text-white/75 mt-1" data-en="mechanical & repeatable" data-pl="mechaniczna i powtarzalna"></div>
+              </div>
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-4">
+                <div class="font-semibold" data-en="Clean wiring" data-pl="Proste okablowanie"></div>
+                <div class="text-white/75 mt-1" data-en="mains + USB per module" data-pl="zasilanie + USB na moduł"></div>
+              </div>
             </div>
           </div>
-        </section>
+
+          <!-- Hero photo + thumbs -->
+          <div class="mb-2">
+            <div class="rounded-2xl photo-frame overflow-hidden">
+              <img class="product-photo cursor-zoom-in"
+                src="/images/rama6dof1.jpg"
+                data-full="/images/rama6dof1-large.jpg"
+                alt="6DOF motion platform"
+                loading="lazy"
+                decoding="async" />
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mt-3">
+              <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                src="/images/rama6dof1.jpg"
+                data-full="/images/rama6dof1-large.jpg"
+                alt="6DOF motion platform photo 1"
+                loading="lazy"
+                decoding="async" />
+              <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                src="/images/rama6dof2.jpg"
+                data-full="/images/rama6dof2.jpg"
+                alt="6DOF motion platform photo 2"
+                loading="lazy"
+                decoding="async" />
+              <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                src="/images/rama6dof3.jpg"
+                data-full="/images/rama6dof3.jpg"
+                alt="6DOF motion platform photo 3"
+                loading="lazy"
+                decoding="async" />
+            </div>
+
+            <p class="text-white/55 text-sm mt-3"
+               data-en="Tip: click an image to zoom."
+               data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
+          </div>
+
+          <!-- Benefits (more tangible, less marketing) -->
+          <div class="grid lg:grid-cols-3 gap-6">
+            <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold mb-3" data-en="Tangible benefits" data-pl="Namacalne korzyści"></h2>
+              <ul class="list-disc list-inside text-white/85 space-y-2">
+                <li data-en="More immersion: believable cues for acceleration, braking, bumps and orientation."
+                    data-pl="Większa immersja: wiarygodne sygnały przyspieszeń, hamowania, nierówności i orientacji."></li>
+                <li data-en="More control: smooth, repeatable motion helps you build confidence."
+                    data-pl="Więcej kontroli: płynny, powtarzalny ruch pomaga budować pewność."></li>
+                <li data-en="Practical build: designed for integration, transport and servicing."
+                    data-pl="Praktyczna konstrukcja: pod integrację, transport i serwis."></li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold mb-3" data-en="Best for" data-pl="Najlepsze dla"></h2>
+              <ul class="list-disc list-inside text-white/85 space-y-2">
+                <li data-en="Flight simulation cockpits and training setups."
+                    data-pl="Kokpitów i stanowisk treningowych do symulacji lotu."></li>
+                <li data-en="Vehicle / racing simulators where weight transfer matters."
+                    data-pl="Symulatorów pojazdów / racing, gdzie przeniesienie masy ma znaczenie."></li>
+                <li data-en="Premium home rigs, show rigs and R&D prototypes."
+                    data-pl="Premium rigów domowych, stanowisk pokazowych i prototypów R&D."></li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold mb-3" data-en="What makes it practical" data-pl="Co jest tu praktyczne"></h2>
+              <ul class="list-disc list-inside text-white/85 space-y-2">
+                <li data-en="Modular frame: fast assembly and teardown."
+                    data-pl="Modułowa rama: szybki montaż i demontaż."></li>
+                <li data-en="Repeatable mechanical adjustment points."
+                    data-pl="Powtarzalne, mechaniczne punkty regulacji."></li>
+                <li data-en="Per module: only mains power + USB control."
+                    data-pl="Na moduł: tylko zasilanie sieciowe + USB do sterowania."></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Videos -->
+          <section id="videos" class="mt-2">
+            <div class="grid lg:grid-cols-2 gap-6">
+              <!-- Adjustment video -->
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+                <h2 class="text-2xl font-bold mb-3" data-en="Frame adjustment" data-pl="Regulacja ramy"></h2>
+                <p class="text-white/85 mb-5"
+                   data-en="The frame is designed for quick, repeatable reconfiguration for different cockpit layouts and user positions."
+                   data-pl="Rama jest zaprojektowana pod szybką, powtarzalną zmianę konfiguracji dla różnych kokpitów i pozycji użytkownika."></p>
+
+                <div class="grid md:grid-cols-[1fr_auto] gap-5 items-start">
+                  <div>
+                    <ul class="text-white/85 space-y-2">
+                      <li class="flex gap-2">
+                        <span class="mt-2 h-2 w-2 rounded-full bg-blue-400 shrink-0"></span>
+                        <span data-en="Mechanical adjustment — no permanent modifications."
+                              data-pl="Regulacja mechaniczna — bez trwałych modyfikacji."></span>
+                      </li>
+                      <li class="flex gap-2">
+                        <span class="mt-2 h-2 w-2 rounded-full bg-blue-400 shrink-0"></span>
+                        <span data-en="Repeatable points for consistent setup."
+                              data-pl="Powtarzalne punkty dla spójnego ustawienia."></span>
+                      </li>
+                      <li class="flex gap-2">
+                        <span class="mt-2 h-2 w-2 rounded-full bg-blue-400 shrink-0"></span>
+                        <span data-en="Optimized for quick deployment and changes between use cases."
+                              data-pl="Zoptymalizowana pod szybkie wdrożenie i zmiany zastosowania."></span>
+                      </li>
+                    </ul>
+
+                    <p class="text-white/55 text-sm mt-4"
+                       data-en="Video shows the adjustment workflow on the real frame."
+                       data-pl="Wideo pokazuje przebieg regulacji na realnej ramie."></p>
+                  </div>
+
+                  <div class="w-full md:w-[280px]">
+                    <video controls playsinline preload="metadata"
+                           poster="/videos/posters/6dof-adjust.jpg"
+                           class="w-full rounded-2xl border border-white/10 bg-black video-9x16 object-cover">
+                      <source src="/videos/6dof-adjust.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Demo video -->
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+                <h2 class="text-2xl font-bold mb-3" data-en="Demo in use" data-pl="Demo w użyciu"></h2>
+                <p class="text-white/85 mb-5"
+                   data-en="Short demo of the system working under load."
+                   data-pl="Krótki pokaz działania systemu pod obciążeniem."></p>
+
+                <video controls playsinline preload="metadata"
+                       poster="/images/rama6dof2.jpg"
+                       class="w-full rounded-2xl border border-white/10 bg-black video-16x9 object-cover">
+                  <source src="/videos/6dof-demo1.mp4" type="video/mp4">
+                </video>
+
+                <div class="grid grid-cols-3 gap-3 mt-4">
+                  <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                    src="/images/rama6dof2.jpg"
+                    data-full="/images/rama6dof2.jpg"
+                    alt="6DOF base"
+                    loading="lazy"
+                    decoding="async" />
+                  <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                    src="/images/rama6dof3.jpg"
+                    data-full="/images/rama6dof3.jpg"
+                    alt="6DOF base frame"
+                    loading="lazy"
+                    decoding="async" />
+                  <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                    src="/images/rama6dof1.jpg"
+                    data-full="/images/rama6dof1-large.jpg"
+                    alt="6DOF full rig"
+                    loading="lazy"
+                    decoding="async" />
+                </div>
+
+                <p class="text-white/55 text-sm mt-3"
+                   data-en="Tip: click a thumbnail to zoom."
+                   data-pl="Wskazówka: kliknij miniaturę, aby powiększyć."></p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Modular module section -->
+          <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <div class="grid lg:grid-cols-2 gap-6 items-start">
+              <div>
+                <h2 class="text-2xl font-bold mb-3"
+                    data-en="Modular drive architecture"
+                    data-pl="Modułowa architektura napędowa"></h2>
+
+                <p class="text-white/85"
+                   data-en="The system is built from identical drive modules. This reduces the number of unique parts and makes assembly, transport and service much simpler."
+                   data-pl="System jest zbudowany z identycznych modułów napędowych. To ogranicza liczbę unikalnych części i ułatwia montaż, transport oraz serwis."></p>
+
+                <div class="mt-5 bg-white/5 border border-white/10 rounded-2xl p-5">
+                  <h3 class="text-lg font-semibold mb-2"
+                      data-en="Two connections per module"
+                      data-pl="Dwa podłączenia na moduł"></h3>
+
+                  <p class="text-white/80 text-sm"
+                     data-en="Each module requires only:"
+                     data-pl="Każdy moduł wymaga tylko:"></p>
+
+                  <ul class="mt-3 text-white/85 space-y-2 text-sm">
+                    <li class="flex gap-2">
+                      <span class="mt-2 h-2 w-2 rounded-full bg-blue-400 shrink-0"></span>
+                      <span data-en="mains power cable"
+                            data-pl="przewodu zasilania sieciowego"></span>
+                    </li>
+                    <li class="flex gap-2">
+                      <span class="mt-2 h-2 w-2 rounded-full bg-blue-400 shrink-0"></span>
+                      <span data-en="USB control cable"
+                            data-pl="kabla USB do sterowania"></span>
+                    </li>
+                  </ul>
+
+                  <div class="mt-4 text-white/85 text-sm">
+                    <div class="font-semibold text-white"
+                         data-en="Why it matters"
+                         data-pl="Dlaczego to ważne"></div>
+                    <ul class="mt-2 space-y-1">
+                      <li>• <span data-en="faster installation and teardown" data-pl="szybszy montaż i demontaż"></span></li>
+                      <li>• <span data-en="cleaner wiring and fewer failure points" data-pl="czystsze okablowanie i mniej punktów awarii"></span></li>
+                      <li>• <span data-en="simpler spare parts strategy" data-pl="prostsza strategia części zamiennych"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-3">
+                <figure class="rounded-2xl photo-frame overflow-hidden">
+                  <img class="product-photo cursor-zoom-in"
+                       src="/images/modul-napedowy6dof-cad.jpg"
+                       data-full="/images/modul-napedowy6dof-cad.jpg"
+                       alt="Drive module CAD"
+                       loading="lazy"
+                       decoding="async" />
+                  <figcaption class="p-4 text-sm text-white/70"
+                              data-en="CAD view of the drive module enclosure and layout."
+                              data-pl="Widok CAD obudowy i układu modułu napędowego"></figcaption>
+                </figure>
+
+                <figure class="rounded-2xl photo-frame overflow-hidden">
+                  <img class="product-photo cursor-zoom-in"
+                       src="/images/modul-napedowy6dof-underconstruction.jpg"
+                       data-full="/images/modul-napedowy6dof-underconstruction.jpg"
+                       alt="Drive module under construction"
+                       loading="lazy"
+                       decoding="async" />
+                  <figcaption class="p-4 text-sm text-white/70"
+                              data-en="Module build in progress — designed for serviceability."
+                              data-pl="Moduł w trakcie budowy — zaprojektowany pod serwisowalność"></figcaption>
+                </figure>
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA / Lead -->
+          <section id="lead" class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-3"
+                data-en="Request configuration"
+                data-pl="Poproś o konfigurację"></h2>
+
+            <p class="text-white/85 mb-5"
+               data-en="Tell us your simulator type (flight / vehicle), payload, available space and integration constraints. We’ll propose the cleanest configuration and next steps."
+               data-pl="Podaj typ symulatora (lotniczy / pojazd), udźwig, dostępną przestrzeń i wymagania integracji. Zaproponujemy najczystszą konfigurację i kolejne kroki."></p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="/#contact"
+                 class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+                 data-en="Request a quote"
+                 data-pl="Poproś o wycenę"></a>
+
+              <a href="/#products"
+                 class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+                 data-en="See all products"
+                 data-pl="Zobacz wszystkie produkty"></a>
+            </div>
+
+            <div class="mt-5 text-white/75 text-sm">
+              <div class="font-semibold text-white"
+                   data-en="Good to include:"
+                   data-pl="Warto podać:"></div>
+              <ul class="mt-2 space-y-1">
+                <li>• <span data-en="use case (flight / racing / training / R&D)" data-pl="zastosowanie (lot / racing / training / R&D)"></span></li>
+                <li>• <span data-en="payload (pilot + seat/cockpit)" data-pl="udźwig (pilot + fotel/kokpit)"></span></li>
+                <li>• <span data-en="available power and space" data-pl="dostępne zasilanie i miejsce"></span></li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- FAQ (short, non-salesy) -->
+          <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
+
+            <div class="space-y-4">
+              <div>
+                <h3 class="font-semibold text-lg" data-en="Is 6DOF only for flight sims?" data-pl="Czy 6DOF jest tylko do flight sim?"></h3>
+                <p class="text-white/80"
+                   data-en="No — 6DOF can be configured for both aircraft and vehicles. The goal is believable full-body cues and repeatable control feedback."
+                   data-pl="Nie — 6DOF można skonfigurować zarówno pod samolot, jak i pod pojazd. Chodzi o wiarygodne sygnały „dla ciała” i powtarzalny feedback sterowania."></p>
+              </div>
+
+              <div>
+                <h3 class="font-semibold text-lg" data-en="How complex is installation?" data-pl="Jak wygląda instalacja?"></h3>
+                <p class="text-white/80"
+                   data-en="The platform is built for practical setup: modular architecture and minimal wiring (mains power + USB per module). Tell us your space and cockpit type."
+                   data-pl="Platforma jest projektowana pod praktyczny montaż: architektura modułowa i minimalne okablowanie (zasilanie + USB na moduł). Daj znać, ile masz miejsca i jaki kokpit."></p>
+              </div>
+
+              <div>
+                <h3 class="font-semibold text-lg" data-en="Can it be adapted to my rig?" data-pl="Czy da się dopasować do mojego riga?"></h3>
+                <p class="text-white/80"
+                   data-en="Yes. The adjustable frame and modular approach make it easier to integrate with different cockpit layouts and upgrade paths."
+                   data-pl="Tak. Regulowana rama i podejście modułowe ułatwiają integrację z różnymi układami kokpitu oraz dalsze rozbudowy."></p>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </section>
 
@@ -166,26 +410,26 @@
     const metaData = {
       en: {
         title: "6DOF Motion Platform – ForgeMotion Systems",
-        description: "Premium 6DOF motion platform for racing and flight simulators. Smooth, predictable full-body motion for maximum immersion.",
-        keywords: "6DOF motion platform, motion simulator, sim racing motion, flight sim motion, ForgeMotion Systems",
+        description: "6DOF motion platform for flight and vehicle simulators. Modular architecture, fast frame adjustment, minimal wiring (mains + USB per module).",
+        keywords: "6DOF motion platform, motion simulator, flight sim motion, racing sim motion, simulator platform, ForgeMotion Systems",
         ogTitle: "6DOF Motion Platform – ForgeMotion Systems",
-        ogDescription: "Full-body motion with smooth, believable feel. Built for premium sim rigs.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+        ogDescription: "Realistic 6DOF motion delivering aircraft or vehicle dynamics directly to the user.",
+        ogImage: "https://forgemotionsystems.com/images/rama6dof1-large.jpg",
         twitterTitle: "6DOF Motion Platform – ForgeMotion Systems",
-        twitterDescription: "Premium full-body motion for racing and flight sims.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+        twitterDescription: "6DOF motion for flight and vehicle simulation. Modular, adjustable, practical.",
+        twitterImage: "https://forgemotionsystems.com/images/rama6dof1-large.jpg",
         canonical: "https://forgemotionsystems.com/products-6dof.html"
       },
       pl: {
-        title: "Platforma motion 6DOF – ForgeMotion Systems",
-        description: "Platforma motion 6DOF do symulatorów wyścigowych i lotniczych. Płynny, przewidywalny ruch i maksimum immersji.",
-        keywords: "platforma motion 6DOF, motion do symulatora, simracing motion, flight sim motion, ForgeMotion Systems",
-        ogTitle: "Platforma motion 6DOF – ForgeMotion Systems",
-        ogDescription: "Motion na całe ciało: płynnie, naturalnie i efektownie. Do premium rigów.",
-        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
-        twitterTitle: "Platforma motion 6DOF – ForgeMotion Systems",
-        twitterDescription: "Premium motion do simracingu i flight sim.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+        title: "Platforma ruchu 6DOF – ForgeMotion Systems",
+        description: "Platforma ruchu 6DOF do symulacji lotu i pojazdów. Modułowa budowa, szybka regulacja ramy, proste okablowanie (zasilanie + USB na moduł).",
+        keywords: "platforma 6DOF, platforma ruchu, motion platform, symulator lotu, symulator pojazdu, ForgeMotion Systems",
+        ogTitle: "Platforma ruchu 6DOF – ForgeMotion Systems",
+        ogDescription: "Realistyczny ruch 6DOF przekazujący dynamikę samolotu lub pojazdu bezpośrednio na użytkownika.",
+        ogImage: "https://forgemotionsystems.com/images/rama6dof1-large.jpg",
+        twitterTitle: "Platforma ruchu 6DOF – ForgeMotion Systems",
+        twitterDescription: "6DOF motion do symulacji lotu i pojazdów. Modułowo, regulowalnie, praktycznie.",
+        twitterImage: "https://forgemotionsystems.com/images/rama6dof1-large.jpg",
         canonical: "https://forgemotionsystems.com/products-6dof.html"
       }
     };
@@ -194,8 +438,10 @@
       SiteLayout.init({
         metaData,
         includeModal: true,
+        includeVideoModal: true,  // keeps video modal available site-wide
         activeProductKey: "6dof",
-        injectOtherProducts: true
+        injectOtherProducts: true,
+        enableVideoDemos: false   // product page uses inline videos; avoid videos.json fetch
       });
     });
   </script>
