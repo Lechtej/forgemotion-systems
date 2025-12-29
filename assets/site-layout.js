@@ -331,7 +331,6 @@
     }
   }
 
-  // (4) SEO: keep canonical stable + set html lang (already) + keep og/twitter in sync
   function updateMetaTags(lang, metaData) {
     const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
 
@@ -369,7 +368,6 @@
     return DEFAULT_LANG;
   }
 
-  // Rewrite "/index.html#..." and "#..." on product pages to "/{lang}/#..."
   function rewriteIndexAnchors(lang) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
@@ -380,10 +378,8 @@
 
       const trimmed = raw.trim();
 
-      // keep pure hash on index pages (local scroll)
       if (trimmed.startsWith("#") && isIndexLikePath(window.location.pathname)) continue;
 
-      // "/index.html#section" or "index.html#section" or "/index.html"
       const m1 = trimmed.match(/^(\/?index\.html)(#.+)?$/i);
       if (m1) {
         const hash = m1[2] || "";
@@ -391,14 +387,12 @@
         continue;
       }
 
-      // "/#section"
       const m2 = trimmed.match(/^\/#(.+)$/);
       if (m2) {
         a.setAttribute("href", buildIndexUrl(safe, `#${m2[1]}`));
         continue;
       }
 
-      // "#section" on product pages should go to index
       const m3 = trimmed.match(/^#(.+)$/);
       if (m3 && !isIndexLikePath(window.location.pathname) && !getPathLang(window.location.pathname)) {
         a.setAttribute("href", buildIndexUrl(safe, `#${m3[1]}`));
@@ -511,7 +505,6 @@
     if (!modal || !video || !source || !title || !closeBtn) return;
 
     function openVideo({ src, poster, titleText }) {
-      // (3) corporate-safe: never autoplay, only load + user starts
       title.textContent = titleText || "Video";
       source.src = src;
       video.poster = poster || "";
@@ -582,8 +575,8 @@
 
   // ---- scrollspy ----
   function bindScrollSpyFallback(links) {
-    // Minimal, robust fallback: highlight section closest to top
     const ids = SCROLLSPY_SECTIONS.slice();
+
     function hrefToId(href) {
       try {
         const u = new URL(href, window.location.origin);
@@ -593,6 +586,7 @@
         return idx >= 0 ? String(href).slice(idx + 1) : "";
       }
     }
+
     function setActive(id) {
       for (const a of links) {
         const isMatch = hrefToId(a.getAttribute("href")) === id;
@@ -601,6 +595,7 @@
         else a.removeAttribute("aria-current");
       }
     }
+
     function pickActive() {
       let bestId = "hero";
       let bestTop = Number.POSITIVE_INFINITY;
@@ -633,7 +628,6 @@
       if (ids.includes(id)) setActive(id);
     });
 
-    // init
     pickActive();
   }
 
@@ -667,7 +661,6 @@
     if (SCROLLSPY_SECTIONS.includes(initialHash)) setActive(initialHash);
     else setActive("hero");
 
-    // (2) corporate-safe: guard IntersectionObserver + fallback if blocked/unsupported
     try {
       if (!("IntersectionObserver" in window)) {
         bindScrollSpyFallback(links);
@@ -722,15 +715,11 @@
   }
 
   // -------- VIDEO DEMOS --------
-  // (1) corporate-safe: fetch with timeout + graceful UI behavior if blocked
   async function fetchVideosJson({ timeoutMs = 3500 } = {}) {
     const controller = new AbortController();
     const t = window.setTimeout(() => controller.abort(), timeoutMs);
     try {
-      const res = await fetch("/videos/videos.json", {
-        cache: "no-store",
-        signal: controller.signal
-      });
+      const res = await fetch("/videos/videos.json", { cache: "no-store", signal: controller.signal });
       if (!res.ok) throw new Error("videos.json not found");
       return await res.json();
     } finally {
@@ -738,9 +727,6 @@
     }
   }
 
-  // Accepts BOTH formats:
-  // 1) { "videos": [ { key, src, poster, title:{en,pl} } ] }
-  // 2) { "6dof": [ ... ], "3dof": [ ... ] }
   function normalizeVideos(json) {
     if (!json) return {};
     if (Array.isArray(json.videos)) {
@@ -769,11 +755,7 @@
       btn.classList.toggle("opacity-50", !has);
       btn.classList.toggle("cursor-not-allowed", !has);
       btn.setAttribute("aria-disabled", String(!has));
-      if (!has) {
-        btn.title = (lang === "pl") ? "Demo w przygotowaniu" : "Demo coming soon";
-      } else {
-        btn.title = "";
-      }
+      btn.title = has ? "" : (lang === "pl" ? "Demo w przygotowaniu" : "Demo coming soon");
     });
   }
 
@@ -825,30 +807,88 @@
     try { video.pause(); } catch {}
     video.load();
 
-    const t = pickTitle(item, lang) || "6DOF demo #1";
-    title.textContent = t;
+    title.textContent = pickTitle(item, lang) || "6DOF demo #1";
   }
 
-  // Hide "More demos" card if there are no extra clips beyond the main hero clip
-  function setMoreDemosVisibility(map) {
+  // More demos: find the right-side card robustly, hide if no extras, otherwise render clickable list
+  function findMoreDemosCard() {
     const videosSection = document.getElementById("videos");
-    if (!videosSection) return;
+    if (!videosSection) return null;
 
-    // Find the card header by data-en marker (stable even before translation)
-    const header = videosSection.querySelector('[data-en="More demos"]');
-    if (!header) return;
+    // Primary: heading has these attributes in your HTML
+    const h = videosSection.querySelector('[data-en="More demos"]');
+    if (h) {
+      const card = h.closest(".rounded-2xl");
+      if (card) return card;
+    }
 
-    const card = header.closest(".rounded-2xl");
+    // Fallback: find by visible text (after translation)
+    const headings = Array.from(videosSection.querySelectorAll("h3"));
+    const target = headings.find(x => {
+      const t = (x.textContent || "").trim().toLowerCase();
+      return t === "more demos" || t === "więcej demo";
+    });
+    if (target) return target.closest(".rounded-2xl");
+
+    return null;
+  }
+
+  function buildExtrasList(extras, lang) {
+    // extras: [{ src, poster, titleText }]
+    const wrap = document.createElement("div");
+    wrap.className = "space-y-3";
+
+    extras.forEach((v, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className =
+        "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 transition";
+      btn.setAttribute("data-extra-idx", String(idx));
+
+      const t = (v.titleText || "").trim() || (lang === "pl" ? `Demo #${idx + 2}` : `Demo #${idx + 2}`);
+      btn.innerHTML = `
+        <div class="font-semibold text-white/90">${escapeHtml(t)}</div>
+        <div class="text-sm text-white/60">${escapeHtml(v.src)}</div>
+      `;
+
+      wrap.appendChild(btn);
+    });
+
+    return wrap;
+  }
+
+  function renderMoreDemos(card, extras, lang, openVideo) {
     if (!card) return;
 
-    // Count extra clips (anything not the first 6dof clip)
-    const six = map?.["6dof"] || [];
-    const total = Object.values(map || {}).reduce((acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0), 0);
+    // hide if none
+    if (!extras.length) {
+      card.classList.add("hidden");
+      return;
+    }
+    card.classList.remove("hidden");
 
-    const hasHero = Boolean(six.length);
-    const extra = hasHero ? (total - 1) : total; // if hero exists, treat it as main
-    if (extra <= 0) card.classList.add("hidden");
-    else card.classList.remove("hidden");
+    // Replace the placeholder text area with a list
+    // Keep the <h3> heading; clean the rest (except heading)
+    const heading = card.querySelector("h3");
+    const nodes = Array.from(card.childNodes);
+    nodes.forEach(n => {
+      if (heading && n === heading) return;
+      if (n.nodeType === 3 && !String(n.textContent || "").trim()) return;
+      card.removeChild(n);
+    });
+
+    const list = buildExtrasList(extras, lang);
+    card.appendChild(list);
+
+    // click binding
+    card.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-extra-idx]");
+      if (!btn) return;
+      const idx = Number(btn.getAttribute("data-extra-idx"));
+      const item = extras[idx];
+      if (!item?.src) return;
+      openVideo({ src: item.src, poster: item.poster || "", titleText: item.titleText || "Video" });
+    }, { passive: true });
   }
 
   async function initVideoDemos(videoModalApi, lang) {
@@ -859,18 +899,31 @@
 
       hydrateHeroVideo(map, lang);
       setDemoButtonsState(map, lang);
-      setMoreDemosVisibility(map);
+
+      // extras = everything except the first 6dof clip (hero)
+      const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
+      const hero = map?.["6dof"]?.[0] || null;
+
+      const extrasRaw = all.filter(v => v && v.src && (!hero || v.src !== hero.src));
+      const extras = extrasRaw.map(v => ({
+        src: v.src,
+        poster: v.poster || "",
+        titleText: pickTitle(v, lang)
+      }));
+
+      const card = findMoreDemosCard();
+      renderMoreDemos(card, extras, lang, videoModalApi.openVideo);
 
       bindDemoButtons(videoModalApi.openVideo, map, lang);
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
 
     } catch {
-      // If videos.json missing/blocked – disable buttons and hide "More demos" card
+      // videos.json missing/blocked
       setDemoButtonsState({}, lang);
-      setMoreDemosVisibility({});
+      const card = findMoreDemosCard();
+      if (card) card.classList.add("hidden");
     }
 
-    // If there is no 6dof hero clip, hide fullscreen button (avoid dead UI)
     const btn = document.getElementById("openHeroVideoModal");
     if (btn && !map?.["6dof"]?.[0]?.src) {
       btn.disabled = true;
@@ -879,16 +932,15 @@
     }
   }
 
-  // ---- public API ----
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
         metaData: options?.metaData || null,
         includeModal: Boolean(options?.includeModal),
-        includeVideoModal: options?.includeVideoModal !== false, // default ON
+        includeVideoModal: options?.includeVideoModal !== false,
         activeProductKey: options?.activeProductKey || null,
         injectOtherProducts: options?.injectOtherProducts !== false,
-        enableVideoDemos: options?.enableVideoDemos !== false,   // default ON
+        enableVideoDemos: options?.enableVideoDemos !== false,
       };
 
       const lang = detectLang();
