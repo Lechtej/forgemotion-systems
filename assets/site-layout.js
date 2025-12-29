@@ -605,6 +605,9 @@
     return res.json();
   }
 
+  // Accepts BOTH formats:
+  // 1) { "videos": [ { key, src, poster, title:{en,pl} } ] }
+  // 2) { "6dof": [ ... ], "3dof": [ ... ] }
   function normalizeVideos(json) {
     if (!json) return {};
     if (Array.isArray(json.videos)) {
@@ -702,67 +705,9 @@
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
 
     } catch {
+      // If videos.json missing – just disable buttons silently
       setDemoButtonsState({}, lang);
     }
-  }
-
-  // -------- OPTIONAL: lead form binder (safe, no-op if leadForm missing) --------
-  function bindLeadForm(opts) {
-    const form = document.getElementById("leadForm");
-    if (!form) return;
-
-    const statusEl = document.getElementById("leadFormStatus");
-    const cfg = {
-      to: (opts && opts.to) ? String(opts.to) : "sales@forgemotionsystems.com"
-    };
-
-    function setStatus(msg, isError) {
-      if (!statusEl) return;
-      statusEl.textContent = msg || "";
-      statusEl.className = "text-sm " + (isError ? "text-red-300" : "text-white/60");
-    }
-
-    function dlPush(eventName, payload) {
-      try {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: eventName, ...payload });
-      } catch (_) {}
-    }
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const fd = new FormData(form);
-      const name = (fd.get("name") || "").toString().trim();
-      const email = (fd.get("email") || "").toString().trim();
-      const dof = (fd.get("dof") || "").toString().trim();
-      const payload = (fd.get("payload") || "").toString().trim();
-      const message = (fd.get("message") || "").toString().trim();
-
-      if (!name || !email || !message) {
-        setStatus("Please fill required fields.", true);
-        return;
-      }
-
-      const subject = `Quote request - ${dof} - ForgeMotion Systems`;
-      const bodyLines = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `DOF: ${dof}`,
-        `Payload: ${payload || "-"}`,
-        "",
-        "Project details:",
-        message,
-        "",
-        `Page: ${location.href}`
-      ];
-
-      dlPush("lead_submit", { dof, payload, page: location.pathname });
-
-      setStatus("Opening email client…", false);
-      const mailto = `mailto:${encodeURIComponent(cfg.to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-      window.location.href = mailto;
-    });
   }
 
   window.SiteLayout = {
@@ -770,10 +715,10 @@
       const cfg = {
         metaData: options?.metaData || null,
         includeModal: Boolean(options?.includeModal),
-        includeVideoModal: options?.includeVideoModal !== false,
+        includeVideoModal: options?.includeVideoModal !== false, // default ON
         activeProductKey: options?.activeProductKey || null,
         injectOtherProducts: options?.injectOtherProducts !== false,
-        enableVideoDemos: options?.enableVideoDemos !== false,
+        enableVideoDemos: options?.enableVideoDemos !== false,   // default ON
       };
 
       const lang = detectLang();
@@ -803,8 +748,6 @@
       }
 
       bindScrollSpy();
-    },
-
-    bindLeadForm
+    }
   };
 })();
