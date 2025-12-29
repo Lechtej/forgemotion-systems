@@ -16,6 +16,7 @@
 
   const SCROLLSPY_SECTIONS = ["hero", "products", "about", "contact"];
 
+  // ✅ correct location in your repo
   const VIDEOS_JSON_URL = "/videos/videos.json";
 
   function escapeHtml(str) {
@@ -78,6 +79,9 @@
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
       .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
+
+      /* demo buttons - UX: disabled until JSON loads */
+      .demo-disabled { opacity: .55; cursor: not-allowed; filter: saturate(.75); }
 
       ${includeModal ? `
       .modal-hidden { display: none; }
@@ -407,7 +411,6 @@
     }
 
     document.addEventListener("click", (e) => {
-      // Image click
       const imgEl = e.target.closest("img[data-full]");
       if (imgEl) {
         const full = imgEl.getAttribute("data-full") || imgEl.getAttribute("src");
@@ -416,7 +419,6 @@
         return;
       }
 
-      // Video button click (wired dynamically or manually)
       const vidBtn = e.target.closest("[data-video]");
       if (vidBtn) {
         const src = vidBtn.getAttribute("data-video");
@@ -579,19 +581,39 @@
     return clip;
   }
 
+  // Disable demo buttons until JSON decides what to do
+  function preDisableDemoButtons() {
+    const btns = Array.from(document.querySelectorAll("[data-video-key]"));
+    for (const btn of btns) {
+      btn.disabled = true;
+      btn.classList.add("demo-disabled");
+      btn.setAttribute("aria-disabled", "true");
+    }
+  }
+
+  function enableDemoButton(btn, clip) {
+    btn.disabled = false;
+    btn.classList.remove("demo-disabled");
+    btn.removeAttribute("aria-disabled");
+
+    btn.setAttribute("data-video", clip.src);
+    if (clip.poster) btn.setAttribute("data-video-poster", clip.poster);
+    else btn.removeAttribute("data-video-poster");
+  }
+
   function wireDemoButtonsFromJson(videosJson) {
     const btns = Array.from(document.querySelectorAll("[data-video-key]"));
     for (const btn of btns) {
       const key = btn.getAttribute("data-video-key");
       const clip = getFirstClip(videosJson, key);
+
       if (!clip) {
         // No video -> hide demo button
         btn.classList.add("hidden");
         continue;
       }
-      btn.setAttribute("data-video", clip.src);
-      if (clip.poster) btn.setAttribute("data-video-poster", clip.poster);
-      else btn.removeAttribute("data-video-poster");
+
+      enableDemoButton(btn, clip);
     }
   }
 
@@ -609,16 +631,11 @@
       return;
     }
 
-    // Choose hero clip: first 6dof if exists, else first of all
     const hero = getFirstClip(videosJson, "6dof") || all[0];
-
     const heroTitle = (lang === "pl" ? hero.title_pl : hero.title_en) || (lang === "pl" ? "Demo" : "Demo");
     const heroPoster = hero.poster ? hero.poster : "";
 
-    // Side list: show up to 4 clips total excluding hero (keeps UI clean)
-    const side = all
-      .filter(c => c.src !== hero.src)
-      .slice(0, 4);
+    const side = all.filter(c => c.src !== hero.src).slice(0, 4);
 
     const sideItems = side.map((c) => {
       const t = (lang === "pl" ? c.title_pl : c.title_en) || (lang === "pl" ? "Demo" : "Demo");
@@ -718,14 +735,22 @@
 
       bindScrollSpy();
 
-      // Load videos JSON and build demo + wire buttons
+      // ✅ demo buttons: don't look "dead"
+      preDisableDemoButtons();
+
       loadVideosJson().then((videosJson) => {
-        if (!videosJson) return;
+        if (!videosJson) {
+          // JSON missing => hide all demo buttons (instead of dead ones)
+          document.querySelectorAll("[data-video-key]").forEach(btn => btn.classList.add("hidden"));
+          const demoSection = document.getElementById("demo");
+          if (demoSection) demoSection.classList.add("hidden");
+          return;
+        }
 
         wireDemoButtonsFromJson(videosJson);
         renderDemoGallery(videosJson, appliedLang);
 
-        // apply texts for injected demo markup (buttons, hints)
+        // apply texts for injected demo markup
         applyTexts(appliedLang);
       });
     }
