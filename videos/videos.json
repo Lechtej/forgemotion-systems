@@ -27,7 +27,16 @@
       }
     }
   ],
-  "mk14": [],
+  "mk14": [
+    {
+      "src": "/videos/mk14seat-painting.mp4",
+      "poster": "/videos/posters/mk14seat-painting.jpg",
+      "title": {
+        "en": "MK14 ejection seat replica – painting process",
+        "pl": "Malowanie repliki fotela katapultowego MK14"
+      }
+    }
+  ],
   "belt": [],
   "acc": []
 }
