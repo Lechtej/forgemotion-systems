@@ -4,13 +4,23 @@
       "key": "6dof",
       "src": "/videos/6dof-demo1.mp4",
       "poster": "/videos/posters/6dof-demo1.jpg",
-      "title": { "en": "6DOF demo #1", "pl": "Demo 6DOF #1" }
+      "title": {
+        "en": "6DOF – Carrier Touch & Go",
+        "pl": "6DOF – Touch & Go na lotniskowcu"
+      }
     },
     {
       "key": "6dof",
       "src": "/videos/6dof-adjust.mp4",
       "poster": "/videos/posters/6dof-adjust.jpg",
-      "title": { "en": "Frame adjustment (rails)", "pl": "Regulacja elementów ramy" }
+      "title": {
+        "en": "Frame adjustment",
+        "pl": "Regulacja ramy"
+      },
+      "desc": {
+        "en": "Easy rig adjustment",
+        "pl": "Łatwe dostosowanie ramy"
+      }
     }
   ],
   "3dof": []
