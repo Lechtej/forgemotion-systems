@@ -3,21 +3,30 @@
     {
       "src": "/videos/6dof-demo1.mp4",
       "poster": "/videos/posters/6dof-demo1.jpg",
-      "title_en": "6DOF – carrier touch&go",
-      "title_pl": "6DOF – touch&go na lotniskowcu",
-      "desc_en": "Real footage from a home setup.",
-      "desc_pl": "Realne ujęcia z domowego stanowiska."
+      "title": {
+        "en": "6DOF – carrier touch&go",
+        "pl": "6DOF – touch&go na lotniskowcu"
+      }
     },
     {
       "src": "/videos/6dof-adjust.mp4",
       "poster": "/videos/posters/6dof-adjust.jpg",
-      "title_en": "Easy rig adjustment",
-      "title_pl": "Łatwe dostosowanie ramy",
-      "desc_en": "Loosen → slide → tighten. Quick position changes on the frame rails.",
-      "desc_pl": "Odkręć → przesuń → dokręć. Szybka zmiana pozycji na prowadnicach ramy."
+      "title": {
+        "en": "Easy rig adjustment",
+        "pl": "Łatwe dostosowanie ramy"
+      }
     }
   ],
-  "3dof": [],
+  "3dof": [
+    {
+      "src": "/videos/3dof-demo1.mp4",
+      "poster": "/videos/posters/3dof-demo1.jpg",
+      "title": {
+        "en": "3DOF demo – motion in action",
+        "pl": "Demo 3DOF – motion w akcji"
+      }
+    }
+  ],
   "mk14": [],
   "belt": [],
   "acc": []
