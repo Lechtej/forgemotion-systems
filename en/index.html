@@ -216,6 +216,89 @@
           </div>
         </section>
 
+        <!-- =========================
+             VIDEO SECTION (MP4) – between Hero and Products
+        ========================== -->
+        <section id="demo" class="py-14 px-4">
+          <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-3"
+                data-en="See it in action"
+                data-pl="Zobacz w akcji"></h2>
+
+            <p class="text-center text-gray-300 mb-8"
+               data-en="Real footage. No CGI. Short demos from our motion platforms."
+               data-pl="Prawdziwe ujęcia. Bez CGI. Krótkie demo naszych platform motion."></p>
+
+            <div class="grid lg:grid-cols-3 gap-6 items-start">
+              <!-- Main video -->
+              <div class="lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
+                <div class="p-5">
+                  <div class="flex items-center justify-between gap-3 mb-3">
+                    <div class="font-semibold text-lg"
+                         data-en="6DOF platform demo"
+                         data-pl="Demo platformy 6DOF"></div>
+                    <button type="button"
+                            class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                            data-video="/videos/6dof-demo1.mp4"
+                            data-video-poster="/images/rama6dof1.jpg"
+                            data-en="Open in fullscreen"
+                            data-pl="Otwórz na pełnym ekranie"></button>
+                  </div>
+
+                  <video class="w-full rounded-xl border border-white/10 bg-black/20"
+                         controls playsinline preload="none"
+                         poster="/images/rama6dof1.jpg">
+                    <source src="/videos/6dof-demo1.mp4" type="video/mp4" />
+                  </video>
+
+                  <div class="text-sm text-gray-300 mt-3"
+                       data-en="Tip: use the button above to open the video in a modal."
+                       data-pl="Wskazówka: użyj przycisku powyżej, aby otworzyć wideo w modalu."></div>
+                </div>
+              </div>
+
+              <!-- Side videos -->
+              <div class="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
+                <div class="p-5">
+                  <div class="font-semibold text-lg mb-3"
+                       data-en="More demos"
+                       data-pl="Więcej demo"></div>
+
+                  <div class="space-y-4">
+                    <div class="rounded-xl border border-white/10 bg-black/20 p-4">
+                      <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="font-semibold"
+                             data-en="3DOF / 2DOF demo"
+                             data-pl="Demo 3DOF / 2DOF"></div>
+                        <button type="button"
+                                class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                                data-video="/videos/3dof-demo1.mp4"
+                                data-video-poster="/images/rama3dof1.jpg">
+                          <span data-en="Play" data-pl="Odtwórz"></span>
+                        </button>
+                      </div>
+
+                      <video class="w-full rounded-lg border border-white/10 bg-black/20"
+                             controls playsinline preload="none"
+                             poster="/images/rama3dof1.jpg">
+                        <source src="/videos/3dof-demo1.mp4" type="video/mp4" />
+                      </video>
+                    </div>
+
+                    <div class="rounded-xl border border-white/10 bg-black/20 p-4">
+                      <div class="text-gray-300 text-sm"
+                           data-en="More clips can be added later (e.g., 6dof-demo2.mp4)."
+                           data-pl="Później możesz dodać kolejne klipy (np. 6dof-demo2.mp4)."></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
         <section id="products" class="py-16 px-4">
           <div class="container mx-auto">
             <h2 class="text-3xl font-bold mb-8 text-center" data-en="Our Products" data-pl="Nasze Produkty"></h2>
@@ -228,10 +311,20 @@
                    data-en="Premium full-body motion for racing and flight sims."
                    data-pl="Motion premium „na całe ciało” do sim racingu i flight sim."></p>
 
-                <a href="/products-6dof.html"
-                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                   data-en="Learn more"
-                   data-pl="Zobacz więcej"></a>
+                <div class="flex flex-col gap-2 mb-3">
+                  <a href="/products-6dof.html"
+                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                     data-en="Learn more"
+                     data-pl="Zobacz więcej"></a>
+
+                  <!-- Watch demo -->
+                  <button type="button"
+                          class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
+                          data-video="/videos/6dof-demo1.mp4"
+                          data-video-poster="/images/rama6dof1.jpg">
+                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
+                  </button>
+                </div>
 
                 <div class="product-image">
                   <img src="/images/rama6dof1.jpg"
@@ -247,10 +340,20 @@
                    data-en="Big immersion in a compact, practical setup."
                    data-pl="Duża immersja w kompaktowej, praktycznej formie."></p>
 
-                <a href="/products-3dof.html"
-                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                   data-en="Learn more"
-                   data-pl="Zobacz więcej"></a>
+                <div class="flex flex-col gap-2 mb-3">
+                  <a href="/products-3dof.html"
+                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                     data-en="Learn more"
+                     data-pl="Zobacz więcej"></a>
+
+                  <!-- Watch demo -->
+                  <button type="button"
+                          class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold"
+                          data-video="/videos/3dof-demo1.mp4"
+                          data-video-poster="/images/rama3dof1.jpg">
+                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
+                  </button>
+                </div>
 
                 <div class="product-image">
                   <img src="/images/rama3dof1.jpg"
@@ -351,7 +454,7 @@
                    data-en="We build for enthusiasts and business: from customizable B2C platforms to durable setups for training and events. It’s hands-on work: CAD, prototyping, 3D printing/CNC, assembly, tuning, and testing."
                    data-pl="Budujemy dla pasjonatów i biznesu: od personalizowanych platform B2C po wytrzymałe konfiguracje do szkoleń i eventów. To praca „od ręki”: CAD, prototypy, druk 3D/CNC, montaż, strojenie i testy."></p>
 
-                <!-- FIXED IMAGE BOXES: equal height + centered contain -->
+                <!-- Equal boxes + contain -->
                 <div class="grid sm:grid-cols-2 gap-4">
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
                     <div class="w-full h-44 md:h-48 bg-black/10 flex items-center justify-center">
@@ -443,27 +546,21 @@
               </div>
             </div>
 
-            <!-- PUBLIC LINKS (VERSION 1) -->
+            <!-- PUBLIC LINKS (no personal YouTube channel) -->
             <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-6">
               <h4 class="text-xl font-semibold mb-3 text-center"
                   data-en="More about the story (public links)"
                   data-pl="Więcej o historii (linki publiczne)"></h4>
 
               <p class="text-gray-300 text-base md:text-lg leading-relaxed text-center max-w-4xl mx-auto mb-5"
-                 data-en="If you want to see the long-term background behind ForgeMotion: interviews, cockpit build logs and aviation digitalization work."
-                 data-pl="Jeśli chcesz zobaczyć tło stojące za ForgeMotion: wywiady, materiały z budowy kokpitu oraz wątki digitalizacji w lotnictwie."></p>
+                 data-en="If you want to see the long-term background behind ForgeMotion: interviews and aviation digitalization work."
+                 data-pl="Jeśli chcesz zobaczyć tło stojące za ForgeMotion: wywiady i wątki digitalizacji w lotnictwie."></p>
 
               <div class="flex flex-wrap gap-3 justify-center">
                 <a href="https://pl.linkedin.com/in/leszek-tejwan-60112614"
                    target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold">
                   <span data-en="LinkedIn profile" data-pl="Profil LinkedIn"></span>
-                </a>
-
-                <a href="https://m.youtube.com/@leszektejwan172"
-                   target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold">
-                  <span data-en="YouTube channel (CRJ200 & cockpit)" data-pl="Kanał YouTube (CRJ200 i cockpit)"></span>
                 </a>
 
                 <a href="https://www.youtube.com/watch?v=u4VKISJ_TzI"
