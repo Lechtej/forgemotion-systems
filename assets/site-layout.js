@@ -1,6 +1,7 @@
 /* /assets/site-layout.js
    Shared layout + i18n + meta + mobile menu + image modal + VIDEO modal + demos from videos.json
    + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
+   + corporate-safe hardening: robust fetch (timeout), safe scrollspy fallback, optional video section auto-hide
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -16,6 +17,7 @@
 
   const SCROLLSPY_SECTIONS = ["hero", "products", "about", "contact"];
 
+  // ---- utils ----
   function escapeHtml(str) {
     return String(str)
       .replaceAll("&", "&amp;")
@@ -43,6 +45,17 @@
     return false;
   }
 
+  function langBasePath(lang) {
+    const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
+    return `/${safe}/`;
+  }
+
+  function buildIndexUrl(lang, hash = "") {
+    const base = langBasePath(lang);
+    const h = hash ? (String(hash).startsWith("#") ? hash : `#${hash}`) : "";
+    return `${base}${h}`;
+  }
+
   function setMetaTag(key, content, attr = "name") {
     let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
     if (!tag) {
@@ -63,6 +76,14 @@
     tag.href = href || "";
   }
 
+  function buildCanonicalForCurrent(lang) {
+    const origin = window.location.origin;
+    const path = stripTrailingSlash(window.location.pathname);
+    if (isIndexLikePath(path) || getPathLang(path)) return `${origin}${langBasePath(lang)}`;
+    return `${origin}${window.location.pathname}`;
+  }
+
+  // ---- global styles ----
   function ensureGlobalStyles(includeModal, includeVideoModal) {
     if (document.getElementById("siteLayoutStyles")) return;
 
@@ -154,24 +175,7 @@
     document.head.appendChild(style);
   }
 
-  function langBasePath(lang) {
-    const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
-    return `/${safe}/`;
-  }
-
-  function buildIndexUrl(lang, hash = "") {
-    const base = langBasePath(lang);
-    const h = hash ? (String(hash).startsWith("#") ? hash : `#${hash}`) : "";
-    return `${base}${h}`;
-  }
-
-  function buildCanonicalForCurrent(lang) {
-    const origin = window.location.origin;
-    const path = stripTrailingSlash(window.location.pathname);
-    if (isIndexLikePath(path) || getPathLang(path)) return `${origin}${langBasePath(lang)}`;
-    return `${origin}${window.location.pathname}`;
-  }
-
+  // ---- layout ----
   function renderHeader(lang) {
     const heroHref = buildIndexUrl(lang, "hero");
     const productsHref = buildIndexUrl(lang, "products");
@@ -294,6 +298,31 @@
 </section>`;
   }
 
+  function injectLayout({ includeModal, includeVideoModal, lang }) {
+    const headerSlot = document.getElementById("siteHeader");
+    const headerHtml = renderHeader(lang);
+    if (headerSlot) headerSlot.innerHTML = headerHtml;
+    else document.body.insertAdjacentHTML("afterbegin", headerHtml);
+
+    const footerSlot = document.getElementById("siteFooter");
+    if (footerSlot) footerSlot.innerHTML = renderFooter();
+    else document.body.insertAdjacentHTML("beforeend", renderFooter());
+
+    const modalSlot = document.getElementById("siteModal");
+
+    if (includeModal) {
+      const html = renderModal();
+      if (modalSlot) modalSlot.insertAdjacentHTML("beforeend", html);
+      else document.body.insertAdjacentHTML("beforeend", html);
+    }
+    if (includeVideoModal) {
+      const html = renderVideoModal();
+      if (modalSlot) modalSlot.insertAdjacentHTML("beforeend", html);
+      else document.body.insertAdjacentHTML("beforeend", html);
+    }
+  }
+
+  // ---- i18n + SEO ----
   function applyTexts(lang) {
     const nodes = Array.from(document.querySelectorAll("[data-en]"));
     for (const el of nodes) {
@@ -302,6 +331,7 @@
     }
   }
 
+  // (4) SEO: keep canonical stable + set html lang (already) + keep og/twitter in sync
   function updateMetaTags(lang, metaData) {
     const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
 
@@ -339,6 +369,44 @@
     return DEFAULT_LANG;
   }
 
+  // Rewrite "/index.html#..." and "#..." on product pages to "/{lang}/#..."
+  function rewriteIndexAnchors(lang) {
+    const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
+
+    const anchors = Array.from(document.querySelectorAll("a[href]"));
+    for (const a of anchors) {
+      const raw = a.getAttribute("href");
+      if (!raw) continue;
+
+      const trimmed = raw.trim();
+
+      // keep pure hash on index pages (local scroll)
+      if (trimmed.startsWith("#") && isIndexLikePath(window.location.pathname)) continue;
+
+      // "/index.html#section" or "index.html#section" or "/index.html"
+      const m1 = trimmed.match(/^(\/?index\.html)(#.+)?$/i);
+      if (m1) {
+        const hash = m1[2] || "";
+        a.setAttribute("href", `${langBasePath(safe)}${hash}`);
+        continue;
+      }
+
+      // "/#section"
+      const m2 = trimmed.match(/^\/#(.+)$/);
+      if (m2) {
+        a.setAttribute("href", buildIndexUrl(safe, `#${m2[1]}`));
+        continue;
+      }
+
+      // "#section" on product pages should go to index
+      const m3 = trimmed.match(/^#(.+)$/);
+      if (m3 && !isIndexLikePath(window.location.pathname) && !getPathLang(window.location.pathname)) {
+        a.setAttribute("href", buildIndexUrl(safe, `#${m3[1]}`));
+        continue;
+      }
+    }
+  }
+
   function setLanguage(lang, metaData) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
@@ -347,6 +415,7 @@
 
     applyTexts(safe);
     updateMetaTags(safe, metaData);
+    rewriteIndexAnchors(safe);
 
     document.querySelectorAll("[data-lang]").forEach(btn => {
       const isActive = btn.getAttribute("data-lang") === safe;
@@ -356,6 +425,7 @@
     return safe;
   }
 
+  // ---- mobile menu ----
   function isMobileMenuOpen() {
     const menu = document.getElementById("mobileMenu");
     return menu ? !menu.classList.contains("hidden") : false;
@@ -388,6 +458,7 @@
     window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
   }
 
+  // ---- image modal ----
   function bindModal() {
     const modal = document.getElementById("imgModal");
     const modalImg = document.getElementById("imgModalImg");
@@ -430,6 +501,7 @@
     });
   }
 
+  // ---- video modal ----
   function bindVideoModal() {
     const modal = document.getElementById("vidModal");
     const video = document.getElementById("vidModalEl");
@@ -439,9 +511,12 @@
     if (!modal || !video || !source || !title || !closeBtn) return;
 
     function openVideo({ src, poster, titleText }) {
+      // (3) corporate-safe: never autoplay, only load + user starts
       title.textContent = titleText || "Video";
       source.src = src;
       video.poster = poster || "";
+      video.autoplay = false;
+      try { video.pause(); } catch {}
       video.load();
 
       modal.classList.remove("vmodal-hidden");
@@ -471,30 +546,7 @@
     return { openVideo, closeVideo };
   }
 
-  function injectLayout({ includeModal, includeVideoModal, lang }) {
-    const headerSlot = document.getElementById("siteHeader");
-    const headerHtml = renderHeader(lang);
-    if (headerSlot) headerSlot.innerHTML = headerHtml;
-    else document.body.insertAdjacentHTML("afterbegin", headerHtml);
-
-    const footerSlot = document.getElementById("siteFooter");
-    if (footerSlot) footerSlot.innerHTML = renderFooter();
-    else document.body.insertAdjacentHTML("beforeend", renderFooter());
-
-    const modalSlot = document.getElementById("siteModal");
-
-    if (includeModal) {
-      const html = renderModal();
-      if (modalSlot) modalSlot.insertAdjacentHTML("beforeend", html);
-      else document.body.insertAdjacentHTML("beforeend", html);
-    }
-    if (includeVideoModal) {
-      const html = renderVideoModal();
-      if (modalSlot) modalSlot.insertAdjacentHTML("beforeend", html);
-      else document.body.insertAdjacentHTML("beforeend", html);
-    }
-  }
-
+  // ---- smooth scroll ----
   function bindSmoothAnchorScroll() {
     document.addEventListener("click", (e) => {
       const a = e.target.closest('a[href*="#"]');
@@ -528,6 +580,63 @@
     });
   }
 
+  // ---- scrollspy ----
+  function bindScrollSpyFallback(links) {
+    // Minimal, robust fallback: highlight section closest to top
+    const ids = SCROLLSPY_SECTIONS.slice();
+    function hrefToId(href) {
+      try {
+        const u = new URL(href, window.location.origin);
+        return (u.hash || "").replace("#", "");
+      } catch {
+        const idx = String(href).indexOf("#");
+        return idx >= 0 ? String(href).slice(idx + 1) : "";
+      }
+    }
+    function setActive(id) {
+      for (const a of links) {
+        const isMatch = hrefToId(a.getAttribute("href")) === id;
+        a.classList.toggle("nav-active", isMatch);
+        if (isMatch) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      }
+    }
+    function pickActive() {
+      let bestId = "hero";
+      let bestTop = Number.POSITIVE_INFINITY;
+
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        const top = Math.abs(r.top - 110);
+        if (top < bestTop) {
+          bestTop = top;
+          bestId = id;
+        }
+      }
+      setActive(bestId);
+    }
+
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        pickActive();
+        ticking = false;
+      });
+    }, { passive: true });
+
+    window.addEventListener("hashchange", () => {
+      const id = (window.location.hash || "").replace("#", "");
+      if (ids.includes(id)) setActive(id);
+    });
+
+    // init
+    pickActive();
+  }
+
   function bindScrollSpy() {
     const sectionEls = SCROLLSPY_SECTIONS.map(id => document.getElementById(id)).filter(Boolean);
     if (sectionEls.length < 2) return;
@@ -558,23 +667,37 @@
     if (SCROLLSPY_SECTIONS.includes(initialHash)) setActive(initialHash);
     else setActive("hero");
 
-    const obs = new IntersectionObserver((entries) => {
-      const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActive(visible.target.id);
-    }, {
-      root: null,
-      rootMargin: "-30% 0px -55% 0px",
-      threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
-    });
+    // (2) corporate-safe: guard IntersectionObserver + fallback if blocked/unsupported
+    try {
+      if (!("IntersectionObserver" in window)) {
+        bindScrollSpyFallback(links);
+        return;
+      }
 
-    sectionEls.forEach(el => obs.observe(el));
+      const obs = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target?.id) setActive(visible.target.id);
+      }, {
+        root: null,
+        rootMargin: "-30% 0px -55% 0px",
+        threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
+      });
 
-    window.addEventListener("hashchange", () => {
-      const id = (window.location.hash || "").replace("#", "");
-      if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
-    });
+      sectionEls.forEach(el => obs.observe(el));
+
+      window.addEventListener("hashchange", () => {
+        const id = (window.location.hash || "").replace("#", "");
+        if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
+      });
+
+    } catch {
+      bindScrollSpyFallback(links);
+    }
   }
 
+  // ---- lang buttons ----
   function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-lang]");
@@ -599,12 +722,25 @@
   }
 
   // -------- VIDEO DEMOS --------
-  async function fetchVideosJson() {
-    const res = await fetch("/videos/videos.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("videos.json not found");
-    return res.json();
+  // (1) corporate-safe: fetch with timeout + graceful UI behavior if blocked
+  async function fetchVideosJson({ timeoutMs = 3500 } = {}) {
+    const controller = new AbortController();
+    const t = window.setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch("/videos/videos.json", {
+        cache: "no-store",
+        signal: controller.signal
+      });
+      if (!res.ok) throw new Error("videos.json not found");
+      return await res.json();
+    } finally {
+      window.clearTimeout(t);
+    }
   }
 
+  // Accepts BOTH formats:
+  // 1) { "videos": [ { key, src, poster, title:{en,pl} } ] }
+  // 2) { "6dof": [ ... ], "3dof": [ ... ] }
   function normalizeVideos(json) {
     if (!json) return {};
     if (Array.isArray(json.videos)) {
@@ -685,95 +821,74 @@
 
     source.src = item.src;
     video.poster = item.poster || "";
+    video.autoplay = false;
+    try { video.pause(); } catch {}
     video.load();
 
     const t = pickTitle(item, lang) || "6DOF demo #1";
     title.textContent = t;
   }
 
+  // Hide "More demos" card if there are no extra clips beyond the main hero clip
+  function setMoreDemosVisibility(map) {
+    const videosSection = document.getElementById("videos");
+    if (!videosSection) return;
+
+    // Find the card header by data-en marker (stable even before translation)
+    const header = videosSection.querySelector('[data-en="More demos"]');
+    if (!header) return;
+
+    const card = header.closest(".rounded-2xl");
+    if (!card) return;
+
+    // Count extra clips (anything not the first 6dof clip)
+    const six = map?.["6dof"] || [];
+    const total = Object.values(map || {}).reduce((acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0), 0);
+
+    const hasHero = Boolean(six.length);
+    const extra = hasHero ? (total - 1) : total; // if hero exists, treat it as main
+    if (extra <= 0) card.classList.add("hidden");
+    else card.classList.remove("hidden");
+  }
+
   async function initVideoDemos(videoModalApi, lang) {
+    let map = {};
     try {
-      const json = await fetchVideosJson();
-      const map = normalizeVideos(json);
+      const json = await fetchVideosJson({ timeoutMs: 3500 });
+      map = normalizeVideos(json);
 
       hydrateHeroVideo(map, lang);
       setDemoButtonsState(map, lang);
+      setMoreDemosVisibility(map);
+
       bindDemoButtons(videoModalApi.openVideo, map, lang);
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
 
     } catch {
+      // If videos.json missing/blocked – disable buttons and hide "More demos" card
       setDemoButtonsState({}, lang);
+      setMoreDemosVisibility({});
+    }
+
+    // If there is no 6dof hero clip, hide fullscreen button (avoid dead UI)
+    const btn = document.getElementById("openHeroVideoModal");
+    if (btn && !map?.["6dof"]?.[0]?.src) {
+      btn.disabled = true;
+      btn.classList.add("opacity-50", "cursor-not-allowed");
+      btn.setAttribute("aria-disabled", "true");
     }
   }
 
-  // -------- OPTIONAL: lead form binder (safe, no-op if leadForm missing) --------
-  function bindLeadForm(opts) {
-    const form = document.getElementById("leadForm");
-    if (!form) return;
-
-    const statusEl = document.getElementById("leadFormStatus");
-    const cfg = {
-      to: (opts && opts.to) ? String(opts.to) : "sales@forgemotionsystems.com"
-    };
-
-    function setStatus(msg, isError) {
-      if (!statusEl) return;
-      statusEl.textContent = msg || "";
-      statusEl.className = "text-sm " + (isError ? "text-red-300" : "text-white/60");
-    }
-
-    function dlPush(eventName, payload) {
-      try {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: eventName, ...payload });
-      } catch (_) {}
-    }
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const fd = new FormData(form);
-      const name = (fd.get("name") || "").toString().trim();
-      const email = (fd.get("email") || "").toString().trim();
-      const dof = (fd.get("dof") || "").toString().trim();
-      const payload = (fd.get("payload") || "").toString().trim();
-      const message = (fd.get("message") || "").toString().trim();
-
-      if (!name || !email || !message) {
-        setStatus("Please fill required fields.", true);
-        return;
-      }
-
-      const subject = `Quote request - ${dof} - ForgeMotion Systems`;
-      const bodyLines = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `DOF: ${dof}`,
-        `Payload: ${payload || "-"}`,
-        "",
-        "Project details:",
-        message,
-        "",
-        `Page: ${location.href}`
-      ];
-
-      dlPush("lead_submit", { dof, payload, page: location.pathname });
-
-      setStatus("Opening email client…", false);
-      const mailto = `mailto:${encodeURIComponent(cfg.to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-      window.location.href = mailto;
-    });
-  }
-
+  // ---- public API ----
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
         metaData: options?.metaData || null,
         includeModal: Boolean(options?.includeModal),
-        includeVideoModal: options?.includeVideoModal !== false,
+        includeVideoModal: options?.includeVideoModal !== false, // default ON
         activeProductKey: options?.activeProductKey || null,
         injectOtherProducts: options?.injectOtherProducts !== false,
-        enableVideoDemos: options?.enableVideoDemos !== false,
+        enableVideoDemos: options?.enableVideoDemos !== false,   // default ON
       };
 
       const lang = detectLang();
@@ -799,12 +914,11 @@
         if (otherSlot) {
           otherSlot.innerHTML = renderOtherProducts(cfg.activeProductKey, appliedLang);
           applyTexts(appliedLang);
+          rewriteIndexAnchors(appliedLang);
         }
       }
 
       bindScrollSpy();
-    },
-
-    bindLeadForm
+    }
   };
 })();
