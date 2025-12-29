@@ -226,10 +226,18 @@
                    data-en="Premium full-body motion for racing and flight sims."
                    data-pl="Motion premium „na całe ciało” do sim racingu i flight sim."></p>
 
-                <a href="/products-6dof.html"
-                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                   data-en="Learn more"
-                   data-pl="Zobacz więcej"></a>
+                <div class="flex flex-col gap-2 mb-3">
+                  <a href="/products-6dof.html"
+                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                     data-en="Learn more"
+                     data-pl="Zobacz więcej"></a>
+
+                  <button type="button"
+                          data-demo-key="6dof"
+                          class="inline-block bg-blue-500/80 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold">
+                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
+                  </button>
+                </div>
 
                 <div class="product-image">
                   <img src="/images/rama6dof1.jpg"
@@ -245,10 +253,18 @@
                    data-en="Big immersion in a compact, practical setup."
                    data-pl="Duża immersja w kompaktowej, praktycznej formie."></p>
 
-                <a href="/products-3dof.html"
-                   class="mb-3 inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
-                   data-en="Learn more"
-                   data-pl="Zobacz więcej"></a>
+                <div class="flex flex-col gap-2 mb-3">
+                  <a href="/products-3dof.html"
+                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 rounded font-semibold"
+                     data-en="Learn more"
+                     data-pl="Zobacz więcej"></a>
+
+                  <button type="button"
+                          data-demo-key="3dof"
+                          class="inline-block bg-blue-500/80 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold">
+                    <span data-en="Watch demo" data-pl="Zobacz demo"></span>
+                  </button>
+                </div>
 
                 <div class="product-image">
                   <img src="/images/rama3dof1.jpg"
@@ -323,10 +339,7 @@
       </div>
     </div>
 
-    <!-- =========================
-         ONE STORY BLOCK (ABOUT+TED+TRUST)
-         keeps anchors: #about, #inspiration, #trust-experience
-    ========================== -->
+    <!-- STORY BLOCK -->
     <section id="about" class="bg-gray-800 py-16 px-4">
       <div class="container mx-auto">
         <div class="max-w-6xl mx-auto">
@@ -350,7 +363,6 @@
                    data-pl="Projektujemy i budujemy rozwiązania dla pasjonatów i biznesu — od przystępnych, personalizowanych platform B2C po wytrzymałe konfiguracje do szkoleń i eventów. Każdy produkt rozwijamy „od zera”: projekt w CAD, szybkie prototypowanie oraz produkcja z użyciem druku 3D i CNC — a potem montaż, strojenie i testy."></p>
 
                 <div class="grid sm:grid-cols-2 gap-4">
-                  <!-- LEFT: CAD (design phase) -->
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
                     <img src="/images/modul-napedowy6dof-cad.jpg"
                          alt="CAD view of 6DOF drive module"
@@ -361,7 +373,6 @@
                                 data-pl="Faza projektowa: weryfikacja w CAD przed wykonaniem."></figcaption>
                   </figure>
 
-                  <!-- RIGHT: under construction (production build) -->
                   <figure class="rounded-xl overflow-hidden border border-white/10 bg-black/20">
                     <img src="/images/modul-napedowy6dof-underconstruction.jpg"
                          alt="6DOF drive module under construction"
@@ -449,7 +460,7 @@
               </a>
             </div>
 
-            <!-- ✅ PUBLIC LINKS (SAME SET IN EN/PL) -->
+            <!-- PUBLIC LINKS -->
             <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-6">
               <h4 class="text-xl md:text-2xl font-semibold text-center mb-2"
                   data-en="More about the story (public links)"
@@ -472,6 +483,12 @@
                    data-en="Myśli Gonitwa (interview)"
                    data-pl="Myśli Gonitwa (wywiad)"></a>
 
+                <a href="https://www.youtube.com/watch?v=yBtuXPZVkk8"
+                   target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold"
+                   data-en="LOT (video)"
+                   data-pl="LOT (wideo)"></a>
+
                 <a href="https://tejwan.wixsite.com/leszek-tejwan/home-cockpit"
                    target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold"
@@ -485,6 +502,7 @@
                 </a>
               </div>
             </div>
+
           </div>
 
         </div>
@@ -529,7 +547,8 @@
       SiteLayout.init({
         metaData,
         includeModal: true,
-        injectOtherProducts: false
+        injectOtherProducts: false,
+        enableVideoDemos: true
       });
     });
   </script>
