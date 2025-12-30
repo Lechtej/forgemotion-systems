@@ -466,7 +466,7 @@
                 </a>
 </div>
 </div>
-<form class="space-y-4" id="leadForm">
+<form class="space-y-4" id="leadForm" enctype="multipart/form-data" novalidate>
   <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
   <input type="hidden" name="lang" value="pl">
   <input type="hidden" name="page_url" value="">
@@ -576,92 +576,7 @@
       });
     });
   </script>
-<script>
-    (function () {
-      const form = document.getElementById("leadForm");
-      if (!form) return;
 
-      const statusEl = document.getElementById("leadFormStatus");
-
-      function getLang() {
-        try {
-          const p = (location.pathname || "").toLowerCase();
-          if (p.startsWith("/pl")) return "pl";
-          return "en";
-        } catch (_) {
-          return "en";
-        }
-      }
-
-      function setStatus(msg, isError) {
-        if (!statusEl) return;
-        statusEl.textContent = msg || "";
-        statusEl.className = "text-sm " + (isError ? "text-red-300" : "text-white/60");
-      }
-
-      function dlPush(eventName, payload) {
-        try {
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({ event: eventName, ...payload });
-        } catch (_) {}
-      }
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const lang = getLang();
-
-        const fd = new FormData(form);
-        const name = (fd.get("name") || "").toString().trim();
-        const email = (fd.get("email") || "").toString().trim();
-        const dof = (fd.get("dof") || "").toString().trim();
-        const payload = (fd.get("payload") || "").toString().trim();
-        const message = (fd.get("message") || "").toString().trim();
-
-        if (!name || !email || !message) {
-          setStatus(lang === "pl"
-            ? "Uzupełnij imię, e-mail i szczegóły projektu."
-            : "Please fill name, email and project details.", true);
-          return;
-        }
-
-        const subject = (lang === "pl")
-          ? `Zapytanie - ${dof} - ForgeMotion Systems`
-          : `Quote request - ${dof} - ForgeMotion Systems`;
-
-        const bodyLines = (lang === "pl")
-          ? [
-              `Imię i nazwisko: ${name}`,
-              `E-mail: ${email}`,
-              `DOF: ${dof}`,
-              `Payload: ${payload || "-"}`,
-              "",
-              "Szczegóły projektu:",
-              message,
-              "",
-              `Strona: ${location.href}`
-            ]
-          : [
-              `Name: ${name}`,
-              `Email: ${email}`,
-              `DOF: ${dof}`,
-              `Payload: ${payload || "-"}`,
-              "",
-              "Project details:",
-              message,
-              "",
-              `Page: ${location.href}`
-            ];
-
-        dlPush("lead_submit", { dof, payload, page: location.pathname });
-
-        setStatus(lang === "pl" ? "Otwieram klienta poczty…" : "Opening email client…", false);
-
-        const mailto = `mailto:contact@forgemotionsystems.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-        window.location.href = mailto;
-      });
-    })();
-  </script>
   <script src="/assets/contact-form.js" defer></script>
 </body>
 </html>
