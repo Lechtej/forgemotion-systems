@@ -1,5 +1,7 @@
 /* /assets/site-layout.js
    Shared layout + i18n + meta + mobile menu + image modal + VIDEO modal + demos from videos.json
+   + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
+   + corporate-safe hardening: robust fetch (timeout), safe scrollspy fallback, optional video section auto-hide
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -17,12 +19,12 @@
 
   // ---- utils ----
   function escapeHtml(str) {
-    return String(str == null ? "" : str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
   function stripTrailingSlash(pathname) {
@@ -95,6 +97,8 @@
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
       .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
+
+      /* Fix anchors under fixed header */
       #videos { scroll-margin-top: 110px; }
 
       ${includeModal ? `
@@ -322,7 +326,7 @@
   function applyTexts(lang) {
     const nodes = Array.from(document.querySelectorAll("[data-en]"));
     for (const el of nodes) {
-      const val = el.dataset?.[lang];
+      const val = el.dataset[lang];
       if (typeof val === "string") el.textContent = val;
     }
   }
@@ -358,10 +362,8 @@
     const fromPath = getPathLang(window.location.pathname);
     if (fromPath) return fromPath;
 
-    try {
-      const stored = localStorage.getItem("lang");
-      if (SUPPORTED_LANGS.includes(stored)) return stored;
-    } catch (_) {}
+    const stored = localStorage.getItem("lang");
+    if (SUPPORTED_LANGS.includes(stored)) return stored;
 
     return DEFAULT_LANG;
   }
@@ -402,7 +404,7 @@
   function setLanguage(lang, metaData) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
-    try { localStorage.setItem("lang", safe); } catch (_) {}
+    localStorage.setItem("lang", safe);
     document.documentElement.lang = safe;
 
     applyTexts(safe);
@@ -475,7 +477,7 @@
     }
 
     document.addEventListener("click", (e) => {
-      const img = e.target?.closest?.("img[data-full]");
+      const img = e.target.closest("img[data-full]");
       if (!img) return;
       const full = img.getAttribute("data-full") || img.getAttribute("src");
       const alt = img.getAttribute("alt") || "";
@@ -485,7 +487,7 @@
     closeBtn.addEventListener("click", closeModal);
 
     modal.addEventListener("click", (e) => {
-      if (e.target?.classList?.contains("modal-overlay")) closeModal();
+      if (e.target.classList.contains("modal-overlay")) closeModal();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -500,11 +502,11 @@
     const source = document.getElementById("vidModalSource");
     const title = document.getElementById("vidModalTitle");
     const closeBtn = document.getElementById("vidModalClose");
-    if (!modal || !video || !source || !title || !closeBtn) return null;
+    if (!modal || !video || !source || !title || !closeBtn) return;
 
     function openVideo({ src, poster, titleText }) {
       title.textContent = titleText || "Video";
-      source.src = src || "";
+      source.src = src;
       video.poster = poster || "";
       video.autoplay = false;
       try { video.pause(); } catch {}
@@ -528,7 +530,7 @@
 
     closeBtn.addEventListener("click", closeVideo);
     modal.addEventListener("click", (e) => {
-      if (e.target?.classList?.contains("vmodal-overlay")) closeVideo();
+      if (e.target.classList.contains("vmodal-overlay")) closeVideo();
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeVideo();
@@ -540,7 +542,7 @@
   // ---- smooth scroll ----
   function bindSmoothAnchorScroll() {
     document.addEventListener("click", (e) => {
-      const a = e.target?.closest?.('a[href*="#"]');
+      const a = e.target.closest('a[href*="#"]');
       if (!a) return;
 
       const href = a.getAttribute("href");
@@ -549,7 +551,9 @@
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
       let url;
-      try { url = new URL(href, window.location.href); } catch { return; }
+      try { url = new URL(href, window.location.href); }
+      catch { return; }
+
       if (url.origin !== window.location.origin) return;
 
       const samePath = (stripTrailingSlash(url.pathname) === stripTrailingSlash(window.location.pathname));
@@ -689,7 +693,7 @@
   // ---- lang buttons ----
   function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
-      const btn = e.target?.closest?.("[data-lang]");
+      const btn = e.target.closest("[data-lang]");
       if (!btn) return;
 
       const targetLang = btn.getAttribute("data-lang");
@@ -699,7 +703,7 @@
       const hash = window.location.hash || "";
 
       if (isIndexLikePath(path) || getPathLang(path)) {
-        try { localStorage.setItem("lang", targetLang); } catch {}
+        localStorage.setItem("lang", targetLang);
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
@@ -710,36 +714,14 @@
     });
   }
 
-  // -------- VIDEO DEMOS (FIXED) --------
-  async function fetchVideosJson({ timeoutMs = 4500 } = {}) {
-    const url = new URL("/videos/videos.json", window.location.origin).toString();
-
-    // AbortController timeout
-    const controller = ("AbortController" in window) ? new AbortController() : null;
-    const t = window.setTimeout(() => { try { controller?.abort(); } catch {} }, timeoutMs);
-
+  // -------- VIDEO DEMOS --------
+  async function fetchVideosJson({ timeoutMs = 3500 } = {}) {
+    const controller = new AbortController();
+    const t = window.setTimeout(() => controller.abort(), timeoutMs);
     try {
-      const res = await fetch(url, {
-        cache: "no-store",
-        signal: controller ? controller.signal : undefined
-      });
-
-      if (!res.ok) {
-        throw new Error(`videos.json HTTP ${res.status}`);
-      }
-
-      // Najważniejsze: text() + JSON.parse() z usunięciem BOM
-      const raw = await res.text();
-      const cleaned = String(raw || "")
-        .replace(/^\uFEFF/, "")     // BOM
-        .trim();
-
-      try {
-        return JSON.parse(cleaned);
-      } catch (e) {
-        console.warn("[SiteLayout] videos.json parse error. First 120 chars:", cleaned.slice(0, 120));
-        throw e;
-      }
+      const res = await fetch("/videos/videos.json", { cache: "no-store", signal: controller.signal });
+      if (!res.ok) throw new Error("videos.json not found");
+      return await res.json();
     } finally {
       window.clearTimeout(t);
     }
@@ -758,6 +740,9 @@
     return json;
   }
 
+  // ✅ Title picker: supports:
+  // - title: {en,pl} or title: "..."
+  // - legacy: title_en / title_pl
   function pickTitle(v, lang) {
     if (!v) return "";
     if (typeof v.title === "string") return v.title;
@@ -769,6 +754,9 @@
     return "";
   }
 
+  // ✅ Description picker: supports:
+  // - desc: {en,pl} or desc: "..."
+  // - legacy: desc_en / desc_pl
   function pickDesc(v, lang) {
     if (!v) return "";
     if (typeof v.desc === "string") return v.desc;
@@ -794,7 +782,7 @@
 
   function bindDemoButtons(openVideo, map, lang) {
     document.addEventListener("click", (e) => {
-      const btn = e.target?.closest?.("[data-demo-key]");
+      const btn = e.target.closest("[data-demo-key]");
       if (!btn) return;
 
       const key = btn.getAttribute("data-demo-key");
@@ -843,18 +831,23 @@
     title.textContent = pickTitle(item, lang) || "6DOF demo #1";
   }
 
+  // More demos: find the right-side card robustly
   function findMoreDemosCard() {
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
 
-    // Twoje HTML ma "More movies" / "Więcej filmów"
-    const h = videosSection.querySelector('[data-en="More movies"]') || videosSection.querySelector('[data-pl="Więcej filmów"]');
-    if (h) return h.closest(".rounded-2xl");
+    // Primary: heading has these attributes in your HTML
+    const h = videosSection.querySelector('[data-en="More demos"]');
+    if (h) {
+      const card = h.closest(".rounded-2xl");
+      if (card) return card;
+    }
 
+    // Fallback: find by visible text (after translation)
     const headings = Array.from(videosSection.querySelectorAll("h3"));
     const target = headings.find(x => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return t === "more movies" || t === "więcej filmów";
+      return t === "more demos" || t === "więcej demo" || t === "more movies" || t === "więcej filmów";
     });
     if (target) return target.closest(".rounded-2xl");
 
@@ -866,6 +859,7 @@
     const h = card.querySelector("h3");
     if (!h) return;
 
+    // Force new wording regardless of HTML
     const en = "More movies";
     const pl = "Więcej filmów";
     h.dataset.en = en;
@@ -909,6 +903,7 @@
   function renderMoreDemos(card, extras, lang, openVideo) {
     if (!card) return;
 
+    // hide if none
     if (!extras.length) {
       card.classList.add("hidden");
       return;
@@ -917,6 +912,7 @@
 
     setMoreDemosHeading(card, lang);
 
+    // Keep only the heading, replace rest with our list
     const heading = card.querySelector("h3");
     const nodes = Array.from(card.childNodes);
     nodes.forEach(n => {
@@ -928,8 +924,9 @@
     const list = buildExtrasListCards(extras, lang);
     card.appendChild(list);
 
+    // click binding
     card.addEventListener("click", (e) => {
-      const btn = e.target?.closest?.("button[data-extra-idx]");
+      const btn = e.target.closest("button[data-extra-idx]");
       if (!btn) return;
       const idx = Number(btn.getAttribute("data-extra-idx"));
       const item = extras[idx];
@@ -939,18 +936,19 @@
         poster: item.poster || "",
         titleText: item.titleText || "Video"
       });
-    });
+    }, { passive: true });
   }
 
   async function initVideoDemos(videoModalApi, lang) {
     let map = {};
     try {
-      const json = await fetchVideosJson({ timeoutMs: 4500 });
+      const json = await fetchVideosJson({ timeoutMs: 3500 });
       map = normalizeVideos(json);
 
       hydrateHeroVideo(map, lang);
       setDemoButtonsState(map, lang);
 
+      // extras = everything except the first 6dof clip (hero)
       const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
       const hero = map?.["6dof"]?.[0] || null;
 
@@ -967,8 +965,9 @@
 
       bindDemoButtons(videoModalApi.openVideo, map, lang);
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
-    } catch (err) {
-      console.warn("[SiteLayout] videos init failed:", err);
+
+    } catch {
+      // videos.json missing/blocked
       setDemoButtonsState({}, lang);
       const card = findMoreDemosCard();
       if (card) card.classList.add("hidden");
