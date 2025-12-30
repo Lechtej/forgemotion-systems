@@ -298,8 +298,7 @@
         <div class="mt-6 text-sm">
           <div class="text-white font-semibold" data-en="Contact" data-pl="Kontakt"></div>
           <a class="mt-2 inline-block text-white/70 hover:text-white transition" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-          <div class="mt-2 text-white/60" data-en="We respond via email only." data-pl="Odpowiadamy wyłącznie mailowo."></div>
-        </div>
+          </div>
       </div>
 
     </div>
