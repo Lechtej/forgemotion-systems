@@ -401,7 +401,16 @@
     }
   }
 
-  function setLanguage(lang, metaData) {
+  
+  function rewriteLangHrefs(lang) {
+    // Elements can declare language-specific hrefs to avoid hardcoding /en/ or /pl/ in HTML.
+    document.querySelectorAll("[data-href-en][data-href-pl]").forEach((a) => {
+      const href = a.getAttribute(lang === "pl" ? "data-href-pl" : "data-href-en");
+      if (href) a.setAttribute("href", href);
+    });
+  }
+
+function setLanguage(lang, metaData) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
     localStorage.setItem("lang", safe);
@@ -410,6 +419,7 @@
     applyTexts(safe);
     updateMetaTags(safe, metaData);
     rewriteIndexAnchors(safe);
+    rewriteLangHrefs(safe);
 
     document.querySelectorAll("[data-lang]").forEach(btn => {
       const isActive = btn.getAttribute("data-lang") === safe;
