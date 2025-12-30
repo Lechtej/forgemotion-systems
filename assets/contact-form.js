@@ -21,6 +21,12 @@
     return "en";
   }
 
+
+  function getAnonKey() {
+    const meta = document.querySelector('meta[name="supabase-anon-key"]');
+    return (meta?.getAttribute('content') || '').trim();
+  }
+
   function setStatus(msg, isError = false) {
     if (!statusEl) return;
     statusEl.textContent = msg || "";
@@ -111,7 +117,21 @@
     try {
       const fd = new FormData(form);
 
-      const res = await fetch(ENDPOINT, { method: "POST", body: fd });
+      const anon = getAnonKey();
+      if (!anon) {
+        setStatus(lang === "pl" ? "Brak konfiguracji: ustaw klucz Supabase ANON w <meta name=\"supabase-anon-key\">." : "Missing configuration: set Supabase ANON key in <meta name=\"supabase-anon-key\">.", true);
+        disable(false);
+        return;
+      }
+
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${anon}`,
+          "apikey": anon
+        },
+        body: fd
+      });
       const data = await readJsonSafe(res);
 
       if (!res.ok || !data?.ok) {
