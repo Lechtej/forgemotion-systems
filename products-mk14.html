@@ -28,107 +28,311 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/assets/site-layout.js" defer></script>
+
+  <style>
+    .product-photo { width: 100%; height: auto; display: block; }
+    .photo-frame { border: 1px solid rgba(255,255,255,0.08); background: rgba(31, 41, 55, 0.55); }
+    .thumb { width: 100%; height: 110px; object-fit: cover; display: block; }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
   <div id="siteHeader"></div>
 
   <main class="pt-24">
-    <section class="container mx-auto px-4 py-14">
-      <div class="max-w-4xl mx-auto">
+    <section id="hero" class="container mx-auto px-4 py-14">
+      <div class="max-w-5xl mx-auto">
         <p class="text-white/70 mb-3">
-          <a href="/index.html#products" class="hover:text-blue-400" data-en="← Back to products" data-pl="← Wróć do produktów"></a>
+          <a href="/#products" class="hover:text-blue-400"
+             data-en="← Back to products"
+             data-pl="← Wróć do produktów"></a>
         </p>
 
-        <h1 class="text-4xl md:text-5xl font-bold mb-5"
-            data-en="Ejection Seat Replica (MK14)"
-            data-pl="Replika fotela katapultowego (MK14)"></h1>
-
-        <p class="text-lg md:text-xl text-white/85 mb-8"
-           data-en="The centerpiece that turns a simulator into a cockpit. Built to impress — and to feel right when you sit in."
-           data-pl="Element, który robi z symulatora kokpit. Robi wrażenie — i daje świetne „czucie miejsca”, gdy siadasz."></p>
-
-        <div class="mb-10">
-          <div class="rounded-2xl border border-white/5 bg-gray-800/40 p-4 md:p-6">
-            <img
-              src="/images/mk14seat1.jpg"
-              data-full="/images/mk14seat1-large.jpg"
-              alt="Ejection seat replica (MK14)"
-              class="w-full h-auto max-h-[520px] object-contain rounded-xl cursor-zoom-in"
-              loading="lazy"
-              decoding="async"
-            />
-            <p class="text-white/55 text-sm mt-3 text-center"
-               data-en="Click the photo to enlarge."
-               data-pl="Kliknij zdjęcie, aby powiększyć."></p>
-          </div>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6 mb-10">
-          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="Why it’s special" data-pl="Co jest w tym wyjątkowego"></h2>
-            <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Instant “wow” effect — it looks like a cockpit." data-pl="Natychmiastowy efekt „wow” — wygląda jak kokpit."></li>
-              <li data-en="Comfortable and solid for real use (not just decor)." data-pl="Wygodny i solidny do realnego używania (nie tylko ozdoba)."></li>
-              <li data-en="A unique vibe you can’t get from a standard sim seat." data-pl="Unikalny klimat nie do uzyskania na zwykłym fotelu sim."></li>
-            </ul>
-          </div>
-
-          <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-            <h2 class="text-2xl font-bold mb-3" data-en="Perfect for" data-pl="Idealne do"></h2>
-            <ul class="list-disc list-inside text-white/85 space-y-2">
-              <li data-en="Flight sim cockpits." data-pl="Kokpitów flight sim."></li>
-              <li data-en="Show rigs and streaming setups." data-pl="Stanowisk pokazowych i na stream."></li>
-              <li data-en="Collectors and aviation fans." data-pl="Kolekcjonerów i fanów lotnictwa."></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10">
-          <h2 class="text-2xl font-bold mb-3" data-en="Make it fit your cockpit" data-pl="Dopasujmy to do Twojego kokpitu"></h2>
-          <p class="text-white/85 mb-5"
-             data-en="Tell us your cockpit concept and available space — we’ll suggest a clean layout and mounting approach."
-             data-pl="Opisz koncepcję kokpitu i dostępną przestrzeń — zaproponujemy czysty układ i sposób montażu."></p>
-
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/index.html#contact"
-               class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
-               data-en="Ask about availability"
-               data-pl="Zapytaj o dostępność"></a>
-
-            <a href="/index.html#products"
-               class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
-               data-en="See all products"
-               data-pl="Zobacz wszystkie produkty"></a>
-          </div>
-        </div>
-
-        <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-          <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Is it only for flight sim?" data-pl="Czy to tylko do flight sim?"></h3>
-              <p class="text-white/80"
-                 data-en="It’s designed for cockpit vibes, so it fits flight sims best — but many people use it as a premium centerpiece in mixed setups."
-                 data-pl="To produkt „kokpitowy”, więc najlepiej pasuje do flight sim — ale część osób używa go też jako premium element w setupach mieszanych."></p>
+        <div class="flex flex-col gap-8">
+          <!-- Title + intro -->
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase text-blue-300/90">
+              <span class="px-2 py-1 rounded-full bg-white/5 border border-white/10">MK14</span>
+              <span data-en="Ejection seat replica" data-pl="Replika fotela katapultowego"></span>
             </div>
 
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Is it comfortable for long sessions?" data-pl="Czy jest wygodny na długie sesje?"></h3>
-              <p class="text-white/80"
-                 data-en="Yes — the goal is a seat you actually use, not just a display prop."
-                 data-pl="Tak — celem jest fotel do realnego grania, nie tylko do oglądania."></p>
+            <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4"
+                data-en="Ejection Seat Replica (MK14)"
+                data-pl="Replika fotela katapultowego (MK14)"></h1>
+
+            <p class="text-lg md:text-xl text-white/85"
+               data-en="A premium centerpiece that turns a simulator into a cockpit — built to impress and to feel right when you sit in."
+               data-pl="Premium element, który zamienia stanowisko w kokpit — robi wrażenie i daje świetne „czucie miejsca”, gdy siadasz."></p>
+
+            <p class="text-white/80 mt-3 max-w-4xl"
+               data-en="Designed with real build quality in mind: rigid structure, clean finishing, and a surface you can rely on in everyday use."
+               data-pl="Projektowany z myślą o realnej jakości wykonania: sztywna konstrukcja, czyste wykończenie i powierzchnia, na której możesz polegać w codziennym użytkowaniu."></p>
+
+            <div class="flex flex-col sm:flex-row gap-3 mt-7">
+              <a href="#lead"
+                 class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+                 data-en="Ask about availability"
+                 data-pl="Zapytaj o dostępność"></a>
+
+              <a href="#production"
+                 class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+                 data-en="See production photos"
+                 data-pl="Zobacz zdjęcia z produkcji"></a>
             </div>
 
-            <div>
-              <h3 class="font-semibold text-lg" data-en="Can it be integrated with other parts?" data-pl="Czy da się to zintegrować z resztą kokpitu?"></h3>
-              <p class="text-white/80"
-                 data-en="Absolutely. We can help plan mounting and add-ons to keep everything coherent."
-                 data-pl="Oczywiście. Pomożemy zaplanować montaż i dodatki tak, aby całość była spójna."></p>
+            <div class="grid sm:grid-cols-3 gap-3 mt-8 text-sm">
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-4">
+                <div class="font-semibold" data-en="Cockpit presence" data-pl="Klimat kokpitu"></div>
+                <div class="text-white/75 mt-1" data-en="instant “wow” effect" data-pl="natychmiastowy efekt „wow”"></div>
+              </div>
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-4">
+                <div class="font-semibold" data-en="Built to use" data-pl="Do realnego użycia"></div>
+                <div class="text-white/75 mt-1" data-en="solid, comfortable, stable" data-pl="solidny, wygodny, stabilny"></div>
+              </div>
+              <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-4">
+                <div class="font-semibold" data-en="Premium finish" data-pl="Premium wykończenie"></div>
+                <div class="text-white/75 mt-1" data-en="durable coating & details" data-pl="trwała powłoka i detale"></div>
+              </div>
             </div>
           </div>
-        </section>
+
+          <!-- Hero photo + thumbs -->
+          <div class="mb-2">
+            <div class="rounded-2xl photo-frame overflow-hidden">
+              <img class="product-photo cursor-zoom-in"
+                src="/images/mk14seat1.jpg"
+                data-full="/images/mk14seat1-large.jpg"
+                alt="Ejection seat replica (MK14)"
+                loading="lazy"
+                decoding="async" />
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mt-3">
+              <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                src="/images/mk14seat1.jpg"
+                data-full="/images/mk14seat1-large.jpg"
+                alt="MK14 seat photo 1"
+                loading="lazy"
+                decoding="async" />
+              <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                src="/images/mk14/production-3.jpg"
+                data-full="/images/mk14/production-3.jpg"
+                alt="MK14 seat production photo"
+                loading="lazy"
+                decoding="async" />
+              <img class="thumb rounded-xl photo-frame cursor-zoom-in"
+                src="/images/mk14/painting.jpg"
+                data-full="/images/mk14/painting.jpg"
+                alt="MK14 seat coating prep"
+                loading="lazy"
+                decoding="async" />
+            </div>
+
+            <p class="text-white/55 text-sm mt-3"
+               data-en="Tip: click an image to zoom."
+               data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
+          </div>
+
+          <!-- Benefits -->
+          <div class="grid lg:grid-cols-3 gap-6">
+            <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold mb-3" data-en="Tangible benefits" data-pl="Namacalne korzyści"></h2>
+              <ul class="list-disc list-inside text-white/85 space-y-2">
+                <li data-en="Strong cockpit vibe: transforms the look and feel of the rig."
+                    data-pl="Mocny klimat kokpitu: zmienia odbiór całego stanowiska."></li>
+                <li data-en="Comfortable for real sessions — not just a display piece."
+                    data-pl="Wygodny do realnych sesji — nie tylko „do oglądania”."></li>
+                <li data-en="Premium finish: durable surfaces and clean details."
+                    data-pl="Premium wykończenie: trwałe powierzchnie i czyste detale."></li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold mb-3" data-en="Best for" data-pl="Najlepsze dla"></h2>
+              <ul class="list-disc list-inside text-white/85 space-y-2">
+                <li data-en="Flight sim cockpits and aviation-themed rigs."
+                    data-pl="Kokpitów flight sim i stanowisk w klimacie lotniczym."></li>
+                <li data-en="Show rigs, streaming setups and events."
+                    data-pl="Stanowisk pokazowych, na stream i eventy."></li>
+                <li data-en="Collectors and aviation fans."
+                    data-pl="Kolekcjonerów i fanów lotnictwa."></li>
+              </ul>
+            </div>
+
+            <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold mb-3" data-en="What makes it practical" data-pl="Co jest tu praktyczne"></h2>
+              <ul class="list-disc list-inside text-white/85 space-y-2">
+                <li data-en="Rigid structure designed for everyday use."
+                    data-pl="Sztywna konstrukcja zaprojektowana do codziennego użycia."></li>
+                <li data-en="Clean surfaces and details that keep the cockpit coherent."
+                    data-pl="Czyste powierzchnie i detale, które trzymają spójność kokpitu."></li>
+                <li data-en="Easy to integrate as the centerpiece of a cockpit build."
+                    data-pl="Łatwy do wkomponowania jako centralny element budowy kokpitu."></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Production / Gallery -->
+          <section id="production" class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-3"
+                data-en="Production photos"
+                data-pl="Zdjęcia z produkcji"></h2>
+
+            <p class="text-white/85 mb-5"
+               data-en="A short behind-the-scenes look: fitting, assembly and surface preparation. Details matter — because you will feel them every session."
+               data-pl="Krótki rzut oka za kulisy: pasowanie, montaż i przygotowanie powierzchni. Detale mają znaczenie — bo czujesz je w każdej sesji."></p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <figure class="rounded-2xl photo-frame overflow-hidden">
+                <img class="thumb h-[160px] sm:h-[190px] lg:h-[160px] cursor-zoom-in"
+                     src="/images/mk14/production-1.jpg"
+                     data-full="/images/mk14/production-1.jpg"
+                     alt="MK14 production photo 1"
+                     loading="lazy" decoding="async" />
+                <figcaption class="p-4 text-sm text-white/70"
+                            data-en="Structure & fitting — rigidity comes first."
+                            data-pl="Konstrukcja i pasowanie — sztywność jest podstawą."></figcaption>
+              </figure>
+
+              <figure class="rounded-2xl photo-frame overflow-hidden">
+                <img class="thumb h-[160px] sm:h-[190px] lg:h-[160px] cursor-zoom-in"
+                     src="/images/mk14/production-2.jpg"
+                     data-full="/images/mk14/production-2.jpg"
+                     alt="MK14 production photo 2"
+                     loading="lazy" decoding="async" />
+                <figcaption class="p-4 text-sm text-white/70"
+                            data-en="Metalwork details — clean lines and repeatability."
+                            data-pl="Detale metalowe — czyste linie i powtarzalność."></figcaption>
+              </figure>
+
+              <figure class="rounded-2xl photo-frame overflow-hidden">
+                <img class="thumb h-[160px] sm:h-[190px] lg:h-[160px] cursor-zoom-in"
+                     src="/images/mk14/production-3.jpg"
+                     data-full="/images/mk14/production-3.jpg"
+                     alt="MK14 production photo 3"
+                     loading="lazy" decoding="async" />
+                <figcaption class="p-4 text-sm text-white/70"
+                            data-en="Assembly stage — everything aligned before finishing."
+                            data-pl="Etap montażu — wszystko ustawione przed wykończeniem."></figcaption>
+              </figure>
+
+              <figure class="rounded-2xl photo-frame overflow-hidden">
+                <img class="thumb h-[160px] sm:h-[190px] lg:h-[160px] cursor-zoom-in"
+                     src="/images/mk14/painting.jpg"
+                     data-full="/images/mk14/painting.jpg"
+                     alt="MK14 coating preparation"
+                     loading="lazy" decoding="async" />
+                <figcaption class="p-4 text-sm text-white/70"
+                            data-en="Surface prep — the finish is only as good as the prep."
+                            data-pl="Przygotowanie powierzchni — finalny efekt zaczyna się tutaj."></figcaption>
+              </figure>
+            </div>
+
+            <p class="text-white/55 text-sm mt-4"
+               data-en="Tip: click a photo to zoom."
+               data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
+          </section>
+
+          <!-- Powder coating partner -->
+          <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <div class="grid lg:grid-cols-[auto_1fr] gap-6 items-start">
+              <a href="https://malarniawadag11.pl/" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center w-fit">
+                <img
+                  src="/images/partners/malarnia-wadag11.png"
+                  alt="Malarnia WADAG 11"
+                  class="h-16 w-auto object-contain rounded-xl bg-white/5 border border-white/10 p-2"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div>
+                <h2 class="text-2xl font-bold mb-3"
+                    data-en="Powder coating by our trusted partner"
+                    data-pl="Lakierowanie proszkowe u naszego zaufanego partnera"></h2>
+
+                <p class="text-white/85"
+                   data-en="The coating process is handled by our friendly, trusted powder coating shop: Malarnia WADAG 11. They deliver excellent results — from small details to large panels — so the finish stays durable, clean and truly premium in a cockpit."
+                   data-pl="Proces lakierowania realizujemy w naszej zaprzyjaźnionej lakierni proszkowej: Malarnia WADAG 11. Robią świetną robotę — zarówno przy małych detalach, jak i dużych elementach — dzięki czemu wykończenie jest trwałe, równe i wygląda premium w kokpicie."></p>
+
+                <div class="flex flex-col sm:flex-row gap-3 mt-5">
+                  <a href="https://malarniawadag11.pl/" target="_blank" rel="noopener noreferrer"
+                     class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+                     data-en="Visit Malarnia WADAG 11"
+                     data-pl="Przejdź na stronę Malarnia WADAG 11"></a>
+
+                  <a href="#lead"
+                     class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+                     data-en="Ask about your build"
+                     data-pl="Zapytaj o swój projekt"></a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA / Lead -->
+          <section id="lead" class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-3"
+                data-en="Ask about availability"
+                data-pl="Zapytaj o dostępność"></h2>
+
+            <p class="text-white/85 mb-5"
+               data-en="Tell us your cockpit concept and constraints (space, mounting, controls). We’ll suggest a clean layout and the best integration approach."
+               data-pl="Opisz koncepcję kokpitu i ograniczenia (miejsce, montaż, sterowanie). Zaproponujemy czysty układ i najlepszy sposób integracji."></p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="/#contact"
+                 class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center"
+                 data-en="Contact us"
+                 data-pl="Skontaktuj się"></a>
+
+              <a href="/#products"
+                 class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center"
+                 data-en="See all products"
+                 data-pl="Zobacz wszystkie produkty"></a>
+            </div>
+
+            <div class="mt-5 text-white/75 text-sm">
+              <div class="font-semibold text-white"
+                   data-en="Good to include:"
+                   data-pl="Warto podać:"></div>
+              <ul class="mt-2 space-y-1">
+                <li>• <span data-en="use case and cockpit concept" data-pl="zastosowanie i koncepcję kokpitu"></span></li>
+                <li>• <span data-en="preferred mounting and accessories" data-pl="preferowany montaż i akcesoria"></span></li>
+                <li>• <span data-en="available space and photos of your rig" data-pl="dostępne miejsce i zdjęcia stanowiska"></span></li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
+
+            <div class="space-y-4">
+              <div>
+                <h3 class="font-semibold text-lg" data-en="Is it only for flight sim?" data-pl="Czy to tylko do flight sim?"></h3>
+                <p class="text-white/80"
+                   data-en="It’s designed for cockpit vibes, so it fits flight sims best — but many users treat it as a premium centerpiece in mixed setups."
+                   data-pl="To produkt „kokpitowy”, więc najlepiej pasuje do flight sim — ale wielu użytkowników traktuje go też jako premium element w setupach mieszanych."></p>
+              </div>
+
+              <div>
+                <h3 class="font-semibold text-lg" data-en="Is it comfortable for long sessions?" data-pl="Czy jest wygodny na długie sesje?"></h3>
+                <p class="text-white/80"
+                   data-en="Yes — the goal is a seat you actually use, not just a display prop."
+                   data-pl="Tak — celem jest fotel do realnego grania, nie tylko „rekwizyt”."></p>
+              </div>
+
+              <div>
+                <h3 class="font-semibold text-lg" data-en="Can it be integrated with other cockpit parts?" data-pl="Czy da się to zintegrować z resztą kokpitu?"></h3>
+                <p class="text-white/80"
+                   data-en="Absolutely. We can help plan mounting and add-ons so the whole cockpit stays coherent."
+                   data-pl="Oczywiście. Pomożemy zaplanować montaż i dodatki tak, aby całość była spójna."></p>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </section>
 
@@ -142,26 +346,26 @@
     const metaData = {
       en: {
         title: "MK14 Ejection Seat Replica – ForgeMotion Systems",
-        description: "High-impact ejection seat replica (MK14) for flight simulators. A premium cockpit centerpiece with true aviation vibe.",
-        keywords: "ejection seat replica, MK14 seat, flight simulator cockpit seat, ForgeMotion Systems",
+        description: "High-impact ejection seat replica (MK14) for flight simulators. A premium cockpit centerpiece with durable finish and true aviation vibe.",
+        keywords: "ejection seat replica, MK14 seat, flight simulator cockpit seat, cockpit seat replica, ForgeMotion Systems",
         ogTitle: "MK14 Ejection Seat Replica – ForgeMotion Systems",
-        ogDescription: "Turn your sim into a cockpit. Premium look and cockpit vibe.",
-        ogImage: "https://forgemotionsystems.com/images/og-en.jpg",
+        ogDescription: "Turn your sim into a cockpit. Premium look, durable finish, and real build quality.",
+        ogImage: "https://forgemotionsystems.com/images/mk14seat1-large.jpg",
         twitterTitle: "MK14 Ejection Seat Replica – ForgeMotion Systems",
-        twitterDescription: "A cockpit centerpiece with instant wow-effect.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-en.jpg",
+        twitterDescription: "A premium cockpit centerpiece with instant wow-effect and durable finish.",
+        twitterImage: "https://forgemotionsystems.com/images/mk14seat1-large.jpg",
         canonical: "https://forgemotionsystems.com/products-mk14.html"
       },
       pl: {
         title: "Replika fotela katapultowego MK14 – ForgeMotion Systems",
-        description: "Replika fotela katapultowego (MK14) do symulatorów lotniczych. Premium element kokpitu z efektem wow.",
-        keywords: "replika fotela katapultowego, MK14, fotel do symulatora lotniczego, ForgeMotion Systems",
+        description: "Replika fotela katapultowego (MK14) do symulatorów lotniczych. Premium element kokpitu z trwałym wykończeniem i efektem wow.",
+        keywords: "replika fotela katapultowego, MK14, fotel do symulatora lotniczego, fotel kokpitu, ForgeMotion Systems",
         ogTitle: "Replika fotela MK14 – ForgeMotion Systems",
-        ogDescription: "Zamień symulator w kokpit. Premium wygląd i klimat lotniczy.",
-        ogImage: "https://forgemotionsystems.com/images/og-pl.jpg",
+        ogDescription: "Zamień stanowisko w kokpit. Premium wygląd, trwałe wykończenie i realna jakość wykonania.",
+        ogImage: "https://forgemotionsystems.com/images/mk14seat1-large.jpg",
         twitterTitle: "Replika fotela MK14 – ForgeMotion Systems",
-        twitterDescription: "Element kokpitu z natychmiastowym efektem wow.",
-        twitterImage: "https://forgemotionsystems.com/images/twitter-pl.jpg",
+        twitterDescription: "Premium element kokpitu z natychmiastowym efektem wow i trwałym wykończeniem.",
+        twitterImage: "https://forgemotionsystems.com/images/mk14seat1-large.jpg",
         canonical: "https://forgemotionsystems.com/products-mk14.html"
       }
     };
@@ -170,8 +374,10 @@
       SiteLayout.init({
         metaData,
         includeModal: true,
+        includeVideoModal: true, // stays available site-wide (safe)
         activeProductKey: "mk14",
-        injectOtherProducts: true
+        injectOtherProducts: true,
+        enableVideoDemos: false  // MK14 page uses images only
       });
     });
   </script>
