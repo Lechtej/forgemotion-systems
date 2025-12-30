@@ -1,7 +1,7 @@
 /* /assets/site-layout.js
    Shared layout + i18n + meta + mobile menu + image modal + VIDEO modal + demos from videos.json
    + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
-   + corporate-safe hardening: robust fetch (timeout), safe scrollspy fallback, optional video section auto-hide
+   + hardened: robust fetch (timeout), safe scrollspy fallback, optional video section auto-hide
 */
 (function () {
   const DEFAULT_LANG = "en";
@@ -19,12 +19,13 @@
 
   // ---- utils ----
   function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+    // avoid String.prototype.replaceAll for older browsers
+    return String(str == null ? "" : str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   function stripTrailingSlash(pathname) {
@@ -57,7 +58,7 @@
   }
 
   function setMetaTag(key, content, attr = "name") {
-    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
+    let tag = document.head.querySelector(`meta[${attr}="${CSS.escape(key)}"]`);
     if (!tag) {
       tag = document.createElement("meta");
       tag.setAttribute(attr, key);
@@ -282,10 +283,12 @@
 
   function renderOtherProducts(activeKey, lang) {
     const items = PRODUCT_LINKS
-      .filter(p => p.key !== activeKey)
-      .map(p => {
-        const label = p.label?.[lang] || p.label?.en || p.key;
-        return `<a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="${escapeHtml(p.href)}">${escapeHtml(label)}</a>`;
+      .filter((p) => p.key !== activeKey)
+      .map((p) => {
+        const label = (p.label && (p.label[lang] || p.label.en)) || p.key;
+        return `<a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="${escapeHtml(
+          p.href
+        )}">${escapeHtml(label)}</a>`;
       })
       .join("");
 
@@ -326,35 +329,36 @@
   function applyTexts(lang) {
     const nodes = Array.from(document.querySelectorAll("[data-en]"));
     for (const el of nodes) {
-      const val = el.dataset[lang];
+      const val = el.dataset ? el.dataset[lang] : null;
       if (typeof val === "string") el.textContent = val;
     }
   }
 
   function updateMetaTags(lang, metaData) {
-    const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
+    const data = (metaData && (metaData[lang] || metaData[DEFAULT_LANG])) || null;
 
-    if (data?.title) document.title = data.title;
+    if (data && data.title) document.title = data.title;
 
-    setMetaTag("description", data?.description || "", "name");
-    setMetaTag("keywords", data?.keywords || "", "name");
-    setMetaTag("author", data?.author || "ForgeMotion Systems", "name");
+    setMetaTag("description", (data && data.description) || "", "name");
+    setMetaTag("keywords", (data && data.keywords) || "", "name");
+    setMetaTag("author", (data && data.author) || "ForgeMotion Systems", "name");
 
-    const canonical = (data?.canonical && String(data.canonical).trim())
-      ? data.canonical
-      : buildCanonicalForCurrent(lang);
+    const canonical =
+      data && data.canonical && String(data.canonical).trim()
+        ? data.canonical
+        : buildCanonicalForCurrent(lang);
 
     setCanonical(canonical);
 
-    setMetaTag("og:title", data?.ogTitle || data?.title || "", "property");
-    setMetaTag("og:description", data?.ogDescription || data?.description || "", "property");
-    setMetaTag("og:image", data?.ogImage || "", "property");
+    setMetaTag("og:title", (data && (data.ogTitle || data.title)) || "", "property");
+    setMetaTag("og:description", (data && (data.ogDescription || data.description)) || "", "property");
+    setMetaTag("og:image", (data && data.ogImage) || "", "property");
     setMetaTag("og:url", canonical || "", "property");
     setMetaTag("og:type", "website", "property");
 
-    setMetaTag("twitter:title", data?.twitterTitle || data?.title || "", "name");
-    setMetaTag("twitter:description", data?.twitterDescription || data?.description || "", "name");
-    setMetaTag("twitter:image", data?.twitterImage || "", "name");
+    setMetaTag("twitter:title", (data && (data.twitterTitle || data.title)) || "", "name");
+    setMetaTag("twitter:description", (data && (data.twitterDescription || data.description)) || "", "name");
+    setMetaTag("twitter:image", (data && data.twitterImage) || "", "name");
     setMetaTag("twitter:card", "summary_large_image", "name");
   }
 
@@ -362,7 +366,10 @@
     const fromPath = getPathLang(window.location.pathname);
     if (fromPath) return fromPath;
 
-    const stored = localStorage.getItem("lang");
+    let stored = null;
+    try {
+      stored = localStorage.getItem("lang");
+    } catch (_) {}
     if (SUPPORTED_LANGS.includes(stored)) return stored;
 
     return DEFAULT_LANG;
@@ -378,8 +385,10 @@
 
       const trimmed = raw.trim();
 
+      // on /en/ or /pl/ keep "#..." as-is
       if (trimmed.startsWith("#") && isIndexLikePath(window.location.pathname)) continue;
 
+      // index.html(#hash)
       const m1 = trimmed.match(/^(\/?index\.html)(#.+)?$/i);
       if (m1) {
         const hash = m1[2] || "";
@@ -387,12 +396,14 @@
         continue;
       }
 
+      // "/#section"
       const m2 = trimmed.match(/^\/#(.+)$/);
       if (m2) {
         a.setAttribute("href", buildIndexUrl(safe, `#${m2[1]}`));
         continue;
       }
 
+      // "#section" on non-index pages -> link to /en/#section
       const m3 = trimmed.match(/^#(.+)$/);
       if (m3 && !isIndexLikePath(window.location.pathname) && !getPathLang(window.location.pathname)) {
         a.setAttribute("href", buildIndexUrl(safe, `#${m3[1]}`));
@@ -404,14 +415,17 @@
   function setLanguage(lang, metaData) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
-    localStorage.setItem("lang", safe);
+    try {
+      localStorage.setItem("lang", safe);
+    } catch (_) {}
+
     document.documentElement.lang = safe;
 
     applyTexts(safe);
     updateMetaTags(safe, metaData);
     rewriteIndexAnchors(safe);
 
-    document.querySelectorAll("[data-lang]").forEach(btn => {
+    document.querySelectorAll("[data-lang]").forEach((btn) => {
       const isActive = btn.getAttribute("data-lang") === safe;
       btn.classList.toggle("nav-active", isActive);
     });
@@ -447,9 +461,13 @@
       }
     });
 
-    document.querySelectorAll(".mobile-link").forEach(a => a.addEventListener("click", closeMobileMenu));
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMobileMenu(); });
-    window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
+    document.querySelectorAll(".mobile-link").forEach((a) => a.addEventListener("click", closeMobileMenu));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) closeMobileMenu();
+    });
   }
 
   // ---- image modal ----
@@ -477,7 +495,7 @@
     }
 
     document.addEventListener("click", (e) => {
-      const img = e.target.closest("img[data-full]");
+      const img = e.target && e.target.closest ? e.target.closest("img[data-full]") : null;
       if (!img) return;
       const full = img.getAttribute("data-full") || img.getAttribute("src");
       const alt = img.getAttribute("alt") || "";
@@ -487,7 +505,7 @@
     closeBtn.addEventListener("click", closeModal);
 
     modal.addEventListener("click", (e) => {
-      if (e.target.classList.contains("modal-overlay")) closeModal();
+      if (e.target && e.target.classList && e.target.classList.contains("modal-overlay")) closeModal();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -502,15 +520,19 @@
     const source = document.getElementById("vidModalSource");
     const title = document.getElementById("vidModalTitle");
     const closeBtn = document.getElementById("vidModalClose");
-    if (!modal || !video || !source || !title || !closeBtn) return;
+    if (!modal || !video || !source || !title || !closeBtn) return null;
 
     function openVideo({ src, poster, titleText }) {
       title.textContent = titleText || "Video";
-      source.src = src;
+      source.src = src || "";
       video.poster = poster || "";
       video.autoplay = false;
-      try { video.pause(); } catch {}
-      video.load();
+      try {
+        video.pause();
+      } catch (_) {}
+      try {
+        video.load();
+      } catch (_) {}
 
       modal.classList.remove("vmodal-hidden");
       modal.setAttribute("aria-hidden", "false");
@@ -519,18 +541,22 @@
     }
 
     function closeVideo() {
-      try { video.pause(); } catch {}
+      try {
+        video.pause();
+      } catch (_) {}
       modal.classList.add("vmodal-hidden");
       modal.setAttribute("aria-hidden", "true");
       source.src = "";
       video.poster = "";
-      video.load();
+      try {
+        video.load();
+      } catch (_) {}
       document.body.style.overflow = "";
     }
 
     closeBtn.addEventListener("click", closeVideo);
     modal.addEventListener("click", (e) => {
-      if (e.target.classList.contains("vmodal-overlay")) closeVideo();
+      if (e.target && e.target.classList && e.target.classList.contains("vmodal-overlay")) closeVideo();
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeVideo();
@@ -542,7 +568,7 @@
   // ---- smooth scroll ----
   function bindSmoothAnchorScroll() {
     document.addEventListener("click", (e) => {
-      const a = e.target.closest('a[href*="#"]');
+      const a = e.target && e.target.closest ? e.target.closest('a[href*="#"]') : null;
       if (!a) return;
 
       const href = a.getAttribute("href");
@@ -551,12 +577,15 @@
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
       let url;
-      try { url = new URL(href, window.location.href); }
-      catch { return; }
+      try {
+        url = new URL(href, window.location.href);
+      } catch (_) {
+        return;
+      }
 
       if (url.origin !== window.location.origin) return;
 
-      const samePath = (stripTrailingSlash(url.pathname) === stripTrailingSlash(window.location.pathname));
+      const samePath = stripTrailingSlash(url.pathname) === stripTrailingSlash(window.location.pathname);
       if (!samePath) return;
 
       const id = (url.hash || "").replace("#", "");
@@ -567,7 +596,11 @@
 
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
-      history.pushState(null, "", `#${id}`);
+      try {
+        history.pushState(null, "", `#${id}`);
+      } catch (_) {
+        // ignore
+      }
 
       if (isMobileMenuOpen()) closeMobileMenu();
     });
@@ -581,7 +614,7 @@
       try {
         const u = new URL(href, window.location.origin);
         return (u.hash || "").replace("#", "");
-      } catch {
+      } catch (_) {
         const idx = String(href).indexOf("#");
         return idx >= 0 ? String(href).slice(idx + 1) : "";
       }
@@ -614,14 +647,18 @@
     }
 
     let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        pickActive();
-        ticking = false;
-      });
-    }, { passive: true });
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          pickActive();
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
 
     window.addEventListener("hashchange", () => {
       const id = (window.location.hash || "").replace("#", "");
@@ -632,7 +669,7 @@
   }
 
   function bindScrollSpy() {
-    const sectionEls = SCROLLSPY_SECTIONS.map(id => document.getElementById(id)).filter(Boolean);
+    const sectionEls = SCROLLSPY_SECTIONS.map((id) => document.getElementById(id)).filter(Boolean);
     if (sectionEls.length < 2) return;
 
     const links = Array.from(document.querySelectorAll('a.site-nav-link[href*="#"]'));
@@ -642,7 +679,7 @@
       try {
         const u = new URL(href, window.location.origin);
         return (u.hash || "").replace("#", "");
-      } catch {
+      } catch (_) {
         const idx = String(href).indexOf("#");
         return idx >= 0 ? String(href).slice(idx + 1) : "";
       }
@@ -667,25 +704,27 @@
         return;
       }
 
-      const obs = new IntersectionObserver((entries) => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target?.id) setActive(visible.target.id);
-      }, {
-        root: null,
-        rootMargin: "-30% 0px -55% 0px",
-        threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
-      });
+      const obs = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (visible && visible.target && visible.target.id) setActive(visible.target.id);
+        },
+        {
+          root: null,
+          rootMargin: "-30% 0px -55% 0px",
+          threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8],
+        }
+      );
 
-      sectionEls.forEach(el => obs.observe(el));
+      sectionEls.forEach((el) => obs.observe(el));
 
       window.addEventListener("hashchange", () => {
         const id = (window.location.hash || "").replace("#", "");
         if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
       });
-
-    } catch {
+    } catch (_) {
       bindScrollSpyFallback(links);
     }
   }
@@ -693,7 +732,7 @@
   // ---- lang buttons ----
   function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-lang]");
+      const btn = e.target && e.target.closest ? e.target.closest("[data-lang]") : null;
       if (!btn) return;
 
       const targetLang = btn.getAttribute("data-lang");
@@ -702,8 +741,11 @@
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
 
+      // On index-ish pages switch by navigating to /en/#... or /pl/#...
       if (isIndexLikePath(path) || getPathLang(path)) {
-        localStorage.setItem("lang", targetLang);
+        try {
+          localStorage.setItem("lang", targetLang);
+        } catch (_) {}
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
@@ -740,9 +782,6 @@
     return json;
   }
 
-  // ✅ Title picker: supports:
-  // - title: {en,pl} or title: "..."
-  // - legacy: title_en / title_pl
   function pickTitle(v, lang) {
     if (!v) return "";
     if (typeof v.title === "string") return v.title;
@@ -754,9 +793,6 @@
     return "";
   }
 
-  // ✅ Description picker: supports:
-  // - desc: {en,pl} or desc: "..."
-  // - legacy: desc_en / desc_pl
   function pickDesc(v, lang) {
     if (!v) return "";
     if (typeof v.desc === "string") return v.desc;
@@ -769,30 +805,30 @@
   }
 
   function setDemoButtonsState(map, lang) {
-    document.querySelectorAll("[data-demo-key]").forEach(btn => {
+    document.querySelectorAll("[data-demo-key]").forEach((btn) => {
       const key = btn.getAttribute("data-demo-key");
-      const has = Boolean(map?.[key]?.length);
+      const has = Boolean(map && map[key] && map[key].length);
       btn.disabled = !has;
       btn.classList.toggle("opacity-50", !has);
       btn.classList.toggle("cursor-not-allowed", !has);
       btn.setAttribute("aria-disabled", String(!has));
-      btn.title = has ? "" : (lang === "pl" ? "Demo w przygotowaniu" : "Demo coming soon");
+      btn.title = has ? "" : lang === "pl" ? "Demo w przygotowaniu" : "Demo coming soon";
     });
   }
 
   function bindDemoButtons(openVideo, map, lang) {
     document.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-demo-key]");
+      const btn = e.target && e.target.closest ? e.target.closest("[data-demo-key]") : null;
       if (!btn) return;
 
       const key = btn.getAttribute("data-demo-key");
-      const item = map?.[key]?.[0];
-      if (!item?.src) return;
+      const item = map && map[key] && map[key][0];
+      if (!item || !item.src) return;
 
       openVideo({
         src: item.src,
         poster: item.poster || "",
-        titleText: pickTitle(item, lang) || (key.toUpperCase() + " demo")
+        titleText: pickTitle(item, lang) || key.toUpperCase() + " demo",
       });
     });
   }
@@ -802,13 +838,13 @@
     if (!btn) return;
 
     btn.addEventListener("click", () => {
-      const item = map?.["6dof"]?.[0];
-      if (!item?.src) return;
+      const item = map && map["6dof"] && map["6dof"][0];
+      if (!item || !item.src) return;
 
       openVideo({
         src: item.src,
         poster: item.poster || "",
-        titleText: pickTitle(item, lang) || "6DOF demo"
+        titleText: pickTitle(item, lang) || "6DOF demo",
       });
     });
   }
@@ -819,39 +855,40 @@
     const title = document.getElementById("heroVideoTitle");
     if (!video || !source || !title) return;
 
-    const item = map?.["6dof"]?.[0];
-    if (!item?.src) return;
+    const item = map && map["6dof"] && map["6dof"][0];
+    if (!item || !item.src) return;
 
     source.src = item.src;
     video.poster = item.poster || "";
     video.autoplay = false;
-    try { video.pause(); } catch {}
-    video.load();
+    try {
+      video.pause();
+    } catch (_) {}
+    try {
+      video.load();
+    } catch (_) {}
 
     title.textContent = pickTitle(item, lang) || "6DOF demo #1";
   }
 
-  // More demos: find the right-side card robustly
+  // More movies card finder (matches your HTML: data-en="More movies")
   function findMoreDemosCard() {
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
 
-    // Primary: heading has these attributes in your HTML
-    const h = videosSection.querySelector('[data-en="More demos"]');
-    if (h) {
-      const card = h.closest(".rounded-2xl");
-      if (card) return card;
-    }
+    const h1 = videosSection.querySelector('[data-en="More movies"]');
+    if (h1) return h1.closest(".rounded-2xl");
 
-    // Fallback: find by visible text (after translation)
+    const h2 = videosSection.querySelector('[data-pl="Więcej filmów"]');
+    if (h2) return h2.closest(".rounded-2xl");
+
+    // Fallback: by visible text
     const headings = Array.from(videosSection.querySelectorAll("h3"));
-    const target = headings.find(x => {
+    const target = headings.find((x) => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return t === "more demos" || t === "więcej demo" || t === "more movies" || t === "więcej filmów";
+      return t === "more movies" || t === "więcej filmów" || t === "more demos" || t === "więcej demo";
     });
-    if (target) return target.closest(".rounded-2xl");
-
-    return null;
+    return target ? target.closest(".rounded-2xl") : null;
   }
 
   function setMoreDemosHeading(card, lang) {
@@ -859,28 +896,29 @@
     const h = card.querySelector("h3");
     if (!h) return;
 
-    // Force new wording regardless of HTML
     const en = "More movies";
     const pl = "Więcej filmów";
     h.dataset.en = en;
     h.dataset.pl = pl;
-    h.textContent = (lang === "pl") ? pl : en;
+    h.textContent = lang === "pl" ? pl : en;
   }
 
   function buildExtrasListCards(extras, lang) {
     const wrap = document.createElement("div");
     wrap.className = "space-y-3";
 
-    extras.forEach((v, idx) => {
+    for (let idx = 0; idx < extras.length; idx++) {
+      const v = extras[idx];
+
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className =
         "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 transition flex gap-3 items-center";
       btn.setAttribute("data-extra-idx", String(idx));
 
-      const title = (v.titleText || "").trim();
-      const desc = (v.descText || "").trim();
-      const safeTitle = title || ((lang === "pl") ? `Film #${idx + 1}` : `Movie #${idx + 1}`);
+      const title = String(v.titleText || "").trim();
+      const desc = String(v.descText || "").trim();
+      const safeTitle = title || (lang === "pl" ? `Film #${idx + 1}` : `Movie #${idx + 1}`);
 
       const posterHtml = v.poster
         ? `<img src="${escapeHtml(v.poster)}" alt="" class="w-20 h-14 object-cover rounded-lg bg-black/40 shrink-0" loading="lazy" decoding="async">`
@@ -895,7 +933,7 @@
       `;
 
       wrap.appendChild(btn);
-    });
+    }
 
     return wrap;
   }
@@ -904,7 +942,7 @@
     if (!card) return;
 
     // hide if none
-    if (!extras.length) {
+    if (!extras || !extras.length) {
       card.classList.add("hidden");
       return;
     }
@@ -915,28 +953,30 @@
     // Keep only the heading, replace rest with our list
     const heading = card.querySelector("h3");
     const nodes = Array.from(card.childNodes);
-    nodes.forEach(n => {
+    nodes.forEach((n) => {
       if (heading && n === heading) return;
       if (n.nodeType === 3 && !String(n.textContent || "").trim()) return;
-      card.removeChild(n);
+      try {
+        card.removeChild(n);
+      } catch (_) {}
     });
 
     const list = buildExtrasListCards(extras, lang);
     card.appendChild(list);
 
-    // click binding
+    // click binding (NO passive on click)
     card.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-extra-idx]");
+      const btn = e.target && e.target.closest ? e.target.closest("button[data-extra-idx]") : null;
       if (!btn) return;
       const idx = Number(btn.getAttribute("data-extra-idx"));
       const item = extras[idx];
-      if (!item?.src) return;
+      if (!item || !item.src) return;
       openVideo({
         src: item.src,
         poster: item.poster || "",
-        titleText: item.titleText || "Video"
+        titleText: item.titleText || "Video",
       });
-    }, { passive: true });
+    });
   }
 
   async function initVideoDemos(videoModalApi, lang) {
@@ -949,11 +989,16 @@
       setDemoButtonsState(map, lang);
 
       // extras = everything except the first 6dof clip (hero)
-      const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
-      const hero = map?.["6dof"]?.[0] || null;
+      const all = [];
+      for (const k in map) {
+        if (Object.prototype.hasOwnProperty.call(map, k) && Array.isArray(map[k])) {
+          for (const v of map[k]) all.push(v);
+        }
+      }
+      const hero = map && map["6dof"] && map["6dof"][0];
 
-      const extrasRaw = all.filter(v => v && v.src && (!hero || v.src !== hero.src));
-      const extras = extrasRaw.map(v => ({
+      const extrasRaw = all.filter((v) => v && v.src && (!hero || v.src !== hero.src));
+      const extras = extrasRaw.map((v) => ({
         src: v.src,
         poster: v.poster || "",
         titleText: pickTitle(v, lang),
@@ -965,8 +1010,7 @@
 
       bindDemoButtons(videoModalApi.openVideo, map, lang);
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
-
-    } catch {
+    } catch (_) {
       // videos.json missing/blocked
       setDemoButtonsState({}, lang);
       const card = findMoreDemosCard();
@@ -974,7 +1018,7 @@
     }
 
     const btn = document.getElementById("openHeroVideoModal");
-    if (btn && !map?.["6dof"]?.[0]?.src) {
+    if (btn && !(map && map["6dof"] && map["6dof"][0] && map["6dof"][0].src)) {
       btn.disabled = true;
       btn.classList.add("opacity-50", "cursor-not-allowed");
       btn.setAttribute("aria-disabled", "true");
@@ -984,12 +1028,12 @@
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
-        metaData: options?.metaData || null,
-        includeModal: Boolean(options?.includeModal),
-        includeVideoModal: options?.includeVideoModal !== false,
-        activeProductKey: options?.activeProductKey || null,
-        injectOtherProducts: options?.injectOtherProducts !== false,
-        enableVideoDemos: options?.enableVideoDemos !== false,
+        metaData: (options && options.metaData) || null,
+        includeModal: Boolean(options && options.includeModal),
+        includeVideoModal: options && options.includeVideoModal === false ? false : true,
+        activeProductKey: (options && options.activeProductKey) || null,
+        injectOtherProducts: options && options.injectOtherProducts === false ? false : true,
+        enableVideoDemos: options && options.enableVideoDemos === false ? false : true,
       };
 
       const lang = detectLang();
@@ -1020,6 +1064,6 @@
       }
 
       bindScrollSpy();
-    }
+    },
   };
 })();
