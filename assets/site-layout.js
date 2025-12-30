@@ -238,8 +238,81 @@
 </header>`;
   }
 
-  function renderFooter() {
-    return `<footer class="bg-gray-900 py-6 text-center text-gray-400">© 2025 ForgeMotion Systems</footer>`;
+  function renderFooter(lang) {
+    const safeLang = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
+    const termsHref = safeLang === "pl"
+      ? "/legal/terms-and-conditions-pl.html"
+      : "/legal/terms-and-conditions-en.html";
+
+    // NOTE: Links are absolute (start with /) to work on GitHub Pages and in local Live Server.
+    return `
+<footer class="bg-gray-900 border-t border-white/5">
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+      <!-- Brand / intro -->
+      <div>
+        <a href="${escapeHtml(buildIndexUrl(safeLang, "products"))}" class="inline-flex items-center gap-3" aria-label="ForgeMotion Systems">
+          <img src="/logo.png" alt="ForgeMotion Systems" class="h-10 w-auto object-contain" loading="lazy" />
+        </a>
+        <p class="mt-4 text-sm text-white/70" data-en="Professional motion platforms for racing and flight simulators."
+           data-pl="Profesjonalne platformy ruchu do symulatorów wyścigowych i lotniczych."></p>
+      </div>
+
+      <!-- Products -->
+      <div>
+        <h3 class="text-sm font-semibold tracking-wide text-white" data-en="Products" data-pl="Produkty"></h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a class="text-white/70 hover:text-white transition" href="/products-6dof.html">6DOF</a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="/products-3dof.html">3DOF / 2DOF</a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="/products-mk14.html">MK14</a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="/products-belt-tensioner.html" data-en="Belt tensioner" data-pl="Napinacz pasów"></a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="/products-accessories.html" data-en="Accessories" data-pl="Akcesoria"></a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h3 class="text-sm font-semibold tracking-wide text-white" data-en="Company" data-pl="Firma"></h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "about"))}" data-en="About" data-pl="O nas"></a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "contact"))}" data-en="Contact" data-pl="Kontakt"></a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "products"))}" data-en="Product overview" data-pl="Przegląd produktów"></a></li>
+        </ul>
+      </div>
+
+      <!-- Legal / contact -->
+      <div>
+        <h3 class="text-sm font-semibold tracking-wide text-white" data-en="Legal" data-pl="Formalności"></h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>
+            <a class="text-white/70 hover:text-white transition" href="${escapeHtml(termsHref)}"
+               data-en="Terms & Conditions" data-pl="Regulamin"></a>
+          </li>
+          <li>
+            <a class="text-white/70 hover:text-white transition" href="/assets/privacy.html"
+               data-en="Privacy policy" data-pl="Polityka prywatności"></a>
+          </li>
+        </ul>
+
+        <div class="mt-6 text-sm">
+          <div class="text-white font-semibold" data-en="Contact" data-pl="Kontakt"></div>
+          <a class="mt-2 inline-block text-white/70 hover:text-white transition" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
+          <div class="mt-2 text-white/60" data-en="We respond via email only." data-pl="Odpowiadamy wyłącznie mailowo."></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-10 border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="text-xs text-white/55">© 2025 ForgeMotion Systems</div>
+      <div class="text-xs text-white/55 flex items-center gap-4">
+        <a class="hover:text-white transition" href="${escapeHtml(termsHref)}" data-en="Terms" data-pl="Regulamin"></a>
+        <a class="hover:text-white transition" href="/assets/privacy.html" data-en="Privacy" data-pl="Prywatność"></a>
+      </div>
+    </div>
+  </div>
+</footer>`;
   }
 
   function renderModal() {
@@ -305,8 +378,8 @@
     else document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
     const footerSlot = document.getElementById("siteFooter");
-    if (footerSlot) footerSlot.innerHTML = renderFooter();
-    else document.body.insertAdjacentHTML("beforeend", renderFooter());
+    if (footerSlot) footerSlot.innerHTML = renderFooter(lang);
+    else document.body.insertAdjacentHTML("beforeend", renderFooter(lang));
 
     const modalSlot = document.getElementById("siteModal");
 
