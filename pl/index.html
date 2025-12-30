@@ -37,7 +37,7 @@
         "name":"ForgeMotion Systems",
         "url":"https://forgemotionsystems.com/",
         "logo":"https://forgemotionsystems.com/logo.png",
-        "email":"sales@forgemotionsystems.com",
+        "email":"contact@forgemotionsystems.com",
         "sameAs":[
           "https://crj200athome.wordpress.com/",
           "https://www.youtube.com/watch?v=2k_porGEQZI",
@@ -461,12 +461,17 @@
 </ul>
 <div class="mt-6 text-sm text-white/70">
 <span data-en="Prefer email?" data-pl="Wolisz e-mail?">Wolisz e-mail?</span>
-<a class="underline hover:text-white" href="mailto:sales@forgemotionsystems.com?subject=Zapytanie%20-%20ForgeMotion%20Systems">
-                  sales@forgemotionsystems.com
+<a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com?subject=Zapytanie%20-%20ForgeMotion%20Systems">
+                  contact@forgemotionsystems.com
                 </a>
 </div>
 </div>
 <form class="space-y-4" id="leadForm">
+  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="lang" value="pl">
+  <input type="hidden" name="page_url" value="">
+  <input type="hidden" name="gdpr_text" value="">
+
 <div>
 <label class="block text-sm text-white/80 mb-1" data-en="Name" data-pl="Imię i nazwisko" for="lead_name">Imię i nazwisko</label>
 <input autocomplete="name" class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30" id="lead_name" name="name" required="" type="text"/>
@@ -495,6 +500,28 @@
 <textarea class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30" data-en="Use case, footprint limits, motion range, timeline..." data-pl="Zastosowanie, ograniczenia gabarytowe, zakres ruchu, termin..." id="lead_message" name="message" placeholder="Zastosowanie, ograniczenia gabarytowe, zakres ruchu, termin..." required="" rows="5"></textarea>
 </div>
 <div class="flex items-center gap-3">
+
+<div class="mt-2">
+  <label class="block text-sm text-white/80 mb-1" data-en="Attachments (optional)" data-pl="Załączniki (opcjonalnie)">Attachments (optional)</label>
+  <input id="lead_files" name="files" type="file" multiple
+         accept=".jpg,.jpeg,.png,.pdf,.dwg"
+         class="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none focus:border-white/30" />
+  <p class="mt-1 text-xs text-white/60" data-en="Up to 3 files. Max 25 MB each. Allowed: JPG, PNG, PDF, DWG." data-pl="Do 3 plików. Maks. 25 MB każdy. Dozwolone: JPG, PNG, PDF, DWG.">
+    Up to 3 files. Max 25 MB each. Allowed: JPG, PNG, PDF, DWG.
+  </p>
+</div>
+
+<div class="mt-4 flex items-start gap-3">
+  <input id="lead_gdpr" name="gdpr" type="checkbox" required
+         class="mt-1 h-4 w-4 rounded border-white/20 bg-black/30" />
+  <label for="lead_gdpr" class="text-sm text-white/75">
+    <span data-en="I agree to the processing of my data in line with the" data-pl="Wyrażam zgodę na przetwarzanie moich danych zgodnie z">
+      I agree to the processing of my data in line with the
+    </span>
+    <a class="underline hover:text-white" href="/pl/privacy.html" data-en="Privacy Policy (GDPR)." data-pl="Polityką prywatności (RODO).">Privacy Policy (GDPR).</a>
+  </label>
+</div>
+
 <button class="rounded-xl bg-white text-black px-5 py-3 font-medium hover:bg-white/90 transition" data-en="Send request" data-pl="Wyślij zapytanie" id="leadSubmitBtn" type="submit">
                   Wyślij zapytanie
                 </button>
@@ -630,10 +657,11 @@
 
         setStatus(lang === "pl" ? "Otwieram klienta poczty…" : "Opening email client…", false);
 
-        const mailto = `mailto:sales@forgemotionsystems.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+        const mailto = `mailto:contact@forgemotionsystems.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
         window.location.href = mailto;
       });
     })();
   </script>
+  <script src="/assets/contact-form.js" defer></script>
 </body>
 </html>
