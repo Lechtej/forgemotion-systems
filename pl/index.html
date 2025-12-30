@@ -57,9 +57,13 @@
     .bg-wrap {
       position: relative;
       background-color: #0b1220;
-      background-image: url('/images/hero-forge.png'); background-image: image-set(url('/images/hero-forge.webp') type('image/webp'), url('/images/hero-forge.png') type('image/png'));
+      background-image: url('/images/hero-forge.png');
+      background-image: image-set(
+        url('/images/hero-forge.webp') type('image/webp'),
+        url('/images/hero-forge.png') type('image/png')
+      );
       background-repeat: no-repeat;
-      background-position: left top;
+      background-position: center top;
       background-size: contain;
       overflow: hidden;
     }
@@ -91,7 +95,7 @@
     .bg-inner { position: relative; z-index: 1; }
 
     @media (max-width: 768px) {
-      .bg-wrap { background-size: 145% auto; background-position: left 18%; }
+      .bg-wrap { background-size: 145% auto; background-position: center top; }
       .bg-wrap::before {
         background: linear-gradient(
           to bottom,
@@ -124,7 +128,7 @@
     @media (min-width: 1024px) { .hero-panel { top: 62vh; } }
     @media (max-width: 768px) { .hero-panel { top: 56vh; } }
     @media (max-width: 768px) {
-      #hero { min-height: auto !important; }
+      #hero { min-height: auto !important; padding-top: 9rem !important; }
       .hero-panel { position: static !important; top:auto !important; left:auto !important; right:auto !important; }
     }
 
