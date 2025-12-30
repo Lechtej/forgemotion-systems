@@ -56,10 +56,12 @@
 <style>
     .bg-wrap {
       position: relative;
-      
-      margin-top: -6rem;
-      padding-top: 6rem;
-background-color: #0b1220;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    main.hero-bg {
+      background-color: #0b1220;
       background-image: url('/images/hero-forge.png');
       background-image: image-set(
         url('/images/hero-forge.webp') type('image/webp'),
@@ -67,10 +69,10 @@ background-color: #0b1220;
       );
       background-repeat: no-repeat;
       background-position: center 0px;
-      background-size: contain;
-      overflow: hidden;
+      background-size: cover;
     }
-    .bg-wrap::before {
+    
+.bg-wrap::before {
       content: "";
       position: absolute;
       inset: 0;
@@ -98,7 +100,7 @@ background-color: #0b1220;
     .bg-inner { position: relative; z-index: 1; }
 
     @media (max-width: 768px) {
-      .bg-wrap { background-size: 145% auto; background-position: center 0px; }
+      main.hero-bg { background-size: 145% auto; background-position: center 0px; }
       .bg-wrap::before {
         background: linear-gradient(
           to bottom,
@@ -116,10 +118,10 @@ background-color: #0b1220;
       }
     }
     @media (min-width: 1024px) {
-      .bg-wrap { background-size: contain; background-position: left 6% 0px; }
+      main.hero-bg { background-size: contain; background-position: left 6% 0px; }
     }
     @media (min-width: 1024px) and (max-height: 820px) {
-      .bg-wrap { background-position: left 10% 0px; }
+      main.hero-bg { background-position: left 10% 0px; }
     }
 
     .hero-panel {
@@ -208,7 +210,7 @@ background-color: #0b1220;
 </head>
 <body class="bg-gray-900 text-white font-sans">
 <div id="siteHeader"></div>
-<main class="pt-24">
+<main class="pt-24 hero-bg">
 <div class="bg-wrap">
 <div class="bg-inner">
 <section class="fade-in relative min-h-[100vh] lg:min-h-[110vh] p-4 pt-24 md:pt-28" id="hero">
