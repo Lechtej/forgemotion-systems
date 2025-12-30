@@ -92,29 +92,102 @@
 </div>
 <!-- Hero photo + thumbs -->
 <div class="mb-2">
-<div class="grid gap-3 md:grid-cols-[minmax(0,1fr)_220px] md:items-start">
-  <!-- Main photo (desktop: slightly smaller thanks to thumbs column) -->
-  <div class="md:max-w-[820px] md:justify-self-start">
+  <div class="md:grid md:grid-cols-[1fr_220px] md:gap-4 md:items-start">
+    <!-- Main image (click opens modal) -->
     <div class="rounded-2xl photo-frame overflow-hidden">
-      <picture><source srcset="/images/rama6dof1.webp" type="image/webp"/><img alt="6DOF motion platform" class="product-photo cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
+      <picture id="mainProductPicture">
+        <source id="mainProductSource" srcset="/images/rama6dof1.webp" type="image/webp"/>
+        <img
+          id="mainProductImg"
+          alt="6DOF motion platform"
+          class="product-photo cursor-zoom-in"
+          src="/images/rama6dof1.jpg"
+          data-full="/images/rama6dof1-large.jpg"
+          data-gallery-key="6dof"
+          data-index="0"
+          loading="lazy"
+          decoding="async"
+          width="1249"
+          height="1023" />
+      </picture>
     </div>
 
-    <!-- Mobile thumbnails (stay below) -->
-    <div class="grid grid-cols-3 gap-3 mt-3 md:hidden">
-      <picture><source srcset="/images/rama6dof1.webp" type="image/webp"/><img alt="6DOF motion platform photo 1" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
-      <picture><source srcset="/images/rama6dof2.webp" type="image/webp"/><img alt="6DOF motion platform photo 2" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof2.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof2.jpg" width="1536"/></picture>
-      <picture><source srcset="/images/rama6dof3.webp" type="image/webp"/><img alt="6DOF motion platform photo 3" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof3.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof3.jpg" width="1536"/></picture>
+    <!-- Desktop thumbs (right side, vertical scroll) -->
+    <div class="hidden md:block">
+      <div class="photo-frame rounded-2xl p-2">
+        <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
+          <div class="grid grid-cols-1 gap-2">
+            <button type="button" class="thumbBtn block" data-jpg="/images/rama6dof1.jpg" data-webp="/images/rama6dof1.webp" data-full="/images/rama6dof1-large.jpg" data-alt="6DOF motion platform photo 1" data-index="0">
+              <img alt="6DOF motion platform photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof1.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/rama6dof2.jpg" data-webp="/images/rama6dof2.webp" data-full="/images/rama6dof2.jpg" data-alt="6DOF motion platform photo 2" data-index="1">
+              <img alt="6DOF motion platform photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof2.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/rama6dof3.jpg" data-webp="/images/rama6dof3.webp" data-full="/images/rama6dof3.jpg" data-alt="6DOF motion platform photo 3" data-index="2">
+              <img alt="6DOF motion platform photo 3" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof3.jpg"/>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Desktop thumbnails (moved to the right) -->
-  <div class="hidden md:flex md:flex-col gap-3">
-    <picture><source srcset="/images/rama6dof1.webp" type="image/webp"/><img alt="6DOF motion platform photo 1" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
-    <picture><source srcset="/images/rama6dof2.webp" type="image/webp"/><img alt="6DOF motion platform photo 2" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof2.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof2.jpg" width="1536"/></picture>
-    <picture><source srcset="/images/rama6dof3.webp" type="image/webp"/><img alt="6DOF motion platform photo 3" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof3.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof3.jpg" width="1536"/></picture>
+  <!-- Mobile thumbs (below, horizontal scroll) -->
+  <div class="md:hidden mt-3">
+    <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;">
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama6dof1.jpg" data-webp="/images/rama6dof1.webp" data-full="/images/rama6dof1-large.jpg" data-alt="6DOF motion platform photo 1" data-index="0">
+        <img alt="6DOF motion platform photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof1.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama6dof2.jpg" data-webp="/images/rama6dof2.webp" data-full="/images/rama6dof2.jpg" data-alt="6DOF motion platform photo 2" data-index="1">
+        <img alt="6DOF motion platform photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof2.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama6dof3.jpg" data-webp="/images/rama6dof3.webp" data-full="/images/rama6dof3.jpg" data-alt="6DOF motion platform photo 3" data-index="2">
+        <img alt="6DOF motion platform photo 3" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof3.jpg"/>
+      </button>
+    </div>
   </div>
-</div>
-<p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
+
+  <p class="text-white/55 text-sm mt-3" data-en="Tip: click the main image to zoom." data-pl="Wskazówka: kliknij duże zdjęcie, aby powiększyć."></p>
+
+  <!-- Gallery wiring (thumbs -> main, main -> modal gallery) -->
+  <script>
+    (function () {
+      const mainImg = document.getElementById('mainProductImg');
+      const mainSource = document.getElementById('mainProductSource');
+
+      // expose gallery for modal (site-layout.js)
+      window.ProductGalleries = window.ProductGalleries || {};
+      window.ProductGalleries['6dof'] = [
+        { full: '/images/rama6dof1-large.jpg', alt: '6DOF motion platform photo 1' },
+        { full: '/images/rama6dof2.jpg', alt: '6DOF motion platform photo 2' },
+        { full: '/images/rama6dof3.jpg', alt: '6DOF motion platform photo 3' },
+      ];
+
+      function setMainFromThumb(btn) {
+        if (!btn || !mainImg) return;
+        const jpg = btn.getAttribute('data-jpg') || '';
+        const webp = btn.getAttribute('data-webp') || '';
+        const full = btn.getAttribute('data-full') || jpg;
+        const alt = btn.getAttribute('data-alt') || '';
+        const idx = btn.getAttribute('data-index') || '0';
+
+        if (webp && mainSource) mainSource.srcset = webp;
+        if (jpg) mainImg.src = jpg;
+        mainImg.setAttribute('data-full', full);
+        mainImg.setAttribute('alt', alt);
+        mainImg.setAttribute('data-index', idx);
+      }
+
+      // default: first image already set in HTML
+      document.querySelectorAll('.thumbBtn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setMainFromThumb(btn);
+        });
+      });
+    })();
+  </script>
 </div>
 <!-- Benefits (more tangible, less marketing) -->
 <div class="grid lg:grid-cols-3 gap-6">
