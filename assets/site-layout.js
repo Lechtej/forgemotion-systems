@@ -330,6 +330,22 @@
       if (typeof val === "string") el.textContent = val;
     }
   }
+  function withLangParam(url, lang) {
+    if (!url) return url;
+    if (!isProductPagePath(window.location.pathname)) return url;
+    if (getPathLang(window.location.pathname)) return url;
+
+    try {
+      const u = new URL(url, window.location.origin);
+      u.searchParams.set("lang", lang);
+      return u.toString();
+    } catch (_) {
+      // fallback for relative URLs
+      if (url.includes("?")) return url + "&lang=" + lang;
+      return url + "?lang=" + lang;
+    }
+  }
+
 
   function updateMetaTags(lang, metaData) {
     const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
@@ -340,10 +356,11 @@
     setMetaTag("keywords", data?.keywords || "", "name");
     setMetaTag("author", data?.author || "ForgeMotion Systems", "name");
 
-    const canonical = (data?.canonical && String(data.canonical).trim())
+    const canonicalBase = (data?.canonical && String(data.canonical).trim())
       ? data.canonical
       : buildCanonicalForCurrent(lang);
 
+    const canonical = withLangParam(canonicalBase, lang);
     setCanonical(canonical);
 
     setMetaTag("og:title", data?.ogTitle || data?.title || "", "property");
@@ -358,7 +375,58 @@
     setMetaTag("twitter:card", "summary_large_image", "name");
   }
 
-  function detectLang() {
+  
+  function getQueryLang() {
+    try {
+      const q = new URLSearchParams(window.location.search);
+      const v = (q.get("lang") || "").toLowerCase();
+      return SUPPORTED_LANGS.includes(v) ? v : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function isProductPagePath(pathname) {
+    return /\/products-[^\/]+\.html$/i.test(pathname);
+  }
+
+  function setLangQueryParam(lang) {
+    // Only for pages that are not under /en or /pl (i.e., product pages in root)
+    if (getPathLang(window.location.pathname)) return;
+    if (!isProductPagePath(window.location.pathname)) return;
+
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", lang);
+      // Keep other params (if any)
+      window.history.replaceState({}, "", url.toString());
+    } catch (_) {}
+  }
+
+  function rewriteProductLinks(lang) {
+    if (!isProductPagePath(window.location.pathname)) return;
+
+    const anchors = Array.from(document.querySelectorAll("a[href]"));
+    for (const a of anchors) {
+      const raw = a.getAttribute("href");
+      if (!raw) continue;
+
+      const trimmed = raw.trim();
+      // skip external
+      if (/^https?:\/\//i.test(trimmed) || trimmed.startsWith("mailto:") || trimmed.startsWith("tel:")) continue;
+
+      // product page links
+      const m = trimmed.match(/^(products-[^#?]+\.html)([#].+)?$/i);
+      if (m) {
+        const file = m[1];
+        const hash = m[2] || "";
+        a.setAttribute("href", `${file}?lang=${lang}${hash}`);
+        continue;
+      }
+    }
+  }
+
+function detectLang() {
     const fromPath = getPathLang(window.location.pathname);
     if (fromPath) return fromPath;
 
@@ -418,7 +486,9 @@ function setLanguage(lang, metaData) {
 
     applyTexts(safe);
     updateMetaTags(safe, metaData);
-    rewriteIndexAnchors(safe);
+    rewriteIndexAnchors(safe)
+    rewriteProductLinks(safe);
+    setLangQueryParam(safe);;
     rewriteLangHrefs(safe);
 
     document.querySelectorAll("[data-lang]").forEach(btn => {
