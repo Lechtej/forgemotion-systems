@@ -1,4 +1,6 @@
-/* /assets/site-layout.js */
+/* /assets/site-layout.js
+   Shared layout + i18n + meta + mobile menu + image modal + VIDEO modal + demos from videos.json
+*/
 (function () {
   const DEFAULT_LANG = "en";
   const SUPPORTED_LANGS = ["en", "pl"];
@@ -53,7 +55,6 @@
   }
 
   function setMetaTag(key, content, attr = "name") {
-    // CSS.escape bywa problematyczne w starszych środowiskach – nie jest tu konieczne
     let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
     if (!tag) {
       tag = document.createElement("meta");
@@ -93,8 +94,7 @@
       .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp .9s forwards; }
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-      .nav-active { color: rgb(96 165 250) !important; }
-
+      .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
       #videos { scroll-margin-top: 110px; }
 
       ${includeModal ? `
@@ -278,12 +278,10 @@
 
   function renderOtherProducts(activeKey, lang) {
     const items = PRODUCT_LINKS
-      .filter((p) => p.key !== activeKey)
-      .map((p) => {
-        const label = (p.label && (p.label[lang] || p.label.en)) || p.key;
-        return `<a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="${escapeHtml(
-          p.href
-        )}">${escapeHtml(label)}</a>`;
+      .filter(p => p.key !== activeKey)
+      .map(p => {
+        const label = p.label?.[lang] || p.label?.en || p.key;
+        return `<a class="bg-white/10 hover:bg-white/15 border border-white/10 px-5 py-3 rounded font-semibold" href="${escapeHtml(p.href)}">${escapeHtml(label)}</a>`;
       })
       .join("");
 
@@ -324,36 +322,35 @@
   function applyTexts(lang) {
     const nodes = Array.from(document.querySelectorAll("[data-en]"));
     for (const el of nodes) {
-      const val = el.dataset ? el.dataset[lang] : null;
+      const val = el.dataset?.[lang];
       if (typeof val === "string") el.textContent = val;
     }
   }
 
   function updateMetaTags(lang, metaData) {
-    const data = (metaData && (metaData[lang] || metaData[DEFAULT_LANG])) || null;
+    const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
 
-    if (data && data.title) document.title = data.title;
+    if (data?.title) document.title = data.title;
 
-    setMetaTag("description", (data && data.description) || "", "name");
-    setMetaTag("keywords", (data && data.keywords) || "", "name");
-    setMetaTag("author", (data && data.author) || "ForgeMotion Systems", "name");
+    setMetaTag("description", data?.description || "", "name");
+    setMetaTag("keywords", data?.keywords || "", "name");
+    setMetaTag("author", data?.author || "ForgeMotion Systems", "name");
 
-    const canonical =
-      data && data.canonical && String(data.canonical).trim()
-        ? data.canonical
-        : buildCanonicalForCurrent(lang);
+    const canonical = (data?.canonical && String(data.canonical).trim())
+      ? data.canonical
+      : buildCanonicalForCurrent(lang);
 
     setCanonical(canonical);
 
-    setMetaTag("og:title", (data && (data.ogTitle || data.title)) || "", "property");
-    setMetaTag("og:description", (data && (data.ogDescription || data.description)) || "", "property");
-    setMetaTag("og:image", (data && data.ogImage) || "", "property");
+    setMetaTag("og:title", data?.ogTitle || data?.title || "", "property");
+    setMetaTag("og:description", data?.ogDescription || data?.description || "", "property");
+    setMetaTag("og:image", data?.ogImage || "", "property");
     setMetaTag("og:url", canonical || "", "property");
     setMetaTag("og:type", "website", "property");
 
-    setMetaTag("twitter:title", (data && (data.twitterTitle || data.title)) || "", "name");
-    setMetaTag("twitter:description", (data && (data.twitterDescription || data.description)) || "", "name");
-    setMetaTag("twitter:image", (data && data.twitterImage) || "", "name");
+    setMetaTag("twitter:title", data?.twitterTitle || data?.title || "", "name");
+    setMetaTag("twitter:description", data?.twitterDescription || data?.description || "", "name");
+    setMetaTag("twitter:image", data?.twitterImage || "", "name");
     setMetaTag("twitter:card", "summary_large_image", "name");
   }
 
@@ -361,11 +358,10 @@
     const fromPath = getPathLang(window.location.pathname);
     if (fromPath) return fromPath;
 
-    let stored = null;
     try {
-      stored = localStorage.getItem("lang");
+      const stored = localStorage.getItem("lang");
+      if (SUPPORTED_LANGS.includes(stored)) return stored;
     } catch (_) {}
-    if (SUPPORTED_LANGS.includes(stored)) return stored;
 
     return DEFAULT_LANG;
   }
@@ -406,17 +402,14 @@
   function setLanguage(lang, metaData) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
-    try {
-      localStorage.setItem("lang", safe);
-    } catch (_) {}
-
+    try { localStorage.setItem("lang", safe); } catch (_) {}
     document.documentElement.lang = safe;
 
     applyTexts(safe);
     updateMetaTags(safe, metaData);
     rewriteIndexAnchors(safe);
 
-    document.querySelectorAll("[data-lang]").forEach((btn) => {
+    document.querySelectorAll("[data-lang]").forEach(btn => {
       const isActive = btn.getAttribute("data-lang") === safe;
       btn.classList.toggle("nav-active", isActive);
     });
@@ -452,13 +445,9 @@
       }
     });
 
-    document.querySelectorAll(".mobile-link").forEach((a) => a.addEventListener("click", closeMobileMenu));
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMobileMenu();
-    });
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= 768) closeMobileMenu();
-    });
+    document.querySelectorAll(".mobile-link").forEach(a => a.addEventListener("click", closeMobileMenu));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMobileMenu(); });
+    window.addEventListener("resize", () => { if (window.innerWidth >= 768) closeMobileMenu(); });
   }
 
   // ---- image modal ----
@@ -486,7 +475,7 @@
     }
 
     document.addEventListener("click", (e) => {
-      const img = e.target && e.target.closest ? e.target.closest("img[data-full]") : null;
+      const img = e.target?.closest?.("img[data-full]");
       if (!img) return;
       const full = img.getAttribute("data-full") || img.getAttribute("src");
       const alt = img.getAttribute("alt") || "";
@@ -496,7 +485,7 @@
     closeBtn.addEventListener("click", closeModal);
 
     modal.addEventListener("click", (e) => {
-      if (e.target && e.target.classList && e.target.classList.contains("modal-overlay")) closeModal();
+      if (e.target?.classList?.contains("modal-overlay")) closeModal();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -518,8 +507,8 @@
       source.src = src || "";
       video.poster = poster || "";
       video.autoplay = false;
-      try { video.pause(); } catch (_) {}
-      try { video.load(); } catch (_) {}
+      try { video.pause(); } catch {}
+      video.load();
 
       modal.classList.remove("vmodal-hidden");
       modal.setAttribute("aria-hidden", "false");
@@ -528,18 +517,18 @@
     }
 
     function closeVideo() {
-      try { video.pause(); } catch (_) {}
+      try { video.pause(); } catch {}
       modal.classList.add("vmodal-hidden");
       modal.setAttribute("aria-hidden", "true");
       source.src = "";
       video.poster = "";
-      try { video.load(); } catch (_) {}
+      video.load();
       document.body.style.overflow = "";
     }
 
     closeBtn.addEventListener("click", closeVideo);
     modal.addEventListener("click", (e) => {
-      if (e.target && e.target.classList && e.target.classList.contains("vmodal-overlay")) closeVideo();
+      if (e.target?.classList?.contains("vmodal-overlay")) closeVideo();
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeVideo();
@@ -551,7 +540,7 @@
   // ---- smooth scroll ----
   function bindSmoothAnchorScroll() {
     document.addEventListener("click", (e) => {
-      const a = e.target && e.target.closest ? e.target.closest('a[href*="#"]') : null;
+      const a = e.target?.closest?.('a[href*="#"]');
       if (!a) return;
 
       const href = a.getAttribute("href");
@@ -560,11 +549,10 @@
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
       let url;
-      try { url = new URL(href, window.location.href); } catch (_) { return; }
-
+      try { url = new URL(href, window.location.href); } catch { return; }
       if (url.origin !== window.location.origin) return;
 
-      const samePath = stripTrailingSlash(url.pathname) === stripTrailingSlash(window.location.pathname);
+      const samePath = (stripTrailingSlash(url.pathname) === stripTrailingSlash(window.location.pathname));
       if (!samePath) return;
 
       const id = (url.hash || "").replace("#", "");
@@ -575,7 +563,7 @@
 
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
-      try { history.pushState(null, "", `#${id}`); } catch (_) {}
+      history.pushState(null, "", `#${id}`);
 
       if (isMobileMenuOpen()) closeMobileMenu();
     });
@@ -589,7 +577,7 @@
       try {
         const u = new URL(href, window.location.origin);
         return (u.hash || "").replace("#", "");
-      } catch (_) {
+      } catch {
         const idx = String(href).indexOf("#");
         return idx >= 0 ? String(href).slice(idx + 1) : "";
       }
@@ -640,7 +628,7 @@
   }
 
   function bindScrollSpy() {
-    const sectionEls = SCROLLSPY_SECTIONS.map((id) => document.getElementById(id)).filter(Boolean);
+    const sectionEls = SCROLLSPY_SECTIONS.map(id => document.getElementById(id)).filter(Boolean);
     if (sectionEls.length < 2) return;
 
     const links = Array.from(document.querySelectorAll('a.site-nav-link[href*="#"]'));
@@ -650,7 +638,7 @@
       try {
         const u = new URL(href, window.location.origin);
         return (u.hash || "").replace("#", "");
-      } catch (_) {
+      } catch {
         const idx = String(href).indexOf("#");
         return idx >= 0 ? String(href).slice(idx + 1) : "";
       }
@@ -677,23 +665,23 @@
 
       const obs = new IntersectionObserver((entries) => {
         const visible = entries
-          .filter((e) => e.isIntersecting)
+          .filter(e => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible && visible.target && visible.target.id) setActive(visible.target.id);
+        if (visible?.target?.id) setActive(visible.target.id);
       }, {
         root: null,
         rootMargin: "-30% 0px -55% 0px",
-        threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8],
+        threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
       });
 
-      sectionEls.forEach((el) => obs.observe(el));
+      sectionEls.forEach(el => obs.observe(el));
 
       window.addEventListener("hashchange", () => {
         const id = (window.location.hash || "").replace("#", "");
         if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
       });
 
-    } catch (_) {
+    } catch {
       bindScrollSpyFallback(links);
     }
   }
@@ -701,7 +689,7 @@
   // ---- lang buttons ----
   function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
-      const btn = e.target && e.target.closest ? e.target.closest("[data-lang]") : null;
+      const btn = e.target?.closest?.("[data-lang]");
       if (!btn) return;
 
       const targetLang = btn.getAttribute("data-lang");
@@ -711,7 +699,7 @@
       const hash = window.location.hash || "";
 
       if (isIndexLikePath(path) || getPathLang(path)) {
-        try { localStorage.setItem("lang", targetLang); } catch (_) {}
+        try { localStorage.setItem("lang", targetLang); } catch {}
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
@@ -722,66 +710,39 @@
     });
   }
 
-  // -------- VIDEO DEMOS --------
-  function buildVideoJsonCandidates() {
-    const p = window.location.pathname || "/";
-    const isLang = p.startsWith("/pl/") || p.startsWith("/en/") || p === "/pl" || p === "/en";
-
-    // ważne: GitHub Pages bywa hostowane pod sub-ścieżką – dokładamy relative fallbacki
-    const candidates = [
-      "/videos/videos.json",          // normalnie na domenie
-      "videos/videos.json",           // względnie
-      "./videos/videos.json",         // względnie
-    ];
-
-    if (isLang) {
-      candidates.push("../videos/videos.json"); // z /pl/ -> /videos/...
-      candidates.push("../../videos/videos.json");
-    }
-
-    // unikalne
-    return Array.from(new Set(candidates));
-  }
-
-  async function fetchWithTimeout(url, timeoutMs) {
-    // AbortController nie zawsze dostępny (albo bywa blokowany) — mamy fallback
-    if ("AbortController" in window) {
-      const controller = new AbortController();
-      const t = window.setTimeout(() => controller.abort(), timeoutMs);
-      try {
-        const res = await fetch(url, { cache: "no-store", signal: controller.signal });
-        return res;
-      } finally {
-        window.clearTimeout(t);
-      }
-    }
-
-    // fallback bez AbortController
-    return await Promise.race([
-      fetch(url, { cache: "no-store" }),
-      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), timeoutMs)),
-    ]);
-  }
-
+  // -------- VIDEO DEMOS (FIXED) --------
   async function fetchVideosJson({ timeoutMs = 4500 } = {}) {
-    const candidates = buildVideoJsonCandidates();
-    let lastErr = null;
+    const url = new URL("/videos/videos.json", window.location.origin).toString();
 
-    for (const url of candidates) {
-      try {
-        const res = await fetchWithTimeout(url, timeoutMs);
-        if (!res || !res.ok) {
-          lastErr = new Error(`videos.json not ok (${url})`);
-          continue;
-        }
-        return await res.json();
-      } catch (e) {
-        lastErr = e;
-        continue;
+    // AbortController timeout
+    const controller = ("AbortController" in window) ? new AbortController() : null;
+    const t = window.setTimeout(() => { try { controller?.abort(); } catch {} }, timeoutMs);
+
+    try {
+      const res = await fetch(url, {
+        cache: "no-store",
+        signal: controller ? controller.signal : undefined
+      });
+
+      if (!res.ok) {
+        throw new Error(`videos.json HTTP ${res.status}`);
       }
-    }
 
-    throw lastErr || new Error("videos.json not found");
+      // Najważniejsze: text() + JSON.parse() z usunięciem BOM
+      const raw = await res.text();
+      const cleaned = String(raw || "")
+        .replace(/^\uFEFF/, "")     // BOM
+        .trim();
+
+      try {
+        return JSON.parse(cleaned);
+      } catch (e) {
+        console.warn("[SiteLayout] videos.json parse error. First 120 chars:", cleaned.slice(0, 120));
+        throw e;
+      }
+    } finally {
+      window.clearTimeout(t);
+    }
   }
 
   function normalizeVideos(json) {
@@ -790,8 +751,7 @@
       const out = {};
       for (const v of json.videos) {
         if (!v || !v.key) continue;
-        if (!out[v.key]) out[v.key] = [];
-        out[v.key].push(v);
+        (out[v.key] ||= []).push(v);
       }
       return out;
     }
@@ -821,30 +781,30 @@
   }
 
   function setDemoButtonsState(map, lang) {
-    document.querySelectorAll("[data-demo-key]").forEach((btn) => {
+    document.querySelectorAll("[data-demo-key]").forEach(btn => {
       const key = btn.getAttribute("data-demo-key");
-      const has = Boolean(map && map[key] && map[key].length);
+      const has = Boolean(map?.[key]?.length);
       btn.disabled = !has;
       btn.classList.toggle("opacity-50", !has);
       btn.classList.toggle("cursor-not-allowed", !has);
       btn.setAttribute("aria-disabled", String(!has));
-      btn.title = has ? "" : lang === "pl" ? "Demo w przygotowaniu" : "Demo coming soon";
+      btn.title = has ? "" : (lang === "pl" ? "Demo w przygotowaniu" : "Demo coming soon");
     });
   }
 
   function bindDemoButtons(openVideo, map, lang) {
     document.addEventListener("click", (e) => {
-      const btn = e.target && e.target.closest ? e.target.closest("[data-demo-key]") : null;
+      const btn = e.target?.closest?.("[data-demo-key]");
       if (!btn) return;
 
       const key = btn.getAttribute("data-demo-key");
-      const item = map && map[key] && map[key][0];
-      if (!item || !item.src) return;
+      const item = map?.[key]?.[0];
+      if (!item?.src) return;
 
       openVideo({
         src: item.src,
         poster: item.poster || "",
-        titleText: pickTitle(item, lang) || key.toUpperCase() + " demo",
+        titleText: pickTitle(item, lang) || (key.toUpperCase() + " demo")
       });
     });
   }
@@ -854,13 +814,13 @@
     if (!btn) return;
 
     btn.addEventListener("click", () => {
-      const item = map && map["6dof"] && map["6dof"][0];
-      if (!item || !item.src) return;
+      const item = map?.["6dof"]?.[0];
+      if (!item?.src) return;
 
       openVideo({
         src: item.src,
         poster: item.poster || "",
-        titleText: pickTitle(item, lang) || "6DOF demo",
+        titleText: pickTitle(item, lang) || "6DOF demo"
       });
     });
   }
@@ -871,14 +831,14 @@
     const title = document.getElementById("heroVideoTitle");
     if (!video || !source || !title) return;
 
-    const item = map && map["6dof"] && map["6dof"][0];
-    if (!item || !item.src) return;
+    const item = map?.["6dof"]?.[0];
+    if (!item?.src) return;
 
     source.src = item.src;
     video.poster = item.poster || "";
     video.autoplay = false;
-    try { video.pause(); } catch (_) {}
-    try { video.load(); } catch (_) {}
+    try { video.pause(); } catch {}
+    video.load();
 
     title.textContent = pickTitle(item, lang) || "6DOF demo #1";
   }
@@ -887,18 +847,18 @@
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
 
-    const h1 = videosSection.querySelector('[data-en="More movies"]');
-    if (h1) return h1.closest(".rounded-2xl");
-
-    const h2 = videosSection.querySelector('[data-pl="Więcej filmów"]');
-    if (h2) return h2.closest(".rounded-2xl");
+    // Twoje HTML ma "More movies" / "Więcej filmów"
+    const h = videosSection.querySelector('[data-en="More movies"]') || videosSection.querySelector('[data-pl="Więcej filmów"]');
+    if (h) return h.closest(".rounded-2xl");
 
     const headings = Array.from(videosSection.querySelectorAll("h3"));
-    const target = headings.find((x) => {
+    const target = headings.find(x => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return t === "more movies" || t === "więcej filmów" || t === "more demos" || t === "więcej demo";
+      return t === "more movies" || t === "więcej filmów";
     });
-    return target ? target.closest(".rounded-2xl") : null;
+    if (target) return target.closest(".rounded-2xl");
+
+    return null;
   }
 
   function setMoreDemosHeading(card, lang) {
@@ -910,25 +870,23 @@
     const pl = "Więcej filmów";
     h.dataset.en = en;
     h.dataset.pl = pl;
-    h.textContent = lang === "pl" ? pl : en;
+    h.textContent = (lang === "pl") ? pl : en;
   }
 
   function buildExtrasListCards(extras, lang) {
     const wrap = document.createElement("div");
     wrap.className = "space-y-3";
 
-    for (let idx = 0; idx < extras.length; idx++) {
-      const v = extras[idx];
-
+    extras.forEach((v, idx) => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className =
         "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 transition flex gap-3 items-center";
       btn.setAttribute("data-extra-idx", String(idx));
 
-      const title = String(v.titleText || "").trim();
-      const desc = String(v.descText || "").trim();
-      const safeTitle = title || (lang === "pl" ? `Film #${idx + 1}` : `Movie #${idx + 1}`);
+      const title = (v.titleText || "").trim();
+      const desc = (v.descText || "").trim();
+      const safeTitle = title || ((lang === "pl") ? `Film #${idx + 1}` : `Movie #${idx + 1}`);
 
       const posterHtml = v.poster
         ? `<img src="${escapeHtml(v.poster)}" alt="" class="w-20 h-14 object-cover rounded-lg bg-black/40 shrink-0" loading="lazy" decoding="async">`
@@ -943,7 +901,7 @@
       `;
 
       wrap.appendChild(btn);
-    }
+    });
 
     return wrap;
   }
@@ -951,7 +909,7 @@
   function renderMoreDemos(card, extras, lang, openVideo) {
     if (!card) return;
 
-    if (!extras || !extras.length) {
+    if (!extras.length) {
       card.classList.add("hidden");
       return;
     }
@@ -961,25 +919,25 @@
 
     const heading = card.querySelector("h3");
     const nodes = Array.from(card.childNodes);
-    nodes.forEach((n) => {
+    nodes.forEach(n => {
       if (heading && n === heading) return;
       if (n.nodeType === 3 && !String(n.textContent || "").trim()) return;
-      try { card.removeChild(n); } catch (_) {}
+      card.removeChild(n);
     });
 
     const list = buildExtrasListCards(extras, lang);
     card.appendChild(list);
 
     card.addEventListener("click", (e) => {
-      const btn = e.target && e.target.closest ? e.target.closest("button[data-extra-idx]") : null;
+      const btn = e.target?.closest?.("button[data-extra-idx]");
       if (!btn) return;
       const idx = Number(btn.getAttribute("data-extra-idx"));
       const item = extras[idx];
-      if (!item || !item.src) return;
+      if (!item?.src) return;
       openVideo({
         src: item.src,
         poster: item.poster || "",
-        titleText: item.titleText || "Video",
+        titleText: item.titleText || "Video"
       });
     });
   }
@@ -993,16 +951,11 @@
       hydrateHeroVideo(map, lang);
       setDemoButtonsState(map, lang);
 
-      const all = [];
-      for (const k in map) {
-        if (Object.prototype.hasOwnProperty.call(map, k) && Array.isArray(map[k])) {
-          for (const v of map[k]) all.push(v);
-        }
-      }
-      const hero = map && map["6dof"] && map["6dof"][0];
+      const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
+      const hero = map?.["6dof"]?.[0] || null;
 
-      const extrasRaw = all.filter((v) => v && v.src && (!hero || v.src !== hero.src));
-      const extras = extrasRaw.map((v) => ({
+      const extrasRaw = all.filter(v => v && v.src && (!hero || v.src !== hero.src));
+      const extras = extrasRaw.map(v => ({
         src: v.src,
         poster: v.poster || "",
         titleText: pickTitle(v, lang),
@@ -1014,14 +967,15 @@
 
       bindDemoButtons(videoModalApi.openVideo, map, lang);
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
-    } catch (_) {
+    } catch (err) {
+      console.warn("[SiteLayout] videos init failed:", err);
       setDemoButtonsState({}, lang);
       const card = findMoreDemosCard();
       if (card) card.classList.add("hidden");
     }
 
     const btn = document.getElementById("openHeroVideoModal");
-    if (btn && !(map && map["6dof"] && map["6dof"][0] && map["6dof"][0].src)) {
+    if (btn && !map?.["6dof"]?.[0]?.src) {
       btn.disabled = true;
       btn.classList.add("opacity-50", "cursor-not-allowed");
       btn.setAttribute("aria-disabled", "true");
@@ -1031,12 +985,12 @@
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
-        metaData: (options && options.metaData) || null,
-        includeModal: Boolean(options && options.includeModal),
-        includeVideoModal: options && options.includeVideoModal === false ? false : true,
-        activeProductKey: (options && options.activeProductKey) || null,
-        injectOtherProducts: options && options.injectOtherProducts === false ? false : true,
-        enableVideoDemos: options && options.enableVideoDemos === false ? false : true,
+        metaData: options?.metaData || null,
+        includeModal: Boolean(options?.includeModal),
+        includeVideoModal: options?.includeVideoModal !== false,
+        activeProductKey: options?.activeProductKey || null,
+        injectOtherProducts: options?.injectOtherProducts !== false,
+        enableVideoDemos: options?.enableVideoDemos !== false,
       };
 
       const lang = detectLang();
@@ -1067,6 +1021,6 @@
       }
 
       bindScrollSpy();
-    },
+    }
   };
 })();
