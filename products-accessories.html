@@ -81,9 +81,88 @@
 <div class="text-white/70 mt-1" data-en="We can design mounts to size." data-pl="Zrobimy mocowania pod wymiar."></div>
 </div>
 </div>
-<div class="bg-gray-900 rounded-2xl border border-white/10 overflow-hidden">
-<picture><source srcset="/images/accessories1.webp" type="image/webp"/><img alt="Simulator accessories" class="w-full h-auto block" height="1536" loading="lazy" src="/images/accessories1.jpg" width="1024"/></picture>
+
+<div class="mb-2">
+  <div class="md:grid md:grid-cols-[1fr_220px] md:gap-4 md:items-start">
+    <!-- Main image (click opens modal) -->
+    <div class="rounded-2xl photo-frame overflow-hidden">
+      <picture id="mainProductPicture">
+        <source id="mainProductSource" srcset="/images/accessories1.webp" type="image/webp"/>
+        <img
+          id="mainProductImg"
+          alt="ForgeMotion accessories"
+          class="product-photo cursor-zoom-in"
+          src="/images/accessories1.jpg"
+          data-full="/images/accessories1-large.jpg"
+          data-gallery-key="acc"
+          data-index="0"
+          loading="lazy"
+          decoding="async" />
+      </picture>
+    </div>
+
+    <!-- Desktop thumbs (right side, vertical scroll) -->
+    <div class="hidden md:block hidden">
+      <div class="photo-frame rounded-2xl p-2">
+        <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
+          <div class="grid grid-cols-1 gap-2">
+            <button type="button" class="thumbBtn block" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="0">
+              <img alt="ForgeMotion accessories photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile thumbs (below, horizontal scroll) -->
+  <div class="md:hidden mt-3 hidden">
+    <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;" id="thumbsMobile">
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="0">
+        <img alt="ForgeMotion accessories photo 1" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const mainImg = document.getElementById('mainProductImg');
+      const mainSource = document.getElementById('mainProductSource');
+
+      // expose gallery for modal (site-layout.js)
+      window.ProductGalleries = window.ProductGalleries || {};
+      window.ProductGalleries['acc'] = [
+        { full: '/images/accessories1-large.jpg', alt: 'ForgeMotion accessories photo 1' },
+      ];
+
+      function setMainFromThumb(btn) {
+        if (!btn || !mainImg) return;
+        const jpg = btn.getAttribute('data-jpg') || '';
+        const webp = btn.getAttribute('data-webp') || '';
+        const full = btn.getAttribute('data-full') || jpg;
+        const alt = btn.getAttribute('data-alt') || '';
+        const idx = btn.getAttribute('data-index') || '0';
+
+        if (webp && mainSource) mainSource.srcset = webp;
+        if (jpg) mainImg.src = jpg;
+
+        mainImg.setAttribute('data-full', full || jpg);
+        mainImg.setAttribute('alt', alt || '');
+        mainImg.setAttribute('data-index', idx);
+      }
+
+      // default: first image already set in HTML
+      document.querySelectorAll('.thumbBtn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setMainFromThumb(btn);
+        });
+      });
+    })();
+  </script>
 </div>
+
 </div>
 </div>
 </section>

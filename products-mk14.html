@@ -90,17 +90,102 @@
 </div>
 </div>
 <!-- Hero photo + thumbs -->
+
 <div class="mb-2">
-<div class="rounded-2xl photo-frame overflow-hidden">
-<picture><source srcset="/images/mk14seat1.webp" type="image/webp"/><img alt="Ejection seat replica (MK14)" class="product-photo cursor-zoom-in" data-full="/images/mk14seat1.jpg" decoding="async" height="1536" loading="lazy" src="/images/mk14seat1.jpg" width="1024"/></picture>
+  <div class="md:grid md:grid-cols-[1fr_220px] md:gap-4 md:items-start">
+    <!-- Main image (click opens modal) -->
+    <div class="rounded-2xl photo-frame overflow-hidden">
+      <picture id="mainProductPicture">
+        <source id="mainProductSource" srcset="/images/mk14seat1.webp" type="image/webp"/>
+        <img
+          id="mainProductImg"
+          alt="MK14 ejection seat replica"
+          class="product-photo cursor-zoom-in"
+          src="/images/mk14seat1.jpg"
+          data-full="/images/mk14seat1-large.jpg"
+          data-gallery-key="mk14"
+          data-index="0"
+          loading="lazy"
+          decoding="async" />
+      </picture>
+    </div>
+
+    <!-- Desktop thumbs (right side, vertical scroll) -->
+    <div class="hidden md:block">
+      <div class="photo-frame rounded-2xl p-2">
+        <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
+          <div class="grid grid-cols-1 gap-2">
+            <button type="button" class="thumbBtn block" data-jpg="/images/mk14seat1.jpg" data-webp="/images/mk14seat1.webp" data-full="/images/mk14seat1-large.jpg" data-alt="MK14 ejection seat replica photo 1" data-index="0">
+              <img alt="MK14 ejection seat replica photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat1.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/mk14seat-production1.jpg" data-webp="/images/mk14seat-production1.webp" data-full="/images/mk14seat-production1.jpg" data-alt="MK14 ejection seat replica photo 2" data-index="1">
+              <img alt="MK14 ejection seat replica photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat-production1.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/mk14seat-production2.jpg" data-webp="/images/mk14seat-production2.webp" data-full="/images/mk14seat-production2.jpg" data-alt="MK14 ejection seat replica photo 3" data-index="2">
+              <img alt="MK14 ejection seat replica photo 3" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat-production2.jpg"/>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile thumbs (below, horizontal scroll) -->
+  <div class="md:hidden mt-3">
+    <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;" id="thumbsMobile">
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/mk14seat1.jpg" data-webp="/images/mk14seat1.webp" data-full="/images/mk14seat1-large.jpg" data-alt="MK14 ejection seat replica photo 1" data-index="0">
+        <img alt="MK14 ejection seat replica photo 1" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat1.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/mk14seat-production1.jpg" data-webp="/images/mk14seat-production1.webp" data-full="/images/mk14seat-production1.jpg" data-alt="MK14 ejection seat replica photo 2" data-index="1">
+        <img alt="MK14 ejection seat replica photo 2" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat-production1.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/mk14seat-production2.jpg" data-webp="/images/mk14seat-production2.webp" data-full="/images/mk14seat-production2.jpg" data-alt="MK14 ejection seat replica photo 3" data-index="2">
+        <img alt="MK14 ejection seat replica photo 3" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat-production2.jpg"/>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const mainImg = document.getElementById('mainProductImg');
+      const mainSource = document.getElementById('mainProductSource');
+
+      // expose gallery for modal (site-layout.js)
+      window.ProductGalleries = window.ProductGalleries || {};
+      window.ProductGalleries['mk14'] = [
+        { full: '/images/mk14seat1-large.jpg', alt: 'MK14 ejection seat replica photo 1' },
+        { full: '/images/mk14seat-production1.jpg', alt: 'MK14 ejection seat replica photo 2' },
+        { full: '/images/mk14seat-production2.jpg', alt: 'MK14 ejection seat replica photo 3' },
+      ];
+
+      function setMainFromThumb(btn) {
+        if (!btn || !mainImg) return;
+        const jpg = btn.getAttribute('data-jpg') || '';
+        const webp = btn.getAttribute('data-webp') || '';
+        const full = btn.getAttribute('data-full') || jpg;
+        const alt = btn.getAttribute('data-alt') || '';
+        const idx = btn.getAttribute('data-index') || '0';
+
+        if (webp && mainSource) mainSource.srcset = webp;
+        if (jpg) mainImg.src = jpg;
+
+        mainImg.setAttribute('data-full', full || jpg);
+        mainImg.setAttribute('alt', alt || '');
+        mainImg.setAttribute('data-index', idx);
+      }
+
+      // default: first image already set in HTML
+      document.querySelectorAll('.thumbBtn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setMainFromThumb(btn);
+        });
+      });
+    })();
+  </script>
 </div>
-<div class="grid grid-cols-3 gap-3 mt-3">
-<picture><source srcset="/images/mk14seat-production1.webp" type="image/webp"/><img alt="MK14 production photo 1" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/mk14seat-production1.jpg" decoding="async" height="983" loading="lazy" src="/images/mk14seat-production1.jpg" width="883"/></picture>
-<picture><source srcset="/images/mk14seat-production2.webp" type="image/webp"/><img alt="MK14 production photo 2" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/mk14seat-production2.jpg" decoding="async" height="975" loading="lazy" src="/images/mk14seat-production2.jpg" width="991"/></picture>
-<picture><source srcset="/images/mk14seat-production3.webp" type="image/webp"/><img alt="MK14 production photo 3" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/mk14seat-production3.jpg" decoding="async" height="1078" loading="lazy" src="/images/mk14seat-production3.jpg" width="1018"/></picture>
-</div>
-<p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
-</div>
+
 <!-- Benefits -->
 <div class="grid lg:grid-cols-3 gap-6">
 <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
