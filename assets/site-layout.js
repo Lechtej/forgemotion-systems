@@ -1,8 +1,4 @@
-/* /assets/site-layout.js
-   Shared layout + i18n + meta + mobile menu + image modal + VIDEO modal + demos from videos.json
-   + scrollspy (index) + smooth anchor scroll + GitHub Pages friendly /en/ /pl/ routing
-   + hardened: robust fetch (timeout), safe scrollspy fallback, optional video section auto-hide
-*/
+/* /assets/site-layout.js */
 (function () {
   const DEFAULT_LANG = "en";
   const SUPPORTED_LANGS = ["en", "pl"];
@@ -19,7 +15,6 @@
 
   // ---- utils ----
   function escapeHtml(str) {
-    // avoid String.prototype.replaceAll for older browsers
     return String(str == null ? "" : str)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
@@ -58,7 +53,8 @@
   }
 
   function setMetaTag(key, content, attr = "name") {
-    let tag = document.head.querySelector(`meta[${attr}="${CSS.escape(key)}"]`);
+    // CSS.escape bywa problematyczne w starszych środowiskach – nie jest tu konieczne
+    let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
     if (!tag) {
       tag = document.createElement("meta");
       tag.setAttribute(attr, key);
@@ -97,9 +93,8 @@
       .fade-in { opacity: 0; transform: translateY(16px); animation: fadeInUp .9s forwards; }
       @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-      .nav-active { color: rgb(96 165 250) !important; } /* blue-400 */
+      .nav-active { color: rgb(96 165 250) !important; }
 
-      /* Fix anchors under fixed header */
       #videos { scroll-margin-top: 110px; }
 
       ${includeModal ? `
@@ -385,10 +380,8 @@
 
       const trimmed = raw.trim();
 
-      // on /en/ or /pl/ keep "#..." as-is
       if (trimmed.startsWith("#") && isIndexLikePath(window.location.pathname)) continue;
 
-      // index.html(#hash)
       const m1 = trimmed.match(/^(\/?index\.html)(#.+)?$/i);
       if (m1) {
         const hash = m1[2] || "";
@@ -396,14 +389,12 @@
         continue;
       }
 
-      // "/#section"
       const m2 = trimmed.match(/^\/#(.+)$/);
       if (m2) {
         a.setAttribute("href", buildIndexUrl(safe, `#${m2[1]}`));
         continue;
       }
 
-      // "#section" on non-index pages -> link to /en/#section
       const m3 = trimmed.match(/^#(.+)$/);
       if (m3 && !isIndexLikePath(window.location.pathname) && !getPathLang(window.location.pathname)) {
         a.setAttribute("href", buildIndexUrl(safe, `#${m3[1]}`));
@@ -527,12 +518,8 @@
       source.src = src || "";
       video.poster = poster || "";
       video.autoplay = false;
-      try {
-        video.pause();
-      } catch (_) {}
-      try {
-        video.load();
-      } catch (_) {}
+      try { video.pause(); } catch (_) {}
+      try { video.load(); } catch (_) {}
 
       modal.classList.remove("vmodal-hidden");
       modal.setAttribute("aria-hidden", "false");
@@ -541,16 +528,12 @@
     }
 
     function closeVideo() {
-      try {
-        video.pause();
-      } catch (_) {}
+      try { video.pause(); } catch (_) {}
       modal.classList.add("vmodal-hidden");
       modal.setAttribute("aria-hidden", "true");
       source.src = "";
       video.poster = "";
-      try {
-        video.load();
-      } catch (_) {}
+      try { video.load(); } catch (_) {}
       document.body.style.overflow = "";
     }
 
@@ -577,11 +560,7 @@
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
       let url;
-      try {
-        url = new URL(href, window.location.href);
-      } catch (_) {
-        return;
-      }
+      try { url = new URL(href, window.location.href); } catch (_) { return; }
 
       if (url.origin !== window.location.origin) return;
 
@@ -596,11 +575,7 @@
 
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
-      try {
-        history.pushState(null, "", `#${id}`);
-      } catch (_) {
-        // ignore
-      }
+      try { history.pushState(null, "", `#${id}`); } catch (_) {}
 
       if (isMobileMenuOpen()) closeMobileMenu();
     });
@@ -647,18 +622,14 @@
     }
 
     let ticking = false;
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(() => {
-          pickActive();
-          ticking = false;
-        });
-      },
-      { passive: true }
-    );
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        pickActive();
+        ticking = false;
+      });
+    }, { passive: true });
 
     window.addEventListener("hashchange", () => {
       const id = (window.location.hash || "").replace("#", "");
@@ -704,19 +675,16 @@
         return;
       }
 
-      const obs = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((e) => e.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (visible && visible.target && visible.target.id) setActive(visible.target.id);
-        },
-        {
-          root: null,
-          rootMargin: "-30% 0px -55% 0px",
-          threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8],
-        }
-      );
+      const obs = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible && visible.target && visible.target.id) setActive(visible.target.id);
+      }, {
+        root: null,
+        rootMargin: "-30% 0px -55% 0px",
+        threshold: [0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8],
+      });
 
       sectionEls.forEach((el) => obs.observe(el));
 
@@ -724,6 +692,7 @@
         const id = (window.location.hash || "").replace("#", "");
         if (SCROLLSPY_SECTIONS.includes(id)) setActive(id);
       });
+
     } catch (_) {
       bindScrollSpyFallback(links);
     }
@@ -741,11 +710,8 @@
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
 
-      // On index-ish pages switch by navigating to /en/#... or /pl/#...
       if (isIndexLikePath(path) || getPathLang(path)) {
-        try {
-          localStorage.setItem("lang", targetLang);
-        } catch (_) {}
+        try { localStorage.setItem("lang", targetLang); } catch (_) {}
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
@@ -757,16 +723,65 @@
   }
 
   // -------- VIDEO DEMOS --------
-  async function fetchVideosJson({ timeoutMs = 3500 } = {}) {
-    const controller = new AbortController();
-    const t = window.setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const res = await fetch("/videos/videos.json", { cache: "no-store", signal: controller.signal });
-      if (!res.ok) throw new Error("videos.json not found");
-      return await res.json();
-    } finally {
-      window.clearTimeout(t);
+  function buildVideoJsonCandidates() {
+    const p = window.location.pathname || "/";
+    const isLang = p.startsWith("/pl/") || p.startsWith("/en/") || p === "/pl" || p === "/en";
+
+    // ważne: GitHub Pages bywa hostowane pod sub-ścieżką – dokładamy relative fallbacki
+    const candidates = [
+      "/videos/videos.json",          // normalnie na domenie
+      "videos/videos.json",           // względnie
+      "./videos/videos.json",         // względnie
+    ];
+
+    if (isLang) {
+      candidates.push("../videos/videos.json"); // z /pl/ -> /videos/...
+      candidates.push("../../videos/videos.json");
     }
+
+    // unikalne
+    return Array.from(new Set(candidates));
+  }
+
+  async function fetchWithTimeout(url, timeoutMs) {
+    // AbortController nie zawsze dostępny (albo bywa blokowany) — mamy fallback
+    if ("AbortController" in window) {
+      const controller = new AbortController();
+      const t = window.setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+        return res;
+      } finally {
+        window.clearTimeout(t);
+      }
+    }
+
+    // fallback bez AbortController
+    return await Promise.race([
+      fetch(url, { cache: "no-store" }),
+      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), timeoutMs)),
+    ]);
+  }
+
+  async function fetchVideosJson({ timeoutMs = 4500 } = {}) {
+    const candidates = buildVideoJsonCandidates();
+    let lastErr = null;
+
+    for (const url of candidates) {
+      try {
+        const res = await fetchWithTimeout(url, timeoutMs);
+        if (!res || !res.ok) {
+          lastErr = new Error(`videos.json not ok (${url})`);
+          continue;
+        }
+        return await res.json();
+      } catch (e) {
+        lastErr = e;
+        continue;
+      }
+    }
+
+    throw lastErr || new Error("videos.json not found");
   }
 
   function normalizeVideos(json) {
@@ -775,7 +790,8 @@
       const out = {};
       for (const v of json.videos) {
         if (!v || !v.key) continue;
-        (out[v.key] ||= []).push(v);
+        if (!out[v.key]) out[v.key] = [];
+        out[v.key].push(v);
       }
       return out;
     }
@@ -861,17 +877,12 @@
     source.src = item.src;
     video.poster = item.poster || "";
     video.autoplay = false;
-    try {
-      video.pause();
-    } catch (_) {}
-    try {
-      video.load();
-    } catch (_) {}
+    try { video.pause(); } catch (_) {}
+    try { video.load(); } catch (_) {}
 
     title.textContent = pickTitle(item, lang) || "6DOF demo #1";
   }
 
-  // More movies card finder (matches your HTML: data-en="More movies")
   function findMoreDemosCard() {
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
@@ -882,7 +893,6 @@
     const h2 = videosSection.querySelector('[data-pl="Więcej filmów"]');
     if (h2) return h2.closest(".rounded-2xl");
 
-    // Fallback: by visible text
     const headings = Array.from(videosSection.querySelectorAll("h3"));
     const target = headings.find((x) => {
       const t = (x.textContent || "").trim().toLowerCase();
@@ -941,7 +951,6 @@
   function renderMoreDemos(card, extras, lang, openVideo) {
     if (!card) return;
 
-    // hide if none
     if (!extras || !extras.length) {
       card.classList.add("hidden");
       return;
@@ -950,21 +959,17 @@
 
     setMoreDemosHeading(card, lang);
 
-    // Keep only the heading, replace rest with our list
     const heading = card.querySelector("h3");
     const nodes = Array.from(card.childNodes);
     nodes.forEach((n) => {
       if (heading && n === heading) return;
       if (n.nodeType === 3 && !String(n.textContent || "").trim()) return;
-      try {
-        card.removeChild(n);
-      } catch (_) {}
+      try { card.removeChild(n); } catch (_) {}
     });
 
     const list = buildExtrasListCards(extras, lang);
     card.appendChild(list);
 
-    // click binding (NO passive on click)
     card.addEventListener("click", (e) => {
       const btn = e.target && e.target.closest ? e.target.closest("button[data-extra-idx]") : null;
       if (!btn) return;
@@ -982,13 +987,12 @@
   async function initVideoDemos(videoModalApi, lang) {
     let map = {};
     try {
-      const json = await fetchVideosJson({ timeoutMs: 3500 });
+      const json = await fetchVideosJson({ timeoutMs: 4500 });
       map = normalizeVideos(json);
 
       hydrateHeroVideo(map, lang);
       setDemoButtonsState(map, lang);
 
-      // extras = everything except the first 6dof clip (hero)
       const all = [];
       for (const k in map) {
         if (Object.prototype.hasOwnProperty.call(map, k) && Array.isArray(map[k])) {
@@ -1011,7 +1015,6 @@
       bindDemoButtons(videoModalApi.openVideo, map, lang);
       bindHeroFullscreenButton(videoModalApi.openVideo, map, lang);
     } catch (_) {
-      // videos.json missing/blocked
       setDemoButtonsState({}, lang);
       const card = findMoreDemosCard();
       if (card) card.classList.add("hidden");
