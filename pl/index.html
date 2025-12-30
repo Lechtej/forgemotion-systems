@@ -63,7 +63,7 @@
         url('/images/hero-forge.png') type('image/png')
       );
       background-repeat: no-repeat;
-      background-position: center top;
+      background-position: center -140px;
       background-size: contain;
       overflow: hidden;
     }
@@ -95,7 +95,7 @@
     .bg-inner { position: relative; z-index: 1; }
 
     @media (max-width: 768px) {
-      .bg-wrap { background-size: 145% auto; background-position: center top; }
+      .bg-wrap { background-size: 145% auto; background-position: center -80px; }
       .bg-wrap::before {
         background: linear-gradient(
           to bottom,
@@ -113,7 +113,7 @@
       }
     }
     @media (min-width: 1024px) {
-      .bg-wrap { background-size: contain; background-position: left 6%; }
+      .bg-wrap { background-size: contain; background-position: left 6% -140px; }
     }
     @media (min-width: 1024px) and (max-height: 820px) {
       .bg-wrap { background-position: left 10%; }
