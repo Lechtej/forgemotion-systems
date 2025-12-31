@@ -45,7 +45,12 @@
     "name": "ForgeMotion Systems"
   },
   "url": "https://forgemotionsystems.com/products-accessories.html"
-}</script></head>
+}</script>
+<style>
+  .photo-frame{ background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+  .thumb{ height: 110px; width: 100%; object-fit: cover; display:block; }
+</style>
+</head>
 <body class="bg-gray-900 text-white font-sans">
 <div id="siteHeader"></div>
 <main class="pt-24">
@@ -82,103 +87,185 @@
 </div>
 </div>
 
+<!-- Hero photo + thumbs -->
 <div class="mb-2">
-  <div class="md:grid md:grid-cols-[1fr_220px] md:gap-4 md:items-start">
-    <!-- Main image (click opens modal) -->
-    <div class="rounded-2xl photo-frame overflow-hidden">
-      <picture id="mainProductPicture">
-        <source id="mainProductSource" srcset="/images/frontpanel-fa18-1.webp" type="image/webp"/>
-        <img
-          id="mainProductImg"
-          alt="FA-18 Front Panel"
-          class="product-photo cursor-zoom-in"
-          src="/images/frontpanel-fa18-1.jpg"
-          data-full="/images/frontpanel-fa18-1-large.jpg"
-          data-gallery-key="acc"
-          data-index="0"
-          loading="lazy"
-          decoding="async" />
-      </picture>
+  <div class="flex flex-col md:flex-row gap-4 items-stretch">
+    <!-- Main image -->
+    <div class="flex-1">
+      <div class="rounded-2xl photo-frame overflow-hidden">
+        <picture>
+          <source id="mainImgWebp" srcset="/images/accessories1-large.webp" type="image/webp"/>
+          <img id="mainImg"
+               src="/images/accessories1-large.jpg"
+               alt="Simulator accessories – main view"
+               class="w-full h-auto md:h-[420px] object-contain"
+               loading="eager" decoding="async"
+               data-full="/images/accessories1-large.jpg"
+               data-gallery-key="accessories"
+        />
+        </picture>
+      </div>
     </div>
 
-    <!-- Desktop thumbs (right side, vertical scroll) -->
-    <div class="hidden md:block">
-      <div class="photo-frame rounded-2xl p-2">
-        <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
-          <div class="grid grid-cols-1 gap-2">
-            <button type="button" class="thumbBtn block" data-jpg="/images/frontpanel-fa18-1.jpg" data-webp="/images/frontpanel-fa18-1.webp" data-full="/images/frontpanel-fa18-1-large.jpg" data-alt="FA-18 Front Panel photo 1" data-index="0">
-              <img alt="FA-18 Front Panel photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-1.jpg"/>
-            </button>
-            <button type="button" class="thumbBtn block" data-jpg="/images/frontpanel-fa18-2.jpg" data-webp="/images/frontpanel-fa18-2.webp" data-full="/images/frontpanel-fa18-2.jpg" data-alt="FA-18 Front Panel photo 2" data-index="1">
-              <img alt="FA-18 Front Panel photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-2.jpg"/>
-            </button>
-            <button type="button" class="thumbBtn block" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="2">
-              <img alt="ForgeMotion accessories photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
-            </button>
-          </div>
+    <!-- Desktop thumbs (bounded to main image height) -->
+    <div class="hidden md:flex flex-col gap-3 w-40 md:h-[420px] overflow-y-auto pr-1">
+      <button type="button" class="thumbBtn block" data-idx="0" aria-label="Accessories – main">
+        <img class="thumb rounded-xl photo-frame" src="/images/accessories1.jpg" alt="Accessories – main thumbnail" loading="lazy" decoding="async"/>
+      </button>
+      <button type="button" class="thumbBtn block" data-idx="1" aria-label="Front panel FA18 – view 1">
+        <img class="thumb rounded-xl photo-frame" src="/images/frontpanel-fa18-1.jpg" alt="Front panel FA18 – thumbnail 1" loading="lazy" decoding="async"/>
+      </button>
+      <button type="button" class="thumbBtn block" data-idx="2" aria-label="Front panel FA18 – view 2">
+        <img class="thumb rounded-xl photo-frame" src="/images/frontpanel-fa18-2.jpg" alt="Front panel FA18 – thumbnail 2" loading="lazy" decoding="async"/>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile thumbs -->
+  <div class="md:hidden flex gap-3 mt-3 overflow-x-auto pb-2">
+    <button type="button" class="thumbBtn shrink-0" data-idx="0" aria-label="Accessories – main">
+      <img class="thumb rounded-xl photo-frame" src="/images/accessories1.jpg" alt="Accessories – main thumbnail" loading="lazy" decoding="async"/>
+    </button>
+    <button type="button" class="thumbBtn shrink-0" data-idx="1" aria-label="Front panel FA18 – view 1">
+      <img class="thumb rounded-xl photo-frame" src="/images/frontpanel-fa18-1.jpg" alt="Front panel FA18 – thumbnail 1" loading="lazy" decoding="async"/>
+    </button>
+    <button type="button" class="thumbBtn shrink-0" data-idx="2" aria-label="Front panel FA18 – view 2">
+      <img class="thumb rounded-xl photo-frame" src="/images/frontpanel-fa18-2.jpg" alt="Front panel FA18 – thumbnail 2" loading="lazy" decoding="async"/>
+    </button>
+  </div>
+
+  <p class="text-white/55 text-sm mt-3"
+     data-en="Tip: click the main image to zoom."
+     data-pl="Wskazówka: kliknij główne zdjęcie, aby powiększyć."></p>
+</div>
+
+<script>
+  // Gallery for modal navigation (site-layout.js reads window.ProductGalleries)
+  window.ProductGalleries = window.ProductGalleries || {};
+  window.ProductGalleries["accessories"] = [
+    { webp: "/images/accessories1-large.webp", jpg: "/images/accessories1-large.jpg", full: "/images/accessories1-large.jpg", altEn: "Simulator accessories – main view", altPl: "Akcesoria do symulatora – widok główny" },
+    { webp: "/images/frontpanel-fa18-1.webp", jpg: "/images/frontpanel-fa18-1.jpg", full: "/images/frontpanel-fa18-1-large.jpg", altEn: "FA18 front panel – view 1", altPl: "Front panel FA18 – ujęcie 1" },
+    { webp: "/images/frontpanel-fa18-2.webp", jpg: "/images/frontpanel-fa18-2.jpg", full: "/images/frontpanel-fa18-2.jpg", altEn: "FA18 front panel – view 2", altPl: "Front panel FA18 – ujęcie 2" }
+  ];
+
+  // Thumbnail -> swap main image (no modal)
+  (function () {
+    const galleryKey = "accessories";
+    const list = window.ProductGalleries[galleryKey] || [];
+    const mainImg = document.getElementById("mainImg");
+    const mainWebp = document.getElementById("mainImgWebp");
+    if (!mainImg || !mainWebp || !list.length) return;
+
+    function applyIdx(i) {
+      const item = list[i];
+      if (!item) return;
+      mainWebp.srcset = item.webp || item.jpg;
+      mainImg.src = item.jpg || item.webp;
+      mainImg.setAttribute("data-full", item.full || item.jpg || item.webp);
+      mainImg.setAttribute("data-gallery-key", galleryKey);
+      mainImg.setAttribute("data-gallery-index", String(i));
+      mainImg.alt = (document.documentElement.lang === "pl") ? (item.altPl || "") : (item.altEn || "");
+    }
+
+    document.querySelectorAll(".thumbBtn[data-idx]").forEach(btn => {
+      btn.addEventListener("click", () => applyIdx(Number(btn.getAttribute("data-idx"))));
+    });
+
+    // default: first image
+    applyIdx(0);
+  })();
+</script>
+
+</div>
+</div>
+</section>
+
+<!-- Content -->
+<section class="container mx-auto px-4 pb-12">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-3" data-en="Front Panel as a base" data-pl="Front Panel jako baza"></h2>
+        <ul class="space-y-2 text-white/80">
+          <li data-en="Mount a UFC/center panel and DDI displays in a clean, rigid front section."
+              data-pl="Zbuduj sztywny i uporządkowany „przód kokpitu” pod UFC/panel centralny oraz ekrany DDI."></li>
+          <li data-en="Spacing and geometry can be adapted to your cockpit and viewing distance."
+              data-pl="Rozstaw i geometria mogą być dopasowane do Twojego kokpitu i dystansu do oczu."></li>
+          <li data-en="Designed for repeatable mounting and easy service access."
+              data-pl="Projekt pod powtarzalny montaż i wygodny dostęp serwisowy."></li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-3" data-en="Compatibility & custom mounts" data-pl="Kompatybilność i custom"></h2>
+        <ul class="space-y-2 text-white/80">
+          <li data-en="Mounting options for Thrustmaster and Winwing – selected per model."
+              data-pl="Mocowania pod Thrustmaster i Winwing – dobierane pod konkretny model."></li>
+          <li data-en="Custom / 3D-printed solutions supported (your parts or our design)."
+              data-pl="Obsługujemy custom / wydruki 3D (Twoje elementy lub projekt po naszej stronie)."></li>
+          <li data-en="We can match hole patterns, offsets and tilt angles on request."
+              data-pl="Na życzenie dopasujemy rozstawy, offsety i kąty pochylenia."></li>
+        </ul>
+      </div>
+
+      <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-3" data-en="Ejection Handle (standalone)" data-pl="Uchwyt katapultowy (osobno)"></h2>
+        <ul class="space-y-2 text-white/80">
+          <li data-en="Available as part of MK14 or as a separate accessory."
+              data-pl="Dostępny w MK14 albo jako osobne akcesorium."></li>
+          <li data-en="Delivered with prepared control wiring/connection."
+              data-pl="Dostarczany z przygotowanym podłączeniem sterowania."></li>
+          <li data-en="You choose the target sim (DCS/other) and preferred interface."
+              data-pl="Ty wybierasz docelowy symulator (DCS/inne) i preferowany interfejs."></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 bg-gray-800/40 border border-white/5 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold mb-4" data-en="FAQ" data-pl="FAQ"></h2>
+      <div class="space-y-4 text-white/80">
+        <div>
+          <div class="font-semibold" data-en="Is Front Panel compatible with Thrustmaster and Winwing?"
+               data-pl="Czy Front Panel jest kompatybilny z Thrustmaster i Winwing?"></div>
+          <div class="mt-1 text-white/75"
+               data-en="Yes. We provide mounting variants matched to your exact model and cockpit geometry."
+               data-pl="Tak. Przygotowujemy wariant mocowania dopasowany do konkretnego modelu i geometrii Twojego kokpitu."></div>
+        </div>
+
+        <div>
+          <div class="font-semibold" data-en="Can I order a custom mount (e.g., 3D print)?"
+               data-pl="Czy mogę zamówić mocowanie custom (np. pod wydruk 3D)?"></div>
+          <div class="mt-1 text-white/75"
+               data-en="Yes. We can adapt to customer parts or design a mount based on dimensions, photos and mounting points."
+               data-pl="Tak. Dopasujemy pod elementy klienta albo zaprojektujemy mocowanie na podstawie wymiarów, zdjęć i punktów montażu."></div>
+        </div>
+
+        <div>
+          <div class="font-semibold" data-en="Is the Ejection Handle functional or just visual?"
+               data-pl="Czy uchwyt katapultowy jest funkcjonalny czy tylko wizualny?"></div>
+          <div class="mt-1 text-white/75"
+               data-en="It can be functional. We prepare it for control wiring and match the interface to DCS or other simulators."
+               data-pl="Może być funkcjonalny. Przygotowujemy go pod sterowanie i dobieramy interfejs pod DCS lub inne symulatory."></div>
+        </div>
+
+        <div>
+          <div class="font-semibold" data-en="Can I buy accessories without a motion platform?"
+               data-pl="Czy mogę kupić akcesoria bez platformy motion?"></div>
+          <div class="mt-1 text-white/75"
+               data-en="Yes. Accessories can be ordered as standalone items."
+               data-pl="Tak. Akcesoria można zamawiać niezależnie."></div>
+        </div>
+
+        <div>
+          <div class="font-semibold" data-en="What do you need to prepare an offer?"
+               data-pl="Czego potrzebujecie do przygotowania oferty?"></div>
+          <div class="mt-1 text-white/75"
+               data-en="A short hardware list (manufacturer/models), photos of your cockpit front area and preferred mounting orientation."
+               data-pl="Wystarczy lista sprzętu (producent/modele), zdjęcia przedniej części kokpitu i preferowana orientacja montażu."></div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Mobile thumbs (below, horizontal scroll) -->
-  <div class="md:hidden mt-3">
-    <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;" id="thumbsMobile">
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/frontpanel-fa18-1.jpg" data-webp="/images/frontpanel-fa18-1.webp" data-full="/images/frontpanel-fa18-1-large.jpg" data-alt="FA-18 Front Panel photo 1" data-index="0">
-        <img alt="FA-18 Front Panel photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-1.jpg"/>
-      </button>
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/frontpanel-fa18-2.jpg" data-webp="/images/frontpanel-fa18-2.webp" data-full="/images/frontpanel-fa18-2.jpg" data-alt="FA-18 Front Panel photo 2" data-index="1">
-        <img alt="FA-18 Front Panel photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-2.jpg"/>
-      </button>
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="2">
-        <img alt="ForgeMotion accessories photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
-      </button>
-    </div>
-  </div>
-
-  <script>
-    (function () {
-      const mainImg = document.getElementById('mainProductImg');
-      const mainSource = document.getElementById('mainProductSource');
-
-      // expose gallery for modal (site-layout.js)
-      window.ProductGalleries = window.ProductGalleries || {};
-      window.ProductGalleries['acc'] = [
-        { full: '/images/frontpanel-fa18-1-large.jpg', alt: 'FA-18 Front Panel photo 1' },
-        { full: '/images/frontpanel-fa18-2.jpg', alt: 'FA-18 Front Panel photo 2' },
-        { full: '/images/accessories1-large.jpg', alt: 'ForgeMotion accessories photo 1' },
-      ];
-
-      function setMainFromThumb(btn) {
-        if (!btn || !mainImg) return;
-        const jpg = btn.getAttribute('data-jpg') || '';
-        const webp = btn.getAttribute('data-webp') || '';
-        const full = btn.getAttribute('data-full') || jpg;
-        const alt = btn.getAttribute('data-alt') || '';
-        const idx = btn.getAttribute('data-index') || '0';
-
-        if (webp && mainSource) mainSource.srcset = webp;
-        if (jpg) mainImg.src = jpg;
-
-        mainImg.setAttribute('data-full', full || jpg);
-        mainImg.setAttribute('alt', alt || '');
-        mainImg.setAttribute('data-index', idx);
-      }
-
-      // default: first image already set in HTML
-      document.querySelectorAll('.thumbBtn').forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setMainFromThumb(btn);
-        });
-      });
-    })();
-  </script>
-</div>
-
-</div>
-</div>
 </section>
 <div id="otherProducts"></div>
 <section class="container mx-auto px-4 pb-14" id="videos">
