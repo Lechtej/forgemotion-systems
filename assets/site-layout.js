@@ -290,7 +290,7 @@
         <h3 class="text-sm font-semibold tracking-wide text-white" data-en="Company" data-pl="Firma"></h3>
         <ul class="mt-4 space-y-2 text-sm">
           <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "about"))}" data-en="About" data-pl="O nas"></a></li>
-          <li><a class="text-white/70 hover:text-white transition" href="/partners.html" data-en="Partners" data-pl="Partnerzy"></a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(`/partners.html?lang=${safeLang}`)}" data-en="Partners" data-pl="Partnerzy"></a></li>
           <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "products"))}" data-en="Product overview" data-pl="Przegląd produktów"></a></li>
         </ul>
       </div>
@@ -310,9 +310,10 @@
         </ul>
 
         <div class="mt-6 text-sm">
-          <a class="text-white font-semibold hover:text-white/90 transition" href="${escapeHtml(buildIndexUrl(safeLang, "lead"))}" data-en="Contact" data-pl="Kontakt"></a>
+          <div class="text-white font-semibold" data-en="Contact" data-pl="Kontakt"></div>
+          <a class="mt-2 inline-block text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "lead"))}"
+             data-en="Go to contact form" data-pl="Przejdź do formularza kontaktowego"></a>
         </div>
-      </div>
 
     </div>
 
