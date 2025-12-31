@@ -132,31 +132,23 @@
       }
       .modal-hint{
         padding: 0 .95rem .95rem .95rem;
+      }
+      .modal-nav{
+        position:absolute; top:50%; transform:translateY(-50%);
+        width:44px; height:44px; border-radius:999px;
+        background: rgba(255,255,255,0.12);
+        border:1px solid rgba(255,255,255,0.18);
+        display:inline-flex; align-items:center; justify-content:center;
+        cursor:pointer; z-index:2; user-select:none;
+      }
+      .modal-nav:hover{ background: rgba(255,255,255,0.18); }
+      .modal-nav-prev{ left:10px; }
+      .modal-nav-next{ right:10px; }
+      @media (max-width: 640px){ .modal-nav{ display:none; } }
+      .modal-hint{
         color: rgba(255,255,255,0.75);
         font-size:.95rem; text-align:center;
       }
-
-      /* Image gallery nav (optional) */
-      .modal-nav{
-        position:absolute;
-        top:50%;
-        transform: translateY(-50%);
-        background: rgba(255,255,255,0.12);
-        border:1px solid rgba(255,255,255,0.18);
-        border-radius:999px;
-        width:44px;
-        height:44px;
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        cursor:pointer;
-        z-index: 2;
-        user-select:none;
-      }
-      .modal-nav:hover{ background: rgba(255,255,255,0.18); }
-      .modal-nav[disabled]{ opacity:.45; cursor:not-allowed; }
-      .modal-nav-prev{ left: 10px; }
-      .modal-nav-next{ right: 10px; }
       .sr-only{
         position:absolute; width:1px; height:1px; padding:0; margin:-1px;
         overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
@@ -341,14 +333,10 @@
 <div id="imgModal" class="modal-hidden" aria-hidden="true">
   <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="imgModalTitle">
     <div class="modal-panel">
+      <button id="imgModalPrev" class="modal-nav modal-nav-prev" type="button" aria-label="Previous image">‹</button>
+      <button id="imgModalNext" class="modal-nav modal-nav-next" type="button" aria-label="Next image">›</button>
       <button id="imgModalClose" class="modal-close" type="button" aria-label="Close image">
         <span aria-hidden="true">✕</span>
-      </button>
-      <button id="imgModalPrev" class="modal-nav modal-nav-prev" type="button" aria-label="Previous image">
-        <span aria-hidden="true">‹</span>
-      </button>
-      <button id="imgModalNext" class="modal-nav modal-nav-next" type="button" aria-label="Next image">
-        <span aria-hidden="true">›</span>
       </button>
       <h2 id="imgModalTitle" class="sr-only">Image preview</h2>
       <div class="modal-img-wrap"><img id="imgModalImg" class="modal-img" src="" alt=""></div>
@@ -641,67 +629,51 @@ function setLanguage(lang, metaData) {
     const nextBtn = document.getElementById("imgModalNext");
     if (!modal || !modalImg || !closeBtn) return;
 
-    const state = {
-      gallery: null, // array of {full, alt?} or strings
-      index: 0,
-      lastOpener: null,
-      touchStartX: 0,
-      touchStartY: 0,
-    };
+    let currentKey = null;
+    let currentIndex = 0;
 
-    function normalizeGallery(raw) {
-      if (!raw) return null;
-      if (!Array.isArray(raw)) return null;
-      return raw
-        .map((it) => {
-          if (!it) return null;
-          if (typeof it === "string") return { full: it, alt: "" };
-          if (typeof it === "object") return { full: it.full || it.src || "", alt: it.alt || "" };
-          return null;
-        })
-        .filter((x) => x && x.full);
+    function getList() {
+      const key = currentKey;
+      const list = (window.ProductGalleries && key && Array.isArray(window.ProductGalleries[key]))
+        ? window.ProductGalleries[key]
+        : null;
+      return list;
     }
 
-    function updateNavButtons() {
-      const canNav = Array.isArray(state.gallery) && state.gallery.length > 1;
-      if (prevBtn) prevBtn.disabled = !canNav;
-      if (nextBtn) nextBtn.disabled = !canNav;
-      if (prevBtn) prevBtn.style.display = canNav ? "" : "none";
-      if (nextBtn) nextBtn.style.display = canNav ? "" : "none";
+    function applyIndex(i) {
+      const list = getList();
+      if (!list || !list.length) return;
+
+      const safe = (i + list.length) % list.length;
+      currentIndex = safe;
+      const item = list[safe] || {};
+      const full = item.full || item.jpg || item.webp || "";
+      modalImg.src = full;
+      const isPl = document.documentElement.lang === "pl";
+      modalImg.alt = isPl ? (item.altPl || "Podgląd zdjęcia") : (item.altEn || "Image preview");
+
+      if (prevBtn) prevBtn.disabled = list.length < 2;
+      if (nextBtn) nextBtn.disabled = list.length < 2;
     }
 
-    function setImageByIndex(idx) {
-      if (!state.gallery || !state.gallery.length) return;
-      const n = state.gallery.length;
-      const safeIdx = ((idx % n) + n) % n;
-      state.index = safeIdx;
-      const item = state.gallery[safeIdx];
-      modalImg.src = item.full;
-      modalImg.alt = item.alt || modalImg.alt || "Image preview";
-      // keep opener in sync (so next click on main image opens same index)
-      if (state.lastOpener && state.lastOpener.dataset) {
-        state.lastOpener.dataset.index = String(safeIdx);
+    function openModalFromImg(img) {
+      const full = img.getAttribute("data-full") || img.getAttribute("src") || "";
+      currentKey = img.getAttribute("data-gallery-key") || null;
+      const idxAttr = img.getAttribute("data-gallery-index");
+      currentIndex = idxAttr != null ? Number(idxAttr) || 0 : 0;
+
+      // If we have a gallery list, use it; otherwise fallback to clicked image
+      const list = getList();
+      if (list && list.length) applyIndex(currentIndex);
+      else {
+        modalImg.src = full;
+        modalImg.alt = img.getAttribute("alt") || "Image preview";
       }
-    }
 
-    function openModal(src, alt, galleryRaw = null, index = 0, openerEl = null) {
-      state.gallery = normalizeGallery(galleryRaw);
-      state.index = Number.isFinite(Number(index)) ? Number(index) : 0;
-      state.lastOpener = openerEl || null;
-
-      modalImg.src = src;
-      modalImg.alt = alt || "Image preview";
       modal.classList.remove("modal-hidden");
       modal.setAttribute("aria-hidden", "false");
       closeBtn.focus();
       document.body.style.overflow = "hidden";
-
-      if (state.gallery && state.gallery.length) {
-        // prefer gallery item at index; fallback to src match
-        const matchIdx = state.gallery.findIndex(x => x.full === src);
-        setImageByIndex(matchIdx >= 0 ? matchIdx : state.index);
-      }
-      updateNavButtons();
     }
 
     function closeModal() {
@@ -710,73 +682,60 @@ function setLanguage(lang, metaData) {
       modalImg.src = "";
       modalImg.alt = "";
       document.body.style.overflow = "";
-      state.gallery = null;
-      state.index = 0;
-      state.lastOpener = null;
+      currentKey = null;
+      currentIndex = 0;
     }
 
-    function nav(delta) {
-      if (!state.gallery || state.gallery.length < 2) return;
-      setImageByIndex(state.index + delta);
+    function next() {
+      const list = getList();
+      if (!list || list.length < 2) return;
+      applyIndex(currentIndex + 1);
+    }
+
+    function prev() {
+      const list = getList();
+      if (!list || list.length < 2) return;
+      applyIndex(currentIndex - 1);
     }
 
     document.addEventListener("click", (e) => {
-      const img = e.target.closest("img[data-full]");
+      const img = e.target.closest('img[data-full]');
       if (!img) return;
-
-      const full = img.getAttribute("data-full") || img.getAttribute("src");
-      const alt = img.getAttribute("alt") || "";
-
-      // Optional product gallery support (prev/next + swipe)
-      const key = img.getAttribute("data-gallery-key");
-      let gallery = null;
-      let idx = 0;
-      if (key && window.ProductGalleries && window.ProductGalleries[key]) {
-        gallery = window.ProductGalleries[key];
-        const rawIdx = img.getAttribute("data-index");
-        idx = rawIdx ? Number(rawIdx) : 0;
-        if (!Number.isFinite(idx)) idx = 0;
-      }
-
-      openModal(full, alt, gallery, idx, img);
+      openModalFromImg(img);
     });
 
-    if (prevBtn) prevBtn.addEventListener("click", () => nav(-1));
-    if (nextBtn) nextBtn.addEventListener("click", () => nav(1));
-
     closeBtn.addEventListener("click", closeModal);
+    if (prevBtn) prevBtn.addEventListener("click", prev);
+    if (nextBtn) nextBtn.addEventListener("click", next);
 
     modal.addEventListener("click", (e) => {
       if (e.target.classList.contains("modal-overlay")) closeModal();
     });
 
+    // keyboard
     document.addEventListener("keydown", (e) => {
       if (modal.getAttribute("aria-hidden") !== "false") return;
       if (e.key === "Escape") closeModal();
-      if (e.key === "ArrowLeft") nav(-1);
-      if (e.key === "ArrowRight") nav(1);
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
     });
 
-    // basic swipe (mobile): left/right to navigate
-    modal.addEventListener("touchstart", (e) => {
-      if (modal.getAttribute("aria-hidden") !== "false") return;
+    // touch swipe (simple)
+    let touchX = null;
+    modalImg.addEventListener("touchstart", (e) => {
       const t = e.touches && e.touches[0];
-      if (!t) return;
-      state.touchStartX = t.clientX;
-      state.touchStartY = t.clientY;
+      touchX = t ? t.clientX : null;
     }, { passive: true });
 
-    modal.addEventListener("touchend", (e) => {
-      if (modal.getAttribute("aria-hidden") !== "false") return;
-      if (!state.gallery || state.gallery.length < 2) return;
-
+    modalImg.addEventListener("touchend", (e) => {
+      if (touchX == null) return;
       const t = e.changedTouches && e.changedTouches[0];
       if (!t) return;
-      const dx = t.clientX - state.touchStartX;
-      const dy = t.clientY - state.touchStartY;
-      if (Math.abs(dx) < 35 || Math.abs(dx) < Math.abs(dy)) return;
-      if (dx < 0) nav(1);
-      else nav(-1);
+      const dx = t.clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) < 45) return;
+      if (dx < 0) next();
+      else prev();
     }, { passive: true });
   }
 
