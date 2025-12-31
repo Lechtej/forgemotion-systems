@@ -43,7 +43,7 @@
   "@type": "Product",
   "@id": "https://forgemotionsystems.com/products-6dof.html#product",
   "name": "6DOF Motion Platform – ForgeMotion Systems",
-  "description": "Professional 6DOF motion platform with clean, readable cues for demanding flight and racing simulation.",
+  "description": "Realistic 6DOF motion delivering aircraft or vehicle dynamics directly to the user.",
   "image": [
     "https://forgemotionsystems.com/images/rama6dof1-large.jpg"
   ],
@@ -92,102 +92,15 @@
 </div>
 <!-- Hero photo + thumbs -->
 <div class="mb-2">
-  <div class="md:grid md:grid-cols-[1fr_220px] md:gap-4 md:items-start">
-    <!-- Main image (click opens modal) -->
-    <div class="rounded-2xl photo-frame overflow-hidden">
-      <picture id="mainProductPicture">
-        <source id="mainProductSource" srcset="/images/rama6dof1.webp" type="image/webp"/>
-        <img
-          id="mainProductImg"
-          alt="6DOF motion platform"
-          class="product-photo cursor-zoom-in"
-          src="/images/rama6dof1.jpg"
-          data-full="/images/rama6dof1-large.jpg"
-          data-gallery-key="6dof"
-          data-index="0"
-          loading="lazy"
-          decoding="async"
-          width="1249"
-          height="1023" />
-      </picture>
-    </div>
-
-    <!-- Desktop thumbs (right side, vertical scroll) -->
-    <div class="hidden md:block">
-      <div class="photo-frame rounded-2xl p-2">
-        <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
-          <div class="grid grid-cols-1 gap-2">
-            <button type="button" class="thumbBtn block" data-jpg="/images/rama6dof1.jpg" data-webp="/images/rama6dof1.webp" data-full="/images/rama6dof1-large.jpg" data-alt="6DOF motion platform photo 1" data-index="0">
-              <img alt="6DOF motion platform photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof1.jpg"/>
-            </button>
-            <button type="button" class="thumbBtn block" data-jpg="/images/rama6dof2.jpg" data-webp="/images/rama6dof2.webp" data-full="/images/rama6dof2.jpg" data-alt="6DOF motion platform photo 2" data-index="1">
-              <img alt="6DOF motion platform photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof2.jpg"/>
-            </button>
-            <button type="button" class="thumbBtn block" data-jpg="/images/rama6dof3.jpg" data-webp="/images/rama6dof3.webp" data-full="/images/rama6dof3.jpg" data-alt="6DOF motion platform photo 3" data-index="2">
-              <img alt="6DOF motion platform photo 3" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof3.jpg"/>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile thumbs (below, horizontal scroll) -->
-  <div class="md:hidden mt-3">
-    <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;">
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama6dof1.jpg" data-webp="/images/rama6dof1.webp" data-full="/images/rama6dof1-large.jpg" data-alt="6DOF motion platform photo 1" data-index="0">
-        <img alt="6DOF motion platform photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof1.jpg"/>
-      </button>
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama6dof2.jpg" data-webp="/images/rama6dof2.webp" data-full="/images/rama6dof2.jpg" data-alt="6DOF motion platform photo 2" data-index="1">
-        <img alt="6DOF motion platform photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof2.jpg"/>
-      </button>
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama6dof3.jpg" data-webp="/images/rama6dof3.webp" data-full="/images/rama6dof3.jpg" data-alt="6DOF motion platform photo 3" data-index="2">
-        <img alt="6DOF motion platform photo 3" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama6dof3.jpg"/>
-      </button>
-    </div>
-  </div>
-
-  <p class="text-white/55 text-sm mt-3" data-en="Tip: click the main image to zoom." data-pl="Wskazówka: kliknij duże zdjęcie, aby powiększyć."></p>
-
-  <!-- Gallery wiring (thumbs -> main, main -> modal gallery) -->
-  <script>
-    (function () {
-      const mainImg = document.getElementById('mainProductImg');
-      const mainSource = document.getElementById('mainProductSource');
-
-      // expose gallery for modal (site-layout.js)
-      window.ProductGalleries = window.ProductGalleries || {};
-      window.ProductGalleries['6dof'] = [
-        { full: '/images/rama6dof1-large.jpg', alt: '6DOF motion platform photo 1' },
-        { full: '/images/rama6dof2.jpg', alt: '6DOF motion platform photo 2' },
-        { full: '/images/rama6dof3.jpg', alt: '6DOF motion platform photo 3' },
-      ];
-
-      function setMainFromThumb(btn) {
-        if (!btn || !mainImg) return;
-        const jpg = btn.getAttribute('data-jpg') || '';
-        const webp = btn.getAttribute('data-webp') || '';
-        const full = btn.getAttribute('data-full') || jpg;
-        const alt = btn.getAttribute('data-alt') || '';
-        const idx = btn.getAttribute('data-index') || '0';
-
-        if (webp && mainSource) mainSource.srcset = webp;
-        if (jpg) mainImg.src = jpg;
-        mainImg.setAttribute('data-full', full);
-        mainImg.setAttribute('alt', alt);
-        mainImg.setAttribute('data-index', idx);
-      }
-
-      // default: first image already set in HTML
-      document.querySelectorAll('.thumbBtn').forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setMainFromThumb(btn);
-        });
-      });
-    })();
-  </script>
+<div class="rounded-2xl photo-frame overflow-hidden">
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof1-480.webp 480w, /images/rama6dof1-768.webp 768w, /images/rama6dof1-1024.webp 1024w" type="image/webp"/><img alt="6DOF motion platform" class="product-photo cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
+</div>
+<div class="grid grid-cols-3 gap-3 mt-3">
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof1-480.webp 480w, /images/rama6dof1-768.webp 768w, /images/rama6dof1-1024.webp 1024w" type="image/webp"/><img alt="6DOF motion platform photo 1" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof2-480.webp 480w, /images/rama6dof2-768.webp 768w, /images/rama6dof2-1024.webp 1024w" type="image/webp"/><img alt="6DOF motion platform photo 2" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof2.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof2.jpg" width="1536"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof3-480.webp 480w, /images/rama6dof3-768.webp 768w, /images/rama6dof3-1024.webp 1024w" type="image/webp"/><img alt="6DOF motion platform photo 3" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof3.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof3.jpg" width="1536"/></picture>
+</div>
+<p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
 </div>
 <!-- Benefits (more tangible, less marketing) -->
 <div class="grid lg:grid-cols-3 gap-6">
@@ -256,9 +169,9 @@
 <source src="/videos/6dof-demo1.mp4" type="video/mp4"/>
 </video>
 <div class="grid grid-cols-3 gap-3 mt-4">
-<picture><source srcset="/images/rama6dof2.webp" type="image/webp"/><img alt="6DOF base" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof2.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof2.jpg" width="1536"/></picture>
-<picture><source srcset="/images/rama6dof3.webp" type="image/webp"/><img alt="6DOF base frame" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof3.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof3.jpg" width="1536"/></picture>
-<picture><source srcset="/images/rama6dof1.webp" type="image/webp"/><img alt="6DOF full rig" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof2-480.webp 480w, /images/rama6dof2-768.webp 768w, /images/rama6dof2-1024.webp 1024w" type="image/webp"/><img alt="6DOF base" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof2.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof2.jpg" width="1536"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof3-480.webp 480w, /images/rama6dof3-768.webp 768w, /images/rama6dof3-1024.webp 1024w" type="image/webp"/><img alt="6DOF base frame" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof3.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama6dof3.jpg" width="1536"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/rama6dof1-480.webp 480w, /images/rama6dof1-768.webp 768w, /images/rama6dof1-1024.webp 1024w" type="image/webp"/><img alt="6DOF full rig" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama6dof1-large.jpg" decoding="async" height="1023" loading="lazy" src="/images/rama6dof1.jpg" width="1249"/></picture>
 </div>
 <p class="text-white/55 text-sm mt-3" data-en="Tip: click a thumbnail to zoom." data-pl="Wskazówka: kliknij miniaturę, aby powiększyć."></p>
 </div>
@@ -295,11 +208,11 @@
 </div>
 <div class="grid md:grid-cols-2 gap-3">
 <figure class="rounded-2xl photo-frame overflow-hidden">
-<picture><source srcset="/images/modul-napedowy6dof-cad.webp" type="image/webp"/><img alt="Drive module CAD" class="product-photo cursor-zoom-in" data-full="/images/modul-napedowy6dof-cad.jpg" decoding="async" height="1625" loading="lazy" src="/images/modul-napedowy6dof-cad.jpg" width="3298"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/modul-napedowy6dof-cad-480.webp 480w, /images/modul-napedowy6dof-cad-768.webp 768w, /images/modul-napedowy6dof-cad-1024.webp 1024w, /images/modul-napedowy6dof-cad-1536.webp 1536w" type="image/webp"/><img alt="Drive module CAD" class="product-photo cursor-zoom-in" data-full="/images/modul-napedowy6dof-cad.jpg" decoding="async" height="1625" loading="lazy" src="/images/modul-napedowy6dof-cad.jpg" width="3298"/></picture>
 <figcaption class="p-4 text-sm text-white/70" data-en="CAD view of the drive module enclosure and layout." data-pl="Widok CAD obudowy i układu modułu napędowego"></figcaption>
 </figure>
 <figure class="rounded-2xl photo-frame overflow-hidden">
-<picture><source srcset="/images/modul-napedowy6dof-underconstruction.webp" type="image/webp"/><img alt="Drive module under construction" class="product-photo cursor-zoom-in" data-full="/images/modul-napedowy6dof-underconstruction.jpg" decoding="async" height="1024" loading="lazy" src="/images/modul-napedowy6dof-underconstruction.jpg" width="1536"/></picture>
+<picture><source sizes="(min-width: 1024px) 900px, 100vw" srcset="/images/modul-napedowy6dof-underconstruction-480.webp 480w, /images/modul-napedowy6dof-underconstruction-768.webp 768w, /images/modul-napedowy6dof-underconstruction-1024.webp 1024w" type="image/webp"/><img alt="Drive module under construction" class="product-photo cursor-zoom-in" data-full="/images/modul-napedowy6dof-underconstruction.jpg" decoding="async" height="1024" loading="lazy" src="/images/modul-napedowy6dof-underconstruction.jpg" width="1536"/></picture>
 <figcaption class="p-4 text-sm text-white/70" data-en="Module build in progress — designed for serviceability." data-pl="Moduł w trakcie budowy — zaprojektowany pod serwisowalność"></figcaption>
 </figure>
 </div>
