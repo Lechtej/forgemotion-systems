@@ -117,7 +117,15 @@
         <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
           <div class="grid grid-cols-1 gap-2">
             <button type="button" class="thumbBtn block" data-jpg="/images/mk14seat1.jpg" data-webp="/images/mk14seat1.webp" data-full="/images/mk14seat1-large.jpg" data-alt="MK14 ejection seat replica photo 1" data-index="0">
-              <img alt="MK14 ejection seat replica photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat1.jpg"/>
+              <img
+  alt="MK14 ejection seat replica photo 1"
+  class="thumb rounded-xl"
+  loading="lazy"
+  decoding="async"
+  src="/images/mk14seat1.jpg"
+  srcset="/images/mk14seat1-480.webp 480w, /images/mk14seat1-768.webp 768w, /images/mk14seat1.webp 1024w, /images/mk14seat1.jpg 1024w"
+  sizes="(min-width: 768px) 220px, 160px"
+/>
             </button>
             <button type="button" class="thumbBtn block" data-jpg="/images/mk14seat-production1.jpg" data-webp="/images/mk14seat-production1.webp" data-full="/images/mk14seat-production1.jpg" data-alt="MK14 ejection seat replica photo 2" data-index="1">
               <img alt="MK14 ejection seat replica photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/mk14seat-production1.jpg"/>
