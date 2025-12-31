@@ -41,7 +41,7 @@
   "@type": "Product",
   "@id": "https://forgemotionsystems.com/products-3dof.html#product",
   "name": "3DOF / 2DOF Motion Platform – ForgeMotion Systems",
-  "description": "Big immersion in a compact, practical setup.",
+  "description": "Clear, comfortable motion cues in a compact footprint for flight and racing simulation.",
   "image": [
     "https://forgemotionsystems.com/images/rama3dof1-large.jpg"
   ],
@@ -60,55 +60,116 @@
 <a class="hover:text-blue-400" data-en="← Back to products" data-href-en="/en/#products" data-href-pl="/pl/#products" data-pl="← Wróć do produktów" href="/en/#products">← Back to products</a>
 </p>
 <h1 class="text-4xl md:text-5xl font-bold mb-5" data-en="3DOF / 2DOF Motion Platform" data-pl="Platforma ruchu 3DOF / 2DOF"></h1>
-<p class="text-lg md:text-xl text-white/85 mb-3" data-en="Big immersion in a compact setup. A smart choice when you want motion — but also want to keep your room practical." data-pl="Duża immersja w kompaktowej formie. Świetny wybór, gdy chcesz motion — ale nadal chcesz mieć „normalny” pokój."></p>
+<p class="text-lg md:text-xl text-white/85 mb-3" data-en="Clear motion cues in a compact setup — a smart choice when you want immersion without turning the room into a workshop." data-pl="Czytelne sygnały motion w kompaktowej formie — gdy chcesz immersji, ale bez zamieniania pokoju w warsztat."></p>
 <div class="flex flex-col sm:flex-row gap-3 mt-7">
 <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center" data-en="Request configuration" data-href-en="/en/?topic=3dof#contact" data-href-pl="/pl/?topic=3dof#contact" data-pl="Poproś o konfigurację" href="/en/?topic=3dof#contact">Request configuration</a>
 <a class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center" data-demo-key="3dof" data-en="See videos" data-pl="Zobacz wideo" href="javascript:void(0)">See videos</a>
+
 </div>
-<p class="text-white/80 mb-8" data-en="Designed for clear, readable cues in aircraft or vehicle simulation: acceleration, braking, and surface changes — with a predictable, comfortable feel for everyday use." data-pl="Zaprojektowana pod czytelne sygnały w symulacji samolotu lub pojazdu: przyspieszanie, hamowanie i zmiany nawierzchni — z przewidywalnym, komfortowym ruchem do codziennego grania."></p>
-<!-- Photo gallery -->
-<div class="mb-10">
-<div class="rounded-2xl photo-frame overflow-hidden">
-<picture><source sizes="100vw" srcset="/images/rama3dof1-480.webp 480w, /images/rama3dof1-768.webp 768w, /images/rama3dof1-1024.webp 1024w" type="image/webp"/><img alt="3DOF / 2DOF motion platform" class="product-photo cursor-zoom-in" data-full="/images/rama3dof1-large.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama3dof1.jpg" width="1536"/></picture>
+<div class="flex flex-wrap gap-2 mt-4 text-sm">
+  <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10" data-en="Compact footprint" data-pl="Kompaktowy rozmiar"></span>
+  <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10" data-en="Comfortable, readable cues" data-pl="Komfortowe, czytelne sygnały"></span>
+  <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10" data-en="Flight + racing ready" data-pl="Gotowe do lotu i wyścigów"></span>
 </div>
-<div class="grid grid-cols-3 gap-3 mt-3">
-<picture><source sizes="(min-width: 1024px) 320px, 33vw" srcset="/images/rama3dof1-480.webp 480w, /images/rama3dof1-768.webp 768w, /images/rama3dof1-1024.webp 1024w" type="image/webp"/><img alt="3DOF motion platform photo 1" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama3dof1-large.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama3dof1.jpg" width="1536"/></picture>
-<picture><source sizes="(min-width: 1024px) 320px, 33vw" srcset="/images/rama3dof2-480.webp 480w, /images/rama3dof2-768.webp 768w, /images/rama3dof2-1024.webp 1024w" type="image/webp"/><img alt="3DOF motion platform photo 2" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama3dof2.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama3dof2.jpg" width="1536"/></picture>
-<picture><source sizes="(min-width: 1024px) 320px, 33vw" srcset="/images/rama3dof3-480.webp 480w, /images/rama3dof3-768.webp 768w, /images/rama3dof3-1024.webp 1024w" type="image/webp"/><img alt="3DOF motion platform photo 3" class="thumb rounded-xl photo-frame cursor-zoom-in" data-full="/images/rama3dof3.jpg" decoding="async" height="1024" loading="lazy" src="/images/rama3dof3.jpg" width="1536"/></picture>
+<p class="text-white/80 mb-8"
+ data-en="Designed for clear, readable cues in aircraft or vehicle simulation: acceleration, braking, and surface changes — with a predictable, comfortable feel for everyday use." data-pl="Zaprojektowana pod czytelne sygnały w symulacji samolotu lub pojazdu: przyspieszanie, hamowanie i zmiany nawierzchni — z przewidywalnym, komfortowym ruchem do codziennego grania."></p>
+<!-- Hero photo + thumbs -->
+
+<div class="mb-2">
+  <div class="md:grid md:grid-cols-[1fr_220px] md:gap-4 md:items-start">
+    <!-- Main image (click opens modal) -->
+    <div class="rounded-2xl photo-frame overflow-hidden">
+      <picture id="mainProductPicture">
+        <source id="mainProductSource" srcset="/images/rama3dof1.webp" type="image/webp"/>
+        <img
+          id="mainProductImg"
+          alt="3DOF / 2DOF motion platform"
+          class="product-photo cursor-zoom-in"
+          src="/images/rama3dof1.jpg"
+          data-full="/images/rama3dof1-large.jpg"
+          data-gallery-key="3dof"
+          data-index="0"
+          loading="lazy"
+          decoding="async" />
+      </picture>
+    </div>
+
+    <!-- Desktop thumbs (right side, vertical scroll) -->
+    <div class="hidden md:block">
+      <div class="photo-frame rounded-2xl p-2">
+        <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
+          <div class="grid grid-cols-1 gap-2">
+            <button type="button" class="thumbBtn block" data-jpg="/images/rama3dof1.jpg" data-webp="/images/rama3dof1.webp" data-full="/images/rama3dof1-large.jpg" data-alt="3DOF / 2DOF motion platform photo 1" data-index="0">
+              <img alt="3DOF / 2DOF motion platform photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama3dof1.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/rama3dof2.jpg" data-webp="/images/rama3dof2.webp" data-full="/images/rama3dof2.jpg" data-alt="3DOF / 2DOF motion platform photo 2" data-index="1">
+              <img alt="3DOF / 2DOF motion platform photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama3dof2.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/rama3dof3.jpg" data-webp="/images/rama3dof3.webp" data-full="/images/rama3dof3.jpg" data-alt="3DOF / 2DOF motion platform photo 3" data-index="2">
+              <img alt="3DOF / 2DOF motion platform photo 3" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/rama3dof3.jpg"/>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile thumbs (below, horizontal scroll) -->
+  <div class="md:hidden mt-3">
+    <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;" id="thumbsMobile">
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama3dof1.jpg" data-webp="/images/rama3dof1.webp" data-full="/images/rama3dof1-large.jpg" data-alt="3DOF / 2DOF motion platform photo 1" data-index="0">
+        <img alt="3DOF / 2DOF motion platform photo 1" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/rama3dof1.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama3dof2.jpg" data-webp="/images/rama3dof2.webp" data-full="/images/rama3dof2.jpg" data-alt="3DOF / 2DOF motion platform photo 2" data-index="1">
+        <img alt="3DOF / 2DOF motion platform photo 2" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/rama3dof2.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/rama3dof3.jpg" data-webp="/images/rama3dof3.webp" data-full="/images/rama3dof3.jpg" data-alt="3DOF / 2DOF motion platform photo 3" data-index="2">
+        <img alt="3DOF / 2DOF motion platform photo 3" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/rama3dof3.jpg"/>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const mainImg = document.getElementById('mainProductImg');
+      const mainSource = document.getElementById('mainProductSource');
+
+      // expose gallery for modal (site-layout.js)
+      window.ProductGalleries = window.ProductGalleries || {};
+      window.ProductGalleries['3dof'] = [
+        { full: '/images/rama3dof1-large.jpg', alt: '3DOF / 2DOF motion platform photo 1' },
+        { full: '/images/rama3dof2.jpg', alt: '3DOF / 2DOF motion platform photo 2' },
+        { full: '/images/rama3dof3.jpg', alt: '3DOF / 2DOF motion platform photo 3' },
+      ];
+
+      function setMainFromThumb(btn) {
+        if (!btn || !mainImg) return;
+        const jpg = btn.getAttribute('data-jpg') || '';
+        const webp = btn.getAttribute('data-webp') || '';
+        const full = btn.getAttribute('data-full') || jpg;
+        const alt = btn.getAttribute('data-alt') || '';
+        const idx = btn.getAttribute('data-index') || '0';
+
+        if (webp && mainSource) mainSource.srcset = webp;
+        if (jpg) mainImg.src = jpg;
+
+        mainImg.setAttribute('data-full', full || jpg);
+        mainImg.setAttribute('alt', alt || '');
+        mainImg.setAttribute('data-index', idx);
+      }
+
+      // default: first image already set in HTML
+      document.querySelectorAll('.thumbBtn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setMainFromThumb(btn);
+        });
+      });
+    })();
+  </script>
 </div>
-<p class="text-white/55 text-sm mt-3" data-en="Tip: click an image to zoom." data-pl="Wskazówka: kliknij zdjęcie, aby powiększyć."></p>
-</div>
-<!-- Video section (ONLY 3DOF demo) -->
-<section class="grid lg:grid-cols-3 gap-6 mb-10" id="videos">
-<!-- Left: inline player -->
-<div class="lg:col-span-2 bg-gray-800/60 border border-white/5 rounded-2xl overflow-hidden">
-<div class="p-6 pb-4">
-<h2 class="text-2xl font-bold" data-en="3DOF demo" data-pl="Demo 3DOF"></h2>
-<p class="text-white/80 mt-2" data-en="A short clip showing compact motion behavior — readable cues without overwhelming movement." data-pl="Krótki klip pokazujący zachowanie kompaktowego motion — czytelne sygnały bez przesadnych wychyleń."></p>
-</div>
-<div class="px-6 pb-6">
-<div class="rounded-2xl overflow-hidden border border-white/10 bg-black/40">
-<video class="w-full h-auto block" controls="" playsinline="" poster="/videos/posters/3dof-demo1.jpg" preload="metadata">
-<source src="/videos/3dof-demo1.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="flex items-center justify-between gap-4 mt-3">
-<div class="text-white/80 text-sm">
-<span class="font-semibold text-white/90" data-en="3DOF – motion demo" data-pl="3DOF – demo motion"></span>
-</div>
-</div>
-</div>
-</div>
-<!-- Right: small info card (no more-demos list) -->
-<div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
-<h3 class="text-xl font-bold mb-4" data-en="What you’re seeing" data-pl="Co tu widać"></h3>
-<ul class="list-disc list-inside text-white/80 space-y-2">
-<li data-en="Compact motion tuned for everyday use." data-pl="Kompaktowe motion strojonne pod codzienne granie."></li>
-<li data-en="Clear cues for acceleration, braking and balance." data-pl="Czytelne sygnały przyspieszania, hamowania i balansu."></li>
-<li data-en="Works for aircraft or vehicle simulation." data-pl="Działa w symulacji samolotu lub pojazdu."></li>
-</ul>
-</div>
-</section>
+
 <!-- Benefits -->
 <div class="grid md:grid-cols-2 gap-6 mb-10">
 <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-6">
@@ -133,6 +194,7 @@
 <section class="bg-gray-800/60 border border-white/5 rounded-2xl p-6 mb-10" id="lead">
 <h2 class="text-2xl font-bold mb-3" data-en="Let’s match it to your space" data-pl="Dopasujmy to do Twojej przestrzeni"></h2>
 <p class="text-white/85 mb-5" data-en="Send us your available space and what you play (flight / vehicle). We’ll recommend a clean layout and configuration." data-pl="Napisz, ile masz miejsca i w co grasz (lotniczy / pojazd). Zaproponujemy czysty układ i konfigurację."></p>
+<p class="text-white/70 text-sm" data-en="Tip: share your available footprint and monitor/seat setup — we’ll suggest a clean layout." data-pl="Wskazówka: podaj dostępny obrys stanowiska i układ monitorów/fotela — zaproponujemy czysty layout."></p>
 <div class="flex flex-col sm:flex-row gap-3">
 <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded font-semibold text-center" data-en="Request a quote" data-href-en="/en/?topic=3dof#contact" data-href-pl="/pl/?topic=3dof#contact" data-pl="Poproś o wycenę" href="/en/?topic=3dof#contact">Request a quote</a>
 <a class="inline-block bg-white/10 hover:bg-white/15 border border-white/10 px-6 py-3 rounded font-semibold text-center" data-en="See all products" data-href-en="/en/#products" data-href-pl="/pl/#products" data-pl="Zobacz wszystkie produkty" href="/en/#products">See all products</a>
