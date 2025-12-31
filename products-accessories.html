@@ -87,13 +87,13 @@
     <!-- Main image (click opens modal) -->
     <div class="rounded-2xl photo-frame overflow-hidden">
       <picture id="mainProductPicture">
-        <source id="mainProductSource" srcset="/images/accessories1.webp" type="image/webp"/>
+        <source id="mainProductSource" srcset="/images/frontpanel-fa18-1.webp" type="image/webp"/>
         <img
           id="mainProductImg"
-          alt="ForgeMotion accessories"
+          alt="FA-18 Front Panel"
           class="product-photo cursor-zoom-in"
-          src="/images/accessories1.jpg"
-          data-full="/images/accessories1-large.jpg"
+          src="/images/frontpanel-fa18-1.jpg"
+          data-full="/images/frontpanel-fa18-1-large.jpg"
           data-gallery-key="acc"
           data-index="0"
           loading="lazy"
@@ -102,11 +102,17 @@
     </div>
 
     <!-- Desktop thumbs (right side, vertical scroll) -->
-    <div class="hidden md:block hidden">
+    <div class="hidden md:block">
       <div class="photo-frame rounded-2xl p-2">
         <div class="max-h-[420px] overflow-y-auto pr-1" id="thumbsDesktop">
           <div class="grid grid-cols-1 gap-2">
-            <button type="button" class="thumbBtn block" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="0">
+            <button type="button" class="thumbBtn block" data-jpg="/images/frontpanel-fa18-1.jpg" data-webp="/images/frontpanel-fa18-1.webp" data-full="/images/frontpanel-fa18-1-large.jpg" data-alt="FA-18 Front Panel photo 1" data-index="0">
+              <img alt="FA-18 Front Panel photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-1.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/frontpanel-fa18-2.jpg" data-webp="/images/frontpanel-fa18-2.webp" data-full="/images/frontpanel-fa18-2.jpg" data-alt="FA-18 Front Panel photo 2" data-index="1">
+              <img alt="FA-18 Front Panel photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-2.jpg"/>
+            </button>
+            <button type="button" class="thumbBtn block" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="2">
               <img alt="ForgeMotion accessories photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
             </button>
           </div>
@@ -116,10 +122,16 @@
   </div>
 
   <!-- Mobile thumbs (below, horizontal scroll) -->
-  <div class="md:hidden mt-3 hidden">
+  <div class="md:hidden mt-3">
     <div class="flex gap-3 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;" id="thumbsMobile">
-      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="0">
-        <img alt="ForgeMotion accessories photo 1" class="thumb w-40 rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/frontpanel-fa18-1.jpg" data-webp="/images/frontpanel-fa18-1.webp" data-full="/images/frontpanel-fa18-1-large.jpg" data-alt="FA-18 Front Panel photo 1" data-index="0">
+        <img alt="FA-18 Front Panel photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-1.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/frontpanel-fa18-2.jpg" data-webp="/images/frontpanel-fa18-2.webp" data-full="/images/frontpanel-fa18-2.jpg" data-alt="FA-18 Front Panel photo 2" data-index="1">
+        <img alt="FA-18 Front Panel photo 2" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/frontpanel-fa18-2.jpg"/>
+      </button>
+      <button type="button" class="thumbBtn shrink-0" data-jpg="/images/accessories1.jpg" data-webp="/images/accessories1.webp" data-full="/images/accessories1-large.jpg" data-alt="ForgeMotion accessories photo 1" data-index="2">
+        <img alt="ForgeMotion accessories photo 1" class="thumb rounded-xl" loading="lazy" decoding="async" src="/images/accessories1.jpg"/>
       </button>
     </div>
   </div>
@@ -132,6 +144,8 @@
       // expose gallery for modal (site-layout.js)
       window.ProductGalleries = window.ProductGalleries || {};
       window.ProductGalleries['acc'] = [
+        { full: '/images/frontpanel-fa18-1-large.jpg', alt: 'FA-18 Front Panel photo 1' },
+        { full: '/images/frontpanel-fa18-2.jpg', alt: 'FA-18 Front Panel photo 2' },
         { full: '/images/accessories1-large.jpg', alt: 'ForgeMotion accessories photo 1' },
       ];
 
