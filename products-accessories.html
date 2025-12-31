@@ -110,6 +110,10 @@
 <button aria-label="Front panel FA18 – view 2" class="thumbBtn block" data-idx="2" type="button">
 <img alt="Front panel FA18 – thumbnail 2" class="thumb rounded-xl photo-frame" decoding="async" loading="lazy" src="/images/frontpanel-fa18-2.jpg"/>
 </button>
+<button aria-label="Ejection handle – view 1" class="thumbBtn block" data-idx="3" type="button">
+  <img alt="Ejection handle – thumbnail 1" class="thumb rounded-xl shadow-sm w-40 h-24 object-cover" decoding="async" loading="lazy" src="/images/ejectionhandle1.jpg"/>
+</button>
+
 </div>
 </div>
 <!-- Mobile thumbs -->
@@ -123,6 +127,10 @@
 <button aria-label="Front panel FA18 – view 2" class="thumbBtn shrink-0" data-idx="2" type="button">
 <img alt="Front panel FA18 – thumbnail 2" class="thumb rounded-xl photo-frame" decoding="async" loading="lazy" src="/images/frontpanel-fa18-2.jpg"/>
 </button>
+<button aria-label="Ejection handle – view 1" class="thumbBtn shrink-0" data-idx="3" type="button">
+  <img alt="Ejection handle – thumbnail 1" class="thumb rounded-xl shadow-sm w-32 h-20 object-cover" decoding="async" loading="lazy" src="/images/ejectionhandle1.jpg"/>
+</button>
+
 </div>
 <p class="text-white/55 text-sm mt-3" data-en="Tip: click the main image to zoom." data-pl="Wskazówka: kliknij główne zdjęcie, aby powiększyć."></p>
 </div>
@@ -130,9 +138,10 @@
   // Gallery for modal navigation (site-layout.js reads window.ProductGalleries)
   window.ProductGalleries = window.ProductGalleries || {};
   window.ProductGalleries["accessories"] = [
-    { webp: "/images/accessories1-large.webp", jpg: "/images/accessories1-large.jpg", full: "/images/accessories1-large.jpg", altEn: "Simulator accessories – main view", altPl: "Akcesoria do symulatora – widok główny" },
-    { webp: "/images/frontpanel-fa18-1.webp", jpg: "/images/frontpanel-fa18-1.jpg", full: "/images/frontpanel-fa18-1-large.jpg", altEn: "FA18 front panel – view 1", altPl: "Front panel FA18 – ujęcie 1" },
-    { webp: "/images/frontpanel-fa18-2.webp", jpg: "/images/frontpanel-fa18-2.jpg", full: "/images/frontpanel-fa18-2.jpg", altEn: "FA18 front panel – view 2", altPl: "Front panel FA18 – ujęcie 2" }
+    { webp: "/images/accessories1-large.webp", jpg: "/images/accessories1-large.jpg", altEn: "Simulator accessories – main view", altPl: "Akcesoria do symulatora – widok główny" },
+    { webp: "/images/frontpanel-fa18-1.webp", jpg: "/images/frontpanel-fa18-1-large.jpg", altEn: "FA18 front panel – view 1", altPl: "Front panel FA18 – ujęcie 1" },
+    { webp: "/images/frontpanel-fa18-2.webp", jpg: "/images/frontpanel-fa18-2.jpg", altEn: "FA18 front panel – view 2", altPl: "Front panel FA18 – ujęcie 2" },
+    { webp: "/images/ejectionhandle1-large.webp", jpg: "/images/ejectionhandle1-large.jpg", altEn: "Ejection handle – product view", altPl: "Uchwyt katapultowania – ujęcie produktowe" }
   ];
 
   // Thumbnail -> swap main image (no modal)
