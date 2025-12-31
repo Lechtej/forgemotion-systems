@@ -1,0 +1,10 @@
+{
+  "name": "forgemotion-systems-site",
+  "private": true,
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/tailwind.css --minify"
+  }
+}
