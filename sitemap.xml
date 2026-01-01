@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
@@ -57,4 +57,4 @@
     <priority>0.6</priority>
   </url>
 
-</urlset>
+<url><loc>https://forgemotionsystems.com/legal/terms-and-conditions-pl.html</loc><lastmod>2026-01-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url><url><loc>https://forgemotionsystems.com/legal/terms-and-conditions-en.html</loc><lastmod>2026-01-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url><url><loc>https://forgemotionsystems.com/pl/privacy.html</loc><lastmod>2026-01-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url><url><loc>https://forgemotionsystems.com/en/privacy.html</loc><lastmod>2026-01-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url></urlset>
