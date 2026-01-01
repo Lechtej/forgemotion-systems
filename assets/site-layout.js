@@ -935,7 +935,24 @@ function setLanguage(lang, metaData) {
   }
 
   // ---- lang buttons ----
-  function bindLangButtons(metaData) {
+  
+  function mapLegalLangPath(path, targetLang) {
+    // Keep user within the same legal document when switching language.
+    // Supports: /pl/privacy.html <-> /en/privacy.html and terms-and-conditions-*-*.html
+    const p = stripTrailingSlash(path);
+
+    // Privacy pages
+    if (p === "/pl/privacy.html" && targetLang === "en") return "/en/privacy.html";
+    if (p === "/en/privacy.html" && targetLang === "pl") return "/pl/privacy.html";
+
+    // Terms & Conditions pages (in /legal/)
+    if (p === "/legal/terms-and-conditions-pl.html" && targetLang === "en") return "/legal/terms-and-conditions-en.html";
+    if (p === "/legal/terms-and-conditions-en.html" && targetLang === "pl") return "/legal/terms-and-conditions-pl.html";
+
+    return null;
+  }
+
+function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-lang]");
       if (!btn) return;
@@ -945,33 +962,20 @@ function setLanguage(lang, metaData) {
 
       const path = stripTrailingSlash(window.location.pathname);
       const hash = window.location.hash || "";
-      const search = window.location.search || "";
 
-      // Index pages: language switch keeps you on the index (optionally with section hash)
-      if (isIndexLikePath(path)) {
+      const mapped = mapLegalLangPath(path, targetLang);
+      if (mapped) {
+        localStorage.setItem("lang", targetLang);
+        window.location.href = mapped + (hash || "");
+        return;
+      }
+
+      if (isIndexLikePath(path) || getPathLang(path)) {
         localStorage.setItem("lang", targetLang);
         window.location.href = buildIndexUrl(targetLang, hash);
         return;
       }
 
-      // Language-prefixed pages (e.g. /pl/privacy.html): keep the same document when switching language
-      const currentLang = getPathLang(path);
-      if (currentLang) {
-        const rest = path.replace(/^\/(en|pl)\//, "");
-        window.location.href = `/${targetLang}/${rest}` + search + hash;
-        return;
-      }
-
-      // Suffix-based language pages (e.g. /legal/terms-and-conditions-pl.html): keep the same document
-      const suffixMatch = path.match(/^(.*?)(-en|-pl)(\.html?)$/i);
-      if (suffixMatch) {
-        const base = suffixMatch[1];
-        const ext = suffixMatch[3];
-        window.location.href = `${base}-${targetLang}${ext}` + search + hash;
-        return;
-      }
-
-      // Fallback: SPA-style language switch without navigation
       const wasMobileOpen = isMobileMenuOpen();
       setLanguage(targetLang, metaData);
       if (wasMobileOpen) closeMobileMenu();
