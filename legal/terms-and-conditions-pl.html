@@ -3,46 +3,107 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Regulamin – ForgeMotion Systems</title>
-<meta content="index, follow" name="robots"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="en, pl" http-equiv="content-language"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Lightweight typography for legal content (no Tailwind typography plugin) */
+  .legal-content h2 { margin-top: 1.25rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+  .legal-content h3 { margin-top: 1rem; font-size: 1.125rem; font-weight: 700; }
+  .legal-content p { margin-top: .75rem; color: rgba(255,255,255,.82); line-height: 1.7; }
+  .legal-content ul { margin-top: .75rem; padding-left: 1.25rem; list-style: disc; color: rgba(255,255,255,.82); }
+  .legal-content ol { margin-top: .75rem; padding-left: 1.25rem; list-style: decimal; color: rgba(255,255,255,.82); }
+  .legal-content li { margin-top: .35rem; }
+  .legal-content a { text-decoration: underline; }
+  .legal-content strong { color: rgba(255,255,255,.92); }
+  .legal-content hr { margin: 1.5rem 0; border-color: rgba(255,255,255,.10); }
+</style>
+<script defer src="/assets/site-layout.js"></script>
 </head>
-<body>
-<main>
-<h1>Regulamin strony ForgeMotion Systems</h1>
-<h2>1. Informacje ogólne</h2>
-<p>Właścicielem marki ForgeMotion Systems oraz administratorem strony forgemotionsystems.com jest:</p>
-<p>
-<strong>UBD Consulting Leszek Tejwan</strong><br/>
-      ul. Na Uboczu 22/9<br/>
-      02-791 Warszawa, Polska<br/>
-      Kontakt: <a href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-</p>
-<h2>2. Charakter działalności</h2>
-<p>ForgeMotion Systems projektuje i produkuje platformy ruchu, symulatory oraz rozwiązania techniczne, w tym produkty wykonywane na indywidualne zamówienie (CUSTOM). Strona ma charakter informacyjny i ofertowy (B2C i B2B).</p>
-<h2>3. Zapytania i zawarcie umowy</h2>
-<p>Informacje na stronie nie stanowią oferty w rozumieniu Kodeksu cywilnego. Umowy zawierane są indywidualnie po przedstawieniu i akceptacji oferty (e-mail/PDF/umowa).</p>
-<h2>4. Produkty CUSTOM</h2>
-<p>Produkty oznaczone jako CUSTOM są wykonywane według specyfikacji uzgodnionej pomiędzy Stronami. Wizualizacje i zdjęcia mają charakter poglądowy.</p>
-<h2>5. Terminy realizacji</h2>
-<p>Termin realizacji, w szczególności dla produktów CUSTOM, jest każdorazowo ustalany indywidualnie i wiążący wyłącznie po pisemnym potwierdzeniu oraz akceptacji przez obie Strony (e-mail/PDF/umowa).</p>
-<h2>6. Zaliczki i przedpłaty</h2>
-<p>Rozpoczęcie realizacji zamówienia może być uzależnione od wpłaty zaliczki:</p>
-<ul>
-<li><strong>30%</strong> wartości zamówienia – standardowe projekty,</li>
-<li><strong>50%</strong> wartości zamówienia – projekty o wyższym stopniu indywidualizacji lub wyższej wartości,</li>
-</ul>
-<p>Wysokość zaliczki jest każdorazowo określona w ofercie/umowie. Dla produktów CUSTOM zaliczka ma charakter <strong>bezzwrotny</strong> i nie podlega zwrotowi w przypadku odstąpienia od umowy przez Klienta, z zastrzeżeniem przepisów bezwzględnie obowiązujących.</p>
-<h2>7. Prawo odstąpienia (B2C)</h2>
-<p>Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość w terminie 14 dni, z wyjątkami przewidzianymi w przepisach. W szczególności prawo odstąpienia nie przysługuje w przypadku umów dotyczących produktów wykonywanych na indywidualne zamówienie (CUSTOM) lub wyraźnie spersonalizowanych (art. 38 ustawy o prawach konsumenta).</p>
-<h2>8. Sprzedaż międzynarodowa (UE / poza UE)</h2>
-<p>Sprzedaż może obejmować UE oraz kraje trzecie (np. UK, USA). W przypadku sprzedaży poza UE mogą mieć zastosowanie przepisy celne i podatkowe kraju docelowego. Klient może być zobowiązany do uiszczenia lokalnych podatków, ceł lub opłat importowych – o ile oferta/umowa nie stanowi inaczej.</p>
-<h2>9. VAT i rezydencja podatkowa</h2>
-<p>Sprzedawca posiada rezydencję podatkową w Polsce. Sposób opodatkowania (w tym VAT) zależy od kraju dostawy, statusu Klienta (B2C/B2B) oraz rodzaju transakcji i jest każdorazowo określany w ofercie/umowie zgodnie z aktualnymi przepisami.</p>
-<h2>10. Prawo właściwe</h2>
-<p>Regulamin i umowy podlegają prawu polskiemu, z poszanowaniem bezwzględnie obowiązujących przepisów ochrony konsumenta mających zastosowanie.</p>
-<h2>11. Postanowienia końcowe</h2>
-<p>Administrator może aktualizować Regulamin. Aktualna wersja jest publikowana na stronie.</p>
+
+<body class="bg-gray-900 text-white font-sans">
+<div id="siteHeader"></div>
+
+<main class="pt-24">
+  <section class="max-w-4xl mx-auto px-6 py-14">
+    <header>
+      <h1 class="text-4xl font-extrabold tracking-tight">Regulamin strony ForgeMotion Systems</h1>
+      
+    </header>
+
+    <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
+      <div class="legal-content">
+        <h2>1. Informacje ogólne</h2>
+        <p>Właścicielem marki ForgeMotion Systems oraz administratorem strony forgemotionsystems.com jest:</p>
+        <p>
+        <strong>UBD Consulting Leszek Tejwan</strong><br/>
+              ul. Na Uboczu 22/9<br/>
+              02-791 Warszawa, Polska<br/>
+              Kontakt: <a href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
+        </p>
+        <h2>2. Charakter działalności</h2>
+        <p>ForgeMotion Systems projektuje i produkuje platformy ruchu, symulatory oraz rozwiązania techniczne, w tym produkty wykonywane na indywidualne zamówienie (CUSTOM). Strona ma charakter informacyjny i ofertowy (B2C i B2B).</p>
+        <h2>3. Zapytania i zawarcie umowy</h2>
+        <p>Informacje na stronie nie stanowią oferty w rozumieniu Kodeksu cywilnego. Umowy zawierane są indywidualnie po przedstawieniu i akceptacji oferty (e-mail/PDF/umowa).</p>
+        <h2>4. Produkty CUSTOM</h2>
+        <p>Produkty oznaczone jako CUSTOM są wykonywane według specyfikacji uzgodnionej pomiędzy Stronami. Wizualizacje i zdjęcia mają charakter poglądowy.</p>
+        <h2>5. Terminy realizacji</h2>
+        <p>Termin realizacji, w szczególności dla produktów CUSTOM, jest każdorazowo ustalany indywidualnie i wiążący wyłącznie po pisemnym potwierdzeniu oraz akceptacji przez obie Strony (e-mail/PDF/umowa).</p>
+        <h2>6. Zaliczki i przedpłaty</h2>
+        <p>Rozpoczęcie realizacji zamówienia może być uzależnione od wpłaty zaliczki:</p>
+        <ul>
+        <li><strong>30%</strong> wartości zamówienia – standardowe projekty,</li>
+        <li><strong>50%</strong> wartości zamówienia – projekty o wyższym stopniu indywidualizacji lub wyższej wartości,</li>
+        </ul>
+        <p>Wysokość zaliczki jest każdorazowo określona w ofercie/umowie. Dla produktów CUSTOM zaliczka ma charakter <strong>bezzwrotny</strong> i nie podlega zwrotowi w przypadku odstąpienia od umowy przez Klienta, z zastrzeżeniem przepisów bezwzględnie obowiązujących.</p>
+        <h2>7. Prawo odstąpienia (B2C)</h2>
+        <p>Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość w terminie 14 dni, z wyjątkami przewidzianymi w przepisach. W szczególności prawo odstąpienia nie przysługuje w przypadku umów dotyczących produktów wykonywanych na indywidualne zamówienie (CUSTOM) lub wyraźnie spersonalizowanych (art. 38 ustawy o prawach konsumenta).</p>
+        <h2>8. Sprzedaż międzynarodowa (UE / poza UE)</h2>
+        <p>Sprzedaż może obejmować UE oraz kraje trzecie (np. UK, USA). W przypadku sprzedaży poza UE mogą mieć zastosowanie przepisy celne i podatkowe kraju docelowego. Klient może być zobowiązany do uiszczenia lokalnych podatków, ceł lub opłat importowych – o ile oferta/umowa nie stanowi inaczej.</p>
+        <h2>9. VAT i rezydencja podatkowa</h2>
+        <p>Sprzedawca posiada rezydencję podatkową w Polsce. Sposób opodatkowania (w tym VAT) zależy od kraju dostawy, statusu Klienta (B2C/B2B) oraz rodzaju transakcji i jest każdorazowo określany w ofercie/umowie zgodnie z aktualnymi przepisami.</p>
+        <h2>10. Prawo właściwe</h2>
+        <p>Regulamin i umowy podlegają prawu polskiemu, z poszanowaniem bezwzględnie obowiązujących przepisów ochrony konsumenta mających zastosowanie.</p>
+        <h2>11. Postanowienia końcowe</h2>
+        <p>Administrator może aktualizować Regulamin. Aktualna wersja jest publikowana na stronie.</p>
+      </div>
+    </div>
+  </section>
 </main>
+
+<div id="siteFooter"></div>
+<div id="siteModal"></div>
+
+<script>
+  const metaData = {
+      "en": {
+            "author": "ForgeMotion Systems",
+            "ogImage": "",
+            "title": "Terms & Conditions – ForgeMotion Systems",
+            "description": "Terms and conditions for using the ForgeMotion Systems website and ordering custom simulator products.",
+            "keywords": "ForgeMotion Systems, terms and conditions, regulations, simulator, custom products",
+            "ogTitle": "Terms & Conditions – ForgeMotion Systems",
+            "ogDescription": "Terms and conditions for using the ForgeMotion Systems website."
+      },
+      "pl": {
+            "author": "ForgeMotion Systems",
+            "ogImage": "",
+            "title": "Regulamin – ForgeMotion Systems",
+            "description": "Regulamin korzystania z serwisu ForgeMotion Systems oraz zasady zamówień produktów wykonywanych na zamówienie.",
+            "keywords": "ForgeMotion Systems, regulamin, warunki, symulator, produkty na zamówienie",
+            "ogTitle": "Regulamin – ForgeMotion Systems",
+            "ogDescription": "Regulamin korzystania z serwisu ForgeMotion Systems."
+      }
+};
+  document.addEventListener("DOMContentLoaded", () => {
+    SiteLayout.init({
+      metaData,
+      includeModal: true,
+      includeVideoModal: false,
+      injectOtherProducts: false,
+      enableVideoDemos: false
+    });
+  });
+</script>
 </body>
 </html>

@@ -1,74 +1,132 @@
-
 <!DOCTYPE html>
 
 <html lang="pl">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="/favicon-32x32.png" rel="icon" sizes="32x32"/>
-<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<title>Polityka prywatności (RODO) – ForgeMotion Systems</title>
-<link rel="stylesheet" href="/assets/tailwind.css"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="en, pl" http-equiv="content-language"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Lightweight typography for legal content (no Tailwind typography plugin) */
+  .legal-content h2 { margin-top: 1.25rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+  .legal-content h3 { margin-top: 1rem; font-size: 1.125rem; font-weight: 700; }
+  .legal-content p { margin-top: .75rem; color: rgba(255,255,255,.82); line-height: 1.7; }
+  .legal-content ul { margin-top: .75rem; padding-left: 1.25rem; list-style: disc; color: rgba(255,255,255,.82); }
+  .legal-content ol { margin-top: .75rem; padding-left: 1.25rem; list-style: decimal; color: rgba(255,255,255,.82); }
+  .legal-content li { margin-top: .35rem; }
+  .legal-content a { text-decoration: underline; }
+  .legal-content strong { color: rgba(255,255,255,.92); }
+  .legal-content hr { margin: 1.5rem 0; border-color: rgba(255,255,255,.10); }
+</style>
+<script defer src="/assets/site-layout.js"></script>
 </head>
-<body class="min-h-screen bg-[#0b1220] text-white">
-<div class="max-w-4xl mx-auto px-6 py-10">
-<a class="text-sm text-white/70 hover:text-white underline" href="/pl/">Powrót</a>
-<h1 class="mt-4 text-3xl font-semibold">Polityka prywatności (RODO)</h1>
-<div class="mt-8 space-y-6 text-white/80 leading-relaxed">
-<section>
-<h2 class="text-xl font-semibold text-white">Administrator danych</h2>
-<p class="mt-2">
-          UBD Consulting Leszek Tejwan<br/>
-          ul. Na Uboczu 22/9, 02-971 Warszawa, Polska<br/>
-          E-mail kontaktowy: <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-</p>
-</section>
-<section>
-<h2 class="text-xl font-semibold text-white">Jakie dane zbieramy</h2>
-<p class="mt-2">
-          Gdy wysyłasz formularz, przetwarzamy dane podane w formularzu (imię/nazwa, e-mail, treść zapytania oraz opcjonalnie: firma, parametry projektu) oraz informacje techniczne (np. user-agent). Jeśli dodasz pliki, przechowujemy je jako załączniki zapytania.
+
+<body class="bg-gray-900 text-white font-sans">
+<div id="siteHeader"></div>
+
+<main class="pt-24">
+  <section class="max-w-4xl mx-auto px-6 py-14">
+    <header>
+      <h1 class="text-4xl font-extrabold tracking-tight">Polityka prywatności (RODO)</h1>
+      
+    </header>
+
+    <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
+      <div class="legal-content">
+        <a class="text-sm text-white/70 hover:text-white underline" href="/pl/">Powrót</a>
+
+        <div class="mt-8 space-y-6 text-white/80 leading-relaxed">
+        <section>
+        <h2 class="text-xl font-semibold text-white">Administrator danych</h2>
+        <p class="mt-2">
+                  UBD Consulting Leszek Tejwan<br/>
+                  ul. Na Uboczu 22/9, 02-971 Warszawa, Polska<br/>
+                  E-mail kontaktowy: <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
         </p>
-</section>
-<section>
-<h2 class="text-xl font-semibold text-white">Cele i podstawa prawna</h2>
-<ul class="mt-2 list-disc pl-6 space-y-2">
-<li>Odpowiedź na zapytanie i przygotowanie oferty – na podstawie Twojej zgody udzielonej w formularzu (art. 6 ust. 1 lit. a RODO).</li>
-<li>Utrzymanie bezpieczeństwa i zapobieganie nadużyciom (np. spam) – prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO).</li>
-</ul>
-</section>
-<section>
-<h2 class="text-xl font-semibold text-white">Odbiorcy danych / podmioty przetwarzające</h2>
-<p class="mt-2">
-          Dane mogą być przetwarzane przez dostawców infrastruktury (hosting) oraz usługi wykorzystywane do obsługi formularza i przechowywania plików (Supabase). Jeśli włączona jest wysyłka powiadomień e-mail, wykorzystywana może być usługa wysyłki e-mail (np. Resend) lub dostawca SMTP.
+        </section>
+        <section>
+        <h2 class="text-xl font-semibold text-white">Jakie dane zbieramy</h2>
+        <p class="mt-2">
+                  Gdy wysyłasz formularz, przetwarzamy dane podane w formularzu (imię/nazwa, e-mail, treść zapytania oraz opcjonalnie: firma, parametry projektu) oraz informacje techniczne (np. user-agent). Jeśli dodasz pliki, przechowujemy je jako załączniki zapytania.
+                </p>
+        </section>
+        <section>
+        <h2 class="text-xl font-semibold text-white">Cele i podstawa prawna</h2>
+        <ul class="mt-2 list-disc pl-6 space-y-2">
+        <li>Odpowiedź na zapytanie i przygotowanie oferty – na podstawie Twojej zgody udzielonej w formularzu (art. 6 ust. 1 lit. a RODO).</li>
+        <li>Utrzymanie bezpieczeństwa i zapobieganie nadużyciom (np. spam) – prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO).</li>
+        </ul>
+        </section>
+        <section>
+        <h2 class="text-xl font-semibold text-white">Odbiorcy danych / podmioty przetwarzające</h2>
+        <p class="mt-2">
+                  Dane mogą być przetwarzane przez dostawców infrastruktury (hosting) oraz usługi wykorzystywane do obsługi formularza i przechowywania plików (Supabase). Jeśli włączona jest wysyłka powiadomień e-mail, wykorzystywana może być usługa wysyłki e-mail (np. Resend) lub dostawca SMTP.
+                </p>
+        </section>
+        <section>
+        <h2 class="text-xl font-semibold text-white">Okres przechowywania</h2>
+        <p class="mt-2">
+                  Dane przechowujemy przez okres niezbędny do obsługi zapytania i korespondencji, maksymalnie 12 miesięcy, chyba że dalsze przechowywanie jest wymagane (np. roszczenia/obrona roszczeń).
+                </p>
+        </section>
+        <section>
+        <h2 class="text-xl font-semibold text-white">Twoje prawa</h2>
+        <p class="mt-2">
+                  Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz wniesienia sprzeciwu. Zgodę możesz wycofać w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania przed wycofaniem).
+                </p>
+        <p class="mt-2">
+                  W sprawach związanych z danymi osobowymi skontaktuj się: 
+                  <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
         </p>
-</section>
-<section>
-<h2 class="text-xl font-semibold text-white">Okres przechowywania</h2>
-<p class="mt-2">
-          Dane przechowujemy przez okres niezbędny do obsługi zapytania i korespondencji, maksymalnie 12 miesięcy, chyba że dalsze przechowywanie jest wymagane (np. roszczenia/obrona roszczeń).
-        </p>
-</section>
-<section>
-<h2 class="text-xl font-semibold text-white">Twoje prawa</h2>
-<p class="mt-2">
-          Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz wniesienia sprzeciwu. Zgodę możesz wycofać w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania przed wycofaniem).
-        </p>
-<p class="mt-2">
-          W sprawach związanych z danymi osobowymi skontaktuj się: 
-          <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-</p>
-</section>
-<section>
-<h2 class="text-xl font-semibold text-white">Skarga do organu nadzorczego</h2>
-<p class="mt-2">
-          W Polsce organem nadzorczym jest Prezes Urzędu Ochrony Danych Osobowych (UODO).
-        </p>
-</section>
-</div>
-<p class="mt-10 text-xs text-white/50">
-      Ostatnia aktualizacja: 2025-12-30
-    </p>
-</div>
+        </section>
+        <section>
+        <h2 class="text-xl font-semibold text-white">Skarga do organu nadzorczego</h2>
+        <p class="mt-2">
+                  W Polsce organem nadzorczym jest Prezes Urzędu Ochrony Danych Osobowych (UODO).
+                </p>
+        </section>
+        </div>
+        <p class="mt-10 text-xs text-white/50">
+              Ostatnia aktualizacja: 2025-12-30
+            </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="siteFooter"></div>
+<div id="siteModal"></div>
+
+<script>
+  const metaData = {
+      "en": {
+            "author": "ForgeMotion Systems",
+            "ogImage": "",
+            "title": "Privacy Policy (GDPR) – ForgeMotion Systems",
+            "description": "Information on personal data processing and privacy policy for ForgeMotion Systems in accordance with GDPR.",
+            "keywords": "ForgeMotion Systems, privacy policy, GDPR, personal data",
+            "ogTitle": "Privacy Policy (GDPR) – ForgeMotion Systems",
+            "ogDescription": "Privacy policy and GDPR information for ForgeMotion Systems."
+      },
+      "pl": {
+            "author": "ForgeMotion Systems",
+            "ogImage": "",
+            "title": "Polityka prywatności (RODO) – ForgeMotion Systems",
+            "description": "Informacje o przetwarzaniu danych osobowych i polityka prywatności ForgeMotion Systems zgodnie z RODO.",
+            "keywords": "ForgeMotion Systems, polityka prywatności, RODO, dane osobowe",
+            "ogTitle": "Polityka prywatności (RODO) – ForgeMotion Systems",
+            "ogDescription": "Polityka prywatności i informacje RODO dla ForgeMotion Systems."
+      }
+};
+  document.addEventListener("DOMContentLoaded", () => {
+    SiteLayout.init({
+      metaData,
+      includeModal: true,
+      includeVideoModal: false,
+      injectOtherProducts: false,
+      enableVideoDemos: false
+    });
+  });
+</script>
 </body>
 </html>
