@@ -7,7 +7,23 @@
 <meta content="en, pl" http-equiv="content-language"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  /* Lightweight, consistent typography for legal pages (no Tailwind typography plugin) */
+  
+  /* TOC + anchors */
+  #legalToc a{display:block;padding:.35rem .5rem;border-radius:.75rem;text-decoration:none!important;color:rgba(255,255,255,.75)!important;}
+  #legalToc a:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.95)!important;}
+  #legalToc a.is-active{background:rgba(255,255,255,.10);color:rgba(255,255,255,.98)!important;}
+
+  .section-anchor{opacity:.55;margin-left:.4rem;text-decoration:none!important;}
+  .section-anchor:hover{opacity:.95;}
+
+  @media print{
+    #siteHeader,#siteFooter,.print-hidden{display:none!important;}
+    body{background:#fff!important;color:#000!important;}
+    .legal-content{color:#111!important;}
+    .legal-content h2,.legal-content h3{color:#000!important;}
+    .legal-content a{text-decoration:none!important;color:#000!important;}
+  }
+/* Lightweight, consistent typography for legal pages (no Tailwind typography plugin) */
   .legal-content{color:rgba(255,255,255,.82);line-height:1.75;font-size:1rem;}
   .legal-content > *:first-child{margin-top:0!important;}
 
@@ -31,15 +47,6 @@
 
   /* Small helpers */
   .legal-content .muted{color:rgba(255,255,255,.72)!important;}
-
-  @media print{
-    #siteHeader,#siteFooter,.print-hidden{display:none!important;}
-    body{background:#fff!important;color:#000!important;}
-    main{padding-top:0!important;}
-    .legal-content{color:#000!important;}
-    a{color:#000!important;text-decoration:underline!important;}
-    .rounded-2xl{border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;}
-  }
 </style>
 <script defer src="/assets/site-layout.js"></script>
 </head>
@@ -51,28 +58,23 @@
   <section class="max-w-6xl mx-auto px-6 py-14">
     <header>
       <h1 class="text-4xl font-extrabold tracking-tight">Polityka prywatności (RODO)</h1>
-      <button type="button" class="print-hidden mt-6 inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm font-semibold text-white/90" onclick="window.print()">Drukuj / PDF</button>
       
     </header>
+  <div class="lg:grid lg:grid-cols-[280px_1fr] lg:gap-10 mt-8">
+    <aside class="space-y-4 print-hidden">
+      <button type="button"
+              class="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm font-semibold"
+              onclick="window.print()">Drukuj / PDF</button>
 
-    <div class="lg:grid lg:grid-cols-[18rem_1fr] lg:gap-8 mt-8">
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+        <div class="text-sm font-semibold text-white/80 mb-3">Spis treści</div>
+        <nav id="legalToc" class="text-sm text-white/70 space-y-1"></nav>
+      </div>
+    </aside>
 
-<div class="lg:hidden mt-6 print-hidden">
-  <details class="rounded-xl bg-white/5 border border-white/10 p-4">
-    <summary class="cursor-pointer select-none font-semibold text-white/90">Spis treści <span class="text-white/60 font-normal">(Pokaż / ukryj)</span></summary>
-    <ul class="mt-3"></ul>
-  </details>
-</div>
+    <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8 lg:mt-0">
+      <div class="legal-content" id="legalContent">
 
-<div class="hidden lg:block print-hidden">
-  <aside class="sticky top-28 rounded-2xl bg-white/5 border border-white/10 p-5">
-    <div class="text-sm font-semibold text-white/90 mb-3">Spis treści</div>
-    <ul class="text-sm"></ul>
-  </aside>
-</div>
-
-<div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8 lg:mt-0">
-      <div class="legal-content">
         <a class="text-sm text-white/70 hover:text-white underline" href="/pl/">Powrót</a>
 
         <div class="mt-8 space-y-6 text-white/80 leading-relaxed">
@@ -131,7 +133,8 @@
             </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
 <div id="siteFooter"></div>
@@ -168,5 +171,95 @@
     });
   });
 </script>
+
+<script>
+(function(){
+  function slugify(s){
+    return (s||"")
+      .toLowerCase()
+      .trim()
+      .replace(/&amp;|&/g,"and")
+      .replace(/[^a-z0-9\u00C0-\u024F\s-]/g,"")
+      .replace(/\s+/g,"-")
+      .replace(/-+/g,"-");
+  }
+
+  function buildLegalToc(){
+    var content = document.getElementById("legalContent") || document.querySelector(".legal-content");
+    var toc = document.getElementById("legalToc");
+    if(!content || !toc) return;
+
+    var headings = Array.prototype.slice.call(content.querySelectorAll("h2"));
+    if(!headings.length) return;
+
+    // Ensure unique IDs + add "§" anchor links
+    var used = {};
+    headings.forEach(function(h){
+      var base = h.id && h.id.trim() ? h.id.trim() : slugify(h.textContent);
+      if(!base) base = "section";
+      var id = base;
+      var i = 2;
+      while(used[id] || document.getElementById(id)) { id = base + "-" + (i++); }
+      used[id] = true;
+      h.id = id;
+
+      if(!h.querySelector(".section-anchor")){
+        var a = document.createElement("a");
+        a.className = "section-anchor";
+        a.href = "#" + id;
+        a.setAttribute("aria-label","Link to section");
+        a.textContent = "§";
+        h.appendChild(a);
+      }
+    });
+
+    // Build nav
+    var frag = document.createDocumentFragment();
+    headings.forEach(function(h){
+      var a = document.createElement("a");
+      a.href = "#" + h.id;
+      a.textContent = h.textContent.replace(/\s*§\s*$/,"").trim();
+      frag.appendChild(a);
+    });
+    toc.innerHTML = "";
+    toc.appendChild(frag);
+
+    // Scrollspy
+    var links = Array.prototype.slice.call(toc.querySelectorAll("a"));
+    var map = links.map(function(a){ return document.getElementById(a.getAttribute("href").slice(1)); });
+
+    function setActive(idx){
+      links.forEach(function(a,i){ a.classList.toggle("is-active", i===idx); });
+    }
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var idx = map.indexOf(e.target);
+          if(idx >= 0) setActive(idx);
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0.01 });
+
+    map.forEach(function(el){ if(el) observer.observe(el); });
+
+    // If hash exists, keep highlight consistent
+    if(location.hash){
+      var targetId = location.hash.slice(1);
+      var idx = map.findIndex(function(el){ return el && el.id === targetId; });
+      if(idx >= 0) setActive(idx);
+    } else {
+      setActive(0);
+    }
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", buildLegalToc);
+  } else {
+    buildLegalToc();
+  }
+})();
+</script>
+
 </body>
 </html>
