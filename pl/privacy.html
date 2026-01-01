@@ -31,86 +31,88 @@
 
   /* Small helpers */
   .legal-content .muted{color:rgba(255,255,255,.72)!important;}
-</style>
-<script defer src="/assets/site-layout.js"></script>
-</head>
 
+  /* Print: hide navigation, footer and UI-only elements */
+  @media print{
+    #siteHeader, #siteFooter, .print-hidden{display:none !important;}
+    body{background:#fff !important; color:#000 !important;}
+    main{padding-top:0 !important;}
+    .legal-content{color:#000 !important;}
+    a{color:#000 !important; text-decoration:none !important;}
+  }
+</style>
+<script defer="" src="/assets/site-layout.js"></script>
+</head>
 <body class="bg-gray-900 text-white font-sans">
 <div id="siteHeader"></div>
-
 <main class="pt-24">
-  <section class="max-w-4xl mx-auto px-6 py-14">
-    <header>
-      <h1 class="text-4xl font-extrabold tracking-tight">Polityka prywatności (RODO)</h1>
-      
-    </header>
-
-    <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
-      <div class="legal-content">
-        <a class="text-sm text-white/70 hover:text-white underline" href="/pl/">Powrót</a>
-
-        <div class="mt-8 space-y-6 text-white/80 leading-relaxed">
-        <section>
-        <h2 class="text-xl font-semibold text-white">Administrator danych</h2>
-        <p class="mt-2">
+<section class="max-w-6xl mx-auto px-6 py-14">
+<header><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div class="min-w-0">
+<h1 class="text-4xl font-extrabold tracking-tight">Polityka prywatności (RODO)</h1>
+</div><div class="shrink-0"><button class="print-hidden inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60" data-action="print" type="button">Drukuj / PDF</button></div></div></header><nav aria-label="Spis treści" class="mt-8 mb-10 rounded-2xl border border-white/5 bg-gray-800/40 p-5" data-toc="legal"><div class="text-sm font-semibold text-white/90 mb-3">Spis treści</div><ul class="grid gap-2 sm:grid-cols-2"><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#administrator-danych">Administrator danych</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#jakie-dane-zbieramy">Jakie dane zbieramy</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#cele-i-podstawa-prawna">Cele i podstawa prawna</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#odbiorcy-danych-podmioty-przetwarzajace">Odbiorcy danych / podmioty przetwarzające</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#okres-przechowywania">Okres przechowywania</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#twoje-prawa">Twoje prawa</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#skarga-do-organu-nadzorczego">Skarga do organu nadzorczego</a></li></ul></nav>
+<div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
+<div class="legal-content">
+<a class="text-sm text-white/70 hover:text-white underline" href="/pl/">Powrót</a>
+<div class="mt-8 space-y-6 text-white/80 leading-relaxed">
+<section>
+<h2 class="text-xl font-semibold text-white" id="administrator-danych">Administrator danych<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#administrator-danych">§</a></h2>
+<p class="mt-2">
                   UBD Consulting Leszek Tejwan<br/>
                   ul. Na Uboczu 22/9, 02-971 Warszawa, Polska<br/>
                   E-mail kontaktowy: <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-        </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Jakie dane zbieramy</h2>
-        <p class="mt-2">
+</p>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="jakie-dane-zbieramy">Jakie dane zbieramy<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#jakie-dane-zbieramy">§</a></h2>
+<p class="mt-2">
                   Gdy wysyłasz formularz, przetwarzamy dane podane w formularzu (imię/nazwa, e-mail, treść zapytania oraz opcjonalnie: firma, parametry projektu) oraz informacje techniczne (np. user-agent). Jeśli dodasz pliki, przechowujemy je jako załączniki zapytania.
                 </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Cele i podstawa prawna</h2>
-        <ul class="mt-2 list-disc pl-6 space-y-2">
-        <li>Odpowiedź na zapytanie i przygotowanie oferty – na podstawie Twojej zgody udzielonej w formularzu (art. 6 ust. 1 lit. a RODO).</li>
-        <li>Utrzymanie bezpieczeństwa i zapobieganie nadużyciom (np. spam) – prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO).</li>
-        </ul>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Odbiorcy danych / podmioty przetwarzające</h2>
-        <p class="mt-2">
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="cele-i-podstawa-prawna">Cele i podstawa prawna<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#cele-i-podstawa-prawna">§</a></h2>
+<ul class="mt-2 list-disc pl-6 space-y-2">
+<li>Odpowiedź na zapytanie i przygotowanie oferty – na podstawie Twojej zgody udzielonej w formularzu (art. 6 ust. 1 lit. a RODO).</li>
+<li>Utrzymanie bezpieczeństwa i zapobieganie nadużyciom (np. spam) – prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO).</li>
+</ul>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="odbiorcy-danych-podmioty-przetwarzajace">Odbiorcy danych / podmioty przetwarzające<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#odbiorcy-danych-podmioty-przetwarzajace">§</a></h2>
+<p class="mt-2">
                   Dane mogą być przetwarzane przez dostawców infrastruktury (hosting) oraz usługi wykorzystywane do obsługi formularza i przechowywania plików (Supabase). Jeśli włączona jest wysyłka powiadomień e-mail, wykorzystywana może być usługa wysyłki e-mail (np. Resend) lub dostawca SMTP.
                 </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Okres przechowywania</h2>
-        <p class="mt-2">
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="okres-przechowywania">Okres przechowywania<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#okres-przechowywania">§</a></h2>
+<p class="mt-2">
                   Dane przechowujemy przez okres niezbędny do obsługi zapytania i korespondencji, maksymalnie 12 miesięcy, chyba że dalsze przechowywanie jest wymagane (np. roszczenia/obrona roszczeń).
                 </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Twoje prawa</h2>
-        <p class="mt-2">
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="twoje-prawa">Twoje prawa<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#twoje-prawa">§</a></h2>
+<p class="mt-2">
                   Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz wniesienia sprzeciwu. Zgodę możesz wycofać w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania przed wycofaniem).
                 </p>
-        <p class="mt-2">
+<p class="mt-2">
                   W sprawach związanych z danymi osobowymi skontaktuj się: 
                   <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-        </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Skarga do organu nadzorczego</h2>
-        <p class="mt-2">
+</p>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="skarga-do-organu-nadzorczego">Skarga do organu nadzorczego<a aria-label="Link do tej sekcji" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#skarga-do-organu-nadzorczego">§</a></h2>
+<p class="mt-2">
                   W Polsce organem nadzorczym jest Prezes Urzędu Ochrony Danych Osobowych (UODO).
                 </p>
-        </section>
-        </div>
-        <p class="mt-10 text-xs text-white/50">
+</section>
+</div>
+<p class="mt-10 text-xs text-white/50">
               Ostatnia aktualizacja: 2025-12-30
             </p>
-      </div>
-    </div>
-  </section>
+</div>
+</div>
+</section>
 </main>
-
 <div id="siteFooter"></div>
 <div id="siteModal"></div>
-
 <script>
   const metaData = {
       "en": {
@@ -142,5 +144,15 @@
     });
   });
 </script>
-</body>
+<script data-print-script="1">(function(){
+  function bind(){
+    document.querySelectorAll('button[data-action="print"]').forEach(function(btn){
+      if (btn.__bound) return;
+      btn.__bound = true;
+      btn.addEventListener('click', function(){ window.print(); });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
+})();</script></body>
 </html>

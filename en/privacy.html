@@ -31,86 +31,88 @@
 
   /* Small helpers */
   .legal-content .muted{color:rgba(255,255,255,.72)!important;}
-</style>
-<script defer src="/assets/site-layout.js"></script>
-</head>
 
+  /* Print: hide navigation, footer and UI-only elements */
+  @media print{
+    #siteHeader, #siteFooter, .print-hidden{display:none !important;}
+    body{background:#fff !important; color:#000 !important;}
+    main{padding-top:0 !important;}
+    .legal-content{color:#000 !important;}
+    a{color:#000 !important; text-decoration:none !important;}
+  }
+</style>
+<script defer="" src="/assets/site-layout.js"></script>
+</head>
 <body class="bg-gray-900 text-white font-sans">
 <div id="siteHeader"></div>
-
 <main class="pt-24">
-  <section class="max-w-4xl mx-auto px-6 py-14">
-    <header>
-      <h1 class="text-4xl font-extrabold tracking-tight">Privacy Policy (GDPR)</h1>
-      
-    </header>
-
-    <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
-      <div class="legal-content">
-        <a class="text-sm text-white/70 hover:text-white underline" href="/en/">Back</a>
-
-        <div class="mt-8 space-y-6 text-white/80 leading-relaxed">
-        <section>
-        <h2 class="text-xl font-semibold text-white">Data controller</h2>
-        <p class="mt-2">
+<section class="max-w-6xl mx-auto px-6 py-14">
+<header><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div class="min-w-0">
+<h1 class="text-4xl font-extrabold tracking-tight">Privacy Policy (GDPR)</h1>
+</div><div class="shrink-0"><button class="print-hidden inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60" data-action="print" type="button">Print / PDF</button></div></div></header><nav aria-label="Table of contents" class="mt-8 mb-10 rounded-2xl border border-white/5 bg-gray-800/40 p-5" data-toc="legal"><div class="text-sm font-semibold text-white/90 mb-3">Table of contents</div><ul class="grid gap-2 sm:grid-cols-2"><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#data-controller">Data controller</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#what-data-we-collect">What data we collect</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#purpose-and-legal-basis">Purpose and legal basis</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#recipients-processors">Recipients / processors</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#retention">Retention</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#your-rights">Your rights</a></li><li><a class="text-white/80 hover:text-white underline-offset-4 hover:underline" href="#supervisory-authority">Supervisory authority</a></li></ul></nav>
+<div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
+<div class="legal-content">
+<a class="text-sm text-white/70 hover:text-white underline" href="/en/">Back</a>
+<div class="mt-8 space-y-6 text-white/80 leading-relaxed">
+<section>
+<h2 class="text-xl font-semibold text-white" id="data-controller">Data controller<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#data-controller">§</a></h2>
+<p class="mt-2">
                   UBD Consulting Leszek Tejwan<br/>
                   ul. Na Uboczu 22/9, 02-971 Warszawa, Polska<br/>
                   Contact email: <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-        </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">What data we collect</h2>
-        <p class="mt-2">
+</p>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="what-data-we-collect">What data we collect<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#what-data-we-collect">§</a></h2>
+<p class="mt-2">
                   When you submit the form, we process the information you provide (name, email, message and optional fields such as company and project parameters) plus basic technical data (e.g., user-agent). If you attach files, we store them as inquiry attachments.
                 </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Purpose and legal basis</h2>
-        <ul class="mt-2 list-disc pl-6 space-y-2">
-        <li>Responding to your inquiry and preparing a quote – based on your consent given in the form (GDPR Art. 6(1)(a)).</li>
-        <li>Security and abuse prevention (e.g., spam) – legitimate interest (GDPR Art. 6(1)(f)).</li>
-        </ul>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Recipients / processors</h2>
-        <p class="mt-2">
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="purpose-and-legal-basis">Purpose and legal basis<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#purpose-and-legal-basis">§</a></h2>
+<ul class="mt-2 list-disc pl-6 space-y-2">
+<li>Responding to your inquiry and preparing a quote – based on your consent given in the form (GDPR Art. 6(1)(a)).</li>
+<li>Security and abuse prevention (e.g., spam) – legitimate interest (GDPR Art. 6(1)(f)).</li>
+</ul>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="recipients-processors">Recipients / processors<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#recipients-processors">§</a></h2>
+<p class="mt-2">
                   Data may be processed by infrastructure providers (hosting) and services used to operate the form and store files (Supabase). If email notifications are enabled, an email delivery provider (e.g., Resend) or SMTP provider may be used.
                 </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Retention</h2>
-        <p class="mt-2">
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="retention">Retention<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#retention">§</a></h2>
+<p class="mt-2">
                   We keep the data for as long as necessary to handle your inquiry and correspondence, up to 12 months, unless longer retention is required (e.g., claims/defense of claims).
                 </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Your rights</h2>
-        <p class="mt-2">
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="your-rights">Your rights<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#your-rights">§</a></h2>
+<p class="mt-2">
                   You have the right to access, rectify, erase, restrict processing, data portability and to object. You may withdraw consent at any time (without affecting the lawfulness of processing before withdrawal).
                 </p>
-        <p class="mt-2">
+<p class="mt-2">
                   For privacy requests contact: 
                   <a class="underline hover:text-white" href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-        </p>
-        </section>
-        <section>
-        <h2 class="text-xl font-semibold text-white">Supervisory authority</h2>
-        <p class="mt-2">
+</p>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-white" id="supervisory-authority">Supervisory authority<a aria-label="Link to this section" class="print-hidden ml-3 text-white/40 hover:text-white/70 text-sm align-middle" data-anchor-link="1" href="#supervisory-authority">§</a></h2>
+<p class="mt-2">
                   In Poland, the supervisory authority is the President of the Personal Data Protection Office (UODO).
                 </p>
-        </section>
-        </div>
-        <p class="mt-10 text-xs text-white/50">
+</section>
+</div>
+<p class="mt-10 text-xs text-white/50">
               Last updated: 2025-12-30
             </p>
-      </div>
-    </div>
-  </section>
+</div>
+</div>
+</section>
 </main>
-
 <div id="siteFooter"></div>
 <div id="siteModal"></div>
-
 <script>
   const metaData = {
       "en": {
@@ -142,5 +144,15 @@
     });
   });
 </script>
-</body>
+<script data-print-script="1">(function(){
+  function bind(){
+    document.querySelectorAll('button[data-action="print"]').forEach(function(btn){
+      if (btn.__bound) return;
+      btn.__bound = true;
+      btn.addEventListener('click', function(){ window.print(); });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
+})();</script></body>
 </html>
