@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pl">
 <head>
 <meta charset="utf-8"/>
@@ -41,92 +40,82 @@
     .rounded-2xl{border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;}
   }
 </style>
-<script defer src="/assets/site-layout.js"></script>
+<script defer="" src="/assets/site-layout.js"></script>
 </head>
-
 <body class="bg-gray-900 text-white font-sans">
 <div id="siteHeader"></div>
-
 <main class="pt-24">
-  <section class="max-w-6xl mx-auto px-6 py-14">
-    <header>
-      <h1 class="text-4xl font-extrabold tracking-tight">Regulamin strony ForgeMotion Systems</h1>
-      <button type="button" class="print-hidden mt-6 inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm font-semibold text-white/90" onclick="window.print()">Drukuj / PDF</button>
-      
-    </header>
-
-    <div class="lg:grid lg:grid-cols-[18rem_1fr] lg:gap-8 mt-8">
-
+<section class="max-w-6xl mx-auto px-6 py-14">
+<header>
+<h1 class="text-4xl font-extrabold tracking-tight">Regulamin strony ForgeMotion Systems</h1>
+<button class="print-hidden mt-6 inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm font-semibold text-white/90" onclick="window.print()" type="button">Drukuj / PDF</button>
+</header>
+<div class="lg:grid lg:grid-cols-[18rem_1fr] lg:gap-8 mt-8">
 <div class="lg:hidden mt-6 print-hidden">
-  <details class="rounded-xl bg-white/5 border border-white/10 p-4">
-    <summary class="cursor-pointer select-none font-semibold text-white/90">Spis treści <span class="text-white/60 font-normal">(Pokaż / ukryj)</span></summary>
-    <nav id="legalTocMobile" class="mt-3 text-sm text-white/70 space-y-1"></nav>
-  </details>
+<details class="rounded-xl bg-white/5 border border-white/10 p-4">
+<summary class="cursor-pointer select-none font-semibold text-white/90">Spis treści <span class="text-white/60 font-normal">(Pokaż / ukryj)</span></summary>
+<nav class="mt-3 text-sm text-white/70 space-y-1" id="legalTocMobile"><a class="block hover:text-white/90" href="#s1-informacje-ogolne">1. Informacje ogólne</a><a class="block hover:text-white/90" href="#s2-charakter-dzialalnosci">2. Charakter działalności</a><a class="block hover:text-white/90" href="#s3-zapytania-i-zawarcie-umowy">3. Zapytania i zawarcie umowy</a><a class="block hover:text-white/90" href="#s4-produkty-custom">4. Produkty CUSTOM</a><a class="block hover:text-white/90" href="#s5-terminy-realizacji">5. Terminy realizacji</a><a class="block hover:text-white/90" href="#s6-zaliczki-i-przedplaty">6. Zaliczki i przedpłaty</a><a class="block hover:text-white/90" href="#s7-prawo-odstapienia-b2c">7. Prawo odstąpienia (B2C)</a><a class="block hover:text-white/90" href="#s8-sprzedaz-miedzynarodowa-ue-poza-ue">8. Sprzedaż międzynarodowa (UE / poza UE)</a><a class="block hover:text-white/90" href="#s9-vat-i-rezydencja-podatkowa">9. VAT i rezydencja podatkowa</a><a class="block hover:text-white/90" href="#s10-prawo-wlasciwe">10. Prawo właściwe</a><a class="block hover:text-white/90" href="#s11-postanowienia-koncowe">11. Postanowienia końcowe</a></nav>
+</details>
 </div>
-
 <div class="hidden lg:block print-hidden">
-  <aside class="sticky top-28 rounded-2xl bg-white/5 border border-white/10 p-5">
-    <div class="text-sm font-semibold text-white/90 mb-3">Spis treści</div>
-    <nav id="legalToc" class="text-sm text-white/70 space-y-1"></nav>
-  </aside>
+<aside class="sticky top-28 rounded-2xl bg-white/5 border border-white/10 p-5">
+<div class="text-sm font-semibold text-white/90 mb-3">Spis treści</div>
+<nav class="text-sm text-white/70 space-y-1" id="legalToc"><a class="block hover:text-white/90" href="#s1-informacje-ogolne">1. Informacje ogólne</a><a class="block hover:text-white/90" href="#s2-charakter-dzialalnosci">2. Charakter działalności</a><a class="block hover:text-white/90" href="#s3-zapytania-i-zawarcie-umowy">3. Zapytania i zawarcie umowy</a><a class="block hover:text-white/90" href="#s4-produkty-custom">4. Produkty CUSTOM</a><a class="block hover:text-white/90" href="#s5-terminy-realizacji">5. Terminy realizacji</a><a class="block hover:text-white/90" href="#s6-zaliczki-i-przedplaty">6. Zaliczki i przedpłaty</a><a class="block hover:text-white/90" href="#s7-prawo-odstapienia-b2c">7. Prawo odstąpienia (B2C)</a><a class="block hover:text-white/90" href="#s8-sprzedaz-miedzynarodowa-ue-poza-ue">8. Sprzedaż międzynarodowa (UE / poza UE)</a><a class="block hover:text-white/90" href="#s9-vat-i-rezydencja-podatkowa">9. VAT i rezydencja podatkowa</a><a class="block hover:text-white/90" href="#s10-prawo-wlasciwe">10. Prawo właściwe</a><a class="block hover:text-white/90" href="#s11-postanowienia-koncowe">11. Postanowienia końcowe</a></nav>
+</aside>
 </div>
-
 <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mt-8">
-      <div class="legal-content">
-        <a id="paragraf-1" aria-hidden="true"></a>
-<h2 id="s1-informacje-ogolne">1. Informacje ogólne<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s1-informacje-ogolne" aria-label="Link do sekcji">§</a></h2>
-        <p>Właścicielem marki ForgeMotion Systems oraz administratorem strony forgemotionsystems.com jest:</p>
-        <p>
-        <strong>UBD Consulting Leszek Tejwan</strong><br/>
+<div class="legal-content">
+<a id="paragraf-1" aria-hidden="true"></a>
+<h2 id="s1-informacje-ogolne">1. Informacje ogólne<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s1-informacje-ogolne">§</a></h2>
+<p id="s1-informacje-ogolne-1">Właścicielem marki ForgeMotion Systems oraz administratorem strony forgemotionsystems.com jest:<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s1-informacje-ogolne-1">§</a></p>
+<p id="s1-informacje-ogolne-2">
+<strong>UBD Consulting Leszek Tejwan</strong><br/>
               ul. Na Uboczu 22/9<br/>
               02-791 Warszawa, Polska<br/>
               Kontakt: <a href="mailto:contact@forgemotionsystems.com">contact@forgemotionsystems.com</a>
-        </p>
-        <a id="paragraf-2" aria-hidden="true"></a>
-<h2 id="s2-charakter-dzialalnosci">2. Charakter działalności<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s2-charakter-dzialalnosci" aria-label="Link do sekcji">§</a></h2>
-        <p>ForgeMotion Systems projektuje i produkuje platformy ruchu, symulatory oraz rozwiązania techniczne, w tym produkty wykonywane na indywidualne zamówienie (CUSTOM). Strona ma charakter informacyjny i ofertowy (B2C i B2B).</p>
-        <a id="paragraf-3" aria-hidden="true"></a>
-<h2 id="s3-zapytania-i-zawarcie-umowy">3. Zapytania i zawarcie umowy<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s3-zapytania-i-zawarcie-umowy" aria-label="Link do sekcji">§</a></h2>
-        <p>Informacje na stronie nie stanowią oferty w rozumieniu Kodeksu cywilnego. Umowy zawierane są indywidualnie po przedstawieniu i akceptacji oferty (e-mail/PDF/umowa).</p>
-        <a id="paragraf-4" aria-hidden="true"></a>
-<h2 id="s4-produkty-custom">4. Produkty CUSTOM<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s4-produkty-custom" aria-label="Link do sekcji">§</a></h2>
-        <p>Produkty oznaczone jako CUSTOM są wykonywane według specyfikacji uzgodnionej pomiędzy Stronami. Wizualizacje i zdjęcia mają charakter poglądowy.</p>
-        <a id="paragraf-5" aria-hidden="true"></a>
-<h2 id="s5-terminy-realizacji">5. Terminy realizacji<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s5-terminy-realizacji" aria-label="Link do sekcji">§</a></h2>
-        <p>Termin realizacji, w szczególności dla produktów CUSTOM, jest każdorazowo ustalany indywidualnie i wiążący wyłącznie po pisemnym potwierdzeniu oraz akceptacji przez obie Strony (e-mail/PDF/umowa).</p>
-        <a id="paragraf-6" aria-hidden="true"></a>
-<h2 id="s6-zaliczki-i-przedplaty">6. Zaliczki i przedpłaty<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s6-zaliczki-i-przedplaty" aria-label="Link do sekcji">§</a></h2>
-        <p>Rozpoczęcie realizacji zamówienia może być uzależnione od wpłaty zaliczki:</p>
-        <ul>
-        <li><strong>30%</strong> wartości zamówienia – standardowe projekty,</li>
-        <li><strong>50%</strong> wartości zamówienia – projekty o wyższym stopniu indywidualizacji lub wyższej wartości,</li>
-        </ul>
-        <p>Wysokość zaliczki jest każdorazowo określona w ofercie/umowie. Dla produktów CUSTOM zaliczka ma charakter <strong>bezzwrotny</strong> i nie podlega zwrotowi w przypadku odstąpienia od umowy przez Klienta, z zastrzeżeniem przepisów bezwzględnie obowiązujących.</p>
-        <a id="paragraf-7" aria-hidden="true"></a>
-<h2 id="s7-prawo-odstapienia-b2c">7. Prawo odstąpienia (B2C)<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s7-prawo-odstapienia-b2c" aria-label="Link do sekcji">§</a></h2>
-        <p>Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość w terminie 14 dni, z wyjątkami przewidzianymi w przepisach. W szczególności prawo odstąpienia nie przysługuje w przypadku umów dotyczących produktów wykonywanych na indywidualne zamówienie (CUSTOM) lub wyraźnie spersonalizowanych (art. 38 ustawy o prawach konsumenta).</p>
-        <a id="paragraf-8" aria-hidden="true"></a>
-<h2 id="s8-sprzedaz-miedzynarodowa-ue-poza-ue">8. Sprzedaż międzynarodowa (UE / poza UE)<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s8-sprzedaz-miedzynarodowa-ue-poza-ue" aria-label="Link do sekcji">§</a></h2>
-        <p>Sprzedaż może obejmować UE oraz kraje trzecie (np. UK, USA). W przypadku sprzedaży poza UE mogą mieć zastosowanie przepisy celne i podatkowe kraju docelowego. Klient może być zobowiązany do uiszczenia lokalnych podatków, ceł lub opłat importowych – o ile oferta/umowa nie stanowi inaczej.</p>
-        <a id="paragraf-9" aria-hidden="true"></a>
-<h2 id="s9-vat-i-rezydencja-podatkowa">9. VAT i rezydencja podatkowa<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s9-vat-i-rezydencja-podatkowa" aria-label="Link do sekcji">§</a></h2>
-        <p>Sprzedawca posiada rezydencję podatkową w Polsce. Sposób opodatkowania (w tym VAT) zależy od kraju dostawy, statusu Klienta (B2C/B2B) oraz rodzaju transakcji i jest każdorazowo określany w ofercie/umowie zgodnie z aktualnymi przepisami.</p>
-        <a id="paragraf-10" aria-hidden="true"></a>
-<h2 id="s10-prawo-wlasciwe">10. Prawo właściwe<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s10-prawo-wlasciwe" aria-label="Link do sekcji">§</a></h2>
-        <p>Regulamin i umowy podlegają prawu polskiemu, z poszanowaniem bezwzględnie obowiązujących przepisów ochrony konsumenta mających zastosowanie.</p>
-        <a id="paragraf-11" aria-hidden="true"></a>
-<h2 id="s11-postanowienia-koncowe">11. Postanowienia końcowe<a class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s11-postanowienia-koncowe" aria-label="Link do sekcji">§</a></h2>
-        <p>Administrator może aktualizować Regulamin. Aktualna wersja jest publikowana na stronie.</p>
-      </div>
-    </div>
-  
+<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s1-informacje-ogolne-2">§</a></p>
+<a id="paragraf-2" aria-hidden="true"></a>
+<h2 id="s2-charakter-dzialalnosci">2. Charakter działalności<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s2-charakter-dzialalnosci">§</a></h2>
+<p id="s2-charakter-dzialalnosci-1">ForgeMotion Systems projektuje i produkuje platformy ruchu, symulatory oraz rozwiązania techniczne, w tym produkty wykonywane na indywidualne zamówienie (CUSTOM). Strona ma charakter informacyjny i ofertowy (B2C i B2B).<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s2-charakter-dzialalnosci-1">§</a></p>
+<a id="paragraf-3" aria-hidden="true"></a>
+<h2 id="s3-zapytania-i-zawarcie-umowy">3. Zapytania i zawarcie umowy<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s3-zapytania-i-zawarcie-umowy">§</a></h2>
+<p id="s3-zapytania-i-zawarcie-umowy-1">Informacje na stronie nie stanowią oferty w rozumieniu Kodeksu cywilnego. Umowy zawierane są indywidualnie po przedstawieniu i akceptacji oferty (e-mail/PDF/umowa).<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s3-zapytania-i-zawarcie-umowy-1">§</a></p>
+<a id="paragraf-4" aria-hidden="true"></a>
+<h2 id="s4-produkty-custom">4. Produkty CUSTOM<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s4-produkty-custom">§</a></h2>
+<p id="s4-produkty-custom-1">Produkty oznaczone jako CUSTOM są wykonywane według specyfikacji uzgodnionej pomiędzy Stronami. Wizualizacje i zdjęcia mają charakter poglądowy.<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s4-produkty-custom-1">§</a></p>
+<a id="paragraf-5" aria-hidden="true"></a>
+<h2 id="s5-terminy-realizacji">5. Terminy realizacji<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s5-terminy-realizacji">§</a></h2>
+<p id="s5-terminy-realizacji-1">Termin realizacji, w szczególności dla produktów CUSTOM, jest każdorazowo ustalany indywidualnie i wiążący wyłącznie po pisemnym potwierdzeniu oraz akceptacji przez obie Strony (e-mail/PDF/umowa).<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s5-terminy-realizacji-1">§</a></p>
+<a id="paragraf-6" aria-hidden="true"></a>
+<h2 id="s6-zaliczki-i-przedplaty">6. Zaliczki i przedpłaty<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s6-zaliczki-i-przedplaty">§</a></h2>
+<p id="s6-zaliczki-i-przedplaty-1">Rozpoczęcie realizacji zamówienia może być uzależnione od wpłaty zaliczki:<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s6-zaliczki-i-przedplaty-1">§</a></p>
+<ul>
+<li id="s6-zaliczki-i-przedplaty-2"><strong>30%</strong> wartości zamówienia – standardowe projekty,<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s6-zaliczki-i-przedplaty-2">§</a></li>
+<li id="s6-zaliczki-i-przedplaty-3"><strong>50%</strong> wartości zamówienia – projekty o wyższym stopniu indywidualizacji lub wyższej wartości,<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s6-zaliczki-i-przedplaty-3">§</a></li>
+</ul>
+<p id="s6-zaliczki-i-przedplaty-4">Wysokość zaliczki jest każdorazowo określona w ofercie/umowie. Dla produktów CUSTOM zaliczka ma charakter <strong>bezzwrotny</strong> i nie podlega zwrotowi w przypadku odstąpienia od umowy przez Klienta, z zastrzeżeniem przepisów bezwzględnie obowiązujących.<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s6-zaliczki-i-przedplaty-4">§</a></p>
+<a id="paragraf-7" aria-hidden="true"></a>
+<h2 id="s7-prawo-odstapienia-b2c">7. Prawo odstąpienia (B2C)<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s7-prawo-odstapienia-b2c">§</a></h2>
+<p id="s7-prawo-odstapienia-b2c-1">Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość w terminie 14 dni, z wyjątkami przewidzianymi w przepisach. W szczególności prawo odstąpienia nie przysługuje w przypadku umów dotyczących produktów wykonywanych na indywidualne zamówienie (CUSTOM) lub wyraźnie spersonalizowanych (art. 38 ustawy o prawach konsumenta).<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s7-prawo-odstapienia-b2c-1">§</a></p>
+<a id="paragraf-8" aria-hidden="true"></a>
+<h2 id="s8-sprzedaz-miedzynarodowa-ue-poza-ue">8. Sprzedaż międzynarodowa (UE / poza UE)<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s8-sprzedaz-miedzynarodowa-ue-poza-ue">§</a></h2>
+<p id="s8-sprzedaz-miedzynarodowa-ue-poza-ue-1">Sprzedaż może obejmować UE oraz kraje trzecie (np. UK, USA). W przypadku sprzedaży poza UE mogą mieć zastosowanie przepisy celne i podatkowe kraju docelowego. Klient może być zobowiązany do uiszczenia lokalnych podatków, ceł lub opłat importowych – o ile oferta/umowa nie stanowi inaczej.<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s8-sprzedaz-miedzynarodowa-ue-poza-ue-1">§</a></p>
+<a id="paragraf-9" aria-hidden="true"></a>
+<h2 id="s9-vat-i-rezydencja-podatkowa">9. VAT i rezydencja podatkowa<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s9-vat-i-rezydencja-podatkowa">§</a></h2>
+<p id="s9-vat-i-rezydencja-podatkowa-1">Sprzedawca posiada rezydencję podatkową w Polsce. Sposób opodatkowania (w tym VAT) zależy od kraju dostawy, statusu Klienta (B2C/B2B) oraz rodzaju transakcji i jest każdorazowo określany w ofercie/umowie zgodnie z aktualnymi przepisami.<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s9-vat-i-rezydencja-podatkowa-1">§</a></p>
+<a id="paragraf-10" aria-hidden="true"></a>
+<h2 id="s10-prawo-wlasciwe">10. Prawo właściwe<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s10-prawo-wlasciwe">§</a></h2>
+<p id="s10-prawo-wlasciwe-1">Regulamin i umowy podlegają prawu polskiemu, z poszanowaniem bezwzględnie obowiązujących przepisów ochrony konsumenta mających zastosowanie.<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s10-prawo-wlasciwe-1">§</a></p>
+<a id="paragraf-11" aria-hidden="true"></a>
+<h2 id="s11-postanowienia-koncowe">11. Postanowienia końcowe<a aria-label="Link do sekcji" class="ml-2 text-white/50 hover:text-white/80 text-sm print-hidden" href="#s11-postanowienia-koncowe">§</a></h2>
+<p id="s11-postanowienia-koncowe-1">Administrator może aktualizować Regulamin. Aktualna wersja jest publikowana na stronie.<a aria-label="Link do tego ustępu" class="ml-2 text-white/40 hover:text-white/80 text-sm print-hidden" href="#s11-postanowienia-koncowe-1">§</a></p>
+</div>
+</div>
 </div>
 </section>
 </main>
-
 <div id="siteFooter"></div>
 <div id="siteModal"></div>
-
 <script>
   const metaData = {
       "en": {
