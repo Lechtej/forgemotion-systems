@@ -7,16 +7,30 @@
 <meta content="en, pl" http-equiv="content-language"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  /* Lightweight typography for legal content (no Tailwind typography plugin) */
-  .legal-content h2 { margin-top: 1.25rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
-  .legal-content h3 { margin-top: 1rem; font-size: 1.125rem; font-weight: 700; }
-  .legal-content p { margin-top: .75rem; color: rgba(255,255,255,.82); line-height: 1.7; }
-  .legal-content ul { margin-top: .75rem; padding-left: 1.25rem; list-style: disc; color: rgba(255,255,255,.82); }
-  .legal-content ol { margin-top: .75rem; padding-left: 1.25rem; list-style: decimal; color: rgba(255,255,255,.82); }
-  .legal-content li { margin-top: .35rem; }
-  .legal-content a { text-decoration: underline; }
-  .legal-content strong { color: rgba(255,255,255,.92); }
-  .legal-content hr { margin: 1.5rem 0; border-color: rgba(255,255,255,.10); }
+  /* Lightweight, consistent typography for legal pages (no Tailwind typography plugin) */
+  .legal-content{color:rgba(255,255,255,.82);line-height:1.75;font-size:1rem;}
+  .legal-content > *:first-child{margin-top:0!important;}
+
+  .legal-content h2{margin-top:1.75rem!important;margin-bottom:.25rem!important;font-size:1.375rem!important;font-weight:800!important;letter-spacing:-0.01em!important;color:rgba(255,255,255,.96)!important;}
+  .legal-content h3{margin-top:1.25rem!important;margin-bottom:.25rem!important;font-size:1.125rem!important;font-weight:800!important;color:rgba(255,255,255,.94)!important;}
+
+  .legal-content p{margin-top:.75rem!important;color:inherit!important;}
+  .legal-content p + p{margin-top:.6rem!important;}
+
+  .legal-content ul,.legal-content ol{margin-top:.75rem!important;padding-left:1.35rem!important;color:inherit!important;}
+  .legal-content ul{list-style:disc!important;}
+  .legal-content ol{list-style:decimal!important;}
+  .legal-content li{margin-top:.35rem!important;}
+  .legal-content li::marker{color:rgba(255,255,255,.55)!important;}
+
+  .legal-content a{text-decoration:underline!important;text-decoration-color:rgba(255,255,255,.35)!important;text-underline-offset:3px!important;text-decoration-thickness:from-font!important;transition:color .15s ease,text-decoration-color .15s ease;}
+  .legal-content a:hover{color:rgba(255,255,255,.98)!important;text-decoration-color:rgba(255,255,255,.8)!important;}
+
+  .legal-content strong{color:rgba(255,255,255,.94)!important;}
+  .legal-content hr{margin:1.75rem 0!important;border-color:rgba(255,255,255,.10)!important;}
+
+  /* Small helpers */
+  .legal-content .muted{color:rgba(255,255,255,.72)!important;}
 </style>
 <script defer src="/assets/site-layout.js"></script>
 </head>
