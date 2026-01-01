@@ -996,7 +996,138 @@ function bindLangButtons(metaData) {
   }
 
   function normalizeVideos(json) {
-    if (!json) return {};
+    if (!json) 
+  // -------------------------
+  // Legal documents: TOC + deep anchors (H2/H3)
+  // -------------------------
+  function slugifyId(str) {
+    return (str || "")
+      .toString()
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
+  function stripSectionMark(text) {
+    return (text || "").replace(/\s*§\s*$/g, "").trim();
+  }
+
+  function ensureHeadingAnchor(h) {
+    if (!h) return null;
+
+    // Some headings may already include the "§" link.
+    const hasPermalink = !!h.querySelector("a.legal-anchor");
+    const rawText = stripSectionMark(h.textContent || "");
+    if (!h.id) {
+      // Prefer stable IDs based on heading text
+      const base = slugifyId(rawText);
+      h.id = base ? base : ("sec-" + Math.random().toString(36).slice(2, 10));
+    }
+
+    if (!hasPermalink) {
+      const a = document.createElement("a");
+      a.href = "#" + h.id;
+      a.className = "legal-anchor ml-2 text-white/30 hover:text-white/60 text-sm align-middle";
+      a.setAttribute("aria-label", "Link do sekcji");
+      a.textContent = "§";
+      h.appendChild(a);
+    }
+
+    return h.id;
+  }
+
+  function buildLegalToc() {
+    const tocDesktop = document.getElementById("legalToc");
+    const tocMobile = document.getElementById("legalTocMobile");
+    if (!tocDesktop && !tocMobile) return;
+
+    const content = document.querySelector(".legal-content");
+    if (!content) return;
+
+    const headings = Array.from(content.querySelectorAll("h2, h3"))
+      .filter(h => (h.textContent || "").trim().length > 0);
+
+    if (!headings.length) return;
+
+    // Ensure IDs + permalink
+    for (const h of headings) ensureHeadingAnchor(h);
+
+    function renderInto(nav) {
+      if (!nav) return;
+      nav.innerHTML = "";
+      for (const h of headings) {
+        const level = h.tagName.toLowerCase(); // h2/h3
+        const a = document.createElement("a");
+        a.href = "#" + h.id;
+        a.dataset.tocTarget = h.id;
+        a.className =
+          "block rounded-md px-2 py-1 hover:bg-white/5 hover:text-white/90 " +
+          (level === "h3" ? "ml-4 text-white/60" : "text-white/75 font-medium");
+
+        // Text without trailing §
+        a.textContent = stripSectionMark((h.textContent || "").trim());
+        nav.appendChild(a);
+      }
+    }
+
+    renderInto(tocDesktop);
+    renderInto(tocMobile);
+
+    // Smooth scroll with header offset
+    const headerOffset = 90;
+    function onTocClick(e) {
+      const link = e.target.closest("a[data-toc-target]");
+      if (!link) return;
+      const id = link.dataset.tocTarget;
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      e.preventDefault();
+      const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.history.pushState(null, "", "#" + id);
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+
+    tocDesktop && tocDesktop.addEventListener("click", onTocClick);
+    tocMobile && tocMobile.addEventListener("click", onTocClick);
+
+    // Scrollspy
+    const allLinks = Array.from(document.querySelectorAll("a[data-toc-target]"));
+    function setActive(id) {
+      for (const l of allLinks) {
+        const active = l.dataset.tocTarget === id;
+        l.classList.toggle("bg-white/10", active);
+        l.classList.toggle("text-white", active);
+        l.classList.toggle("text-white/75", !active && !l.classList.contains("ml-4"));
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      // Pick the nearest visible heading to top
+      const visible = entries
+        .filter(en => en.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length) setActive(visible[0].target.id);
+    }, {
+      root: null,
+      threshold: [0.15, 0.3, 0.6],
+      rootMargin: "-20% 0px -70% 0px"
+    });
+
+    headings.forEach(h => observer.observe(h));
+
+    // If loaded with hash
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      if (id) setActive(id);
+    }
+  }
+return {};
     if (Array.isArray(json.videos)) {
       const out = {};
       for (const v of json.videos) {
@@ -1287,6 +1418,7 @@ function bindLangButtons(metaData) {
         }
       }
 
+      buildLegalToc();
       bindScrollSpy();
     }
   };
