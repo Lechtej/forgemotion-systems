@@ -6,6 +6,10 @@
 (function () {
   const DEFAULT_LANG = "en";
   const SUPPORTED_LANGS = ["en", "pl"];
+  // SEO strategy: keep a single canonical URL without language parameters.
+  // Language is handled purely client-side (JS), so we avoid adding ?lang=...
+  // to canonicals or internal product links.
+  const USE_LANG_PARAM = false;
 
   const PRODUCT_LINKS = [
     { key: "6dof", href: "/products-6dof.html", label: { en: "6DOF", pl: "6DOF" } },
@@ -198,7 +202,7 @@
     const logoHref = productsHref;
 
     return `
-<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed w-full z-10 shadow-md">
+<header class="bg-gray-800/90 backdrop-blur border-b border-white/5 fixed top-0 left-0 right-0 w-full z-50 shadow-md">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
     <a href="${escapeHtml(logoHref)}" class="flex items-center" aria-label="Go to products">
       <img src="/logo.png" alt="ForgeMotion Systems logo"
@@ -419,6 +423,7 @@
     }
   }
   function withLangParam(url, lang) {
+    if (!USE_LANG_PARAM) return url;
     if (!url) return url;
     if (!isProductPagePath(window.location.pathname)) return url;
     if (getPathLang(window.location.pathname)) return url;
@@ -479,6 +484,7 @@
   }
 
   function setLangQueryParam(lang) {
+    if (!USE_LANG_PARAM) return;
     // Only for pages that are not under /en or /pl (i.e., product pages in root)
     if (getPathLang(window.location.pathname)) return;
     if (!isProductPagePath(window.location.pathname)) return;
@@ -492,6 +498,7 @@
   }
 
   function rewriteProductLinks(lang) {
+    if (!USE_LANG_PARAM) return;
     if (!isProductPagePath(window.location.pathname)) return;
 
     const anchors = Array.from(document.querySelectorAll("a[href]"));
