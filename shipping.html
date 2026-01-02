@@ -1,138 +1,170 @@
 <!DOCTYPE html>
+
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dostawa – Forge Motion Systems</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="canonical" href="https://forgemotionsystems.com/shipping.html" />
-
-  <!-- JSON-LD: Organization -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Forge Motion Systems",
-    "url": "https://forgemotionsystems.com"
-  }
-  </script>
-
-  <!-- JSON-LD: WebPage -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Shipping information",
-    "url": "https://forgemotionsystems.com/shipping.html"
-  }
-  </script>
+<meta charset="utf-8"/>
+<title>Dostawa – ForgeMotion Systems</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/style.css" rel="stylesheet"/>
 </head>
+<body class="bg-[#0B1220] text-white">
 
-<body>
+<header class="w-full bg-[#0B1220]/80 backdrop-blur border-b border-white/5 sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a class="flex items-center gap-3" href="/">
+      <img alt="Forge Motion Systems" class="h-9 w-auto" src="/assets/forge-logo.svg"/>
+    </a>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <span class="badge" data-pl="Dostawa" data-en="Shipping">Dostawa</span>
-      <h1 data-pl="Orientacyjne koszty dostawy („od”)" data-en="Indicative shipping costs (“from”)">
-        Orientacyjne koszty dostawy („od”)
-      </h1>
-      <p
-        data-pl="To orientacyjne stawki „od”. Finalna wycena jest potwierdzana indywidualnie po konfiguracji, adresie dostawy i wyborze formy (paleta vs paczki)."
-        data-en="These are indicative “from” rates. Final pricing is confirmed individually after configuration, delivery address, and shipping method (pallet vs parcels).">
+    <nav class="hidden md:flex items-center gap-8 text-sm text-white/80">
+      <a class="hover:text-white" data-en="Home" data-pl="Strona główna" href="/">Strona główna</a>
+      <a class="hover:text-white" data-en="Products" data-pl="Produkty" href="/#products">Produkty</a>
+      <a class="hover:text-white" data-en="About" data-pl="O nas" href="/about.html">O nas</a>
+      <a class="hover:text-white" data-en="Contact" data-pl="Kontakt" href="/contact.html">Kontakt</a>
+    </nav>
+
+    <div class="flex items-center gap-3 text-sm">
+      <button class="text-white/70 hover:text-white" data-lang="en">EN</button>
+      <span class="text-white/30">|</span>
+      <button class="text-white/70 hover:text-white" data-lang="pl">PL</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="py-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/70">
+        <span class="w-1.5 h-1.5 rounded-full bg-white/50"></span>
+        <span data-en="Shipping" data-pl="Dostawa">Dostawa</span>
+      </div>
+
+      <h1 class="mt-4 text-4xl md:text-5xl font-semibold leading-tight"
+          data-en="Indicative shipping costs (“from”)"
+          data-pl="Orientacyjne koszty dostawy („od”)">Orientacyjne koszty dostawy („od”)</h1>
+
+      <p class="mt-4 text-white/70 max-w-3xl"
+         data-en='These are indicative “from” rates. Final pricing is confirmed individually after configuration, delivery address, and shipping method (pallet vs parcels).'
+         data-pl='To orientacyjne stawki „od”. Finalna wycena jest potwierdzana indywidualnie po konfiguracji, adresie dostawy i wyborze formy (paleta vs paczki).'>
         To orientacyjne stawki „od”. Finalna wycena jest potwierdzana indywidualnie po konfiguracji, adresie dostawy i wyborze formy (paleta vs paczki).
       </p>
     </div>
   </section>
 
-  <!-- PALETA -->
-  <section class="section">
-    <div class="container">
-      <h2 data-pl="Wysyłka paletowa (duże produkty)" data-en="Pallet shipping (large products)">
-        Wysyłka paletowa (duże produkty)
-      </h2>
-      <p
-        data-pl="6DOF, 3DOF / 2DOF oraz MK14 zwykle wysyłamy na palecie (lub jako zestaw paczek po uzgodnieniu)."
-        data-en="6DOF, 3DOF / 2DOF and MK14 are usually shipped on a pallet (or as multiple parcels by arrangement).">
+  <section class="pb-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold"
+          data-en="Pallet shipping (large products)"
+          data-pl="Wysyłka paletowa (duże produkty)">Wysyłka paletowa (duże produkty)</h2>
+
+      <p class="text-white/70 mt-2"
+         data-en="6DOF, 3DOF / 2DOF and MK14 are usually shipped on a pallet (or as multiple parcels by arrangement)."
+         data-pl="6DOF, 3DOF / 2DOF oraz MK14 zwykle wysyłamy na palecie (lub jako zestaw paczek po uzgodnieniu).">
         6DOF, 3DOF / 2DOF oraz MK14 zwykle wysyłamy na palecie (lub jako zestaw paczek po uzgodnieniu).
       </p>
 
-      <!-- 6DOF -->
-      <div class="card" id="6dof">
-        <h3>6DOF</h3>
-        <p data-pl="Orientacyjnie (od)" data-en="Indicative (from)">Orientacyjnie (od)</p>
-        <ul>
-          <li data-pl="Polska: ~700 PLN" data-en="Poland: ~€170">Polska: ~700 PLN</li>
-          <li data-pl="UE: ~1 600 PLN" data-en="EU: ~€380">UE: ~1 600 PLN</li>
-          <li data-pl="USA: ~4 000 PLN" data-en="USA: ~€950">USA: ~4 000 PLN</li>
-        </ul>
-      </div>
+      <div class="mt-8 grid gap-6">
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10" id="6dof">
+          <div class="flex items-start justify-between gap-6">
+            <div>
+              <div class="text-lg font-semibold">6DOF</div>
+              <div class="text-sm text-white/60 mt-1" data-en="Indicative (from)" data-pl="Orientacyjnie (od)">Orientacyjnie (od)</div>
+            </div>
+            <div class="text-sm text-white/70 text-right">
+              <div data-en="Poland: ~€170" data-pl="Polska: ~700 PLN">Polska: ~700 PLN</div>
+              <div data-en="EU: ~€380" data-pl="UE: ~1 600 PLN">UE: ~1 600 PLN</div>
+              <div data-en="USA: ~€950" data-pl="USA: ~4 000 PLN">USA: ~4 000 PLN</div>
+            </div>
+          </div>
+          <div class="mt-4 text-sm text-white/60"
+               data-en="Final pricing confirmed after configuration, address and method selection."
+               data-pl="Finalna wycena po konfiguracji, adresie i wyborze metody.">Finalna wycena po konfiguracji, adresie i wyborze metody.</div>
+        </div>
 
-      <!-- 3DOF -->
-      <div class="card" id="3dof">
-        <h3>3DOF / 2DOF</h3>
-        <p data-pl="Orientacyjnie (od)" data-en="Indicative (from)">Orientacyjnie (od)</p>
-        <ul>
-          <li data-pl="Polska: ~500 PLN" data-en="Poland: ~€120">Polska: ~500 PLN</li>
-          <li data-pl="UE: ~1 200 PLN" data-en="EU: ~€290">UE: ~1 200 PLN</li>
-          <li data-pl="USA: ~3 000 PLN" data-en="USA: ~€720">USA: ~3 000 PLN</li>
-        </ul>
-      </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10" id="3dof">
+          <div class="flex items-start justify-between gap-6">
+            <div>
+              <div class="text-lg font-semibold">3DOF / 2DOF</div>
+              <div class="text-sm text-white/60 mt-1" data-en="Indicative (from)" data-pl="Orientacyjnie (od)">Orientacyjnie (od)</div>
+            </div>
+            <div class="text-sm text-white/70 text-right">
+              <div data-en="Poland: ~€120" data-pl="Polska: ~500 PLN">Polska: ~500 PLN</div>
+              <div data-en="EU: ~€290" data-pl="UE: ~1 200 PLN">UE: ~1 200 PLN</div>
+              <div data-en="USA: ~€720" data-pl="USA: ~3 000 PLN">USA: ~3 000 PLN</div>
+            </div>
+          </div>
+          <div class="mt-4 text-sm text-white/60"
+               data-en="Final pricing confirmed after configuration, address and method selection."
+               data-pl="Finalna wycena po konfiguracji, adresie i wyborze metody.">Finalna wycena po konfiguracji, adresie i wyborze metody.</div>
+        </div>
 
-      <!-- MK14 -->
-      <div class="card" id="mk14">
-        <h3>MK14 (replika fotela)</h3>
-        <p data-pl="Orientacyjnie (od)" data-en="Indicative (from)">Orientacyjnie (od)</p>
-        <ul>
-          <li data-pl="Polska: ~450 PLN" data-en="Poland: ~€110">Polska: ~450 PLN</li>
-          <li data-pl="UE: ~1 000 PLN" data-en="EU: ~€240">UE: ~1 000 PLN</li>
-          <li data-pl="USA: ~2 500 PLN" data-en="USA: ~€600">USA: ~2 500 PLN</li>
-        </ul>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10" id="mk14">
+          <div class="flex items-start justify-between gap-6">
+            <div>
+              <div class="text-lg font-semibold" data-en="MK14 (seat replica)" data-pl="MK14 (replika fotela)">MK14 (replika fotela)</div>
+              <div class="text-sm text-white/60 mt-1" data-en="Indicative (from)" data-pl="Orientacyjnie (od)">Orientacyjnie (od)</div>
+            </div>
+            <div class="text-sm text-white/70 text-right">
+              <div data-en="Poland: ~€110" data-pl="Polska: ~450 PLN">Polska: ~450 PLN</div>
+              <div data-en="EU: ~€240" data-pl="UE: ~1 000 PLN">UE: ~1 000 PLN</div>
+              <div data-en="USA: ~€600" data-pl="USA: ~2 500 PLN">USA: ~2 500 PLN</div>
+            </div>
+          </div>
+          <div class="mt-4 text-sm text-white/60"
+               data-en="Final pricing confirmed after configuration, address and method selection."
+               data-pl="Finalna wycena po konfiguracji, adresie i wyborze metody.">Finalna wycena po konfiguracji, adresie i wyborze metody.</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PACZKI -->
-  <section class="section">
-    <div class="container">
-      <h2 data-pl="Paczki (mniejsze elementy)" data-en="Parcels (smaller items)">
-        Paczki (mniejsze elementy)
-      </h2>
+  <section class="pb-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold"
+          data-en="Parcels (smaller items)"
+          data-pl="Paczki (mniejsze elementy)">Paczki (mniejsze elementy)</h2>
 
-      <div class="card" id="belt">
-        <h3 data-pl="Napinacz pasów" data-en="Belt tensioner">Napinacz pasów</h3>
-        <p data-pl="Orientacyjnie (zakres, od)" data-en="Indicative (range, from)">
-          Orientacyjnie (zakres, od)
-        </p>
-        <ul>
-          <li data-pl="Polska: ~80–140 PLN" data-en="Poland: ~€20–40">Polska: ~80–140 PLN</li>
-          <li data-pl="UE: ~250–420 PLN" data-en="EU: ~€60–100">UE: ~250–420 PLN</li>
-          <li data-pl="USA: ~900–1 400 PLN" data-en="USA: ~€220–340">USA: ~900–1 400 PLN</li>
-        </ul>
+      <div class="mt-8 p-6 rounded-2xl bg-white/5 border border-white/10" id="belt">
+        <div class="flex items-start justify-between gap-6">
+          <div>
+            <div class="text-lg font-semibold" data-en="Belt tensioner" data-pl="Napinacz pasów">Napinacz pasów</div>
+            <div class="text-sm text-white/60 mt-1" data-en="Indicative (range, from)" data-pl="Orientacyjnie (zakres, od)">Orientacyjnie (zakres, od)</div>
+          </div>
+          <div class="text-sm text-white/70 text-right">
+            <div data-en="Poland: ~€20–40" data-pl="Polska: ~80–140 PLN">Polska: ~80–140 PLN</div>
+            <div data-en="EU: ~€60–100" data-pl="UE: ~250–420 PLN">UE: ~250–420 PLN</div>
+            <div data-en="USA: ~€220–340" data-pl="USA: ~900–1 400 PLN">USA: ~900–1 400 PLN</div>
+          </div>
+        </div>
+        <div class="mt-4 text-sm text-white/60"
+             data-en="Final pricing confirmed after configuration, address and method selection."
+             data-pl="Finalna wycena po konfiguracji, adresie i wyborze metody.">Finalna wycena po konfiguracji, adresie i wyborze metody.</div>
       </div>
     </div>
   </section>
 
-  <!-- PRZEWOŹNICY -->
-  <section class="section">
-    <div class="container">
-      <h2 data-pl="Przewoźnicy i metody" data-en="Carriers and methods">
-        Przewoźnicy i metody
-      </h2>
+  <!-- ✅ TU JEST POPRAWKA: PL DOMYŚLNY, EN TYLKO W data-en -->
+  <section class="pb-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold"
+          data-en="Carriers & methods"
+          data-pl="Przewoźnicy i metody">Przewoźnicy i metody</h2>
 
-      <p
-        data-pl="Przewoźnik, usługa i dokładna cena zależą od miejsca dostawy i parametrów przesyłki. Finalną opcję potwierdzamy po konfiguracji i adresie."
-        data-en="Carrier, service, and exact cost depend on delivery location and shipment parameters. The final option is confirmed after configuration and address.">
+      <p class="text-white/70 mt-2"
+         data-en="Carrier, service level and exact cost depend on delivery location and shipment parameters. We confirm the final option after configuration and address."
+         data-pl="Przewoźnik, usługa i dokładna cena zależą od miejsca dostawy i parametrów przesyłki. Finalną opcję potwierdzamy po konfiguracji i adresie.">
         Przewoźnik, usługa i dokładna cena zależą od miejsca dostawy i parametrów przesyłki. Finalną opcję potwierdzamy po konfiguracji i adresie.
       </p>
 
-      <div class="note"
-        data-pl="Przykładowi przewoźnicy (dobór zależny od regionu, gabarytów i adresu): DHL / DPD / UPS / FedEx / firmy paletowe (np. Raben, DB Schenker). Ostateczny wybór i cena są potwierdzane indywidualnie."
-        data-en="Example carriers (selection depends on region, dimensions, and address): DHL / DPD / UPS / FedEx / pallet freight carriers (e.g. Raben, DB Schenker). Final carrier and cost are confirmed individually.">
+      <div class="mt-4 p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/70"
+           data-en="Example carriers (selection depends on region, dimensions, and address): DHL / DPD / UPS / FedEx / pallet freight carriers (e.g. Raben, DB Schenker). Final carrier and cost are confirmed individually."
+           data-pl="Przykładowi przewoźnicy (dobór zależny od regionu, gabarytów i adresu): DHL / DPD / UPS / FedEx / firmy paletowe (np. Raben, DB Schenker). Ostateczny wybór i cena są potwierdzane indywidualnie.">
         Przykładowi przewoźnicy (dobór zależny od regionu, gabarytów i adresu): DHL / DPD / UPS / FedEx / firmy paletowe (np. Raben, DB Schenker). Ostateczny wybór i cena są potwierdzane indywidualnie.
       </div>
     </div>
   </section>
+</main>
 
+<script src="/assets/lang.js"></script>
 </body>
 </html>
