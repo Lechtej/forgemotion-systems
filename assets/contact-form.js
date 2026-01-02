@@ -70,11 +70,30 @@
   function normalizeTopic(v) {
     return String(v || "").trim().toLowerCase();
   }
-  function preselectTopicFromUrl() {
+  
+  function inferTopicFromReferrer() {
+    try {
+      const ref = (document.referrer || "").toLowerCase();
+      if (!ref) return "";
+      // Match product page slugs or common keywords
+      if (ref.includes("products-6dof")) return "6dof";
+      if (ref.includes("products-3dof")) return "3dof";
+      if (ref.includes("products-mk14")) return "mk14";
+      if (ref.includes("products-belt")) return "belt";
+      if (ref.includes("products-accessories")) return "accessories";
+      return "";
+    } catch (_) {
+      return "";
+    }
+  }
+
+function preselectTopicFromUrl() {
     if (!topicEl) return;
 
     const params = new URLSearchParams(window.location.search);
-    const raw = normalizeTopic(params.get("topic"));
+    const rawParam = normalizeTopic(params.get("topic"));
+    const rawRef = normalizeTopic(inferTopicFromReferrer());
+    const raw = rawParam || rawRef;
     if (!raw) return;
 
     const map = {
