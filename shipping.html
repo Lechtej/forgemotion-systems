@@ -278,5 +278,36 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     });
   </script>
+<!-- Cookie banner (v2.3.38) -->
+<div id="cookieBanner" class="fixed bottom-4 left-4 right-4 z-50 hidden">
+  <div class="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-gray-900/95 backdrop-blur px-6 py-5 text-white shadow-lg">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="text-sm leading-relaxed text-white/80">
+        <strong class="block mb-1" data-en="Cookies" data-pl="Pliki cookies">Cookies</strong>
+        <span
+          data-en="This website uses cookies strictly for technical purposes (proper site operation, security, and form handling). We do not use marketing or tracking cookies."
+          data-pl="Ta strona wykorzystuje pliki cookies wyłącznie w celach technicznych (prawidłowe działanie serwisu, bezpieczeństwo, obsługa formularzy). Nie stosujemy cookies marketingowych ani narzędzi śledzących."
+        >This website uses cookies strictly for technical purposes (proper site operation, security, and form handling). We do not use marketing or tracking cookies.</span>
+        <a
+          class="underline ml-1 text-white/90 hover:text-white"
+          href="/en/privacy.html"
+          data-en-href="/en/privacy.html"
+          data-pl-href="/pl/privacy.html"
+          data-en="Privacy Policy"
+          data-pl="Polityka prywatności"
+        >Privacy Policy</a>
+      </div>
+      <button
+        id="cookieAcceptBtn"
+        class="shrink-0 rounded-xl bg-white text-black px-5 py-2 font-semibold hover:bg-gray-200"
+        type="button"
+        data-en="Accept"
+        data-pl="Akceptuję"
+      >Accept</button>
+    </div>
+  </div>
+</div>
+<script defer src="/assets/cookie-banner.js"></script>
+
 </body>
 </html>
