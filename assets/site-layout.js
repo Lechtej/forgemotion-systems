@@ -1284,8 +1284,24 @@ function bindLangButtons(metaData) {
       if(!existing.dataset.cookieInit){
         existing.dataset.cookieInit = "1";
         const acceptBtn = existing.querySelector("#cookieAcceptBtn");
-        const rejectBtn = existing.querySelector("#cookieRejectBtn");
+        let rejectBtn = existing.querySelector("#cookieRejectBtn");
         const closeBtn  = existing.querySelector("#cookieCloseBtn");
+
+        // Some pages may ship an older banner markup that only contains "Accept".
+        // To keep UX consistent, inject a "Reject" button when it's missing.
+        if(!rejectBtn){
+          const btnRow = existing.querySelector(".cookie-btn-row") || acceptBtn?.parentElement;
+          if(btnRow && acceptBtn){
+            rejectBtn = document.createElement("button");
+            rejectBtn.type = "button";
+            rejectBtn.id = "cookieRejectBtn";
+            rejectBtn.className = "rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm font-semibold text-white/90";
+            rejectBtn.dataset.en = "Reject";
+            rejectBtn.dataset.pl = "Odrzu\u0107";
+            rejectBtn.textContent = (lang || "").toLowerCase().startsWith("pl") ? "Odrzu\u0107" : "Reject";
+            btnRow.insertBefore(rejectBtn, acceptBtn);
+          }
+        }
 
         const hide = () => {
           existing.classList.add("hidden");
