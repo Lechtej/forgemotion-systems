@@ -1,62 +1,111 @@
-/* ForgeMotion Systems — cookie banner (v2.3.38)
-   - Shows once per browser (localStorage)
-   - Language derived from <html lang="">
-*/
 (function () {
+  // Simple technical-cookie consent banner (no tracking)
+  // Stores a single 1st-party cookie so the banner is not shown again.
+
   const KEY = "forgemotion_cookies_accepted_v1";
-  const banner = document.getElementById("cookieBanner");
-  const btn = document.getElementById("cookieAcceptBtn");
-
-  if (!banner || !btn) return;
-
-  const lang = (document.documentElement.getAttribute("lang") || "en").toLowerCase();
-  const isPL = lang.startsWith("pl");
-
-  // Apply i18n for elements in banner only
-  banner.querySelectorAll("[data-en][data-pl]").forEach((el) => {
-    const txt = isPL ? el.getAttribute("data-pl") : el.getAttribute("data-en");
-    if (txt) el.textContent = txt;
-  });
-
-  // Language-aware privacy link
-  banner.querySelectorAll("[data-en-href][data-pl-href]").forEach((a) => {
-    a.setAttribute("href", isPL ? a.getAttribute("data-pl-href") : a.getAttribute("data-en-href"));
-  });
+  const HIGH_Z = "2147483000"; // stay above any UI overlays
 
   function getCookie(name) {
-    const escaped = name.replace(/[.$?*|{}()\[\]\\\/\+^]/g, "\\$&");
-    const m = document.cookie.match(new RegExp("(?:^|; )" + escaped + "=([^;]*)"));
-    return m ? decodeURIComponent(m[1]) : null;
+    const pattern = "; " + document.cookie;
+    const parts = pattern.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
   }
 
-  function setCookie(name, value) {
-    // 365 days, Lax (works for a simple banner)
-    const maxAge = 60 * 60 * 24 * 365;
-    document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie =
+      name +
+      "=" +
+      value +
+      "; expires=" +
+      d.toUTCString() +
+      "; path=/; SameSite=Lax";
   }
 
   function hasConsent() {
-    // Prefer localStorage, fallback to cookie
-    try {
-      if (localStorage.getItem(KEY)) return true;
-    } catch (e) {
-      /* ignore */
-    }
     return getCookie(KEY) === "1";
   }
 
-  if (!hasConsent()) {
-    banner.classList.remove("hidden");
+  function applyLangToLinks(banner) {
+    // Best-effort: set correct Privacy Policy URL based on current path.
+    const isPL = (location.pathname || "/").startsWith("/pl/");
+    banner
+      .querySelectorAll("[data-en-href][data-pl-href]")
+      .forEach((a) => {
+        a.setAttribute("href", isPL ? a.getAttribute("data-pl-href") : a.getAttribute("data-en-href"));
+      });
   }
 
-  btn.addEventListener("click", function () {
-    // Always hide immediately, even if storage is blocked.
-    banner.classList.add("hidden");
+  function show(banner) {
+    banner.style.zIndex = HIGH_Z;
+    banner.style.pointerEvents = "auto";
+    banner.classList.remove("hidden");
+    banner.removeAttribute("aria-hidden");
+    applyLangToLinks(banner);
+  }
 
-    try {
-      localStorage.setItem(KEY, "1");
-    } catch (e) {
-      try { setCookie(KEY, "1"); } catch (e2) {}
+  function hide(banner) {
+    banner.classList.add("hidden");
+    banner.setAttribute("aria-hidden", "true");
+  }
+
+  function bind(banner) {
+    const acceptBtn = banner.querySelector("#cookieAcceptBtn");
+    const rejectBtn = banner.querySelector("#cookieRejectBtn");
+
+    // Defensive: ensure banner stays clickable even if some overlay exists.
+    banner.style.zIndex = HIGH_Z;
+    banner.style.pointerEvents = "auto";
+    if (acceptBtn) acceptBtn.style.pointerEvents = "auto";
+    if (rejectBtn) rejectBtn.style.pointerEvents = "auto";
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener(
+        "click",
+        () => {
+          setCookie(KEY, "1", 180);
+          hide(banner);
+        },
+        { capture: true }
+      );
     }
-  });
+
+    if (rejectBtn) {
+      rejectBtn.addEventListener(
+        "click",
+        () => {
+          // Still set a cookie to avoid showing the banner again (technical-only site).
+          setCookie(KEY, "1", 180);
+          hide(banner);
+        },
+        { capture: true }
+      );
+    }
+  }
+
+  function init() {
+    const banner = document.getElementById("cookieBanner");
+    if (!banner) return;
+
+    bind(banner);
+
+    if (hasConsent()) {
+      hide(banner);
+      return;
+    }
+
+    show(banner);
+  }
+
+  // Run reliably whether the script is executed before or after DOMContentLoaded.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  // Fallback: in case the banner is injected late (e.g., header/footer async), retry once.
+  setTimeout(init, 250);
 })();
