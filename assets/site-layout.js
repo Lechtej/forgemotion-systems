@@ -543,7 +543,7 @@ function detectLang() {
 
       const trimmed = raw.trim();
 
-      if (trimmed.startsWith("#") && isIndexLikePath(window.location.pathname)) continue;
+      if (trimmed.startsWith("#")) continue;
 
       const m1 = trimmed.match(/^(\/?index\.html)(#.+)?$/i);
       if (m1) {
