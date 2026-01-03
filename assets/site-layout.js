@@ -1258,6 +1258,80 @@ function bindLangButtons(metaData) {
     }
   }
 
+
+  function initCookieBanner(lang) {
+    try {
+      const acceptedKeyNew = "forgemotion_cookies_accepted_v1";
+      const acceptedKeyOld = "fms_cookie_consent_v1";
+      const hasConsent = () => {
+        try {
+          return localStorage.getItem(acceptedKeyNew) === "1" || localStorage.getItem(acceptedKeyOld) === "1";
+        } catch (e) {
+          return false;
+        }
+      };
+      const setConsent = () => {
+        try {
+          localStorage.setItem(acceptedKeyNew, "1");
+          localStorage.setItem(acceptedKeyOld, "1");
+        } catch (e) {}
+      };
+
+      let banner = document.getElementById("cookieBanner");
+      if (!banner) {
+        banner = document.createElement("div");
+        banner.id = "cookieBanner";
+        banner.style.position = "fixed";
+        banner.style.left = "0";
+        banner.style.right = "0";
+        banner.style.bottom = "0";
+        banner.style.zIndex = "9999";
+        banner.style.display = "none";
+        banner.style.padding = "12px";
+        banner.style.background = "rgba(12, 18, 32, 0.96)";
+        banner.style.borderTop = "1px solid rgba(255,255,255,0.10)";
+        banner.style.backdropFilter = "blur(6px)";
+
+        const plText = 'Używamy plików cookies w celu działania strony, analityki i poprawy doświadczenia. Szczegóły znajdziesz w <a href="/pl/privacy.html#cookies" style="text-decoration: underline;">Polityce prywatności</a>.';
+        const enText = 'We use cookies to run the site, measure performance and improve the experience. Details in the <a href="/en/privacy.html#cookies" style="text-decoration: underline;">Privacy Policy</a>.';
+        banner.innerHTML = `
+          <div style="max-width: 1100px; margin: 0 auto; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+            <div style="color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.35;">
+              <span data-en="${enText.replace(/"/g,'&quot;')}" data-pl="${plText.replace(/"/g,'&quot;')}"></span>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button id="cookieAcceptBtn" type="button"
+                style="background: rgba(255,255,255,0.92); color:#0b1220; border: 1px solid rgba(255,255,255,0.15); padding: 10px 14px; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                <span data-en="Accept" data-pl="Akceptuję">Akceptuję</span>
+              </button>
+            </div>
+          </div>`;
+        document.body.appendChild(banner);
+      }
+
+      if (hasConsent()) {
+        banner.classList?.add?.("hidden");
+        banner.style.display = "none";
+        return;
+      }
+
+      banner.classList?.remove?.("hidden");
+      banner.style.display = "block";
+
+      applyTexts(lang);
+
+      const acceptBtn = document.getElementById("cookieAcceptBtn");
+      if (acceptBtn && !acceptBtn.__cookieBound) {
+        acceptBtn.__cookieBound = true;
+        acceptBtn.addEventListener("click", () => {
+          setConsent();
+          banner.classList?.add?.("hidden");
+          banner.style.display = "none";
+        });
+      }
+    } catch (e) {}
+  }
+
   window.SiteLayout = {
     init: function (options) {
       const cfg = {
@@ -1296,6 +1370,7 @@ function bindLangButtons(metaData) {
         }
       }
 
+      initCookieBanner(lang);
       bindScrollSpy();
     }
   };
