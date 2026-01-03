@@ -1258,81 +1258,73 @@ function bindLangButtons(metaData) {
     }
   }
 
+  
+  // Cookie banner (shows on first visit; remembers choice in localStorage)
+  function initCookieBanner(lang){
+    const KEY = "fms_cookie_consent_v1";
+    const safeGet = () => {
+      try { return window.localStorage ? localStorage.getItem(KEY) : null; } catch(e){ return null; }
+    };
+    const safeSet = (val) => {
+      try { if(window.localStorage) localStorage.setItem(KEY, val); } catch(e){ /* ignore */ }
+    };
+    const hasConsent = () => safeGet() === "accepted" || safeGet() === "rejected";
 
-  function initCookieBanner(lang) {
-    try {
-      const acceptedKeyNew = "forgemotion_cookies_accepted_v1";
-      const acceptedKeyOld = "fms_cookie_consent_v1";
-      const hasConsent = () => {
-        try {
-          return localStorage.getItem(acceptedKeyNew) === "1" || localStorage.getItem(acceptedKeyOld) === "1";
-        } catch (e) {
-          return false;
-        }
-      };
-      const setConsent = () => {
-        try {
-          localStorage.setItem(acceptedKeyNew, "1");
-          localStorage.setItem(acceptedKeyOld, "1");
-        } catch (e) {}
-      };
+    // Avoid duplicates (e.g., hot reload)
+    const existing = document.getElementById("cookieBanner");
+    if(existing){
+      if(!hasConsent()) existing.style.display = "block";
+      return;
+    }
+    if(hasConsent()) return;
 
-      let banner = document.getElementById("cookieBanner");
-      if (!banner) {
-        banner = document.createElement("div");
-        banner.id = "cookieBanner";
-        banner.style.position = "fixed";
-        banner.style.left = "0";
-        banner.style.right = "0";
-        banner.style.bottom = "0";
-        banner.style.zIndex = "9999";
-        banner.style.display = "none";
-        banner.style.padding = "12px";
-        banner.style.background = "rgba(12, 18, 32, 0.96)";
-        banner.style.borderTop = "1px solid rgba(255,255,255,0.10)";
-        banner.style.backdropFilter = "blur(6px)";
+    const isPL = (lang || "").toLowerCase().startsWith("pl");
+    const href = isPL ? "/pl/cookies.html" : "/en/cookies.html";
 
-        const plText = 'Używamy plików cookies w celu działania strony, analityki i poprawy doświadczenia. Szczegóły znajdziesz w <a href="/pl/privacy.html#cookies" style="text-decoration: underline;">Polityce prywatności</a>.';
-        const enText = 'We use cookies to run the site, measure performance and improve the experience. Details in the <a href="/en/privacy.html#cookies" style="text-decoration: underline;">Privacy Policy</a>.';
-        banner.innerHTML = `
-          <div style="max-width: 1100px; margin: 0 auto; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-            <div style="color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.35;">
-              <span data-en="${enText.replace(/"/g,'&quot;')}" data-pl="${plText.replace(/"/g,'&quot;')}"></span>
+    const banner = document.createElement("div");
+    banner.id = "cookieBanner";
+    banner.setAttribute("role","dialog");
+    banner.setAttribute("aria-live","polite");
+    banner.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:9999;";
+
+    banner.innerHTML = `
+      <div class="mx-auto max-w-6xl px-4 pb-4">
+        <div class="rounded-2xl border border-white/10 bg-gray-900/95 backdrop-blur p-4 md:p-5 shadow-lg">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="text-sm text-white/80 leading-relaxed">
+              ${isPL
+                ? `Ta strona używa plików cookies (w tym niezbędnych do działania). Możesz zaakceptować lub odrzucić opcjonalne cookies. <a class="underline hover:text-white" href="${href}">Dowiedz się więcej</a>.`
+                : `This site uses cookies (including those necessary for operation). You can accept or reject optional cookies. <a class="underline hover:text-white" href="${href}">Learn more</a>.`
+              }
             </div>
-            <div style="display:flex; gap:10px; align-items:center;">
-              <button id="cookieAcceptBtn" type="button"
-                style="background: rgba(255,255,255,0.92); color:#0b1220; border: 1px solid rgba(255,255,255,0.15); padding: 10px 14px; border-radius: 12px; font-weight: 600; cursor: pointer;">
-                <span data-en="Accept" data-pl="Akceptuję">Akceptuję</span>
+            <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+              <button type="button" id="cookieRejectBtn" class="rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-2 text-sm font-semibold">
+                ${isPL ? "Odrzuć" : "Reject"}
+              </button>
+              <button type="button" id="cookieAcceptBtn" class="rounded-xl bg-white text-black px-4 py-2 text-sm font-semibold">
+                ${isPL ? "Akceptuję" : "Accept"}
               </button>
             </div>
-          </div>`;
-        document.body.appendChild(banner);
-      }
+          </div>
+        </div>
+      </div>
+    `;
 
-      if (hasConsent()) {
-        banner.classList?.add?.("hidden");
-        banner.style.display = "none";
-        return;
-      }
+    document.body.appendChild(banner);
 
-      banner.classList?.remove?.("hidden");
-      banner.style.display = "block";
+    const close = () => { banner.style.display = "none"; };
+    const acceptBtn = banner.querySelector("#cookieAcceptBtn");
+    const rejectBtn = banner.querySelector("#cookieRejectBtn");
 
-      applyTexts(lang);
-
-      const acceptBtn = document.getElementById("cookieAcceptBtn");
-      if (acceptBtn && !acceptBtn.__cookieBound) {
-        acceptBtn.__cookieBound = true;
-        acceptBtn.addEventListener("click", () => {
-          setConsent();
-          banner.classList?.add?.("hidden");
-          banner.style.display = "none";
-        });
-      }
-    } catch (e) {}
+    if(acceptBtn){
+      acceptBtn.addEventListener("click", () => { safeSet("accepted"); close(); }, { passive: true });
+    }
+    if(rejectBtn){
+      rejectBtn.addEventListener("click", () => { safeSet("rejected"); close(); }, { passive: true });
+    }
   }
 
-  window.SiteLayout = {
+window.SiteLayout = {
     init: function (options) {
       const cfg = {
         metaData: options?.metaData || null,
@@ -1370,6 +1362,8 @@ function bindLangButtons(metaData) {
         }
       }
 
+
+      // Cookie banner (first visit)
       initCookieBanner(lang);
       bindScrollSpy();
     }
