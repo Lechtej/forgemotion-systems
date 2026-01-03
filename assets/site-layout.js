@@ -1270,10 +1270,48 @@ function bindLangButtons(metaData) {
     };
     const hasConsent = () => safeGet() === "accepted" || safeGet() === "rejected";
 
-    // Avoid duplicates (e.g., hot reload)
+    // Reuse existing banner markup if present, but ensure:
+    // - it becomes visible when consent is missing ("hidden" class removed)
+    // - buttons are wired (some pages embed markup without JS handlers)
     const existing = document.getElementById("cookieBanner");
     if(existing){
-      if(!hasConsent()) existing.style.display = "block";
+      if(!hasConsent()){
+        existing.classList.remove("hidden");
+        existing.style.display = "block";
+      }
+
+      // Wire handlers once
+      if(!existing.dataset.cookieInit){
+        existing.dataset.cookieInit = "1";
+        const acceptBtn = existing.querySelector("#cookieAcceptBtn");
+        const rejectBtn = existing.querySelector("#cookieRejectBtn");
+        const closeBtn  = existing.querySelector("#cookieCloseBtn");
+
+        const hide = () => {
+          existing.classList.add("hidden");
+          existing.style.display = "none";
+        };
+
+        if(acceptBtn){
+          acceptBtn.addEventListener("click", () => {
+            safeSet("accepted");
+            hide();
+          });
+        }
+        if(rejectBtn){
+          rejectBtn.addEventListener("click", () => {
+            safeSet("rejected");
+            hide();
+          });
+        }
+        if(closeBtn){
+          closeBtn.addEventListener("click", () => {
+            // Close is treated as a temporary dismissal (no consent stored)
+            hide();
+          });
+        }
+      }
+
       return;
     }
     if(hasConsent()) return;
