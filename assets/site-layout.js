@@ -383,9 +383,11 @@
 
     return `
 <section class="container mx-auto px-4 pb-16">
-  <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
+  <div class="max-w-5xl mx-auto">
+    <div class="bg-gray-800/60 border border-white/5 rounded-2xl p-8">
     <h2 class="text-2xl font-bold mb-5" data-en="Other products" data-pl="Pozostałe produkty"></h2>
     <div class="flex flex-wrap gap-3">${items}</div>
+    </div>
   </div>
 </section>`;
   }
