@@ -1284,6 +1284,14 @@ function bindLangButtons(metaData) {
       if(!existing.dataset.cookieInit){
         existing.dataset.cookieInit = "1";
         const acceptBtn = existing.querySelector("#cookieAcceptBtn");
+        if(acceptBtn){
+          // Ensure the visible text matches the current language even when markup ships with EN defaults.
+          acceptBtn.dataset.en = acceptBtn.dataset.en || "Accept";
+          acceptBtn.dataset.pl = acceptBtn.dataset.pl || "Akceptuję";
+          acceptBtn.textContent = (lang || "").toLowerCase().startsWith("pl")
+            ? (acceptBtn.dataset.pl || "Akceptuję")
+            : (acceptBtn.dataset.en || "Accept");
+        }
         let rejectBtn = existing.querySelector("#cookieRejectBtn");
         const closeBtn  = existing.querySelector("#cookieCloseBtn");
 
