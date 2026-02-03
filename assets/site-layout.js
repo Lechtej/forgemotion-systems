@@ -956,20 +956,23 @@
   // ---- lang buttons ----
 
   function mapLegalLangPath(path, targetLang) {
-    // Keep user within the same legal document when switching language.
-    // Supports: /pl/privacy.html <-> /en/privacy.html and terms-and-conditions-*-*.html
-    const p = stripTrailingSlash(path);
+  // Keep user within the same document when switching language.
+  const p = stripTrailingSlash(path);
 
-    // Privacy pages
-    if (p === "/pl/privacy.html" && targetLang === "en") return "/en/privacy.html";
-    if (p === "/en/privacy.html" && targetLang === "pl") return "/pl/privacy.html";
+  // Privacy pages
+  if (p === "/pl/privacy.html" && targetLang === "en") return "/en/privacy.html";
+  if (p === "/en/privacy.html" && targetLang === "pl") return "/pl/privacy.html";
 
-    // Terms & Conditions pages (in /legal/)
-    if (p === "/legal/terms-and-conditions-pl.html" && targetLang === "en") return "/legal/terms-and-conditions-en.html";
-    if (p === "/legal/terms-and-conditions-en.html" && targetLang === "pl") return "/legal/terms-and-conditions-pl.html";
+  // Terms & Conditions pages (in /legal/)
+  if (p === "/legal/terms-and-conditions-pl.html" && targetLang === "en") return "/legal/terms-and-conditions-en.html";
+  if (p === "/legal/terms-and-conditions-en.html" && targetLang === "pl") return "/legal/terms-and-conditions-pl.html";
 
-    return null;
-  }
+  // Downloads pages
+  if (p === "/pl/downloads.html" && targetLang === "en") return "/en/downloads.html";
+  if (p === "/en/downloads.html" && targetLang === "pl") return "/pl/downloads.html";
+
+  return null;
+}
 
   function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
