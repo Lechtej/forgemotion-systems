@@ -78,4 +78,10 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://forgemotionsystems.com/en/downloads.html</loc>
+  </url>
+  <url>
+    <loc>https://forgemotionsystems.com/pl/downloads.html</loc>
+  </url>
 </urlset>

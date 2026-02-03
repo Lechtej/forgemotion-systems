@@ -199,6 +199,7 @@
     const productsHref = buildIndexUrl(lang, "products");
     const aboutHref = buildIndexUrl(lang, "about");
     const contactHref = buildIndexUrl(lang, "contact");
+    const downloadsHref = lang === "pl" ? "/pl/downloads.html" : "/en/downloads.html";
     const logoHref = productsHref;
 
     return `
@@ -214,6 +215,7 @@
         <ul class="flex items-center gap-8">
           <li><a href="${escapeHtml(heroHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Home" data-pl="Strona główna"></a></li>
           <li><a href="${escapeHtml(productsHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Products" data-pl="Produkty"></a></li>
+          <li><a href="${escapeHtml(downloadsHref)}" class="hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Download" data-pl="Pobierz"></a></li>
           <li><a href="${escapeHtml(aboutHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="About" data-pl="O nas"></a></li>
           <li><a href="${escapeHtml(contactHref)}" class="site-nav-link hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1" data-en="Contact" data-pl="Kontakt"></a></li>
         </ul>
@@ -248,6 +250,7 @@
       <ul class="flex flex-col gap-2">
         <li><a href="${escapeHtml(heroHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Home" data-pl="Strona główna"></a></li>
         <li><a href="${escapeHtml(productsHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Products" data-pl="Produkty"></a></li>
+        <li><a href="${escapeHtml(downloadsHref)}" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Download" data-pl="Pobierz"></a></li>
         <li><a href="${escapeHtml(aboutHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
         <li><a href="${escapeHtml(contactHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
       </ul>
@@ -261,6 +264,10 @@
     const termsHref = safeLang === "pl"
       ? "/legal/terms-and-conditions-pl.html"
       : "/legal/terms-and-conditions-en.html";
+
+    const downloadsHref = safeLang === "pl"
+      ? "/pl/downloads.html"
+      : "/en/downloads.html";
 
     // NOTE: Links are absolute (start with /) to work on GitHub Pages and in local Live Server.
     return `
@@ -296,6 +303,7 @@
           <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "about"))}" data-en="About" data-pl="O nas"></a></li>
           <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(`/partners.html?lang=${safeLang}`)}" data-en="Partners" data-pl="Partnerzy"></a></li>
           <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "products"))}" data-en="Product overview" data-pl="Przegląd produktów"></a></li>
+          <li><a class="text-white/70 hover:text-white transition" href="${escapeHtml(downloadsHref)}" data-en="Download" data-pl="Pobierz"></a></li>
         </ul>
       </div>
 
@@ -310,6 +318,10 @@
           <li>
             <a class="text-white/70 hover:text-white transition" href="/assets/privacy.html"
                data-en="Privacy policy" data-pl="Polityka prywatności"></a>
+          </li>
+          <li>
+            <a class="text-white/70 hover:text-white transition" href="${escapeHtml(downloadsHref)}"
+               data-en="Downloads" data-pl="Pobieranie"></a>
           </li>
         </ul>
 
@@ -326,6 +338,7 @@
       <div class="text-xs text-white/55 flex items-center gap-4">
         <a class="hover:text-white transition" href="${escapeHtml(termsHref)}" data-en="Terms" data-pl="Regulamin"></a>
         <a class="hover:text-white transition" href="/assets/privacy.html" data-en="Privacy" data-pl="Prywatność"></a>
+        <a class="hover:text-white transition" href="${escapeHtml(downloadsHref)}" data-en="Downloads" data-pl="Pobieranie"></a>
       </div>
     </div>
   </div>
@@ -441,7 +454,6 @@
     }
   }
 
-
   function updateMetaTags(lang, metaData) {
     const data = metaData?.[lang] || metaData?.[DEFAULT_LANG] || null;
 
@@ -470,7 +482,6 @@
     setMetaTag("twitter:card", "summary_large_image", "name");
   }
 
-  
   function getQueryLang() {
     try {
       const q = new URLSearchParams(window.location.search);
@@ -523,7 +534,7 @@
     }
   }
 
-function detectLang() {
+  function detectLang() {
     const fromPath = getPathLang(window.location.pathname);
     if (fromPath) return fromPath;
 
@@ -566,7 +577,6 @@ function detectLang() {
     }
   }
 
-  
   function rewriteLangHrefs(lang) {
     // Elements can declare language-specific hrefs to avoid hardcoding /en/ or /pl/ in HTML.
     document.querySelectorAll("[data-href-en][data-href-pl]").forEach((a) => {
@@ -575,7 +585,7 @@ function detectLang() {
     });
   }
 
-function setLanguage(lang, metaData) {
+  function setLanguage(lang, metaData) {
     const safe = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
 
     localStorage.setItem("lang", safe);
@@ -944,7 +954,7 @@ function setLanguage(lang, metaData) {
   }
 
   // ---- lang buttons ----
-  
+
   function mapLegalLangPath(path, targetLang) {
     // Keep user within the same legal document when switching language.
     // Supports: /pl/privacy.html <-> /en/privacy.html and terms-and-conditions-*-*.html
@@ -961,7 +971,7 @@ function setLanguage(lang, metaData) {
     return null;
   }
 
-function bindLangButtons(metaData) {
+  function bindLangButtons(metaData) {
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-lang]");
       if (!btn) return;
@@ -1258,7 +1268,6 @@ function bindLangButtons(metaData) {
     }
   }
 
-  
   // Cookie banner (shows on first visit; remembers choice in localStorage)
   function initCookieBanner(lang){
     const KEY = "fms_cookie_consent_v1";
@@ -1386,7 +1395,7 @@ function bindLangButtons(metaData) {
     }
   }
 
-window.SiteLayout = {
+  window.SiteLayout = {
     init: function (options) {
       const cfg = {
         metaData: options?.metaData || null,
@@ -1423,7 +1432,6 @@ window.SiteLayout = {
           rewriteIndexAnchors(appliedLang);
         }
       }
-
 
       // Cookie banner (first visit)
       initCookieBanner(lang);
