@@ -79,13 +79,45 @@
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{ max-height: 90px !important; height: auto !important; object-fit: contain !important; }
 </style>
 <style>
-/* SHIPPING_UI_FIX v1.0.5 – fix flex shrinking + arrow vertical alignment */
-.shipping-visual{display:flex !important;align-items:center !important;justify-content:center !important;gap:18px !important;}
-.shipping-visual img{flex:0 0 auto !important;display:block;}
-.shipping-visual img[src*="/assets/img/shipping/product_"]{width:160px !important;height:auto !important;object-fit:contain !important;}
-.shipping-visual img[src*="/assets/img/shipping/pack_"]{width:180px !important;max-height:110px !important;height:auto !important;object-fit:contain !important;}
-/* The pack group includes label -> shift arrow up to align with icon midline */
-.shipping-visual .shipping-arrow{line-height:1 !important;align-self:center !important;transform:translateY(-8px);}
+/* SHIPPING_UI_FIX v1.0.6 – center arrows (grid column) */
+.shipping-visual{
+  display:grid !important;
+  grid-template-columns: 160px 64px auto;
+  align-items:center !important;
+  justify-content:center !important;
+  column-gap:18px !important;
+}
+/* prevent shrinking */
+.shipping-visual img{display:block;flex:0 0 auto !important;}
+.shipping-visual img[src*="/assets/img/shipping/product_"]{
+  width:160px !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+.shipping-visual img[src*="/assets/img/shipping/pack_"]{
+  width:180px !important;
+  max-height:110px !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+/* Arrow: centered in its own column, aligned to icon midline (not label midline) */
+.shipping-visual .shipping-arrow{
+  width:64px !important;
+  text-align:center !important;
+  line-height:1 !important;
+  align-self:center !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  transform:translateY(-12px) !important;
+}
+/* Labels */
+.shipping-visual .text-\[10px\].tracking-widest{
+  margin-top:6px !important;
+  font-size:11px !important;
+  opacity:.85 !important;
+  text-align:center !important;
+}
 </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
@@ -98,7 +130,7 @@
         <span data-en="Shipping" data-pl="Dostawa">Shipping</span>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.5</span></h1>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.6</span></h1>
 
       <p class="text-white/80 max-w-4xl"
          data-en="These are indicative 'from' costs. Final shipping is confirmed individually after configuration, delivery address, and the selected shipping method (pallet vs parcels)."
