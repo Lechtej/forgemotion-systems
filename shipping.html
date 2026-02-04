@@ -79,41 +79,62 @@
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{ max-height: 90px !important; height: auto !important; object-fit: contain !important; }
 </style>
 <style>
-/* SHIPPING_UI_FIX v1.0.6 – center arrows (grid column) */
+/* SHIPPING_UI_FIX v1.0.7 – center arrows for ALL rows (separate icon row vs label row) */
 .shipping-visual{
   display:grid !important;
   grid-template-columns: 160px 64px auto;
+  grid-template-rows: auto 18px;
+  column-gap:18px !important;
   align-items:center !important;
   justify-content:center !important;
-  column-gap:18px !important;
 }
-/* prevent shrinking */
-.shipping-visual img{display:block;flex:0 0 auto !important;}
-.shipping-visual img[src*="/assets/img/shipping/product_"]{
+/* product icon spans both rows */
+.shipping-visual > img[src*="/assets/img/shipping/product_"]{
+  grid-column:1;
+  grid-row:1 / span 2;
   width:160px !important;
   height:auto !important;
   object-fit:contain !important;
+  display:block;
+  flex:0 0 auto !important;
+}
+/* arrow lives ONLY in the icon row */
+.shipping-visual .shipping-arrow{
+  grid-column:2;
+  grid-row:1;
+  width:64px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  line-height:1 !important;
+  transform:none !important;
+}
+/* pack group spans both rows; its items create their own 2-row grid (icon + label) */
+.shipping-visual > div.flex.items-center.gap-3{
+  grid-column:3;
+  grid-row:1 / span 2;
+  align-items:start !important;
+}
+/* each pack item: fixed label row */
+.shipping-visual .flex.flex-col.items-center.gap-1{
+  display:grid !important;
+  grid-template-rows:auto 18px;
+  row-gap:6px;
+  align-items:center;
 }
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{
   width:180px !important;
   max-height:110px !important;
   height:auto !important;
   object-fit:contain !important;
+  display:block;
+  flex:0 0 auto !important;
 }
-/* Arrow: centered in its own column, aligned to icon midline (not label midline) */
-.shipping-visual .shipping-arrow{
-  width:64px !important;
-  text-align:center !important;
-  line-height:1 !important;
-  align-self:center !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  transform:translateY(-12px) !important;
-}
-/* Labels */
 .shipping-visual .text-\[10px\].tracking-widest{
-  margin-top:6px !important;
+  height:18px !important;
+  line-height:18px !important;
+  margin-top:0 !important;
   font-size:11px !important;
   opacity:.85 !important;
   text-align:center !important;
@@ -130,7 +151,7 @@
         <span data-en="Shipping" data-pl="Dostawa">Shipping</span>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.6</span></h1>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.7</span></h1>
 
       <p class="text-white/80 max-w-4xl"
          data-en="These are indicative 'from' costs. Final shipping is confirmed individually after configuration, delivery address, and the selected shipping method (pallet vs parcels)."
