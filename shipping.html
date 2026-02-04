@@ -79,7 +79,7 @@
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{ max-height: 90px !important; height: auto !important; object-fit: contain !important; }
 </style>
 <style>
-/* SHIPPING_UI_FIX v1.0.9 – consistent centering for ALL rows (fixed method column width) */
+/* SHIPPING_UI_FIX v1.1.0 – unify method column centering (MK14 like 6DOF) */
 .shipping-visual{
   display:grid !important;
   grid-template-columns: 160px 64px 320px;
@@ -88,17 +88,18 @@
   align-items:center !important;
   justify-content:center !important;
 }
-/* product spans both rows */
 .shipping-visual > img[src*="/assets/img/shipping/product_"]{
   grid-column:1;
   grid-row:1 / span 2;
   width:160px !important;
   height:auto !important;
   object-fit:contain !important;
+  object-position:center !important;
   display:block;
+  justify-self:center;
+  align-self:center;
   flex:0 0 auto !important;
 }
-/* arrow: centered in its own column, icon-row only */
 .shipping-visual .shipping-arrow{
   grid-column:2;
   grid-row:1;
@@ -108,30 +109,26 @@
   justify-content:center !important;
   text-align:center !important;
   line-height:1 !important;
-  transform:none !important;
 }
-/* pack group occupies a fixed-width column to keep layout identical between 1-icon and 2-icon rows */
-.shipping-visual > div{
+.shipping-visual > div.flex.items-center.gap-3{
   grid-column:3;
   grid-row:1 / span 2;
   width:320px !important;
-  display:flex !important;
-  align-items:flex-start !important;
-  justify-content:center !important;
-  gap:18px !important;
+  justify-content:center !important; /* key fix */
+  align-items:start !important;
 }
-/* each pack item: icon row + label row */
-.shipping-visual > div > div{
+.shipping-visual .flex.flex-col.items-center.gap-1{
   display:grid !important;
   grid-template-rows:auto 18px;
   row-gap:6px;
-  justify-items:center;
+  align-items:center;
 }
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{
   width:180px !important;
   max-height:110px !important;
   height:auto !important;
   object-fit:contain !important;
+  object-position:center !important;
   display:block;
   flex:0 0 auto !important;
 }
@@ -143,9 +140,6 @@
   opacity:.85 !important;
   text-align:center !important;
 }
-
-/* MK14_VISUAL_NUDGE v1.0.9 – compensate transparent padding in product_mk14.png */
-.shipping-visual img[src*="/assets/img/shipping/product_mk14.png"]{ transform: translateX(18px); }
 </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
@@ -158,7 +152,7 @@
         <span data-en="Shipping" data-pl="Dostawa">Shipping</span>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.9</span></h1>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.1.0</span></h1>
 
       <p class="text-white/80 max-w-4xl"
          data-en="These are indicative 'from' costs. Final shipping is confirmed individually after configuration, delivery address, and the selected shipping method (pallet vs parcels)."
