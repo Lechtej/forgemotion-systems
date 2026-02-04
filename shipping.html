@@ -79,16 +79,16 @@
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{ max-height: 90px !important; height: auto !important; object-fit: contain !important; }
 </style>
 <style>
-/* SHIPPING_UI_FIX v1.0.7 – center arrows for ALL rows (separate icon row vs label row) */
+/* SHIPPING_UI_FIX v1.0.8 – consistent centering for ALL rows (fixed method column width) */
 .shipping-visual{
   display:grid !important;
-  grid-template-columns: 160px 64px auto;
+  grid-template-columns: 160px 64px 320px;
   grid-template-rows: auto 18px;
   column-gap:18px !important;
   align-items:center !important;
   justify-content:center !important;
 }
-/* product icon spans both rows */
+/* product spans both rows */
 .shipping-visual > img[src*="/assets/img/shipping/product_"]{
   grid-column:1;
   grid-row:1 / span 2;
@@ -98,7 +98,7 @@
   display:block;
   flex:0 0 auto !important;
 }
-/* arrow lives ONLY in the icon row */
+/* arrow: centered in its own column, icon-row only */
 .shipping-visual .shipping-arrow{
   grid-column:2;
   grid-row:1;
@@ -110,18 +110,22 @@
   line-height:1 !important;
   transform:none !important;
 }
-/* pack group spans both rows; its items create their own 2-row grid (icon + label) */
-.shipping-visual > div.flex.items-center.gap-3{
+/* pack group occupies a fixed-width column to keep layout identical between 1-icon and 2-icon rows */
+.shipping-visual > div{
   grid-column:3;
   grid-row:1 / span 2;
-  align-items:start !important;
+  width:320px !important;
+  display:flex !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  gap:18px !important;
 }
-/* each pack item: fixed label row */
-.shipping-visual .flex.flex-col.items-center.gap-1{
+/* each pack item: icon row + label row */
+.shipping-visual > div > div{
   display:grid !important;
   grid-template-rows:auto 18px;
   row-gap:6px;
-  align-items:center;
+  justify-items:center;
 }
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{
   width:180px !important;
@@ -151,7 +155,7 @@
         <span data-en="Shipping" data-pl="Dostawa">Shipping</span>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.7</span></h1>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.8</span></h1>
 
       <p class="text-white/80 max-w-4xl"
          data-en="These are indicative 'from' costs. Final shipping is confirmed individually after configuration, delivery address, and the selected shipping method (pallet vs parcels)."
