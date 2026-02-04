@@ -1,23 +1,46 @@
 /* Shipping icons scaling & alignment
-   Version: v1.0.0
+   Version: v1.0.1
+   Fix: overrides Tailwind utility widths and aligns arrow/pack block vertically.
 */
-.shipping-flow {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+
+/* 1) Make the whole visual row truly centered */
+.shipping-visual {
+  align-items: center !important;
 }
 
-.shipping-method img,
-.shipping-pack img {
-    width: auto;
-    height: 64px;
-    max-height: 64px;
-    object-fit: contain;
+/* 2) The inner container that currently uses Tailwind `items-end` should be centered */
+.shipping-visual .items-end {
+  align-items: center !important;
 }
 
-.shipping-method-label {
-    margin-top: 6px;
-    font-size: 11px;
-    opacity: 0.85;
-    text-align: center;
+/* 3) Product icon stays as-is (160px) - optional safeguard */
+.shipping-visual img[src*="/assets/img/shipping/product_"]{
+  width: 160px !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* 4) Pallet / Parcel icons: bigger and consistent */
+.shipping-visual img[src*="/assets/img/shipping/pack_"]{
+  width: 150px !important;   /* was 110px */
+  height: auto !important;
+  max-height: 90px !important;
+  object-fit: contain !important;
+}
+
+/* 5) Arrow: keep centered and visually balanced */
+.shipping-arrow{
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: translateY(-2px);
+}
+
+/* 6) Labels under pallet/parcel */
+.shipping-visual .text-\[10px\].tracking-widest{
+  margin-top: 6px !important;
+  font-size: 11px !important;
+  opacity: 0.85 !important;
+  text-align: center !important;
 }
