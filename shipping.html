@@ -2,7 +2,6 @@
 
 <html lang="en">
 <head>
-  <!-- SHIPPING_UI_FIX v1.0.3 -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -80,16 +79,13 @@
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{ max-height: 90px !important; height: auto !important; object-fit: contain !important; }
 </style>
 <style>
-/* SHIPPING_UI_FIX v1.0.4 – deterministic overrides */
-.shipping-visual{display:flex !important;align-items:center !important;justify-content:center !important;gap:14px !important;}
-.shipping-visual > img{display:block;}
-.shipping-visual .shipping-arrow{line-height:1 !important;align-self:center !important;transform:translateY(-1px);}
-/* Target pack icons by src to override Tailwind width utilities */
+/* SHIPPING_UI_FIX v1.0.5 – fix flex shrinking + arrow vertical alignment */
+.shipping-visual{display:flex !important;align-items:center !important;justify-content:center !important;gap:18px !important;}
+.shipping-visual img{flex:0 0 auto !important;display:block;}
+.shipping-visual img[src*="/assets/img/shipping/product_"]{width:160px !important;height:auto !important;object-fit:contain !important;}
 .shipping-visual img[src*="/assets/img/shipping/pack_"]{width:180px !important;max-height:110px !important;height:auto !important;object-fit:contain !important;}
-/* Ensure the pack container is vertically centered (overrides items-end) */
-.shipping-visual .flex.flex-col.items-center{align-items:center !important;}
-/* Labels */
-.shipping-visual .text-\[10px\].tracking-widest{margin-top:6px !important;font-size:11px !important;opacity:.85 !important;text-align:center !important;}
+/* The pack group includes label -> shift arrow up to align with icon midline */
+.shipping-visual .shipping-arrow{line-height:1 !important;align-self:center !important;transform:translateY(-8px);}
 </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
@@ -102,7 +98,7 @@
         <span data-en="Shipping" data-pl="Dostawa">Shipping</span>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)</h1>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4" data-en="Estimated shipping costs (from)" data-pl="Orientacyjne koszty dostawy („od”)">Estimated shipping costs (from)<span style="margin-left:10px;font-size:10px;opacity:0.5;letter-spacing:0.12em;">UI-FIX v1.0.5</span></h1>
 
       <p class="text-white/80 max-w-4xl"
          data-en="These are indicative 'from' costs. Final shipping is confirmed individually after configuration, delivery address, and the selected shipping method (pallet vs parcels)."
@@ -132,8 +128,8 @@
       <div class="text-lg font-semibold" data-en="6DOF" data-pl="6DOF">6DOF</div>
       <div class="text-sm text-white/60 mt-1" data-en="Estimated shipping (from)" data-pl="Orientacyjnie (od)">Estimated shipping (from)</div>
     </div>
-    <div class="hidden md:flex items-center justify-center shrink-0 w-[220px]">
-      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_6dof.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none"/><div class="shipping-arrow text-gray-400 text-3xl leading-none flex items-center justify-center flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_pallet.png" alt="Pallet" class="w-[180px] h-auto select-none pointer-events-none"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PALLET" data-pl="PALETA"></div></div></div></div>
+    <div class="hidden md:flex items-center justify-center shrink-0 w-[420px]">
+      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_6dof.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none shrink-0"/><div class="shipping-arrow text-gray-400 text-2xl leading-none flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_pallet.png" alt="Pallet" class="w-[150px] h-auto select-none pointer-events-none shrink-0"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PALLET" data-pl="PALETA"></div></div></div></div>
     </div>
     <div class="grid gap-1 text-sm text-white/80">
       <div><span data-en="Poland: ~€170" data-pl="Polska: ~700 PLN">Poland: ~€170</span></div>
@@ -148,9 +144,9 @@
       <div class="text-lg font-semibold" data-en="3DOF / 2DOF" data-pl="3DOF / 2DOF">3DOF / 2DOF</div>
       <div class="text-sm text-white/60 mt-1" data-en="Estimated shipping (from)" data-pl="Orientacyjnie (od)">Estimated shipping (from)</div>
     </div>
-    <div class="hidden md:flex items-center justify-center shrink-0 w-[220px]">
-      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_3dof.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none"/><div class="shipping-arrow text-gray-400 text-3xl leading-none flex items-center justify-center flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_pallet.png" alt="Pallet" class="w-[180px] h-auto select-none pointer-events-none"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PALLET" data-pl="PALETA"></div></div>
-<div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_parcel.png" alt="Parcel" class="w-[180px] h-auto select-none pointer-events-none"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PARCEL" data-pl="PACZKA"></div></div></div></div>
+    <div class="hidden md:flex items-center justify-center shrink-0 w-[420px]">
+      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_3dof.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none shrink-0"/><div class="shipping-arrow text-gray-400 text-2xl leading-none flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_pallet.png" alt="Pallet" class="w-[150px] h-auto select-none pointer-events-none shrink-0"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PALLET" data-pl="PALETA"></div></div>
+<div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_parcel.png" alt="Parcel" class="w-[150px] h-auto select-none pointer-events-none shrink-0"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PARCEL" data-pl="PACZKA"></div></div></div></div>
     </div>
     <div class="grid gap-1 text-sm text-white/80">
       <div><span data-en="Poland: ~€120" data-pl="Polska: ~500 PLN">Poland: ~€120</span></div>
@@ -165,8 +161,8 @@
       <div class="text-lg font-semibold" data-en="MK14 (Ejection seat replica)" data-pl="MK14 (Replika fotela)">MK14 (Ejection seat replica)</div>
       <div class="text-sm text-white/60 mt-1" data-en="Estimated shipping (from)" data-pl="Orientacyjnie (od)">Estimated shipping (from)</div>
     </div>
-    <div class="hidden md:flex items-center justify-center shrink-0 w-[220px]">
-      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_mk14.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none"/><div class="shipping-arrow text-gray-400 text-3xl leading-none flex items-center justify-center flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_pallet.png" alt="Pallet" class="w-[180px] h-auto select-none pointer-events-none"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PALLET" data-pl="PALETA"></div></div></div></div>
+    <div class="hidden md:flex items-center justify-center shrink-0 w-[420px]">
+      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_mk14.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none shrink-0"/><div class="shipping-arrow text-gray-400 text-2xl leading-none flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_pallet.png" alt="Pallet" class="w-[150px] h-auto select-none pointer-events-none shrink-0"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PALLET" data-pl="PALETA"></div></div></div></div>
     </div>
     <div class="grid gap-1 text-sm text-white/80">
       <div><span data-en="Poland: ~€110" data-pl="Polska: ~450 PLN">Poland: ~€110</span></div>
@@ -190,8 +186,8 @@
       <div class="text-lg font-semibold" data-en="Belt tensioner" data-pl="Napinacz pasów">Belt tensioner</div>
       <div class="text-sm text-white/60 mt-1" data-en="Estimated shipping (range, from)" data-pl="Orientacyjnie (zakres, od)">Estimated shipping (range, from)</div>
     </div>
-    <div class="hidden md:flex items-center justify-center shrink-0 w-[220px]">
-      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_belt.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none"/><div class="shipping-arrow text-gray-400 text-3xl leading-none flex items-center justify-center flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_parcel.png" alt="Parcel" class="w-[180px] h-auto select-none pointer-events-none"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PARCEL" data-pl="PACZKA"></div></div></div></div>
+    <div class="hidden md:flex items-center justify-center shrink-0 w-[420px]">
+      <div class="shipping-visual flex items-center justify-center gap-3"><img src="/assets/img/shipping/product_belt.png" alt="Product" class="w-[160px] h-auto select-none pointer-events-none shrink-0"/><div class="shipping-arrow text-gray-400 text-2xl leading-none flex items-center justify-center">→</div><div class="flex items-center gap-3"><div class="flex flex-col items-center gap-1"><img src="/assets/img/shipping/pack_parcel.png" alt="Parcel" class="w-[150px] h-auto select-none pointer-events-none shrink-0"/><div class="text-[10px] tracking-widest text-gray-300" data-en="PARCEL" data-pl="PACZKA"></div></div></div></div>
     </div>
 <div class="grid gap-1 text-sm text-white/80">
       <div><span data-en="Poland: ~€20–€40" data-pl="Polska: ~80–140 PLN">Poland: ~€20–€40</span></div>
