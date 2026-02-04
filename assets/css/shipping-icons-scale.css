@@ -1,15 +1,12 @@
 /* Shipping icons scaling & alignment
    Version: v1.0.0
 */
-
-/* Flow container: product -> arrow -> pallet/parcel */
 .shipping-flow {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-/* Shipping method icons: PALLET / PARCEL */
 .shipping-method img,
 .shipping-pack img {
     width: auto;
@@ -18,7 +15,6 @@
     object-fit: contain;
 }
 
-/* Label under pallet/parcel */
 .shipping-method-label {
     margin-top: 6px;
     font-size: 11px;
