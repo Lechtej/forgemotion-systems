@@ -1150,8 +1150,8 @@
     if (!h) return;
 
     // Force new wording regardless of HTML
-    const en = "More movies";
-    const pl = "Więcej filmów";
+    const en = "More story clips";
+    const pl = "Kolejne klipy historii";
     h.dataset.en = en;
     h.dataset.pl = pl;
     h.textContent = (lang === "pl") ? pl : en;
@@ -1188,6 +1188,20 @@
     });
 
     return wrap;
+  }
+
+  function getVideoStoryPriority(v) {
+    const src = String(v?.src || "");
+    const priorities = [
+      "/videos/6dof-demo1.mp4",
+      "/videos/accessories-backlit-panel-1.mp4",
+      "/videos/accessories-hornet-front-panel-1.mp4",
+      "/videos/3dof-demo1.mp4",
+      "/videos/6dof-adjust.mp4",
+      "/videos/mk14seat-painting.mp4"
+    ];
+    const idx = priorities.indexOf(src);
+    return idx === -1 ? 999 : idx;
   }
 
   function renderMoreDemos(card, extras, lang, openVideo) {
@@ -1248,7 +1262,7 @@
         poster: v.poster || "",
         titleText: pickTitle(v, lang),
         descText: pickDesc(v, lang),
-      }));
+      })).sort((a, b) => getVideoStoryPriority(a) - getVideoStoryPriority(b));
 
       const card = findMoreDemosCard();
       renderMoreDemos(card, extras, lang, videoModalApi.openVideo);
