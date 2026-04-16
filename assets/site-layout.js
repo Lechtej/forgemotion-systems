@@ -1126,20 +1126,45 @@
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
 
-    // Primary: heading has these attributes in your HTML
-    const h = videosSection.querySelector('[data-en="More demos"]');
-    if (h) {
-      const card = h.closest(".rounded-2xl");
-      if (card) return card;
+    const headingSelectors = [
+      '[data-en="More demos"]',
+      '[data-en="More movies"]',
+      '[data-en="More story clips"]',
+      '[data-pl="Więcej demo"]',
+      '[data-pl="Więcej filmów"]',
+      '[data-pl="Więcej klipów"]'
+    ];
+
+    for (const sel of headingSelectors) {
+      const h = videosSection.querySelector(sel);
+      if (h) {
+        const card = h.closest('.rounded-2xl');
+        if (card) return card;
+      }
     }
 
     // Fallback: find by visible text (after translation)
     const headings = Array.from(videosSection.querySelectorAll("h3"));
     const target = headings.find(x => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return t === "more demos" || t === "więcej demo" || t === "more movies" || t === "więcej filmów";
+      return [
+        "more demos",
+        "więcej demo",
+        "more movies",
+        "więcej filmów",
+        "more story clips",
+        "więcej klipów"
+      ].includes(t);
     });
     if (target) return target.closest(".rounded-2xl");
+
+    // Structural fallback: the right card in the 3-column videos grid
+    const grid = videosSection.querySelector('.grid.lg\:grid-cols-3');
+    if (grid) {
+      const cards = Array.from(grid.children).filter(el => el.classList && el.classList.contains('rounded-2xl'));
+      const sideCard = cards.find(el => !el.classList.contains('video-panel'));
+      if (sideCard) return sideCard;
+    }
 
     return null;
   }
@@ -1149,9 +1174,9 @@
     const h = card.querySelector("h3");
     if (!h) return;
 
-    // Force new wording regardless of HTML
+    // Keep storytelling wording, but support older HTML too
     const en = "More story clips";
-    const pl = "Kolejne klipy historii";
+    const pl = "Więcej klipów";
     h.dataset.en = en;
     h.dataset.pl = pl;
     h.textContent = (lang === "pl") ? pl : en;
@@ -1190,20 +1215,6 @@
     return wrap;
   }
 
-  function getVideoStoryPriority(v) {
-    const src = String(v?.src || "");
-    const priorities = [
-      "/videos/6dof-demo1.mp4",
-      "/videos/accessories-backlit-panel-1.mp4",
-      "/videos/accessories-hornet-front-panel-1.mp4",
-      "/videos/3dof-demo1.mp4",
-      "/videos/6dof-adjust.mp4",
-      "/videos/mk14seat-painting.mp4"
-    ];
-    const idx = priorities.indexOf(src);
-    return idx === -1 ? 999 : idx;
-  }
-
   function renderMoreDemos(card, extras, lang, openVideo) {
     if (!card) return;
 
@@ -1216,16 +1227,19 @@
 
     setMoreDemosHeading(card, lang);
 
-    // Keep only the heading, replace rest with our list
+    // Keep heading and intro paragraphs, replace only the dynamic body with our list
     const heading = card.querySelector("h3");
-    const nodes = Array.from(card.childNodes);
-    nodes.forEach(n => {
-      if (heading && n === heading) return;
-      if (n.nodeType === 3 && !String(n.textContent || "").trim()) return;
-      card.removeChild(n);
+    const introNodes = Array.from(card.children).filter(el => el === heading || el.tagName === 'P');
+    Array.from(card.children).forEach(el => {
+      if (introNodes.includes(el)) return;
+      card.removeChild(el);
     });
 
+    const existingList = card.querySelector('[data-more-demos-list="true"]');
+    if (existingList) existingList.remove();
+
     const list = buildExtrasListCards(extras, lang);
+    list.setAttribute('data-more-demos-list', 'true');
     card.appendChild(list);
 
     // click binding
@@ -1253,16 +1267,19 @@
       setDemoButtonsState(map, lang);
 
       // extras = everything except the first 6dof clip (hero)
-      const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
+      const preferredOrder = ["6dof", "acc", "mk14", "3dof", "belt"];
       const hero = map?.["6dof"]?.[0] || null;
 
-      const extrasRaw = all.filter(v => v && v.src && (!hero || v.src !== hero.src));
+      const extrasRaw = preferredOrder.flatMap((key) => {
+        const list = Array.isArray(map?.[key]) ? map[key] : [];
+        return list.filter((v, idx) => v && v.src && !(key === "6dof" && idx === 0));
+      });
       const extras = extrasRaw.map(v => ({
         src: v.src,
         poster: v.poster || "",
         titleText: pickTitle(v, lang),
         descText: pickDesc(v, lang),
-      })).sort((a, b) => getVideoStoryPriority(a) - getVideoStoryPriority(b));
+      }));
 
       const card = findMoreDemosCard();
       renderMoreDemos(card, extras, lang, videoModalApi.openVideo);
