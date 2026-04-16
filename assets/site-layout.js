@@ -1194,26 +1194,30 @@
     if (!card) return;
 
     const heroPanel = document.querySelector("#videos .video-panel");
+    const heroVideo = document.getElementById("heroVideoEl");
     const scroller = card.querySelector("[data-more-demos-scroller]");
     const intro = card.querySelector("[data-more-demos-intro]");
     const heading = card.querySelector("h3");
-    if (!heroPanel || !scroller || !heading) return;
+    if (!heroPanel || !heroVideo || !scroller || !heading) return;
 
-    const heroHeight = heroPanel.offsetHeight;
-    if (!heroHeight) return;
+    const heroVideoBottom = heroVideo.offsetTop + heroVideo.offsetHeight;
+    if (!heroVideoBottom) return;
 
-    card.style.height = `${heroHeight}px`;
+    card.style.alignSelf = "start";
+    card.style.height = `${heroVideoBottom}px`;
+    card.style.maxHeight = `${heroVideoBottom}px`;
     card.style.overflow = "hidden";
     card.style.display = "flex";
     card.style.flexDirection = "column";
 
     const chrome = heading.offsetHeight + (intro ? intro.offsetHeight : 0) + 24;
-    const listHeight = Math.max(140, heroHeight - chrome);
+    const listHeight = Math.max(140, heroVideoBottom - chrome);
+    scroller.style.height = `${listHeight}px`;
     scroller.style.maxHeight = `${listHeight}px`;
     scroller.style.overflowY = "auto";
     scroller.style.paddingRight = "4px";
     scroller.style.minHeight = "0";
-    scroller.style.flex = "1 1 auto";
+    scroller.style.flex = "0 0 auto";
   }
 
   function getVideoStoryPriority(v) {
