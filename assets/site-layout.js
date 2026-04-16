@@ -1126,20 +1126,45 @@
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
 
-    // Primary: heading has these attributes in your HTML
-    const h = videosSection.querySelector('[data-en="More demos"]');
-    if (h) {
-      const card = h.closest(".rounded-2xl");
-      if (card) return card;
+    const headingSelectors = [
+      '[data-en="More demos"]',
+      '[data-en="More movies"]',
+      '[data-en="More story clips"]',
+      '[data-pl="Więcej demo"]',
+      '[data-pl="Więcej filmów"]',
+      '[data-pl="Więcej klipów"]'
+    ];
+
+    for (const sel of headingSelectors) {
+      const h = videosSection.querySelector(sel);
+      if (h) {
+        const card = h.closest('.rounded-2xl');
+        if (card) return card;
+      }
     }
 
     // Fallback: find by visible text (after translation)
     const headings = Array.from(videosSection.querySelectorAll("h3"));
     const target = headings.find(x => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return t === "more demos" || t === "więcej demo" || t === "more movies" || t === "więcej filmów";
+      return [
+        "more demos",
+        "więcej demo",
+        "more movies",
+        "więcej filmów",
+        "more story clips",
+        "więcej klipów"
+      ].includes(t);
     });
     if (target) return target.closest(".rounded-2xl");
+
+    // Structural fallback: the right card in the 3-column videos grid
+    const grid = videosSection.querySelector('.grid.lg\:grid-cols-3');
+    if (grid) {
+      const cards = Array.from(grid.children).filter(el => el.classList && el.classList.contains('rounded-2xl'));
+      const sideCard = cards.find(el => !el.classList.contains('video-panel'));
+      if (sideCard) return sideCard;
+    }
 
     return null;
   }
@@ -1149,9 +1174,9 @@
     const h = card.querySelector("h3");
     if (!h) return;
 
-    // Force new wording regardless of HTML
-    const en = "More movies";
-    const pl = "Więcej filmów";
+    // Keep storytelling wording, but support older HTML too
+    const en = "More story clips";
+    const pl = "Więcej klipów";
     h.dataset.en = en;
     h.dataset.pl = pl;
     h.textContent = (lang === "pl") ? pl : en;
@@ -1202,16 +1227,19 @@
 
     setMoreDemosHeading(card, lang);
 
-    // Keep only the heading, replace rest with our list
+    // Keep heading and intro paragraphs, replace only the dynamic body with our list
     const heading = card.querySelector("h3");
-    const nodes = Array.from(card.childNodes);
-    nodes.forEach(n => {
-      if (heading && n === heading) return;
-      if (n.nodeType === 3 && !String(n.textContent || "").trim()) return;
-      card.removeChild(n);
+    const introNodes = Array.from(card.children).filter(el => el === heading || el.tagName === 'P');
+    Array.from(card.children).forEach(el => {
+      if (introNodes.includes(el)) return;
+      card.removeChild(el);
     });
 
+    const existingList = card.querySelector('[data-more-demos-list="true"]');
+    if (existingList) existingList.remove();
+
     const list = buildExtrasListCards(extras, lang);
+    list.setAttribute('data-more-demos-list', 'true');
     card.appendChild(list);
 
     // click binding

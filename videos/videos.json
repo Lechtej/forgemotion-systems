@@ -4,62 +4,36 @@
       "src": "/videos/6dof-hero-new.mp4",
       "poster": "/videos/posters/6dof-hero-new.jpg",
       "title": {
-        "en": "Built from Aviation. Tuned for Real Motion.",
-        "pl": "Z lotnictwa. Dostrojone do prawdziwego motion."
+        "en": "6DOF – Full Motion Experience",
+        "pl": "6DOF – pełne doświadczenie ruchu"
       },
       "desc": {
-        "en": "Start here: the core ForgeMotion experience.",
-        "pl": "Zacznij tutaj: esencja doświadczenia ForgeMotion."
+        "en": "The main ForgeMotion Systems experience: full-scale motion built for immersive simulation.",
+        "pl": "Główne doświadczenie ForgeMotion Systems: pełny ruch zaprojektowany dla immersyjnej symulacji."
       }
     },
     {
       "src": "/videos/6dof-demo1.mp4",
       "poster": "/videos/posters/6dof-demo1.jpg",
       "title": {
-        "en": "Real use: carrier touch & go",
-        "pl": "Realne użycie: touch & go na lotniskowcu"
+        "en": "6DOF – carrier touch&go",
+        "pl": "6DOF – touch&go na lotniskowcu"
       },
       "desc": {
-        "en": "A short flight sequence showing the platform under dynamic load.",
-        "pl": "Krótka sekwencja lotu pokazująca platformę pod dynamicznym obciążeniem."
+        "en": "Real-use flight sequence showing platform response in a demanding carrier scenario.",
+        "pl": "Sekwencja lotu w real-use pokazująca reakcję platformy w wymagającym scenariuszu lotniskowcowym."
       }
     },
     {
       "src": "/videos/6dof-adjust.mp4",
       "poster": "/videos/posters/6dof-adjust.jpg",
       "title": {
-        "en": "Behind the scenes: quick rig adjustment",
-        "pl": "Zza kulis: szybka regulacja platformy"
+        "en": "Easy rig adjustment",
+        "pl": "Łatwe dostosowanie ramy"
       },
       "desc": {
-        "en": "Simple mechanical adjustment prepared for day-to-day use.",
-        "pl": "Prosta regulacja mechaniczna przygotowana do codziennego użytkowania."
-      }
-    }
-  ],
-  "acc": [
-    {
-      "src": "/videos/accessories-backlit-panel-1.mp4",
-      "poster": "/videos/posters/accessories-backlit-panel-1.jpg",
-      "title": {
-        "en": "Feature: backlit cockpit panel",
-        "pl": "Feature: podświetlany panel kokpitowy"
-      },
-      "desc": {
-        "en": "Functional lighting and cockpit detail for modular simulator builds.",
-        "pl": "Funkcjonalne podświetlenie i detal kokpitu dla modułowych stanowisk."
-      }
-    },
-    {
-      "src": "/videos/accessories-hornet-front-panel-1.mp4",
-      "poster": "/videos/posters/accessories-hornet-front-panel-1.jpg",
-      "title": {
-        "en": "Engineering: F/A-18 front panel CAD",
-        "pl": "Engineering: CAD panelu przedniego F/A-18"
-      },
-      "desc": {
-        "en": "Steel front panel development compatible with Winwing/Winctrl displays and UFC.",
-        "pl": "Rozwój stalowego panelu przedniego kompatybilnego z wyświetlaczami i UFC Winwing/Winctrl."
+        "en": "Quick look at practical rig setup and adjustment before the session.",
+        "pl": "Krótki pokaz praktycznej regulacji i przygotowania stanowiska przed sesją."
       }
     }
   ],
@@ -68,28 +42,66 @@
       "src": "/videos/3dof-demo1.mp4",
       "poster": "/videos/posters/3dof-demo1.jpg",
       "title": {
-        "en": "3DOF in action: compact combat setup",
-        "pl": "3DOF w akcji: kompaktowa konfiguracja bojowa"
+        "en": "3DOF – dog fight",
+        "pl": "3DOF – walka powietrzna"
       },
       "desc": {
-        "en": "Compact motion, quick response, strong immersion.",
-        "pl": "Kompaktowy motion, szybka odpowiedź, mocna immersja."
+        "en": "Compact motion setup in an air combat sequence.",
+        "pl": "Kompaktowy zestaw motion w sekwencji walki powietrznej."
       }
     }
   ],
   "mk14": [
     {
+      "src": "/videos/mk14seat-showcase-1.mp4",
+      "poster": "/videos/posters/mk14seat-showcase-1.jpg",
+      "title": {
+        "en": "MK14 ejection seat replica – finished product showcase",
+        "pl": "Replika fotela katapultowego MK14 – prezentacja gotowego produktu"
+      },
+      "desc": {
+        "en": "Fresh product video showing the current MK14 seat replica in its present form.",
+        "pl": "Nowy materiał pokazujący aktualną wersję repliki fotela MK14 w gotowej formie."
+      }
+    },
+    {
       "src": "/videos/mk14seat-painting.mp4",
       "poster": "/videos/posters/mk14seat-painting.jpg",
       "title": {
-        "en": "Workshop: MK14 seat finishing",
-        "pl": "Warsztat: wykończenie fotela MK14"
+        "en": "MK14 ejection seat replica – painting process",
+        "pl": "Malowanie repliki fotela katapultowego MK14"
       },
       "desc": {
-        "en": "Painting process for the MK14 ejection seat replica.",
-        "pl": "Proces malowania repliki fotela katapultowego MK14."
+        "en": "Behind the scenes: coating and finishing work during production.",
+        "pl": "Behind the scenes: przygotowanie powłok i wykończenia w trakcie produkcji."
       }
     }
   ],
-  "belt": []
+  "belt": [],
+  "acc": [
+    {
+      "src": "/videos/accessories-backlit-panel-1.mp4",
+      "poster": "/videos/posters/accessories-backlit-panel-1.jpg",
+      "title": {
+        "en": "Backlit cockpit panel – lighting demo",
+        "pl": "Podświetlany panel kokpitowy – demonstracja"
+      },
+      "desc": {
+        "en": "Feature clip focused on cockpit backlighting and panel visibility.",
+        "pl": "Materiał skupiony na podświetleniu kokpitu i czytelności panelu."
+      }
+    },
+    {
+      "src": "/videos/accessories-hornet-front-panel-1.mp4",
+      "poster": "/videos/posters/accessories-hornet-front-panel-1.jpg",
+      "title": {
+        "en": "F/A-18 front panel – CAD design for Winwing/Winctrl compatibility",
+        "pl": "Panel przedni F/A-18 – projekt CAD pod kompatybilność z Winwing/Winctrl"
+      },
+      "desc": {
+        "en": "Engineering-stage preview of the modular front panel prepared for Winwing/Winctrl integration.",
+        "pl": "Podgląd etapu engineering: modułowy front panel przygotowany pod integrację z Winwing/Winctrl."
+      }
+    }
+  ]
 }
