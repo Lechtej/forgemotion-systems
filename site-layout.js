@@ -1193,27 +1193,43 @@
   function syncMoreDemosScrollerHeight(card) {
     if (!card) return;
 
+    const videosSection = document.getElementById("videos");
+    const grid = videosSection ? videosSection.querySelector(".grid") : null;
     const heroPanel = document.querySelector("#videos .video-panel");
+    const heroVideo = document.getElementById("heroVideoEl");
     const scroller = card.querySelector("[data-more-demos-scroller]");
     const intro = card.querySelector("[data-more-demos-intro]");
     const heading = card.querySelector("h3");
-    if (!heroPanel || !scroller || !heading) return;
+    if (!heroPanel || !heroVideo || !scroller || !heading) return;
 
-    const heroHeight = heroPanel.offsetHeight;
-    if (!heroHeight) return;
+    if (grid) grid.style.alignItems = "start";
+    heroPanel.style.alignSelf = "start";
+    card.style.alignSelf = "start";
 
-    card.style.height = `${heroHeight}px`;
     card.style.overflow = "hidden";
     card.style.display = "flex";
     card.style.flexDirection = "column";
 
-    const chrome = heading.offsetHeight + (intro ? intro.offsetHeight : 0) + 24;
-    const listHeight = Math.max(140, heroHeight - chrome);
+    const cardRect = card.getBoundingClientRect();
+    const videoRect = heroVideo.getBoundingClientRect();
+    const styles = window.getComputedStyle(card);
+    const paddingTop = parseFloat(styles.paddingTop || "0") || 0;
+    const paddingBottom = parseFloat(styles.paddingBottom || "0") || 0;
+
+    const targetHeight = Math.floor(videoRect.bottom - cardRect.top + paddingBottom);
+    if (targetHeight > 120) {
+      card.style.height = `${targetHeight}px`;
+      card.style.maxHeight = `${targetHeight}px`;
+    }
+
+    const chrome = heading.offsetHeight + (intro ? intro.offsetHeight : 0) + paddingTop + paddingBottom + 8;
+    const listHeight = Math.max(120, targetHeight - chrome);
+    scroller.style.height = `${listHeight}px`;
     scroller.style.maxHeight = `${listHeight}px`;
     scroller.style.overflowY = "auto";
     scroller.style.paddingRight = "4px";
     scroller.style.minHeight = "0";
-    scroller.style.flex = "1 1 auto";
+    scroller.style.flex = "0 0 auto";
   }
 
   function getVideoStoryPriority(v) {
