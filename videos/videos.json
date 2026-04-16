@@ -1,42 +1,50 @@
 {
-  "6dof": [
-    {
-      "src": "/videos/6dof-demo1.mp4",
-      "poster": "/videos/posters/6dof-demo1.jpg",
-      "title": {
-        "en": "6DOF – carrier touch&go",
-        "pl": "6DOF – touch&go na lotniskowcu"
-      }
-    },
-    {
-      "src": "/videos/6dof-adjust.mp4",
-      "poster": "/videos/posters/6dof-adjust.jpg",
-      "title": {
-        "en": "Easy rig adjustment",
-        "pl": "Łatwe dostosowanie ramy"
-      }
-    }
-  ],
-  "3dof": [
-    {
-      "src": "/videos/3dof-demo1.mp4",
-      "poster": "/videos/posters/3dof-demo1.jpg",
-      "title": {
-        "en": "3DOF dog fight",
-        "pl": "3DOF – walka powietrzna"
-      }
-    }
-  ],
-  "mk14": [
-    {
-      "src": "/videos/mk14seat-painting.mp4",
-      "poster": "/videos/posters/mk14seat-painting.jpg",
-      "title": {
-        "en": "MK14 ejection seat replica – painting process",
-        "pl": "Malowanie repliki fotela katapultowego MK14"
-      }
-    }
-  ],
-  "belt": [],
-  "acc": []
+"6dof": [
+{
+"src": "/videos/6dof-hero-new.mp4",
+"poster": "/videos/posters/6dof-hero-new.jpg",
+"title": {
+"en": "6DOF – Full Motion Experience",
+"pl": "6DOF – pełne doświadczenie ruchu"
+}
+},
+{
+"src": "/videos/6dof-demo1.mp4",
+"poster": "/videos/posters/6dof-demo1.jpg",
+"title": {
+"en": "6DOF – carrier touch&go",
+"pl": "6DOF – touch&go na lotniskowcu"
+}
+},
+{
+"src": "/videos/6dof-adjust.mp4",
+"poster": "/videos/posters/6dof-adjust.jpg",
+"title": {
+"en": "Easy rig adjustment",
+"pl": "Łatwe dostosowanie ramy"
+}
+}
+],
+"3dof": [
+{
+"src": "/videos/3dof-demo1.mp4",
+"poster": "/videos/posters/3dof-demo1.jpg",
+"title": {
+"en": "3DOF dog fight",
+"pl": "3DOF – walka powietrzna"
+}
+}
+],
+"mk14": [
+{
+"src": "/videos/mk14seat-painting.mp4",
+"poster": "/videos/posters/mk14seat-painting.jpg",
+"title": {
+"en": "MK14 ejection seat replica – painting process",
+"pl": "Malowanie repliki fotela katapultowego MK14"
+}
+}
+],
+"belt": [],
+"acc": []
 }
