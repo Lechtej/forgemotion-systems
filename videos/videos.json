@@ -54,6 +54,14 @@
 "en": "Backlit cockpit panel – lighting demo",
 "pl": "Podświetlany panel kokpitowy – demonstracja"
 }
+},
+{
+"src": "/videos/accessories-hornet-front-panel-1.mp4",
+"poster": "/videos/posters/accessories-hornet-front-panel-1.jpg",
+"title": {
+"en": "F/A-18 front panel – CAD design for Winwing/Winctrl compatibility",
+"pl": "Panel przedni F/A-18 – projekt CAD pod kompatybilność z Winwing/Winctrl"
+}
 }
 ]
 }
