@@ -1193,6 +1193,7 @@
   function syncMoreDemosScrollerHeight(card) {
     if (!card) return;
 
+    const grid = document.querySelector("#videos .grid");
     const heroPanel = document.querySelector("#videos .video-panel");
     const heroVideo = document.getElementById("heroVideoEl");
     const scroller = card.querySelector("[data-more-demos-scroller]");
@@ -1200,18 +1201,28 @@
     const heading = card.querySelector("h3");
     if (!heroPanel || !heroVideo || !scroller || !heading) return;
 
-    const heroVideoBottom = heroVideo.offsetTop + heroVideo.offsetHeight;
-    if (!heroVideoBottom) return;
+    if (grid) {
+      grid.style.alignItems = "start";
+    }
 
-    card.style.alignSelf = "start";
-    card.style.height = `${heroVideoBottom}px`;
-    card.style.maxHeight = `${heroVideoBottom}px`;
+    const heroPanelRect = heroPanel.getBoundingClientRect();
+    const heroVideoRect = heroVideo.getBoundingClientRect();
+    const videoBottomWithinPanel = Math.round(heroVideoRect.bottom - heroPanelRect.top);
+    if (!videoBottomWithinPanel || videoBottomWithinPanel < 120) return;
+
+    card.style.height = `${videoBottomWithinPanel}px`;
+    card.style.maxHeight = `${videoBottomWithinPanel}px`;
     card.style.overflow = "hidden";
     card.style.display = "flex";
     card.style.flexDirection = "column";
+    card.style.alignSelf = "start";
 
-    const chrome = heading.offsetHeight + (intro ? intro.offsetHeight : 0) + 24;
-    const listHeight = Math.max(140, heroVideoBottom - chrome);
+    const introHeight = intro ? intro.offsetHeight : 0;
+    const cardStyles = window.getComputedStyle(card);
+    const paddingTop = parseFloat(cardStyles.paddingTop || "0") || 0;
+    const paddingBottom = parseFloat(cardStyles.paddingBottom || "0") || 0;
+    const chrome = heading.offsetHeight + introHeight + paddingTop + paddingBottom + 12;
+    const listHeight = Math.max(120, videoBottomWithinPanel - chrome);
     scroller.style.height = `${listHeight}px`;
     scroller.style.maxHeight = `${listHeight}px`;
     scroller.style.overflowY = "auto";
@@ -1270,8 +1281,18 @@
     scroller.replaceChildren(buildExtrasListCards(extras, lang));
     card.replaceChildren(heading, intro, scroller);
 
-    syncMoreDemosScrollerHeight(card);
-    window.requestAnimationFrame(() => syncMoreDemosScrollerHeight(card));
+    const resync = () => syncMoreDemosScrollerHeight(card);
+    resync();
+    window.requestAnimationFrame(resync);
+    window.setTimeout(resync, 120);
+
+    const heroVideo = document.getElementById("heroVideoEl");
+    if (heroVideo && !heroVideo.dataset.moreDemosSyncBound) {
+      heroVideo.addEventListener("loadedmetadata", resync);
+      heroVideo.addEventListener("loadeddata", resync);
+      heroVideo.addEventListener("canplay", resync);
+      heroVideo.dataset.moreDemosSyncBound = "1";
+    }
 
     if (!card.dataset.moreDemosBound) {
       card.addEventListener("click", (e) => {
@@ -1290,7 +1311,7 @@
     }
 
     if (!card.dataset.moreDemosResizeBound) {
-      window.addEventListener("resize", () => syncMoreDemosScrollerHeight(card), { passive: true });
+      window.addEventListener("resize", resync, { passive: true });
       card.dataset.moreDemosResizeBound = "1";
     }
   }
