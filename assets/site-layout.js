@@ -1126,45 +1126,20 @@
     const videosSection = document.getElementById("videos");
     if (!videosSection) return null;
 
-    const headingSelectors = [
-      '[data-en="More demos"]',
-      '[data-en="More movies"]',
-      '[data-en="More story clips"]',
-      '[data-pl="Więcej demo"]',
-      '[data-pl="Więcej filmów"]',
-      '[data-pl="Więcej klipów"]'
-    ];
-
-    for (const sel of headingSelectors) {
-      const h = videosSection.querySelector(sel);
-      if (h) {
-        const card = h.closest('.rounded-2xl');
-        if (card) return card;
-      }
+    // Primary: heading has these attributes in your HTML
+    const h = videosSection.querySelector('[data-en="More demos"]');
+    if (h) {
+      const card = h.closest(".rounded-2xl");
+      if (card) return card;
     }
 
     // Fallback: find by visible text (after translation)
     const headings = Array.from(videosSection.querySelectorAll("h3"));
     const target = headings.find(x => {
       const t = (x.textContent || "").trim().toLowerCase();
-      return [
-        "more demos",
-        "więcej demo",
-        "more movies",
-        "więcej filmów",
-        "more story clips",
-        "więcej klipów"
-      ].includes(t);
+      return t === "more demos" || t === "więcej demo" || t === "more movies" || t === "więcej filmów" || t === "more story clips" || t === "kolejne klipy historii";
     });
     if (target) return target.closest(".rounded-2xl");
-
-    // Structural fallback: the right card in the 3-column videos grid
-    const grid = videosSection.querySelector('.grid.lg\:grid-cols-3');
-    if (grid) {
-      const cards = Array.from(grid.children).filter(el => el.classList && el.classList.contains('rounded-2xl'));
-      const sideCard = cards.find(el => !el.classList.contains('video-panel'));
-      if (sideCard) return sideCard;
-    }
 
     return null;
   }
@@ -1174,9 +1149,9 @@
     const h = card.querySelector("h3");
     if (!h) return;
 
-    // Keep storytelling wording, but support older HTML too
+    // Force new wording regardless of HTML
     const en = "More story clips";
-    const pl = "Więcej klipów";
+    const pl = "Kolejne klipy historii";
     h.dataset.en = en;
     h.dataset.pl = pl;
     h.textContent = (lang === "pl") ? pl : en;
@@ -1190,7 +1165,7 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className =
-        "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-3 transition flex gap-3 items-center";
+        "w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-3 transition flex gap-3 items-start";
       btn.setAttribute("data-extra-idx", String(idx));
 
       const title = (v.titleText || "").trim();
@@ -1203,9 +1178,9 @@
 
       btn.innerHTML = `
         ${posterHtml}
-        <div class="min-w-0">
+        <div class="min-w-0 flex-1">
           <div class="font-semibold text-white/90 leading-snug">${escapeHtml(safeTitle)}</div>
-          ${desc ? `<div class="text-sm text-white/70 mt-0.5">${escapeHtml(desc)}</div>` : ``}
+          ${desc ? `<div class="text-sm text-white/70 mt-0.5 leading-snug">${escapeHtml(desc)}</div>` : ``}
         </div>
       `;
 
@@ -1215,10 +1190,50 @@
     return wrap;
   }
 
+  function syncMoreDemosScrollerHeight(card) {
+    if (!card) return;
+
+    const heroPanel = document.querySelector("#videos .video-panel");
+    const scroller = card.querySelector("[data-more-demos-scroller]");
+    const intro = card.querySelector("[data-more-demos-intro]");
+    const heading = card.querySelector("h3");
+    if (!heroPanel || !scroller || !heading) return;
+
+    const heroHeight = heroPanel.offsetHeight;
+    if (!heroHeight) return;
+
+    card.style.height = `${heroHeight}px`;
+    card.style.overflow = "hidden";
+    card.style.display = "flex";
+    card.style.flexDirection = "column";
+
+    const chrome = heading.offsetHeight + (intro ? intro.offsetHeight : 0) + 24;
+    const listHeight = Math.max(140, heroHeight - chrome);
+    scroller.style.maxHeight = `${listHeight}px`;
+    scroller.style.overflowY = "auto";
+    scroller.style.paddingRight = "4px";
+    scroller.style.minHeight = "0";
+    scroller.style.flex = "1 1 auto";
+  }
+
+  function getVideoStoryPriority(v) {
+    const src = String(v?.src || "");
+    const priorities = [
+      "/videos/6dof-demo1.mp4",
+      "/videos/accessories-backlit-panel-1.mp4",
+      "/videos/accessories-hornet-front-panel-1.mp4",
+      "/videos/mk14seat-showcase-1.mp4",
+      "/videos/mk14seat-painting.mp4",
+      "/videos/3dof-demo1.mp4",
+      "/videos/6dof-adjust.mp4"
+    ];
+    const idx = priorities.indexOf(src);
+    return idx === -1 ? 999 : idx;
+  }
+
   function renderMoreDemos(card, extras, lang, openVideo) {
     if (!card) return;
 
-    // hide if none
     if (!extras.length) {
       card.classList.add("hidden");
       return;
@@ -1227,34 +1242,53 @@
 
     setMoreDemosHeading(card, lang);
 
-    // Keep heading and intro paragraphs, replace only the dynamic body with our list
     const heading = card.querySelector("h3");
-    const introNodes = Array.from(card.children).filter(el => el === heading || el.tagName === 'P');
-    Array.from(card.children).forEach(el => {
-      if (introNodes.includes(el)) return;
-      card.removeChild(el);
-    });
+    if (!heading) return;
 
-    const existingList = card.querySelector('[data-more-demos-list="true"]');
-    if (existingList) existingList.remove();
+    let intro = card.querySelector("[data-more-demos-intro]");
+    if (!intro) {
+      intro = document.createElement("div");
+      intro.setAttribute("data-more-demos-intro", "1");
+      intro.className = "text-gray-300 text-sm mb-4 space-y-3";
+    }
+    intro.innerHTML = `
+      <p data-en="Next: real use, feature clips, product videos, and behind-the-scenes engineering footage." data-pl="Dalej: realne użycie, klipy feature, filmy produktowe i materiały engineering zza kulis.">${lang === "pl" ? "Dalej: realne użycie, klipy feature, filmy produktowe i materiały engineering zza kulis." : "Next: real use, feature clips, product videos, and behind-the-scenes engineering footage."}</p>
+      <p data-en="The list stays inside this panel. Use the scrollbar to browse all clips." data-pl="Lista pozostaje w tym panelu. Użyj suwaka, aby przejrzeć wszystkie klipy.">${lang === "pl" ? "Lista pozostaje w tym panelu. Użyj suwaka, aby przejrzeć wszystkie klipy." : "The list stays inside this panel. Use the scrollbar to browse all clips."}</p>
+    `;
 
-    const list = buildExtrasListCards(extras, lang);
-    list.setAttribute('data-more-demos-list', 'true');
-    card.appendChild(list);
+    let scroller = card.querySelector("[data-more-demos-scroller]");
+    if (!scroller) {
+      scroller = document.createElement("div");
+      scroller.setAttribute("data-more-demos-scroller", "1");
+      scroller.className = "min-h-0";
+    }
 
-    // click binding
-    card.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-extra-idx]");
-      if (!btn) return;
-      const idx = Number(btn.getAttribute("data-extra-idx"));
-      const item = extras[idx];
-      if (!item?.src) return;
-      openVideo({
-        src: item.src,
-        poster: item.poster || "",
-        titleText: item.titleText || "Video"
+    scroller.replaceChildren(buildExtrasListCards(extras, lang));
+    card.replaceChildren(heading, intro, scroller);
+
+    syncMoreDemosScrollerHeight(card);
+    window.requestAnimationFrame(() => syncMoreDemosScrollerHeight(card));
+
+    if (!card.dataset.moreDemosBound) {
+      card.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-extra-idx]");
+        if (!btn) return;
+        const idx = Number(btn.getAttribute("data-extra-idx"));
+        const item = extras[idx];
+        if (!item?.src) return;
+        openVideo({
+          src: item.src,
+          poster: item.poster || "",
+          titleText: item.titleText || "Video"
+        });
       });
-    }, { passive: true });
+      card.dataset.moreDemosBound = "1";
+    }
+
+    if (!card.dataset.moreDemosResizeBound) {
+      window.addEventListener("resize", () => syncMoreDemosScrollerHeight(card), { passive: true });
+      card.dataset.moreDemosResizeBound = "1";
+    }
   }
 
   async function initVideoDemos(videoModalApi, lang) {
@@ -1267,19 +1301,16 @@
       setDemoButtonsState(map, lang);
 
       // extras = everything except the first 6dof clip (hero)
-      const preferredOrder = ["6dof", "acc", "mk14", "3dof", "belt"];
+      const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
       const hero = map?.["6dof"]?.[0] || null;
 
-      const extrasRaw = preferredOrder.flatMap((key) => {
-        const list = Array.isArray(map?.[key]) ? map[key] : [];
-        return list.filter((v, idx) => v && v.src && !(key === "6dof" && idx === 0));
-      });
+      const extrasRaw = all.filter(v => v && v.src && (!hero || v.src !== hero.src));
       const extras = extrasRaw.map(v => ({
         src: v.src,
         poster: v.poster || "",
         titleText: pickTitle(v, lang),
         descText: pickDesc(v, lang),
-      }));
+      })).sort((a, b) => getVideoStoryPriority(a) - getVideoStoryPriority(b));
 
       const card = findMoreDemosCard();
       renderMoreDemos(card, extras, lang, videoModalApi.openVideo);
