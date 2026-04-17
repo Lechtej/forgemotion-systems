@@ -77,7 +77,20 @@
       }
     }
   ],
-  "belt": [],
+  "belt": [
+    {
+      "src": "/videos/belt-tensioner-dual-channel-1.mp4",
+      "poster": "/videos/posters/belt-tensioner-dual-channel-1.jpg",
+      "title": {
+        "en": "Dual-channel belt tensioner – force feedback demo",
+        "pl": "Dwukanałowy napinacz pasów – demonstracja działania"
+      },
+      "desc": {
+        "en": "Real-use demo of the dual-channel belt tensioner showing braking and acceleration cues through harness load.",
+        "pl": "Materiał pokazujący dwukanałowy napinacz pasów i działanie cue hamowania oraz przyspieszenia przez napięcie uprzęży."
+      }
+    }
+  ],
   "acc": [
     {
       "src": "/videos/accessories-backlit-panel-1.mp4",
