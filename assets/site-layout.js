@@ -1062,18 +1062,39 @@
     document.querySelectorAll("[data-demo-key]").forEach(btn => {
       const key = btn.getAttribute("data-demo-key");
       const has = Boolean(map?.[key]?.length);
+      btn.dataset.demoAvailable = has ? "1" : "0";
       btn.disabled = !has;
       btn.classList.toggle("opacity-50", !has);
       btn.classList.toggle("cursor-not-allowed", !has);
+      btn.classList.toggle("pointer-events-none", !has);
       btn.setAttribute("aria-disabled", String(!has));
+      if (!has) {
+        btn.setAttribute("tabindex", "-1");
+      } else {
+        btn.removeAttribute("tabindex");
+      }
       btn.title = has ? "" : (lang === "pl" ? "Demo w przygotowaniu" : "Demo coming soon");
     });
+  }
+
+  function syncProductVideoSectionState(activeProductKey, map) {
+    if (!activeProductKey) return;
+    const videosSection = document.getElementById("videos");
+    if (!videosSection) return;
+
+    const hasInlineVideo = Boolean(videosSection.querySelector("video source[src], video[src]"));
+    const hasMappedVideo = Boolean(map?.[activeProductKey]?.length);
+
+    videosSection.classList.toggle("hidden", !hasInlineVideo && !hasMappedVideo);
   }
 
   function bindDemoButtons(openVideo, map, lang) {
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-demo-key]");
       if (!btn) return;
+
+      e.preventDefault();
+      if (btn.getAttribute("aria-disabled") === "true" || btn.dataset.demoAvailable === "0") return;
 
       const key = btn.getAttribute("data-demo-key");
       const item = map?.[key]?.[0];
@@ -1316,7 +1337,7 @@
     }
   }
 
-  async function initVideoDemos(videoModalApi, lang) {
+  async function initVideoDemos(videoModalApi, lang, activeProductKey) {
     let map = {};
     try {
       const json = await fetchVideosJson({ timeoutMs: 3500 });
@@ -1324,6 +1345,7 @@
 
       hydrateHeroVideo(map, lang);
       setDemoButtonsState(map, lang);
+      syncProductVideoSectionState(activeProductKey, map);
 
       // extras = everything except the first 6dof clip (hero)
       const all = Object.values(map || {}).flatMap(v => Array.isArray(v) ? v : []);
@@ -1346,6 +1368,7 @@
     } catch {
       // videos.json missing/blocked
       setDemoButtonsState({}, lang);
+      syncProductVideoSectionState(activeProductKey, {});
       const card = findMoreDemosCard();
       if (card) card.classList.add("hidden");
     }
@@ -1511,7 +1534,7 @@
 
       const videoModalApi = cfg.includeVideoModal ? bindVideoModal() : null;
       if (cfg.enableVideoDemos && videoModalApi) {
-        initVideoDemos(videoModalApi, appliedLang);
+        initVideoDemos(videoModalApi, appliedLang, cfg.activeProductKey);
       }
 
       if (cfg.injectOtherProducts) {
