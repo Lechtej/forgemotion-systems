@@ -200,6 +200,7 @@
     const aboutHref = buildIndexUrl(lang, "about");
     const contactHref = buildIndexUrl(lang, "contact");
     const downloadsHref = lang === "pl" ? "/pl/downloads.html" : "/en/downloads.html";
+    const facebookHref = "https://www.facebook.com/forgemotionsystems/";
     const logoHref = productsHref;
 
     return `
@@ -221,14 +222,33 @@
         </ul>
       </nav>
 
-      <div class="flex items-center gap-2 text-sm">
-        <button type="button" data-lang="en" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
-        <span class="text-gray-400">|</span>
-        <button type="button" data-lang="pl" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="${escapeHtml(facebookHref)}" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1"
+           aria-label="ForgeMotion Systems Facebook">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M22 12a10 10 0 1 0-11.63 9.87v-6.99h-2.8v-2.88h2.8V9.41c0-2.76 1.64-4.29 4.15-4.29 1.2 0 2.45.21 2.45.21v2.7h-1.38c-1.36 0-1.78.84-1.78 1.7v2.04h3.03l-.48 2.88h-2.55v6.99A10 10 0 0 0 22 12z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+        <div class="flex items-center gap-2 text-sm">
+          <button type="button" data-lang="en" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
+          <span class="text-gray-400">|</span>
+          <button type="button" data-lang="pl" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">PL</button>
+        </div>
       </div>
     </div>
 
     <div class="flex md:hidden items-center gap-3">
+      <a href="${escapeHtml(facebookHref)}" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-sm hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1"
+        aria-label="ForgeMotion Systems Facebook">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M22 12a10 10 0 1 0-11.63 9.87v-6.99h-2.8v-2.88h2.8V9.41c0-2.76 1.64-4.29 4.15-4.29 1.2 0 2.45.21 2.45.21v2.7h-1.38c-1.36 0-1.78.84-1.78 1.7v2.04h3.03l-.48 2.88h-2.55v6.99A10 10 0 0 0 22 12z"/>
+        </svg>
+        <span>Facebook</span>
+      </a>
+
       <div class="flex items-center gap-2 text-sm">
         <button type="button" data-lang="en" class="lang-btn hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/60 rounded px-1">EN</button>
         <span class="text-gray-400">|</span>
@@ -253,6 +273,15 @@
         <li><a href="${escapeHtml(downloadsHref)}" class="mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Download" data-pl="Pobierz"></a></li>
         <li><a href="${escapeHtml(aboutHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="About" data-pl="O nas"></a></li>
         <li><a href="${escapeHtml(contactHref)}" class="site-nav-link mobile-link block rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400" data-en="Contact" data-pl="Kontakt"></a></li>
+        <li>
+          <a href="${escapeHtml(facebookHref)}" target="_blank" rel="noopener noreferrer"
+             class="mobile-link flex items-center gap-2 rounded px-3 py-2 hover:bg-white/10 hover:text-blue-400">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 12a10 10 0 1 0-11.63 9.87v-6.99h-2.8v-2.88h2.8V9.41c0-2.76 1.64-4.29 4.15-4.29 1.2 0 2.45.21 2.45.21v2.7h-1.38c-1.36 0-1.78.84-1.78 1.7v2.04h3.03l-.48 2.88h-2.55v6.99A10 10 0 0 0 22 12z"/>
+            </svg>
+            <span>Facebook</span>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -329,16 +358,30 @@
           <div class="text-white font-semibold" data-en="Contact" data-pl="Kontakt"></div>
           <a class="mt-2 inline-block text-white/70 hover:text-white transition" href="${escapeHtml(buildIndexUrl(safeLang, "lead"))}"
              data-en="Go to contact form" data-pl="Przejdź do formularza kontaktowego"></a>
+          <a class="mt-3 flex items-center gap-2 text-white/70 hover:text-white transition" href="https://www.facebook.com/forgemotionsystems/"
+             target="_blank" rel="noopener noreferrer" aria-label="ForgeMotion Systems Facebook">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 12a10 10 0 1 0-11.63 9.87v-6.99h-2.8v-2.88h2.8V9.41c0-2.76 1.64-4.29 4.15-4.29 1.2 0 2.45.21 2.45.21v2.7h-1.38c-1.36 0-1.78.84-1.78 1.7v2.04h3.03l-.48 2.88h-2.55v6.99A10 10 0 0 0 22 12z"/>
+            </svg>
+            <span>Facebook</span>
+          </a>
         </div>
 
     </div>
 
     <div class="mt-10 border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
       <div class="text-xs text-white/55">© 2025 ForgeMotion Systems</div>
-      <div class="text-xs text-white/55 flex items-center gap-4">
+      <div class="text-xs text-white/55 flex flex-wrap items-center gap-4">
         <a class="hover:text-white transition" href="${escapeHtml(termsHref)}" data-en="Terms" data-pl="Regulamin"></a>
         <a class="hover:text-white transition" href="/assets/privacy.html" data-en="Privacy" data-pl="Prywatność"></a>
         <a class="hover:text-white transition" href="${escapeHtml(downloadsHref)}" data-en="Downloads" data-pl="Pobieranie"></a>
+        <a class="inline-flex items-center gap-2 hover:text-white transition" href="https://www.facebook.com/forgemotionsystems/"
+           target="_blank" rel="noopener noreferrer" aria-label="ForgeMotion Systems Facebook">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M22 12a10 10 0 1 0-11.63 9.87v-6.99h-2.8v-2.88h2.8V9.41c0-2.76 1.64-4.29 4.15-4.29 1.2 0 2.45.21 2.45.21v2.7h-1.38c-1.36 0-1.78.84-1.78 1.7v2.04h3.03l-.48 2.88h-2.55v6.99A10 10 0 0 0 22 12z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
       </div>
     </div>
   </div>
