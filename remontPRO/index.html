@@ -155,7 +155,27 @@
         </div>
       </div>
     </section>
-    <section id="kontakt" class="section contact-section"><div><p class="eyebrow">Kontakt</p><h2>Poproś o wycenę</h2><p class="muted">Opisz krótko zakres prac, lokalizację i preferowany termin. Oddzwonimy, żeby doprecyzować szczegóły.</p></div><form class="contact-form"><input type="text" placeholder="Imię" /><input type="tel" placeholder="Telefon" /><input type="text" placeholder="Lokalizacja" /><textarea placeholder="Krótki opis prac"></textarea><button class="btn btn-primary" type="button">Wyślij zapytanie</button></form></section>
+    <section id="kontakt" class="section contact-section">
+      <div>
+        <p class="eyebrow">Kontakt</p>
+        <h2>Poproś o wycenę</h2>
+        <p class="muted">Opisz krótko zakres prac, lokalizację i preferowany termin. Wiadomość trafi bezpośrednio na skrzynkę kontaktową.</p>
+      </div>
+      <form class="contact-form" action="https://formsubmit.co/leszek.tejwan@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Remont Pro — nowe zapytanie ze strony" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://forgemotionsystems.com/remontPRO/?sent=1#kontakt" />
+        <input type="text" name="Imię" placeholder="Imię" required />
+        <input type="tel" name="Telefon" placeholder="Telefon" required />
+        <input type="email" name="Email" placeholder="Email (opcjonalnie)" />
+        <input type="text" name="Lokalizacja" placeholder="Lokalizacja" required />
+        <textarea name="Opis prac" placeholder="Krótki opis prac" required></textarea>
+        <button class="btn btn-primary" type="submit">Wyślij zapytanie</button>
+        <p class="form-note">Formularz wysyła zgłoszenie na adres: leszek.tejwan@gmail.com</p>
+      </form>
+    </section>
+
   </main>
   <footer class="footer"><span>© 2026 Remont Pro</span><span>Remonty i wykończenia</span></footer><a class="btn btn-primary sticky-call" href="tel:+48000000000">Zadzwoń</a>
   <div class="lightbox" id="galleryLightbox" aria-hidden="true"><div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="Podgląd realizacji"><button class="lightbox-close" type="button" aria-label="Zamknij">×</button><button class="lightbox-nav lightbox-prev" type="button" aria-label="Poprzednie zdjęcie">‹</button><div class="lightbox-image"><img id="lightboxImage" src="" alt="Podgląd realizacji"></div><button class="lightbox-nav lightbox-next" type="button" aria-label="Następne zdjęcie">›</button><div class="lightbox-copy"><p class="eyebrow">Realizacja</p><h3 id="lightboxTitle">Tytuł</h3><p id="lightboxDesc">Opis</p><p class="lightbox-counter" id="lightboxCounter">1 / 1</p></div></div></div>

@@ -126,3 +126,15 @@ Data: 2026-04-30
 - Verify all images open in lightbox.
 - Verify arrows work on desktop and mobile.
 - Verify gallery no longer dominates page height.
+
+## v0.1.8 — contact form email routing
+
+### Added
+- Contact form configured to send requests to `leszek.tejwan@gmail.com`.
+- Added required fields: name, phone, location, work description.
+- Added optional email field.
+- Added redirect back to `/remontPRO/#kontakt` after successful submit.
+
+### Validation
+- First submission may require mailbox confirmation from the form provider.
+- After deployment, send one test message from the public URL and verify delivery to Gmail.
