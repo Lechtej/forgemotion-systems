@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kalkulator remonty v1.4.1 - czas robocizny</title>
+  <title>Kalkulator remonty v1.5.0 - CRM local-first</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar proTopbar">
-    <div class="brandBox"><div class="brandIcon">⌂</div><div><h1>Kalkulator remonty <span class="versionPill">v1.4.1</span></h1><p>Kalkulacja kosztów robocizny + oferta PDF</p></div></div>
-    <div class="topActions proActions"><button id="resetBtn" class="ghostBtn" type="button">▣ Nowy projekt</button><button id="saveProjectBtn" class="ghostBtn" type="button">▣ Zapisz</button><button id="loadProjectBtn" class="ghostBtn" type="button">⇧ Wczytaj</button><button id="exportPdfBtn" class="ghostBtn" type="button">▣ Generuj ofertę PDF</button><button class="ghostBtn" type="button" data-tab-target="tabAdmin">⚙ Administracja</button><button class="ghostBtn" type="button">⚙ Ustawienia</button><input id="projectFileInput" type="file" accept="application/json,.json" style="display:none" /></div>
+    <div class="brandBox"><div class="brandIcon">⌂</div><div><h1>Kalkulator remonty <span class="versionPill">v1.5.0</span></h1><p>Kalkulacja kosztów robocizny + oferta PDF</p></div></div>
+    <div class="topActions proActions"><button id="resetBtn" class="ghostBtn" type="button">▣ Nowy projekt</button><button id="saveProjectBtn" class="ghostBtn" type="button">▣ Zapisz JSON</button><button id="saveHistoryBtn" class="ghostBtn" type="button">★ Zapisz ofertę</button><button id="loadProjectBtn" class="ghostBtn" type="button">⇧ Wczytaj</button><button id="exportPdfBtn" class="ghostBtn" type="button">▣ Generuj ofertę PDF</button><button class="ghostBtn" type="button" data-tab-target="tabAdmin">⚙ Administracja</button><button class="ghostBtn" type="button">⚙ Ustawienia</button><input id="projectFileInput" type="file" accept="application/json,.json" style="display:none" /></div>
   </header>
 
   <main class="layout">
@@ -42,6 +42,7 @@
             <label>Adres inwestycji<input id="investmentAddress" placeholder="np. Warszawa, Ursus" /></label>
             <label>Numer oferty<input id="offerNumber" readonly value="REM/2026/04/001" /></label>
             <label>Ważność oferty [dni]<input id="offerValidDays" type="number" min="1" step="1" value="14" /></label>
+            <label>Status oferty<select id="offerStatus"><option value="robocza">robocza</option><option value="wyslana">wysłana</option><option value="zaakceptowana">zaakceptowana</option><option value="odrzucona">odrzucona</option></select></label>
           </div>
           <div class="grid three brandingGrid">
             <label>Nazwa wykonawcy / brand<input id="companyName" value="RemontPRO" /></label>
@@ -49,6 +50,14 @@
             <label>Email wykonawcy<input id="companyEmail" placeholder="" /></label>
           </div>
           <p class="hint smallHint">Dane trafiają do PDF i zapisu projektu. Numer oferty generowany jest automatycznie przy eksporcie, jeśli pole jest puste.</p>
+        </div>
+        <div class="subcard historyCard">
+          <div class="historyHeader">
+            <h3>Historia ofert</h3>
+            <div class="historyActions"><button id="refreshHistoryBtn" type="button" class="secondary">Odśwież</button><button id="clearHistoryBtn" type="button" class="secondary dangerSoft">Wyczyść historię</button></div>
+          </div>
+          <p class="hint smallHint">Historia jest lokalna: działa na tym komputerze i w tej przeglądarce. Backup JSON zostaje niezależnie.</p>
+          <div id="offersHistory" class="offersHistory empty">Brak zapisanych ofert.</div>
         </div>
         <div class="grid two">
           <label>Nazwa klienta / projektu<input id="projectName" value="Klient" /></label>

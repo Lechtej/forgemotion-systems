@@ -1955,3 +1955,209 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
   }
   bindProjectIo();
 })();
+
+// v1.5.0 - CRM local-first: historia ofert, statusy, wczytywanie z historii
+(function(){
+  const VERSION = '1.5.0';
+  const HISTORY_KEY = 'offers_history_v150';
+  const safeId = (id) => document.getElementById(id);
+  const controls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
+  const esc = (text) => String(text || '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+
+  function getControlKey(control, index){
+    if(control.id) return `id:${control.id}`;
+    const row = control.closest('tr');
+    if(row){
+      const table = control.closest('table');
+      const tableId = table && table.id ? table.id : 'table';
+      const rowIndex = Array.from(row.parentElement.children).indexOf(row);
+      const cellIndex = Array.from(row.children).findIndex(td => td.contains(control));
+      const classKey = Array.from(control.classList || []).join('.') || control.tagName.toLowerCase();
+      return `table:${tableId}:row:${rowIndex}:cell:${cellIndex}:class:${classKey}`;
+    }
+    return `index:${index}`;
+  }
+
+  function findControlByKey(key, fallbackIndex){
+    if(key && key.startsWith('id:')) return safeId(key.slice(3));
+    if(key && key.startsWith('table:')){
+      const parts = key.split(':');
+      const tableId = parts[1];
+      const rowIndex = Number(parts[3]);
+      const cellIndex = Number(parts[5]);
+      const classSpec = (parts[7] || '').split('.').filter(Boolean);
+      const table = safeId(tableId);
+      const row = table && table.tBodies[0] ? table.tBodies[0].children[rowIndex] : null;
+      const cell = row ? row.children[cellIndex] : null;
+      if(cell){
+        const candidates = Array.from(cell.querySelectorAll('input,select,textarea'));
+        if(classSpec.length){
+          const byClass = candidates.find(c => classSpec.every(cls => c.classList.contains(cls)));
+          if(byClass) return byClass;
+        }
+        if(candidates[0]) return candidates[0];
+      }
+    }
+    return controls()[fallbackIndex] || null;
+  }
+
+  function collectState(){
+    if(typeof calc === 'function') calc();
+    const values = controls().map((c, index) => ({
+      key:getControlKey(c,index), tag:c.tagName.toLowerCase(), type:c.type || '',
+      value:c.type === 'checkbox' ? !!c.checked : c.value, dataset:{...(c.dataset || {})}
+    }));
+    return {
+      app:'kalkulator_remonty', version:VERSION, savedAt:new Date().toISOString(),
+      projectName:safeId('projectName') ? safeId('projectName').value : '',
+      clientName:safeId('clientName') ? safeId('clientName').value : '',
+      offerNumber:safeId('offerNumber') ? safeId('offerNumber').value : '',
+      offerStatus:safeId('offerStatus') ? safeId('offerStatus').value : 'robocza',
+      values,
+      rates:(typeof rates === 'object' ? {...rates} : {}),
+      summaryHtml:safeId('summary') ? safeId('summary').innerHTML : ''
+    };
+  }
+
+  function applyState(project){
+    if(!project || !Array.isArray(project.values)) throw new Error('Nieprawidłowy format projektu z historii.');
+    if(project.rates && typeof project.rates === 'object' && typeof rates === 'object'){
+      rates = {...rates, ...project.rates};
+      localStorage.setItem('rates_v135', JSON.stringify(rates));
+      if(typeof renderRates === 'function') renderRates();
+    }
+    project.values.forEach((item, index) => {
+      const c = findControlByKey(item.key, index);
+      if(!c) return;
+      if(c.type === 'checkbox') c.checked = !!item.value; else c.value = item.value;
+      if(item.dataset && typeof item.dataset === 'object') Object.keys(item.dataset).forEach(k => { c.dataset[k] = item.dataset[k]; });
+      c.dispatchEvent(new Event('input', {bubbles:true}));
+      c.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    if(typeof updateLivingHint === 'function') updateLivingHint();
+    if(typeof updateDelegationVisibility === 'function') updateDelegationVisibility();
+    if(typeof syncAtticMenuUi === 'function') syncAtticMenuUi();
+    if(typeof syncFloorUi === 'function') syncFloorUi();
+    if(typeof syncSubfloorUi === 'function') syncSubfloorUi();
+    if(typeof syncDecorUi === 'function') syncDecorUi();
+    if(typeof syncHardUi === 'function') syncHardUi();
+    if(typeof refreshModuleMirrors === 'function') refreshModuleMirrors();
+    if(typeof calc === 'function') calc();
+  }
+
+  function loadHistory(){
+    try{ return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveHistory(list){ localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0,200))); }
+
+  function ensureOfferNumberForHistory(){
+    const field = safeId('offerNumber');
+    if(!field) return '';
+    if(!field.value){
+      const d = new Date();
+      const prefix = `REM/${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}`;
+      const key = 'offer_counter_' + prefix;
+      const next = (parseInt(localStorage.getItem(key) || '0',10) || 0) + 1;
+      localStorage.setItem(key, String(next));
+      field.value = `${prefix}/${String(next).padStart(3,'0')}`;
+    }
+    return field.value;
+  }
+
+  function extractTotal(){
+    const node = safeId('summary');
+    const txt = node ? (node.innerText || node.textContent || '') : '';
+    const matches = [...txt.matchAll(/([0-9][0-9\s.,]*)\s*zł/g)];
+    if(!matches.length) return '';
+    return matches[matches.length-1][1].replace(/\s/g,'').replace(',', '.');
+  }
+
+  function statusLabel(value){
+    return ({robocza:'robocza', wyslana:'wysłana', zaakceptowana:'zaakceptowana', odrzucona:'odrzucona'}[value] || value || 'robocza');
+  }
+
+  function saveCurrentOfferToHistory(source='manual'){
+    if(typeof calc === 'function') calc();
+    const offerNumber = ensureOfferNumberForHistory();
+    const state = collectState();
+    state.offerNumber = offerNumber;
+    const now = new Date().toISOString();
+    const item = {
+      id: offerNumber || ('LOCAL-' + Date.now()),
+      offerNumber,
+      clientName: safeId('clientName') ? safeId('clientName').value : '',
+      clientPhone: safeId('clientPhone') ? safeId('clientPhone').value : '',
+      clientEmail: safeId('clientEmail') ? safeId('clientEmail').value : '',
+      projectName: safeId('projectName') ? safeId('projectName').value : '',
+      investmentAddress: safeId('investmentAddress') ? safeId('investmentAddress').value : '',
+      status: safeId('offerStatus') ? safeId('offerStatus').value : 'robocza',
+      totalNet: extractTotal(),
+      source,
+      updatedAt: now,
+      createdAt: now,
+      project: state
+    };
+    const list = loadHistory();
+    const idx = list.findIndex(x => x.offerNumber === item.offerNumber && item.offerNumber);
+    if(idx >= 0){ item.createdAt = list[idx].createdAt || now; list.splice(idx,1,item); }
+    else list.unshift(item);
+    saveHistory(list);
+    renderHistory();
+    return item;
+  }
+
+  function renderHistory(){
+    const root = safeId('offersHistory');
+    if(!root) return;
+    const list = loadHistory();
+    if(!list.length){ root.className = 'offersHistory empty'; root.textContent = 'Brak zapisanych ofert.'; return; }
+    root.className = 'offersHistory';
+    const rows = list.map(item => `
+      <div class="offerHistoryRow" data-offer-id="${esc(item.id)}">
+        <div><b>${esc(item.offerNumber || 'bez numeru')}</b><div class="muted">${esc((item.updatedAt || '').slice(0,10))}</div></div>
+        <div>${esc(item.clientName || item.projectName || 'Klient')}<div class="muted">${esc(item.investmentAddress || '')}</div></div>
+        <div>${item.totalNet ? esc(item.totalNet) + ' zł' : '<span class="muted">brak kwoty</span>'}</div>
+        <div><select class="offerStatusSelect" data-history-status="${esc(item.id)}">
+          ${['robocza','wyslana','zaakceptowana','odrzucona'].map(s => `<option value="${s}" ${item.status===s?'selected':''}>${statusLabel(s)}</option>`).join('')}
+        </select></div>
+        <div class="offerHistoryActions"><button type="button" data-history-load="${esc(item.id)}">Wczytaj</button><button type="button" data-history-delete="${esc(item.id)}">Usuń</button></div>
+      </div>`).join('');
+    root.innerHTML = `<div class="offerHistoryRow header"><div>Oferta</div><div>Klient</div><div>Kwota</div><div>Status</div><div>Akcje</div></div>${rows}`;
+  }
+
+  function bindHistory(){
+    const saveBtn = safeId('saveHistoryBtn');
+    const refreshBtn = safeId('refreshHistoryBtn');
+    const clearBtn = safeId('clearHistoryBtn');
+    const pdfBtn = safeId('exportPdfBtn');
+    if(saveBtn) saveBtn.addEventListener('click', () => { saveCurrentOfferToHistory('manual'); alert('Oferta zapisana w historii lokalnej.'); });
+    if(refreshBtn) refreshBtn.addEventListener('click', renderHistory);
+    if(clearBtn) clearBtn.addEventListener('click', () => { if(confirm('Wyczyścić całą lokalną historię ofert?')){ localStorage.removeItem(HISTORY_KEY); renderHistory(); } });
+    if(pdfBtn) pdfBtn.addEventListener('click', () => { try{ saveCurrentOfferToHistory('pdf'); }catch(e){} });
+    document.addEventListener('click', (ev) => {
+      const loadBtn = ev.target.closest('[data-history-load]');
+      const delBtn = ev.target.closest('[data-history-delete]');
+      if(loadBtn){
+        const id = loadBtn.getAttribute('data-history-load');
+        const item = loadHistory().find(x => x.id === id);
+        if(item && item.project){ applyState(item.project); alert('Oferta wczytana z historii.'); }
+      }
+      if(delBtn){
+        const id = delBtn.getAttribute('data-history-delete');
+        if(confirm('Usunąć ofertę z historii lokalnej?')){ saveHistory(loadHistory().filter(x => x.id !== id)); renderHistory(); }
+      }
+    });
+    document.addEventListener('change', (ev) => {
+      const sel = ev.target.closest('[data-history-status]');
+      if(!sel) return;
+      const id = sel.getAttribute('data-history-status');
+      const list = loadHistory();
+      const item = list.find(x => x.id === id);
+      if(item){ item.status = sel.value; item.updatedAt = new Date().toISOString(); saveHistory(list); }
+    });
+    renderHistory();
+  }
+
+  bindHistory();
+})();

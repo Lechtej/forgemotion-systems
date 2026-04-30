@@ -155,3 +155,12 @@
 ### Test
 - PASS: `node --check app.js`.
 - PASS: ZIP zawiera komplet plików aplikacji.
+
+## v1.5.0
+
+- Dodano lokalną historię ofert (localStorage).
+- Dodano status oferty: robocza / wysłana / zaakceptowana / odrzucona.
+- Dodano wczytywanie oferty z historii i usuwanie wpisów.
+- Dodano przycisk „Zapisz ofertę” niezależny od backupu JSON.
+- Generowanie PDF zapisuje ofertę w historii lokalnej.
+- Backup JSON pozostaje bez zmian.
