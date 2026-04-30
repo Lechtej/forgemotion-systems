@@ -3,26 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kalkulator remonty v1.1.6 — podłogi + listwy przypodłogowe</title>
+  <title>Kalkulator remonty v1.4.1 - czas robocizny</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div><h1>Kalkulator ofertowy remonty</h1><p>v1.1.6 — podłogi + listwy przypodłogowe</p></div>
-    <div class="topActions"><button id="resetBtn" class="secondary">Reset</button></div>
+  <header class="topbar proTopbar">
+    <div class="brandBox"><div class="brandIcon">⌂</div><div><h1>Kalkulator remonty <span class="versionPill">v1.4.1</span></h1><p>Kalkulacja kosztów robocizny + oferta PDF</p></div></div>
+    <div class="topActions proActions"><button id="resetBtn" class="ghostBtn" type="button">▣ Nowy projekt</button><button id="saveProjectBtn" class="ghostBtn" type="button">▣ Zapisz</button><button id="loadProjectBtn" class="ghostBtn" type="button">⇧ Wczytaj</button><button id="exportPdfBtn" class="ghostBtn" type="button">▣ Generuj ofertę PDF</button><button class="ghostBtn" type="button" data-tab-target="tabAdmin">⚙ Administracja</button><button class="ghostBtn" type="button">⚙ Ustawienia</button><input id="projectFileInput" type="file" accept="application/json,.json" style="display:none" /></div>
   </header>
 
   <main class="layout">
-    <section class="card">
-      <div class="tabs">
-        <button class="tabBtn active" data-tab="tabCalc">Kalkulator</button>
-        <button class="tabBtn" data-tab="tabAdmin">Administracja / cennik</button>
-      </div>
-    </section>
+    <aside class="moduleSidebar">
+      <div class="sidebarSectionTitle">1. ZAKRES PRAC</div>
+      <button class="moduleItem" data-scroll-target="roomsTable" data-master-id="roomsTable"><span class="moduleCheck on">✓</span><span><b>Obmiar pomieszczeń</b><small>Podstawa wyceny</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="svcPaint" data-master-id="svcPaint"><span class="moduleCheck"></span><span><b>Malowanie</b><small>Per pomieszczenie</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="demoServiceBlock" data-master-id="svcDemo"><span class="moduleCheck"></span><span><b>Demolka</b><small>Z logistyką</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="electricTable" data-master-id="svcElec"><span class="moduleCheck"></span><span><b>Elektryka</b><small>Punkty, tabela szczegółowa</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="hydTable" data-master-id="svcHyd"><span class="moduleCheck"></span><span><b>Hydraulika</b><small>PEX, zgrzewana, biały montaż</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="wetServiceBlock" data-master-id="svcWet"><span class="moduleCheck"></span><span><b>Pomieszczenia mokre</b><small>Łazienki, kuchnia</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="wallsServiceBlock" data-master-id="svcWalls"><span class="moduleCheck"></span><span><b>Zabudowy</b><small>GK, murowane</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="floorServiceBlock" data-master-id="svcFloor"><span class="moduleCheck"></span><span><b>Podłogi + listwy</b><small>Panele, winyl, deska, listwy</small></span><em>›</em></button>
+      <button class="moduleItem active" data-scroll-target="subfloorServiceBlock" data-master-id="svcSubfloor"><span class="moduleCheck"></span><span><b>Posadzki / podłoże</b><small>Przygotowanie podłoża</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="decorServiceBlock" data-master-id="svcDecor"><span class="moduleCheck"></span><span><b>Dekoracje / sztukateria</b><small>Listwy, maskownice, dekoracje</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="hardServiceBlock" data-master-id="svcHard"><span class="moduleCheck"></span><span><b>Prace trudne</b><small>Wysokość, rusztowania, transport</small></span><em>›</em></button>
+      <button class="moduleItem atticMenuItem" data-scroll-target="atticServiceBlock" data-master-id="svcAttic" style="display:none;"><span class="moduleCheck"></span><span><b>Poddasze</b><small>Izolacje, skosy, GK</small></span><em>›</em></button>
+      <div class="sidebarFooter"><button data-scroll-target="timeSettingsCard">2. CZAS</button><button data-scroll-target="summary">3. PODSUMOWANIE</button><button data-tab-target="tabAdmin">3. ADMINISTRACJA</button><button data-scroll-target="materialsMode">4. MATERIAŁY / VAT / BUFOR</button></div>
+    </aside>
 
     <div id="tabCalc" class="tabPanel active">
       <section class="card">
         <h2>1. Dane projektu</h2>
+        <div class="subcard salesLeadCard">
+          <h3>Dane klienta / oferta</h3>
+          <div class="grid three">
+            <label>Imię i nazwisko / firma<input id="clientName" placeholder="np. Jan Kowalski" /></label>
+            <label>Telefon<input id="clientPhone" placeholder="np. 600 000 000" /></label>
+            <label>Email<input id="clientEmail" type="email" placeholder="np. klient@email.pl" /></label>
+            <label>Adres inwestycji<input id="investmentAddress" placeholder="np. Warszawa, Ursus" /></label>
+            <label>Numer oferty<input id="offerNumber" readonly value="REM/2026/04/001" /></label>
+            <label>Ważność oferty [dni]<input id="offerValidDays" type="number" min="1" step="1" value="14" /></label>
+          </div>
+          <div class="grid three brandingGrid">
+            <label>Nazwa wykonawcy / brand<input id="companyName" value="RemontPRO" /></label>
+            <label>Telefon wykonawcy<input id="companyPhone" placeholder="" /></label>
+            <label>Email wykonawcy<input id="companyEmail" placeholder="" /></label>
+          </div>
+          <p class="hint smallHint">Dane trafiają do PDF i zapisu projektu. Numer oferty generowany jest automatycznie przy eksporcie, jeśli pole jest puste.</p>
+        </div>
         <div class="grid two">
           <label>Nazwa klienta / projektu<input id="projectName" value="Klient" /></label>
           <label>Typ nieruchomości<select id="propertyType"><option value="mieszkanie">mieszkanie</option><option value="dom_segment">dom / segment</option><option value="lokal">lokal użytkowy</option></select></label>
@@ -267,8 +294,7 @@
             </div>
           </div>
           <div class="serviceBlock sectionBlock" id="subfloorServiceBlock">
-            <div class="serviceHeader"><span>Posadzki — przygotowanie podłoża</span></div>
-            <label class="checkLine"><input type="checkbox" id="svcSubfloor" /> <span>Posadzki / przygotowanie podłoża</span></label>
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcSubfloor" /> <span>Posadzki — przygotowanie podłoża</span></label></div>
             <p class="hint smallHint">Moduł liczy robociznę przygotowania podłoża przed płytkami, panelami, winylem lub deską. Materiały: grunt, masa samopoziomująca, żywice i zaprawy rozliczaj w sekcji materiałów.</p>
             <div class="serviceDetails" id="subfloorDetailsBox" style="display:none;">
               <h3>Posadzki / podłoże — zakres prac</h3>
@@ -280,7 +306,7 @@
               </div>
               <div class="subfloorQuickOptions" id="subfloorQuickOptions">
                 <label class="checkLine"><input type="checkbox" id="subfloorQuickPrimer" checked /> <span>Gruntowanie podłoża <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna naniesienia gruntu przed dalszymi pracami. Grunt jako materiał rozliczany osobno.</div></label>
-                <label class="checkLine"><span>Wylewka samopoziomująca <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna wykonania warstwy samopoziomującej. Opcja cienka dla standardowego wyrównania, grubsza dla większych nierówności. Materiał liczony osobno.</div><select id="subfloorQuickSelfLevel"><option value="none">brak</option><option value="thin">samopoziom cienki</option><option value="thick">samopoziom grubszy</option></select></label>
+                <label class="checkLine"><span>Wylewka samopoziomująca <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna wykonania warstwy samopoziomującej. Opcja cienka dla standardowego wyrównania, grubsza dla większych nierówności. Materiał liczony osobno.</div><select id="subfloorQuickSelfLevel"><option value="none">brak</option><option value="thin">samopoziom cienki</option><option value="thick" selected>samopoziom grubszy</option></select></label>
                 <label><span class="field-label">Wyrównanie lokalne [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Miejscowe naprawy, podlania, uzupełnienia i korekty przed docelową okładziną.</div><input id="subfloorQuickLocalArea" type="number" min="0" step="0.1" value="0" /></label>
                 <label class="checkLine"><input type="checkbox" id="subfloorQuickGrinding" /> <span>Szlifowanie / oczyszczenie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Mechaniczne przygotowanie powierzchni: usunięcie mleczka, nierówności, resztek kleju lub zabrudzeń. Nie obejmuje ciężkiego skuwania.</div></label>
               </div>
@@ -291,7 +317,7 @@
                   </thead>
                   <tbody></tbody>
                 </table>
-                <button id="addSubfloorRoomBtn" class="secondary" type="button">+ Dodaj pozycję podłoża</button>
+                <button id="addSubfloorRoomBtn" class="secondary addLineBtn" type="button">+ Dodaj pozycję podłoża</button>
               </div>
               <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Moduł jest celowo osobny, żeby przygotowanie podłoża można było policzyć przed płytkami lub podłogami bez duplikacji robót wykończeniowych.</p>
             </div>
@@ -337,6 +363,38 @@
             </div>
           </div>
         </div>
+
+          <div class="serviceBlock sectionBlock" id="decorServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcDecor" /> <span>Dekoracje / sztukateria</span></label></div>
+            <p class="hint smallHint">Moduł liczy robociznę dekoracji: listwy, maskownice LED, narożniki oraz malowanie listew. Materiały rozliczane osobno.</p>
+            <div class="serviceDetails" id="decorDetailsBox" style="display:none;">
+              <h3>Dekoracje / sztukateria — zakres prac</h3>
+              <div class="grid three">
+                <label><span class="field-label">Listwy przysufitowe [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Montaż listew przysufitowych/sztukateryjnych. Kleje, akryle i listwy jako materiał.</div><input id="decorCeilingMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Listwy ścienne dekoracyjne [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Ramki, podziały i listwy dekoracyjne na ścianach. Liczone w metrach bieżących.</div><input id="decorWallMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Maskownice LED [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Montaż profili/maskownic pod LED. Elektryka i osprzęt LED są osobnymi pozycjami.</div><input id="decorLedMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Narożniki / zakończenia [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Docinki, narożniki, zakończenia i dopasowania listew.</div><input id="decorCornersQty" type="number" min="0" step="1" value="0" /></label>
+                <label class="checkLine"><input type="checkbox" id="decorPaint" /> <span>Malowanie listew <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Po zaznaczeniu malowanie liczy się automatycznie po sumie mb listew przysufitowych, ściennych i maskownic LED.</div></label>
+              </div>
+              <p class="hint smallHint">Malowanie listew nie ma osobnego obmiaru — system liczy sumę mb aktywnych listew.</p>
+            </div>
+          </div>
+
+          <div class="serviceBlock sectionBlock" id="hardServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcHard" /> <span>Prace trudne — multiplikator globalny</span></label></div>
+            <p class="hint smallHint">Moduł nie tworzy bazowej wyceny robót. Dodaje globalne dopłaty procentowe oraz koszty stałe na końcu kalkulacji.</p>
+            <div class="serviceDetails" id="hardDetailsBox" style="display:none;">
+              <h3>Prace trudne — zakres</h3>
+              <div class="grid three">
+                <label class="checkLine"><input type="checkbox" id="hardStairs" /> <span>Klatki schodowe <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Dopłata procentowa za trudność pracy na klatkach schodowych: logistyka, docinki, ograniczony dostęp.</div></label>
+                <label><span class="field-label">Prace na wysokości [%] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Dodatkowy procent od robocizny bazowej dla pracy na wysokości lub w utrudnionym dostępie.</div><input id="hardHeightPct" type="number" min="0" step="0.01" value="0" /></label>
+                <label><span class="field-label">Rusztowania — dni <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Liczba dni użycia rusztowania. Stawka dzienna jest w cenniku.</div><input id="hardScaffoldDays" type="number" min="0" step="1" value="0" /></label>
+                <label><span class="field-label">Zabezpieczenia [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Zabezpieczenia krawędzi, ciągów komunikacyjnych lub elementów narażonych na uszkodzenia.</div><input id="hardProtectionMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Transport pionowy [%] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Dopłata procentowa za transport materiałów/narzędzi pionowo: schody, brak windy, trudny dostęp.</div><input id="hardVerticalTransportPct" type="number" min="0" step="0.01" value="0" /></label>
+              </div>
+              <p class="hint smallHint">Dopłaty procentowe liczą się od robocizny netto przed buforem i VAT. Rusztowania oraz zabezpieczenia są dodawane jako kwoty stałe.</p>
+            </div>
+          </div>
 
           <div class="serviceBlock sectionBlock" id="atticServiceBlock" style="display:none;">
             <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcAttic" /> <span>Poddasze — ocieplenie / izolacje / zabudowa GK</span></label></div>
@@ -387,8 +445,18 @@
         </div>
       </section>
 
+      <section class="card" id="timeSettingsCard">
+        <h2>5. Czas robocizny</h2>
+        <p class="hint smallHint">Szacunek czasu jest orientacyjny i liczony z norm wydajności. Domyślnie: jedna osoba, 8 godzin pracy dziennie.</p>
+        <div class="grid three">
+          <label>Długość dnia roboczego [h]<input id="workHoursPerDay" type="number" min="4" max="12" step="0.5" value="8" /></label>
+          <label>Pomocnik okazjonalny<select id="helperMode"><option value="off" selected>brak — pracuję sam</option><option value="light">sporadyczny ×1.25</option><option value="standard">okazjonalny ×1.50</option><option value="full">druga osoba pełny czas ×2.00</option></select></label>
+          <label>Trudność / organizacja<select id="timeDifficulty"><option value="0.9">łatwa / puste mieszkanie</option><option value="1" selected>standard</option><option value="1.2">trudna / dużo detali</option><option value="1.35">lokator / praca etapami</option></select></label>
+        </div>
+      </section>
+
       <section class="card summary">
-        <h2>5. Podsumowanie</h2>
+        <h2>6. Podsumowanie</h2>
         <div id="summary"></div>
         <button id="calcBtn">Przelicz</button>
       </section>
@@ -396,7 +464,7 @@
 
     <div id="tabAdmin" class="tabPanel">
       <section class="card">
-        <h2>Administracja / cennik Warszawa — robocizna i logistyka</h2>
+        <div class="adminHeaderRow"><h2>Administracja / cennik Warszawa — robocizna i logistyka</h2><button class="secondary backToProjectBtn" type="button" data-tab-target="tabCalc">← Wróć do projektu</button></div>
         <p class="hint">Zmiana stawek działa od razu po kliknięciu „Zapisz cennik”. Dane są zapisywane lokalnie w przeglądarce.</p>
         <div class="tableWrap"><table id="ratesTable"><thead><tr><th>Parametr</th><th>Wartość</th><th>Jednostka</th></tr></thead><tbody></tbody></table></div>
         <div class="actions"><button id="saveRatesBtn">Zapisz cennik</button><button id="defaultRatesBtn" class="secondary">Przywróć domyślne</button></div>

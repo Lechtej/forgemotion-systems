@@ -1,4 +1,10 @@
-# Release notes
+# Release notes — Remont Pro WWW
+
+## v0.1.7 — calculator v1.4.1 and public test cleanup
+- Podmieniono kalkulator na `kalkulator_remonty_v1.4.1_release`.
+- Usunięto komunikaty robocze i wskazówki wewnętrzne ze strony głównej.
+- Zmieniono teksty sekcji kalkulatora i kontaktu na wersję nadającą się do udostępnienia testowego.
+- Zachowano układ miniatur + lightbox z v0.1.6.
 
 ## v0.1.4 — Top gallery + calculator app integration
 - Dodano sekcję wybranych realizacji wysoko na stronie, bezpośrednio po hero.

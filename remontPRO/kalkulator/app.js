@@ -5,122 +5,132 @@ const val = id => el(id).value;
 const chk = id => el(id).checked;
 
 const defaultRates = {
+  // v1.3.5 — cennik sprzedażowy Warszawa i okolice, robocizna netto.
+  // Założenie: dolny / środkowy segment rynkowy, bez stawek premium.
   paintWhiteWalls: 22,
-  paintLightExtra: 5,
-  paintDarkExtra: 10,
-  paintCeiling: 28,
-  paintLatexExtra: 5,
-  paintCeramicExtra: 10,
-  primer: 8,
-  smooth: 50,
+  paintLightExtra: 4,
+  paintDarkExtra: 8,
+  paintCeiling: 25,
+  paintLatexExtra: 4,
+  paintCeramicExtra: 8,
+  primer: 6,
+  smooth: 45,
   mask: 4,
   prepMediumExtra: 18,
-  prepHeavyExtra: 40,
-  elec: 180,
-  elecQuickPoint: 180,
-  elecSocket: 160,
-  elecSwitch: 140,
-  elecLight: 160,
-  elecPower: 260,
-  elecBruzdaWall: 35,
-  elecBruzdaConcrete: 55,
-  elecCable: 12,
-  elecConduit: 8,
-  elecBoxCut: 30,
-  elecBoxMount: 30,
-  elecBoard: 750,
-  elecProtection: 150,
-  elecAgd: 180,
-  elecLed: 180,
-  hyd: 300,
-  hydQuickPoint: 320,
-  hydWaterPoint: 320,
-  hydSewerPoint: 260,
-  hydPipeWall: 45,
-  hydPipeFloor: 35,
+  prepHeavyExtra: 35,
+  elec: 150,
+  elecQuickPoint: 150,
+  elecSocket: 130,
+  elecSwitch: 110,
+  elecLight: 140,
+  elecPower: 220,
+  elecBruzdaWall: 30,
+  elecBruzdaConcrete: 50,
+  elecCable: 10,
+  elecConduit: 7,
+  elecBoxCut: 25,
+  elecBoxMount: 25,
+  elecBoard: 650,
+  elecProtection: 120,
+  elecAgd: 150,
+  elecLed: 90,
+  hyd: 260,
+  hydQuickPoint: 280,
+  hydWaterPoint: 260,
+  hydSewerPoint: 240,
+  hydPipeWall: 35,
+  hydPipeFloor: 30,
   hydInsulation: 8,
-  hydBruzda: 45,
-  hydSewerMb: 60,
-  hydManifold: 300,
-  hydManifoldConnect: 220,
-  hydCorrection: 250,
-  hydTapSink: 180,
-  hydTapShower: 240,
-  hydSink: 220,
-  hydWcCompact: 300,
-  hydWcFrame: 600,
-  hydShowerCabin: 650,
-  hydBathtub: 500,
-  hydAppliance: 150,
-  hydHose: 60,
-  hydPpMultiplier: 1.15,
-  gk: 160,
-  wallGkSingle: 95,
-  wallGkDouble: 140,
-  wallGkCeiling: 120,
-  wallGkBuildout: 160,
-  wallGkInsulation: 25,
-  wallGkJoint: 35,
-  wallGkOpening: 180,
-  wallMasonryAerated: 160,
-  wallMasonryBrick: 220,
-  wallMasonryBuildout: 180,
-  wallMasonryPlaster: 55,
-  wallMasonrySmooth: 50,
-  wallMasonryOpening: 220,
-  demoTiles: 80,
-  demoPlaster: 65,
-  demoScreed: 80,
-  demoFloor: 35,
+  hydBruzda: 40,
+  hydSewerMb: 50,
+  hydManifold: 250,
+  hydManifoldConnect: 180,
+  hydCorrection: 220,
+  hydTapSink: 150,
+  hydTapShower: 200,
+  hydSink: 180,
+  hydWcCompact: 250,
+  hydWcFrame: 500,
+  hydShowerCabin: 550,
+  hydBathtub: 450,
+  hydAppliance: 130,
+  hydHose: 50,
+  hydPpMultiplier: 1.12,
+  gk: 140,
+  wallGkSingle: 90,
+  wallGkDouble: 130,
+  wallGkCeiling: 110,
+  wallGkBuildout: 140,
+  wallGkInsulation: 22,
+  wallGkJoint: 30,
+  wallGkOpening: 160,
+  wallMasonryAerated: 140,
+  wallMasonryBrick: 180,
+  wallMasonryBuildout: 160,
+  wallMasonryPlaster: 50,
+  wallMasonrySmooth: 45,
+  wallMasonryOpening: 200,
+  demoTiles: 50,
+  demoPlaster: 30,
+  demoScreed: 65,
+  demoFloor: 30,
   rubbleTilesM3: 0.04,
   rubblePlasterM3: 0.02,
   rubbleScreedM3: 0.06,
   rubbleFloorM3: 0.015,
-  carryHourly: 80,
-  noElevatorSurchargePct: 0.45,
-  elevatorSurchargePct: 0.10,
-  containerSmall: 650,
-  containerLarge: 1000,
-  bigbag: 330,
-  atticWool1: 60,
-  atticWool2: 85,
-  atticVapor: 15,
-  atticTape: 10,
-  atticFrame: 40,
-  atticGk1: 60,
-  atticGk2: 85,
-  atticJoint: 32,
-  atticSmooth: 55,
-  atticRoofWindow: 450,
-  atticHatch: 350,
-  atticBeamMask: 80,
-  atticNiche: 300,
-  tileWall: 150,
-  tileFloor: 130,
-  tileHydro: 40,
-  tilePrimer: 10,
-  tileGrout: 25,
-  tileProfile: 35,
-  tileGresExtra: 25,
-  tileHardExtra: 45,
-  tileMiter: 90,
-  bathroomGkFrame: 650,
-  floorLaminate: 55,
-  floorVinylClick: 65,
-  floorEngineeredFloating: 90,
-  floorUnderlay: 12,
-  floorVaporFoil: 8,
-  floorSkirting: 25,
-  floorThreshold: 80,
+  carryHourly: 70,
+  noElevatorSurchargePct: 0.35,
+  elevatorSurchargePct: 0.08,
+  containerSmall: 600,
+  containerLarge: 950,
+  bigbag: 300,
+  atticWool1: 55,
+  atticWool2: 80,
+  atticVapor: 12,
+  atticTape: 8,
+  atticFrame: 35,
+  atticGk1: 55,
+  atticGk2: 80,
+  atticJoint: 30,
+  atticSmooth: 45,
+  atticRoofWindow: 400,
+  atticHatch: 300,
+  atticBeamMask: 70,
+  atticNiche: 260,
+  tileWall: 120,
+  tileFloor: 125,
+  tileHydro: 35,
+  tilePrimer: 8,
+  tileGrout: 20,
+  tileProfile: 30,
+  tileGresExtra: 20,
+  tileHardExtra: 35,
+  tileMiter: 80,
+  bathroomGkFrame: 550,
+  floorLaminate: 45,
+  floorVinylClick: 55,
+  floorEngineeredFloating: 75,
+  floorUnderlay: 10,
+  floorVaporFoil: 6,
+  floorSkirting: 22,
+  floorThreshold: 60,
   floorDemoSkirting: 8,
-  subfloorPrimer: 10,
-  subfloorSelfLevelThin: 45,
-  subfloorSelfLevelThick: 70,
-  subfloorLocalLevel: 55,
-  subfloorGrinding: 35,
-  subfloorCrackRepair: 30
+  subfloorPrimer: 8,
+  subfloorSelfLevelThin: 30,
+  subfloorSelfLevelThick: 45,
+  subfloorLocalLevel: 40,
+  subfloorGrinding: 18,
+  subfloorCrackRepair: 25,
+  decorCeiling: 30,
+  decorWall: 30,
+  decorLedMask: 40,
+  decorCorner: 20,
+  decorPaint: 15,
+  hardStairsPct: 0.10,
+  hardScaffoldDay: 220,
+  hardProtectionMb: 10
 };
-let rates = {...defaultRates, ...(JSON.parse(localStorage.getItem('rates_v110') || '{}'))};
+let rates = {...defaultRates, ...(JSON.parse(localStorage.getItem('rates_v135') || '{}'))};
 
 const rateLabels = {
   paintWhiteWalls:['Malowanie ścian 2x — biały / baza','zł/m²'],
@@ -236,8 +246,210 @@ const rateLabels = {
   subfloorSelfLevelThick:["Posadzki/podłoże: wylewka samopoziomująca grubsza","zł/m²"],
   subfloorLocalLevel:["Posadzki/podłoże: wyrównanie lokalne","zł/m²"],
   subfloorGrinding:["Posadzki/podłoże: szlifowanie / oczyszczenie","zł/m²"],
-  subfloorCrackRepair:["Posadzki/podłoże: naprawa pęknięć","zł/mb"]
+  subfloorCrackRepair:["Posadzki/podłoże: naprawa pęknięć","zł/mb"],
+  decorCeiling:["Dekoracje: listwy przysufitowe","zł/mb"],
+  decorWall:["Dekoracje: listwy ścienne dekoracyjne","zł/mb"],
+  decorLedMask:["Dekoracje: maskownice LED","zł/mb"],
+  decorCorner:["Dekoracje: narożniki / zakończenia","zł/szt"],
+  decorPaint:["Dekoracje: malowanie listew","zł/mb"],
+  hardStairsPct:["Prace trudne: klatki schodowe — dopłata","% robocizny"],
+  hardScaffoldDay:["Prace trudne: rusztowanie","zł/dzień"],
+  hardProtectionMb:["Prace trudne: zabezpieczenia","zł/mb"]
 };
+
+
+const SUMMARY_GROUPS = [
+  {id:'prep', title:'1. Prace przygotowawcze', order:10},
+  {id:'demo', title:'2. Demontaże / skucia / gruz', order:20},
+  {id:'subfloor', title:'3. Posadzki / przygotowanie podłoża', order:30},
+  {id:'electric', title:'4. Instalacje elektryczne', order:40},
+  {id:'hydraulic', title:'5. Hydraulika / biały montaż', order:50},
+  {id:'wet', title:'6. Pomieszczenia mokre / glazura', order:60},
+  {id:'walls', title:'7. Ściany / sufity / zabudowy', order:70},
+  {id:'attic', title:'8. Poddasze', order:80},
+  {id:'smooth', title:'9. Gładzie', order:90},
+  {id:'floor', title:'10. Podłogi i listwy przypodłogowe', order:100},
+  {id:'decor', title:'11. Dekoracje / sztukateria', order:110},
+  {id:'paint', title:'12. Malowanie', order:120},
+  {id:'hard', title:'13. Prace trudne / narzuty', order:130},
+  {id:'other', title:'14. Inne pozycje', order:900}
+];
+const SUMMARY_GROUP_BY_ID = Object.fromEntries(SUMMARY_GROUPS.map(g => [g.id, g]));
+function inferSummaryMeta(name=''){
+  const n = (name || '').toLowerCase();
+
+  // Priorytet 1: wszystkie roboty rozbiórkowe i logistyka gruzu.
+  // To musi być return, a nie zwykłe nadpisanie id, bo nazwy typu
+  // „Skuwanie płytek…” zawierają też słowa klasyfikujące do glazury/podłóg.
+  if(
+    n.includes('demolka') ||
+    n.includes('demontaż') ||
+    n.includes('skuwanie') ||
+    n.includes('kucie') ||
+    n.includes('zrywanie') ||
+    n.includes('usunięcie') ||
+    n.includes('gruz') ||
+    n.includes('kontener') ||
+    n.includes('big-bag') ||
+    n.includes('wynoszenie') ||
+    n.includes('wywóz')
+  ) {
+    return {group:'demo', groupOrder:SUMMARY_GROUP_BY_ID.demo.order, order:20};
+  }
+
+  // Priorytet 2: prace przygotowawcze niebędące demontażem.
+  if(n.includes('zabezpieczenie') || n.includes('oklejanie')) return {group:'prep', groupOrder:SUMMARY_GROUP_BY_ID.prep.order, order:10};
+
+  let id = 'other';
+  let order = 9000;
+  if(n.includes('posadzki') || n.includes('podłoże') || n.includes('samopoziom') || n.includes('wyrównanie lokalne') || n.includes('szlifowanie')) { id='subfloor'; order=30; }
+  if(n.includes('elektryka')) { id='electric'; order=40; }
+  if(n.includes('hydraulika')) { id='hydraulic'; order=50; }
+  if(n.includes('płytki') || n.includes('glazura') || n.includes('łazienka') || n.includes('hydroizolacja') || n.includes('fugowanie')) { id='wet'; order=60; }
+  // v1.4.1: po imporcie JSON pozycje malowania per pomieszczenie mają nazwy typu
+  // „salon — ściany (biały, akrylowa)” / „sypialnia — sufit (biały, akrylowa)”.
+  // Nie zawierają słowa „malowanie”, więc muszą być klasyfikowane jawnie.
+  if(
+    n.includes('— ściany (') || n.includes('- ściany (') ||
+    n.includes('— sufit (') || n.includes('- sufit (') ||
+    n.includes('— sufity (') || n.includes('- sufity (')
+  ) { id='paint'; order=120; }
+  if(n.includes('zabudowy') || n.includes('ścianka') || n.includes('sufit podwieszany') || n.includes('gk') || n.includes('murowan')) { id='walls'; order=70; }
+  if(n.includes('poddasze')) { id='attic'; order=80; }
+  if(n.includes('gładź')) { id='smooth'; order=90; }
+  if(n.includes('podłogi') || n.includes('panele') || n.includes('winyl') || n.includes('deska warstwowa') || n.includes('listwy przypodłogowe') || n.includes('podkład') || n.includes('paroizolacyjna') || n.includes('progowa')) { id='floor'; order=100; }
+  if(n.includes('dekoracje') || n.includes('sztukateria') || n.includes('listwy przysufitowe') || n.includes('maskownice led') || n.includes('malowanie listew')) { id='decor'; order=110; }
+  if(n.includes('malowanie') || n.includes('gruntowanie')) { id='paint'; order=120; }
+  if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('transport pionowy')) { id='hard'; order=130; }
+  return {group:id, groupOrder:SUMMARY_GROUP_BY_ID[id].order, order};
+}
+function renderGroupedSummary(rows){
+  if(!rows.length) return '<p>Brak aktywnych pozycji.</p>';
+  const normalized = rows.map((r, idx) => ({...inferSummaryMeta(r.name), ...r, _idx: idx}));
+  normalized.sort((a,b)=>(a.groupOrder-b.groupOrder) || ((a.order||0)-(b.order||0)) || (a._idx-b._idx));
+  const groups = [];
+  normalized.forEach(r=>{
+    let g = groups[groups.length-1];
+    if(!g || g.id !== r.group){
+      const def = SUMMARY_GROUP_BY_ID[r.group] || SUMMARY_GROUP_BY_ID.other;
+      g = {id:r.group, title:def.title, rows:[], subtotal:0};
+      groups.push(g);
+    }
+    g.rows.push(r);
+    if(!r.note) g.subtotal += Number(r.value || 0);
+  });
+  return groups.map(g=>{
+    const body = g.rows.map(r=> r.note
+      ? `<div class="summaryRow muted"><span>${r.name}</span><b></b></div>`
+      : `<div class="summaryRow"><span>${r.name}: ${Number(r.qty||0).toFixed(1)} ${r.unit || ''} × ${money(r.rate)}</span><b>${money(r.value)}</b></div>`
+    ).join('');
+    const subtotal = g.subtotal > 0 ? `<div class="summaryRow subtotal"><span>Suma bloku</span><b>${money(g.subtotal)}</b></div>` : '';
+    return `<div class="summaryGroupTitle">${g.title}</div>${body}${subtotal}`;
+  }).join('');
+}
+
+// v1.4.0 — szacowanie czasu robocizny dla jednej osoby.
+function helperProductivityFactor(){
+  const mode = el('helperMode') ? val('helperMode') : 'off';
+  return ({off:1, light:1.25, standard:1.5, full:2})[mode] || 1;
+}
+function timeDifficultyFactor(){
+  return el('timeDifficulty') ? (parseFloat(val('timeDifficulty')) || 1) : 1;
+}
+function workHoursPerDay(){
+  return Math.max(4, Math.min(12, el('workHoursPerDay') ? num('workHoursPerDay') : 8)) || 8;
+}
+function workTimeRule(row){
+  const n = (row.name || '').toLowerCase();
+  const unit = (row.unit || '').toLowerCase();
+  if(row.note || !Number(row.qty)) return null;
+  if(n.includes('wywóz') || n.includes('kontener') || n.includes('big-bag')) return null;
+  if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('dopłata globalna')) return null;
+  if(n.includes('malowanie listew')) return {min:45, max:75};
+  if(n.includes('malowanie ścian')) return {min:45, max:75};
+  if(n.includes('malowanie sufit')) return {min:40, max:65};
+  if(n.includes('gruntowanie')) return {min:90, max:150};
+  if(n.includes('gładź')) return {min:12, max:22};
+  if(n.includes('zabezpieczenie') || n.includes('oklejanie')) return {min:70, max:120};
+  if(n.includes('skuwanie płytek')) return {min:12, max:25};
+  if(n.includes('skuwanie starego tynku')) return {min:10, max:20};
+  if(n.includes('kucie posadzki')) return {min:8, max:16};
+  if(n.includes('zrywanie')) return {min:20, max:40};
+  if(n.includes('wynoszenie gruzu')) return {hoursPerQty:1};
+  if(n.includes('samopoziom')) return {min:35, max:70};
+  if(n.includes('szlifowanie') && n.includes('podło')) return {min:35, max:70};
+  if(n.includes('naprawa pęknięć')) return {min:25, max:45};
+  if(n.includes('wyrównanie lokalne')) return {min:15, max:30};
+  if(n.includes('płytki') || n.includes('glazura')) return {min:3.5, max:6.5};
+  if(n.includes('hydroizolacja')) return {min:25, max:45};
+  if(n.includes('fugowanie')) return {min:20, max:35};
+  if(n.includes('profile') || n.includes('narożniki')) return {min:25, max:45};
+  if(n.includes('elektryka')) return unit.includes('mb') ? {min:25, max:45} : {min:7, max:12};
+  if(n.includes('hydraulika')) return unit.includes('mb') ? {min:12, max:25} : {min:3, max:6};
+  if(n.includes('panele') || n.includes('winyl') || n.includes('deska warstwowa')) return {min:18, max:35};
+  if(n.includes('podkład') || n.includes('folia paroizolacyjna')) return {min:40, max:80};
+  if(n.includes('listwy przypodłogowe')) return {min:35, max:70};
+  if(n.includes('listwy progowe')) return {min:10, max:18};
+  if(n.includes('listwy przysufitowe') || n.includes('listwy ścienne') || n.includes('maskownice led')) return {min:25, max:50};
+  if(n.includes('dekoracje: narożniki')) return {min:25, max:40};
+  if(n.includes('zabudowy') || n.includes('ścianka') || n.includes('sufit podwieszany') || n.includes('gk') || n.includes('murowan')) return {min:6, max:12};
+  if(n.includes('poddasze')) return {min:8, max:16};
+  if(unit.includes('m²')) return {min:20, max:40};
+  if(unit.includes('mb')) return {min:25, max:50};
+  if(unit.includes('szt')) return {min:6, max:12};
+  return null;
+}
+function estimateWorkTime(rows){
+  let minDays = 0, maxDays = 0, counted = 0;
+  const hoursDay = workHoursPerDay();
+  const hoursScale = 8 / hoursDay;
+  const difficulty = timeDifficultyFactor();
+  rows.forEach(row=>{
+    const rule = workTimeRule(row);
+    if(!rule) return;
+    const qty = Math.max(0, Number(row.qty || 0));
+    let min = 0, max = 0;
+    if(rule.hoursPerQty){
+      const days = qty * rule.hoursPerQty / 8;
+      min = days * 0.85;
+      max = days * 1.25;
+    } else {
+      min = qty / Math.max(rule.max || 1, 0.01);
+      max = qty / Math.max(rule.min || 1, 0.01);
+    }
+    if(isFinite(min) && isFinite(max) && max > 0){ minDays += min; maxDays += max; counted += 1; }
+  });
+  minDays *= hoursScale * difficulty;
+  maxDays *= hoursScale * difficulty;
+  const helper = helperProductivityFactor();
+  return {min:Math.max(0,minDays), max:Math.max(0,maxDays), helperMin:Math.max(0,minDays/helper), helperMax:Math.max(0,maxDays/helper), helper, hoursDay, counted};
+}
+function workDaysToWeeksLabel(days){
+  const d = Math.max(0, Math.round(Number(days) || 0));
+  const weeks = Math.floor(d / 5);
+  const rem = d % 5;
+  if(weeks <= 0) return `${d} dni roboczych`;
+  if(rem === 0) return `${weeks} tyg. robocze`;
+  return `${weeks} tyg. robocze + ${rem} dni`;
+}
+function workDaysRangeLabel(minDays, maxDays){
+  const min = Math.max(1, Math.ceil(Number(minDays) || 0));
+  const max = Math.max(min, Math.ceil(Number(maxDays) || min));
+  return `${workDaysToWeeksLabel(min)} – ${workDaysToWeeksLabel(max)}`;
+}
+function renderWorkTimeSummary(rows){
+  const t = estimateWorkTime(rows);
+  if(!t.counted || t.max <= 0) return '';
+  const fmt = v => Math.max(0.5, Math.ceil(v * 2) / 2).toFixed(1).replace('.', ',');
+  const helperLine = t.helper > 1 ? `<div class="summaryRow"><span>Z pomocnikiem / większą obsadą</span><b>${fmt(t.helperMin)}–${fmt(t.helperMax)} dni roboczych</b></div><div class="summaryRow muted"><span>W przeliczeniu na tygodnie</span><b>${workDaysRangeLabel(t.helperMin, t.helperMax)}</b></div>` : '';
+  return `
+    <div class="summaryGroupTitle">Szacowany czas robocizny</div>
+    <div class="summaryRow total"><span>Zakres bazowy</span><b>${fmt(t.min)}–${fmt(t.max)} dni roboczych</b></div>
+    <div class="summaryRow muted"><span>W przeliczeniu na tygodnie</span><b>${workDaysRangeLabel(t.min, t.max)}</b></div>
+    <div class="summaryRow"><span>Założenie</span><b>1 osoba × ${t.hoursDay.toFixed(1).replace('.', ',')} h/dzień</b></div>
+    ${helperLine}
+    <p class="info">Czas jest orientacyjny. 1 tydzień roboczy = 5 dni. Nie obejmuje pełnego harmonogramu, przerw technologicznych, oczekiwania na materiały ani kolizji między branżami.</p>`;
+}
 
 const demoMap = {
   tiles: {rate:'demoTiles', rubble:'rubbleTilesM3', label:'Skuwanie płytek ściany/podłogi'},
@@ -310,31 +522,90 @@ const floorTypeMap = {
   engineered: {rate:'floorEngineeredFloating', label:'Podłogi: deska warstwowa pływająca'}
 };
 
-function toggleTip(elm){
-  const field = elm.closest('.field-label') || elm.parentElement;
-  const localTip = (field?.nextElementSibling?.classList?.contains('tooltip-box')) ? field.nextElementSibling : elm.closest('td, th, label, div')?.querySelector('.tooltip-box');
-  if(!localTip) return;
-  let floatTip = document.getElementById('floatingTooltip');
-  if(!floatTip){ floatTip = document.createElement('div'); floatTip.id = 'floatingTooltip'; document.body.appendChild(floatTip); }
-  const same = floatTip.dataset.source === localTip.textContent.trim() && floatTip.style.display === 'block';
-  if(same){ floatTip.style.display = 'none'; return; }
-  floatTip.innerHTML = localTip.innerHTML;
-  floatTip.dataset.source = localTip.textContent.trim();
-  floatTip.style.display = 'block';
-  const rect = elm.getBoundingClientRect();
-  const width = Math.min(420, window.innerWidth - 24);
-  floatTip.style.width = width + 'px';
-  let left = rect.left + window.scrollX + 18;
-  if(left + width > window.scrollX + window.innerWidth - 12) left = window.scrollX + window.innerWidth - width - 12;
-  floatTip.style.left = left + 'px';
-  floatTip.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+function findTooltipBox(icon){
+  if(!icon) return null;
+
+  const fieldLabel = icon.closest('.field-label');
+  if(fieldLabel && fieldLabel.nextElementSibling?.classList?.contains('tooltip-box')){
+    return fieldLabel.nextElementSibling;
+  }
+
+  const inlineSpan = icon.parentElement;
+  if(inlineSpan && inlineSpan.nextElementSibling?.classList?.contains('tooltip-box')){
+    return inlineSpan.nextElementSibling;
+  }
+
+  const host = icon.closest('label, td, th, .serviceBlock, .card, div');
+  return host?.querySelector('.tooltip-box') || null;
 }
 
-document.addEventListener('click', (ev)=>{
-  if(ev.target.classList?.contains('info-icon')) return;
+function ensureFloatingTooltip(){
+  let floatTip = document.getElementById('floatingTooltip');
+  if(!floatTip){
+    floatTip = document.createElement('div');
+    floatTip.id = 'floatingTooltip';
+    document.body.appendChild(floatTip);
+  }
+  return floatTip;
+}
+
+function hideTooltip(){
   const floatTip = document.getElementById('floatingTooltip');
-  if(floatTip && !floatTip.contains(ev.target)) floatTip.style.display='none';
+  if(floatTip){
+    floatTip.style.display = 'none';
+    floatTip.dataset.source = '';
+  }
+}
+
+function toggleTip(elm, ev){
+  if(ev){
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
+  const localTip = findTooltipBox(elm);
+  if(!localTip) return;
+
+  const floatTip = ensureFloatingTooltip();
+  const source = localTip.textContent.trim();
+  const same = floatTip.dataset.source === source && floatTip.style.display === 'block';
+  if(same){ hideTooltip(); return; }
+
+  floatTip.innerHTML = localTip.innerHTML;
+  floatTip.dataset.source = source;
+  floatTip.style.display = 'block';
+
+  const rect = elm.getBoundingClientRect();
+  const width = Math.min(420, Math.max(260, window.innerWidth - 24));
+  floatTip.style.width = width + 'px';
+
+  let left = rect.left + 18;
+  if(left + width > window.innerWidth - 12) left = window.innerWidth - width - 12;
+  if(left < 12) left = 12;
+
+  let top = rect.bottom + 8;
+  const height = floatTip.offsetHeight || 80;
+  if(top + height > window.innerHeight - 12) top = rect.top - height - 8;
+  if(top < 12) top = 12;
+
+  floatTip.style.left = left + 'px';
+  floatTip.style.top = top + 'px';
+}
+
+window.toggleTip = toggleTip;
+
+document.addEventListener('click', (ev)=>{
+  const icon = ev.target.closest?.('.info-icon');
+  if(icon){ toggleTip(icon, ev); return; }
+  const floatTip = document.getElementById('floatingTooltip');
+  if(floatTip && !floatTip.contains(ev.target)) hideTooltip();
+}, true);
+
+document.addEventListener('keydown', (ev)=>{
+  if(ev.key === 'Escape') hideTooltip();
 });
+
+window.addEventListener('resize', hideTooltip);
 
 const roomBody = document.querySelector('#roomsTable tbody');
 function salonName(){ return val('kitchenType') === 'aneks' ? 'salon z aneksem kuchennym' : 'salon'; }
@@ -833,7 +1104,7 @@ function addSubfloorRoom(data={}){
     <td><button type="button" class="secondary delSubfloor">Usuń</button></td>`;
   tbody.appendChild(tr);
   tr.querySelector('.subfloorSource').value=source;
-  tr.querySelector('.subfloorSelfLevel').value=data.selfLevel || 'none';
+  tr.querySelector('.subfloorSelfLevel').value=data.selfLevel || 'thick';
   tr.querySelector('.subfloorLocalArea').value=data.localArea ?? 0;
   tr.querySelector('.subfloorCracksMb').value=data.cracksMb ?? 0;
   tr.querySelector('.subfloorGrinding').checked=!!data.grinding;
@@ -1165,6 +1436,46 @@ function syncMeasureUi(){
   if(manualCeilings) manualCeilings.closest('label').classList.toggle('mutedControl', !manualOnly);
 }
 
+function syncDecorUi(){
+  const details = el('decorDetailsBox');
+  if(details) details.style.display = chk('svcDecor') ? 'block' : 'none';
+}
+function syncHardUi(){
+  const details = el('hardDetailsBox');
+  if(details) details.style.display = chk('svcHard') ? 'block' : 'none';
+}
+function syncAtticMenuUi(){
+  const isHouse = el('propertyType') && val('propertyType') === 'dom_segment';
+  document.querySelectorAll('.atticMenuItem').forEach(x=>x.style.display = isHouse ? 'flex' : 'none');
+  const block = el('atticServiceBlock');
+  if(block) block.style.display = isHouse ? 'block' : 'none';
+  if(!isHouse && el('svcAttic')) el('svcAttic').checked = false;
+}
+function addDecorRows(add){
+  if(!chk('svcDecor')) return;
+  const ceiling = num('decorCeilingMb');
+  const wall = num('decorWallMb');
+  const led = num('decorLedMb');
+  add('Dekoracje: listwy przysufitowe', ceiling, 'mb', rates.decorCeiling);
+  add('Dekoracje: listwy ścienne dekoracyjne', wall, 'mb', rates.decorWall);
+  add('Dekoracje: maskownice LED', led, 'mb', rates.decorLedMask);
+  add('Dekoracje: narożniki / zakończenia', num('decorCornersQty'), 'szt', rates.decorCorner);
+  if(chk('decorPaint')) add('Dekoracje: malowanie listew', ceiling + wall + led, 'mb', rates.decorPaint);
+}
+function addHardRows(rows, addFixed, baseNet){
+  if(!chk('svcHard')) return 0;
+  let pct = 0;
+  if(chk('hardStairs')) pct += rates.hardStairsPct || 0;
+  pct += num('hardHeightPct') / 100;
+  pct += num('hardVerticalTransportPct') / 100;
+  const percentValue = baseNet * pct;
+  if(percentValue){
+    addFixed('Prace trudne: dopłata globalna (' + (pct*100).toFixed(1) + '%)', percentValue);
+  }
+  addFixed('Prace trudne: rusztowanie', num('hardScaffoldDays') * (rates.hardScaffoldDay || 0));
+  addFixed('Prace trudne: zabezpieczenia', num('hardProtectionMb') * (rates.hardProtectionMb || 0));
+  return percentValue;
+}
 function calc(){
   syncDemoUi();
   syncMeasureUi();
@@ -1174,6 +1485,9 @@ function calc(){
   syncWetUi();
   syncFloorUi();
   syncSubfloorUi();
+  syncDecorUi();
+  syncHardUi();
+  syncAtticMenuUi();
   syncWallsUi();
   if(val('paintVariant')==='C') el('svcSmooth').checked=true;
   syncSmoothUi();
@@ -1185,11 +1499,11 @@ function calc(){
   function add(name, qty, unit, rate, applyStandard=true){
     if(!qty || !rate) return;
     const effectiveRate = applyStandard ? rate*st : rate;
-    const value=qty*effectiveRate; net+=value; rows.push({name, qty, unit, rate:effectiveRate, value});
+    const value=qty*effectiveRate; net+=value; rows.push({name, qty, unit, rate:effectiveRate, value, ...inferSummaryMeta(name)});
   }
   function addFixed(name, value){
     if(!value) return;
-    net+=value; rows.push({name, qty:1, unit:'kpl', rate:value, value});
+    net+=value; rows.push({name, qty:1, unit:'kpl', rate:value, value, ...inferSummaryMeta(name)});
   }
   if(chk('svcPaint')){
     if(val('measureMode') === 'rooms' && Array.isArray(m.paintRows)){
@@ -1216,8 +1530,11 @@ function calc(){
   }
   addSubfloorRows(add);
   addFloorRows(add);
+  addDecorRows(add);
   addWallRows(add);
   addAtticRows(add);
+  const netBeforeHard = net;
+  addHardRows(rows, addFixed, netBeforeHard);
 
   const riskPct=num('riskBuffer');
   const risk=net*riskPct;
@@ -1241,10 +1558,7 @@ function calc(){
   const laborGross=laborNet+laborVat;
   const total=laborGross+mat+deleg;
 
-  const list = rows.map(r=> r.note
-    ? `<div class="summaryRow muted"><span>${r.name}</span><b></b></div>`
-    : `<div class="summaryRow"><span>${r.name}: ${r.qty.toFixed(1)} ${r.unit} × ${money(r.rate)}</span><b>${money(r.value)}</b></div>`).join('');
-
+  const list = renderGroupedSummary(rows);
   let summaryTotals = '';
   if(bufferMode === 'transparent'){
     summaryTotals = `
@@ -1274,6 +1588,7 @@ function calc(){
   el('summary').innerHTML = `
     <div class="info">Obmiar aktywny: ściany ${m.walls.toFixed(1)} m², sufity ${m.ceilings.toFixed(1)} m², razem ${paintArea.toFixed(1)} m². ${val('measureMode') === 'rooms' ? 'Malowanie liczone per pomieszczenie.' : 'Użyto domyślnych ustawień malowania.'}</div>
     ${list || '<p>Brak aktywnych pozycji.</p>'}
+    ${renderWorkTimeSummary(rows)}
     ${summaryTotals}
     <p class="warn">Uwaga: ceny są startowe. VAT 8%/23% wymaga weryfikacji dla konkretnego zakresu i nieruchomości.</p>`;
 }
@@ -1290,7 +1605,7 @@ function renderRates(){
 }
 function saveRates(){
   document.querySelectorAll('[data-rate]').forEach(i=> rates[i.dataset.rate] = parseFloat(i.value)||0);
-  localStorage.setItem('rates_v110', JSON.stringify(rates));
+  localStorage.setItem('rates_v135', JSON.stringify(rates));
   calc();
 }
 function bindAll(){
@@ -1325,8 +1640,318 @@ function bindAll(){
   });
   el('calcBtn').addEventListener('click',calc);
   el('saveRatesBtn').addEventListener('click',saveRates);
-  el('defaultRatesBtn').addEventListener('click',()=>{rates={...defaultRates};localStorage.setItem('rates_v110',JSON.stringify(rates));renderRates();calc();});
+  el('defaultRatesBtn').addEventListener('click',()=>{rates={...defaultRates};localStorage.setItem('rates_v135',JSON.stringify(rates));renderRates();calc();});
   el('resetBtn').addEventListener('click',()=>{localStorage.clear(); location.reload();});
 }
 
 renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisibility(); calc();
+
+
+// v1.1.7.8 — preset posadzek: szybka wycena = całość z obmiaru + grunt + samopoziom grubszy
+(function(){
+  const moduleStateMap = [
+    {masterId:'roomsTable', locked:true},
+    {masterId:'svcPaint', sync:()=>{}},
+    {masterId:'svcDemo', sync:()=>{}},
+    {masterId:'svcElec', sync:()=>{}},
+    {masterId:'svcHyd', sync:()=>{}},
+    {masterId:'svcWet', sync:()=>{ if(typeof syncWetUi==='function') syncWetUi(); }},
+    {masterId:'svcWalls', sync:()=>{}},
+    {masterId:'svcFloor', sync:()=>{ if(typeof syncFloorUi==='function') syncFloorUi(); }},
+    {masterId:'svcSubfloor', sync:()=>{ if(typeof syncSubfloorUi==='function') syncSubfloorUi(); }},
+    {masterId:'svcDecor', sync:()=>{ if(typeof syncDecorUi==='function') syncDecorUi(); }},
+    {masterId:'svcHard', sync:()=>{ if(typeof syncHardUi==='function') syncHardUi(); }},
+    {masterId:'svcAttic', sync:()=>{ if(typeof syncAtticUi==='function') syncAtticUi(); }}
+  ];
+
+  function getMaster(id){ return document.getElementById(id); }
+
+  function setMenuMirror(masterId, checked){
+    const item = document.querySelector(`.moduleItem[data-master-id="${masterId}"]`);
+    if(!item) return;
+    const mark = item.querySelector('.moduleCheck');
+    if(!mark) return;
+    mark.classList.toggle('on', !!checked);
+    mark.textContent = checked ? '✓' : '';
+  }
+
+  function refreshModuleMirrors(){
+    moduleStateMap.forEach(cfg=>{
+      const master = getMaster(cfg.masterId);
+      setMenuMirror(cfg.masterId, cfg.locked ? true : !!master?.checked);
+    });
+  }
+
+  function runModuleSync(masterId){
+    const cfg = moduleStateMap.find(x=>x.masterId===masterId);
+    if(cfg?.sync) cfg.sync();
+    refreshModuleMirrors();
+    if(typeof calc==='function') calc();
+  }
+
+  function goTo(id){
+    const target=document.getElementById(id) || document.querySelector('[name="'+id+'"]');
+    if(!target) return;
+    const panel=target.closest('.tabPanel');
+    if(panel && getComputedStyle(panel).overflowY !== 'visible'){
+      const offset=target.getBoundingClientRect().top - panel.getBoundingClientRect().top + panel.scrollTop - 12;
+      panel.scrollTo({top:Math.max(0,offset),behavior:'smooth'});
+    } else {
+      target.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  }
+
+  moduleStateMap.forEach(cfg=>{
+    const master = getMaster(cfg.masterId);
+    if(!master || master.tagName.toLowerCase() !== 'input') return;
+    master.addEventListener('change',()=>runModuleSync(cfg.masterId));
+    master.addEventListener('input',()=>runModuleSync(cfg.masterId));
+  });
+
+  document.querySelectorAll('[data-scroll-target]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.moduleItem').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      goTo(btn.getAttribute('data-scroll-target'));
+      refreshModuleMirrors();
+    });
+  });
+
+  document.querySelectorAll('[data-tab-target]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const tab=btn.getAttribute('data-tab-target');
+      document.querySelectorAll('.tabBtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+      document.querySelectorAll('.tabPanel').forEach(p=>p.classList.toggle('active',p.id===tab));
+      setTimeout(()=>{ const panel=document.getElementById(tab); if(panel) panel.scrollTo({top:0,behavior:'smooth'}); },0);
+    });
+  });
+
+  if(typeof syncFloorUi==='function') syncFloorUi();
+  if(typeof syncSubfloorUi==='function') syncSubfloorUi();
+  if(typeof syncDecorUi==='function') syncDecorUi();
+  if(typeof syncHardUi==='function') syncHardUi();
+  if(typeof syncAtticMenuUi==='function') syncAtticMenuUi();
+  if(typeof syncWetUi==='function') syncWetUi();
+  refreshModuleMirrors();
+})();
+
+
+// v1.4.0 - cennik sprzedażowy Warszawa i okolice + czas robocizny
+(function(){
+  function safeEl(id){ return document.getElementById(id); }
+  function seedDecorDefaults(){
+    const master = safeEl('svcDecor');
+    if(!master || !master.checked) return;
+    const ceiling = safeEl('decorCeilingMb');
+    const paint = safeEl('decorPaint');
+    const total = (typeof totalFloorMeasurement === 'function') ? totalFloorMeasurement() : {perimeter:0};
+    const perimeter = Math.max(0, Number(total.perimeter || 0));
+    if(ceiling && (!ceiling.value || Number(ceiling.value) === 0)) ceiling.value = perimeter.toFixed(1);
+    if(paint) paint.checked = true;
+  }
+  const master = safeEl('svcDecor');
+  if(master){
+    master.addEventListener('change', () => {
+      if(master.checked) seedDecorDefaults();
+      if(typeof syncDecorUi === 'function') syncDecorUi();
+      if(typeof calc === 'function') calc();
+    });
+  }
+})();
+
+// v1.4.0 - funkcje operacyjne: Zapisz / Wczytaj / Generuj ofertę PDF PRO
+(function(){
+  const PROJECT_SCHEMA_VERSION = '1.4.1';
+  const safeId = (id) => document.getElementById(id);
+  const getControls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
+
+  function escapeHtml(text){ return String(text || '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
+  function sanitizeFilePart(value, fallback='projekt'){
+    return String(value || fallback)
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '') || fallback;
+  }
+  function clientShortName(value){
+    const raw = String(value || '').trim();
+    if(!raw) return 'klient';
+    const parts = raw.split(/\s+/).filter(Boolean);
+    return parts.length ? parts[parts.length - 1] : 'klient';
+  }
+  function buildProjectFileName(data){
+    const offer = sanitizeFilePart((data && data.offerNumber) || (safeId('offerNumber') ? safeId('offerNumber').value : ''), 'oferta');
+    const client = sanitizeFilePart(clientShortName((data && data.clientName) || (safeId('clientName') ? safeId('clientName').value : '') || (data && data.projectName)), 'klient');
+    return `${offer}_${client}.json`;
+  }
+  function slugifyFileName(value){
+    const base = sanitizeFilePart(value || 'projekt_remontu', 'projekt_remontu');
+    return `${base}_${new Date().toISOString().slice(0,10)}.json`;
+  }
+  function offerPrefix(){
+    const d = new Date();
+    return `REM/${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}`;
+  }
+  function nextOfferNumber(){
+    const prefix = offerPrefix();
+    const key = 'offer_counter_' + prefix;
+    const current = parseInt(localStorage.getItem(key) || '0', 10) || 0;
+    const next = current + 1;
+    localStorage.setItem(key, String(next));
+    return `${prefix}/${String(next).padStart(3,'0')}`;
+  }
+  function previewOfferNumber(){
+    const prefix = offerPrefix();
+    const key = 'offer_counter_' + prefix;
+    const next = (parseInt(localStorage.getItem(key) || '0', 10) || 0) + 1;
+    return `${prefix}/${String(next).padStart(3,'0')}`;
+  }
+  function ensureOfferNumber(commit){
+    const field = safeId('offerNumber');
+    if(!field) return '';
+    if(!field.value || /^REM\/\d{4}\/\d{2}\/001$/.test(field.value)){
+      field.value = commit ? nextOfferNumber() : previewOfferNumber();
+    }
+    return field.value;
+  }
+  function getControlKey(control, index){
+    if(control.id) return `id:${control.id}`;
+    const row = control.closest('tr');
+    if(row){
+      const table = control.closest('table');
+      const tableId = table && table.id ? table.id : 'table';
+      const rowIndex = Array.from(row.parentElement.children).indexOf(row);
+      const cellIndex = Array.from(row.children).findIndex(td => td.contains(control));
+      const classKey = Array.from(control.classList || []).join('.') || control.tagName.toLowerCase();
+      return `table:${tableId}:row:${rowIndex}:cell:${cellIndex}:class:${classKey}`;
+    }
+    return `index:${index}`;
+  }
+  function collectProjectState(){
+    if(typeof calc === 'function') calc();
+    const values = getControls().map((c, index) => ({
+      key: getControlKey(c, index), tag: c.tagName.toLowerCase(), type: c.type || '',
+      value: c.type === 'checkbox' ? !!c.checked : c.value, dataset: {...(c.dataset || {})}
+    }));
+    return {app:'kalkulator_remonty', version:PROJECT_SCHEMA_VERSION, savedAt:new Date().toISOString(), projectName:safeId('projectName') ? safeId('projectName').value : '', clientName:safeId('clientName') ? safeId('clientName').value : '', offerNumber:safeId('offerNumber') ? safeId('offerNumber').value : '', values, rates:{...rates}, summaryHtml:safeId('summary') ? safeId('summary').innerHTML : ''};
+  }
+  function findControlByKey(key, fallbackIndex){
+    if(key && key.startsWith('id:')) return safeId(key.slice(3));
+    if(key && key.startsWith('table:')){
+      const parts = key.split(':'); const tableId = parts[1]; const rowIndex = Number(parts[3]); const cellIndex = Number(parts[5]); const classSpec = (parts[7] || '').split('.').filter(Boolean);
+      const table = safeId(tableId); const row = table && table.tBodies[0] ? table.tBodies[0].children[rowIndex] : null; const cell = row ? row.children[cellIndex] : null;
+      if(cell){
+        const candidates = Array.from(cell.querySelectorAll('input,select,textarea'));
+        if(classSpec.length){ const byClass = candidates.find(c => classSpec.every(cls => c.classList.contains(cls))); if(byClass) return byClass; }
+        if(candidates[0]) return candidates[0];
+      }
+    }
+    return getControls()[fallbackIndex] || null;
+  }
+  function applyProjectState(project){
+    if(!project || !Array.isArray(project.values)) throw new Error('Nieprawidłowy format pliku projektu.');
+    if(project.rates && typeof project.rates === 'object'){
+      rates = {...rates, ...project.rates}; localStorage.setItem('rates_v135', JSON.stringify(rates)); if(typeof renderRates === 'function') renderRates();
+    }
+    project.values.forEach((item, index) => {
+      const c = findControlByKey(item.key, index); if(!c) return;
+      if(c.type === 'checkbox') c.checked = !!item.value; else c.value = item.value;
+      if(item.dataset && typeof item.dataset === 'object') Object.keys(item.dataset).forEach(k => { c.dataset[k] = item.dataset[k]; });
+      c.dispatchEvent(new Event('input', {bubbles:true})); c.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    if(typeof updateLivingHint === 'function') updateLivingHint(); if(typeof updateDelegationVisibility === 'function') updateDelegationVisibility(); if(typeof syncAtticMenuUi === 'function') syncAtticMenuUi(); if(typeof calc === 'function') calc();
+  }
+  function saveProjectToFile(){
+    const data = collectProjectState(); const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json;charset=utf-8'}); const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = buildProjectFileName(data); document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  }
+  function loadProjectFromFile(file){
+    const reader = new FileReader(); reader.onload = () => { try{ applyProjectState(JSON.parse(reader.result)); alert('Projekt wczytany poprawnie.'); } catch(err){ alert('Nie udało się wczytać projektu: ' + (err && err.message ? err.message : err)); } }; reader.readAsText(file, 'utf-8');
+  }
+  function ensurePrintRoot(){
+    let root = safeId('printRoot');
+    if(!root){
+      root = document.createElement('section');
+      root.id = 'printRoot';
+      root.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(root);
+    }
+    return root;
+  }
+  function offerLine(label, value){ return value ? `<div><b>${escapeHtml(label)}:</b> ${escapeHtml(value)}</div>` : ''; }
+  function storeLeadHistory(payload){
+    try{
+      const key = 'lead_history_v140';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      list.unshift(payload);
+      localStorage.setItem(key, JSON.stringify(list.slice(0,100)));
+    }catch(e){}
+  }
+  function exportSummaryPdf(){
+    if(typeof calc === 'function') calc();
+    const offerNumber = ensureOfferNumber(true);
+    const projectName = safeId('projectName') ? safeId('projectName').value : 'Projekt';
+    const clientName = safeId('clientName') ? safeId('clientName').value : '';
+    const clientPhone = safeId('clientPhone') ? safeId('clientPhone').value : '';
+    const clientEmail = safeId('clientEmail') ? safeId('clientEmail').value : '';
+    const investmentAddress = safeId('investmentAddress') ? safeId('investmentAddress').value : '';
+    const companyName = safeId('companyName') ? (safeId('companyName').value || 'RemontPRO') : 'RemontPRO';
+    const companyPhone = safeId('companyPhone') ? safeId('companyPhone').value : '';
+    const companyEmail = safeId('companyEmail') ? safeId('companyEmail').value : '';
+    const propertyType = safeId('propertyType') ? safeId('propertyType').value : '';
+    const area = safeId('area') ? safeId('area').value : '';
+    const offerValidDays = safeId('offerValidDays') ? (safeId('offerValidDays').value || '14') : '14';
+    const summary = safeId('summary') ? safeId('summary').innerHTML : '';
+    storeLeadHistory({offerNumber, savedAt:new Date().toISOString(), clientName, clientPhone, clientEmail, investmentAddress, projectName, area});
+    const root = ensurePrintRoot();
+    root.innerHTML = `
+      <div class="offerTop">
+        <div class="offerBrand">
+          <h1>${escapeHtml(companyName)}</h1>
+          <div class="tagline">Kosztorys robocizny remontowej</div>
+          ${offerLine('Telefon', companyPhone)}
+          ${offerLine('Email', companyEmail)}
+        </div>
+        <div class="offerBadge">
+          <div>Numer oferty</div>
+          <b>${escapeHtml(offerNumber)}</b>
+          <div>Data: ${new Date().toLocaleDateString('pl-PL')}</div>
+        </div>
+      </div>
+      <div class="offerGrid">
+        <div class="offerBox">
+          <h3>Dane klienta</h3>
+          ${offerLine('Klient', clientName || projectName)}
+          ${offerLine('Telefon', clientPhone)}
+          ${offerLine('Email', clientEmail)}
+          ${offerLine('Adres inwestycji', investmentAddress)}
+        </div>
+        <div class="offerBox">
+          <h3>Dane projektu</h3>
+          ${offerLine('Projekt', projectName)}
+          ${offerLine('Typ nieruchomości', propertyType)}
+          ${offerLine('Powierzchnia', area ? area + ' m²' : '')}
+          ${offerLine('Ważność oferty', offerValidDays + ' dni')}
+        </div>
+      </div>
+      <h2>Podsumowanie kosztorysowe</h2>
+      <div class="printSummary">${summary}</div>
+      <div class="offerFooter">
+        <b>Uwagi:</b> Oferta dotyczy robocizny i nie obejmuje materiałów, zakupów inwestorskich ani ukrytych prac dodatkowych, jeżeli nie wskazano inaczej.
+        Ważność oferty: ${escapeHtml(offerValidDays)} dni. Finalny zakres wymaga potwierdzenia po oględzinach.
+      </div>
+    `;
+    root.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+  }
+  function bindProjectIo(){
+    const saveBtn = safeId('saveProjectBtn'), loadBtn = safeId('loadProjectBtn'), fileInput = safeId('projectFileInput'), pdfBtn = safeId('exportPdfBtn');
+    if(saveBtn) saveBtn.addEventListener('click', saveProjectToFile); if(loadBtn && fileInput) loadBtn.addEventListener('click', () => fileInput.click());
+    if(fileInput) fileInput.addEventListener('change', () => { const file = fileInput.files && fileInput.files[0]; if(file) loadProjectFromFile(file); fileInput.value = ''; });
+    if(pdfBtn) pdfBtn.addEventListener('click', exportSummaryPdf);
+    ensureOfferNumber(false);
+  }
+  bindProjectIo();
+})();

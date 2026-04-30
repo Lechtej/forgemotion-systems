@@ -1,26 +1,25 @@
-# Remont Pro WWW v0.1.4
+# Remont Pro WWW v0.1.7
 
-Statyczna strona Remont Pro na GitHub Pages.
+Statyczna strona testowa Remont Pro przygotowana do publikacji pod `/remontPRO/`.
 
-## Zakres v0.1.4
-- Galeria realizacji przeniesiona wyżej — wybrane zdjęcia widoczne zaraz po hero.
-- Case studies pozostają jako pełny układ: PRZED → W TRAKCIE → PO.
-- Kalkulator orientacyjny z homepage zastąpiony linkiem do osobnej aplikacji.
-- Dodano aplikację kalkulatora w katalogu `/kalkulator/`.
+## Zakres
+- Ciemny layout inspirowany ForgeMotion Systems.
+- Hero ze zdjęciem realizacji.
+- Wybrane realizacje jako miniatury + lightbox.
+- Realizacje krok po kroku: PRZED / W TRAKCIE / PO.
+- Kalkulator Remont Pro jako osobna aplikacja w `/kalkulator/`.
+- Sekcja usług i kontaktu.
 
 ## Wdrożenie
-Skopiuj zawartość folderu do root repo `remont-pro-www`, wykonaj commit i push.
+Skopiuj zawartość folderu `remont_pro_www_v0.1.7` do katalogu docelowego, np.:
 
-## Linki
-- Strona: `/index.html`
-- Kalkulator: `/kalkulator/index.html`
+```text
+/remontPRO/
+```
 
+Po wdrożeniu sprawdź:
 
-## v0.1.5
-- Premium hero z jednym mocnym zdjęciem finalnego efektu.
-- CTA do wyceny, case studies i kalkulatora.
-- Układ przygotowany pod tymczasowy deploy /remontPRO/.
-
-## Aktualna poprawka
-
-v0.1.5.1 — korekta opisów galerii i podmiana głównego kadru Na Uboczu.
+```text
+/remontPRO/index.html
+/remontPRO/kalkulator/index.html
+```
