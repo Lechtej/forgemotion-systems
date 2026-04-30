@@ -14,3 +14,13 @@ Skopiuj zawartość folderu do root repo `remont-pro-www`, wykonaj commit i push
 ## Linki
 - Strona: `/index.html`
 - Kalkulator: `/kalkulator/index.html`
+
+
+## v0.1.5
+- Premium hero z jednym mocnym zdjęciem finalnego efektu.
+- CTA do wyceny, case studies i kalkulatora.
+- Układ przygotowany pod tymczasowy deploy /remontPRO/.
+
+## Aktualna poprawka
+
+v0.1.5.1 — korekta opisów galerii i podmiana głównego kadru Na Uboczu.

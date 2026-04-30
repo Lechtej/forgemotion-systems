@@ -82,3 +82,19 @@ Data: 2026-04-30
 - Dodano filtry: wszystkie, łazienki, mieszkania, detale, przed/po.
 - Dodano lightbox JS do podglądu realizacji.
 - Przygotowano folder `assets/img/realizacje/` na docelowe zdjęcia.
+
+
+## v0.1.5 - premium photo hero
+- Dodano hero z jednym dużym zdjęciem gotowego pomieszczenia.
+- Zmieniono priorytet komunikacji: najpierw efekt końcowy, potem case studies.
+- Dodano CTA do kontaktu i kalkulatora w hero.
+
+
+## v0.1.5.1 - 2026-04-30
+
+### Poprawki galerii
+- Podmieniono główne zdjęcie „Na Uboczu” w sekcji wybranych kadrów na łazienkę używaną w hero.
+- Usunięto błędne nazewnictwo „Łazienka” dla zdjęcia salonu w trakcie wykańczania.
+- Zmieniono „Schody LED” na „Beton architektoniczny” tam, gdzie kadr pokazuje przede wszystkim wykończenie ściany.
+- Zmieniono „Prace mokre” na „Remont łazienki”.
+- Zmieniono „Pomieszczenie techniczne” na „Salon sportowca”.
