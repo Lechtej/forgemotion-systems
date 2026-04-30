@@ -98,3 +98,25 @@ Data: 2026-04-30
 - Zmieniono „Schody LED” na „Beton architektoniczny” tam, gdzie kadr pokazuje przede wszystkim wykończenie ściany.
 - Zmieniono „Prace mokre” na „Remont łazienki”.
 - Zmieniono „Pomieszczenie techniczne” na „Salon sportowca”.
+
+## v0.1.5.2 — hero gallery image fix
+- Podmieniono główne zdjęcie „Na Uboczu” w sekcji wybranych kadrów na łazienkę używaną jako hero background.
+- Podmieniono kartę błędnie opisaną jako „Łazienka” na właściwe zdjęcie i podpis „Salon sportowca”.
+- Zmniejszono wizualne przytłoczenie galerii przez limity wysokości kart i bardziej kompaktowe kadrowanie.
+
+## v0.1.6 — thumbnails + lightbox gallery
+
+### Added
+- Gallery layout changed to compact thumbnails.
+- Lightbox navigation added: previous / next buttons and keyboard arrows.
+- Lightbox counter added.
+
+### Changed
+- Featured realization section reduced in visual weight.
+- Case studies now use compact thumbnail grids instead of large stacked cards.
+- Improved mobile behavior for gallery and lightbox.
+
+### Risk / validation
+- Verify all images open in lightbox.
+- Verify arrows work on desktop and mobile.
+- Verify gallery no longer dominates page height.
