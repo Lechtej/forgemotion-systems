@@ -1,0 +1,141 @@
+:root { --bg:#f4f7fb; --card:#fff; --text:#102033; --muted:#5d6b7a; --line:#d8e0ea; --accent:#0b5cab; }
+*{box-sizing:border-box} body{margin:0;font-family:Arial, sans-serif;background:var(--bg);color:var(--text)}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;background:#0f2d4d;color:white} .topbar h1{margin:0;font-size:24px}.topbar p{margin:4px 0 0;color:#dce8f5}
+.layout{max-width:1180px;margin:24px auto;padding:0 16px;display:grid;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 4px 14px rgba(18,35,60,.06)}
+h2{margin:0 0 14px;font-size:20px}h3{margin:18px 0 10px}.grid{display:grid;gap:12px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:13px}input,select{padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:14px;background:white}button{border:0;border-radius:10px;padding:10px 14px;background:var(--accent);color:white;font-weight:700;cursor:pointer}.secondary{background:#e6eef7;color:#0f2d4d}.hint,.info{color:var(--muted);background:#f0f5fb;border-left:4px solid var(--accent);padding:10px;border-radius:8px}.tableWrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid var(--line);padding:6px;text-align:left}th{background:#eaf2fb}.services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.summaryRow{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0}.summaryRow.total{font-size:20px;font-weight:800}.warn{color:#a35a00}.ok{color:#116b38}@media(max-width:800px){.two,.three,.services{grid-template-columns:1fr}.topbar{align-items:flex-start;gap:12px;flex-direction:column}}
+.tabs{display:flex;gap:10px;flex-wrap:wrap}.tabBtn{background:#e9f1f8;color:#00284d}.tabBtn.active{background:#0b5cad;color:#fff}.tabPanel{display:none}.tabPanel.active{display:block}.topActions{display:flex;gap:10px}.actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}#ratesTable input{width:120px}.services select{min-width:220px}
+.muted{color:var(--muted);font-style:italic}
+#demoTable input[type="number"]{width:110px}
+.demoDetailsInline{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}.demoDetailsInline h3{margin-top:0}
+
+
+/* v1.0.3.2 — stabilizacja układu i tabel */
+html, body { max-width: 100%; overflow-x: hidden; }
+.layout, .tabPanel, .card { min-width: 0; }
+.card { overflow: hidden; }
+.grid.one { grid-template-columns: 1fr; }
+.grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tableWrap { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tableWrap table { width: max-content; min-width: 100%; }
+.tableWrap th, .tableWrap td { white-space: nowrap; }
+.tableWrap input, .tableWrap select { width: 100%; min-width: 0; }
+.roomsTableWrap table { min-width: 1320px; }
+.roomsTableWrap th:nth-child(1), .roomsTableWrap td:nth-child(1) { min-width: 190px; }
+.roomsTableWrap th:nth-child(2), .roomsTableWrap th:nth-child(3), .roomsTableWrap th:nth-child(4), .roomsTableWrap th:nth-child(5),
+.roomsTableWrap td:nth-child(2), .roomsTableWrap td:nth-child(3), .roomsTableWrap td:nth-child(4), .roomsTableWrap td:nth-child(5) { min-width: 120px; }
+.roomsTableWrap th:nth-child(6), .roomsTableWrap td:nth-child(6) { min-width: 150px; }
+.roomsTableWrap th:nth-child(7), .roomsTableWrap td:nth-child(7) { min-width: 80px; }
+.roomsTableWrap th:nth-child(8), .roomsTableWrap td:nth-child(8),
+.roomsTableWrap th:nth-child(9), .roomsTableWrap td:nth-child(9),
+.roomsTableWrap th:nth-child(10), .roomsTableWrap td:nth-child(10) { min-width: 130px; }
+.subcard { margin: 12px 0 16px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #fbfdff; }
+.subcard h3 { margin-top: 0; }
+.smallHint { font-size: 12px; margin: 10px 0 0; }
+.measureModeRow { max-width: 360px; }
+.mutedControl { opacity: .55; }
+@media(max-width:1000px){.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){.grid.four{grid-template-columns:1fr}}
+
+/* v1.0.3.3 — porządkowanie usług i kompaktowa tabela pomieszczeń */
+.roomsTableWrap table { min-width: 1120px; }
+.roomsTableWrap th:nth-child(1), .roomsTableWrap td:nth-child(1) { min-width: 175px; }
+.roomsTableWrap th:nth-child(2), .roomsTableWrap td:nth-child(2),
+.roomsTableWrap th:nth-child(3), .roomsTableWrap td:nth-child(3),
+.roomsTableWrap th:nth-child(4), .roomsTableWrap td:nth-child(4) { min-width: 78px; width: 78px; }
+.roomsTableWrap th:nth-child(5), .roomsTableWrap td:nth-child(5) { min-width: 92px; width: 92px; }
+.roomsTableWrap th:nth-child(6), .roomsTableWrap td:nth-child(6) { min-width: 138px; }
+.roomsTableWrap th:nth-child(7), .roomsTableWrap td:nth-child(7) { min-width: 70px; width: 70px; }
+.roomsTableWrap th:nth-child(8), .roomsTableWrap td:nth-child(8),
+.roomsTableWrap th:nth-child(9), .roomsTableWrap td:nth-child(9),
+.roomsTableWrap th:nth-child(10), .roomsTableWrap td:nth-child(10) { min-width: 118px; }
+.roomsTableWrap th:nth-child(11), .roomsTableWrap td:nth-child(11) { min-width: 72px; }
+.roomsTableWrap input[type="number"] { padding-left: 8px; padding-right: 6px; }
+.serviceStack { display: grid; gap: 12px; }
+.serviceBlock { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #fbfdff; }
+.serviceHeader { display:flex; align-items:center; justify-content:space-between; gap:12px; font-weight:800; font-size:16px; margin-bottom:10px; color:#0f2d4d; }
+.serviceGrid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items:end; }
+.checkLine { flex-direction: row; align-items:center; gap:8px; min-height: 38px; }
+.checkLine input { width: auto; }
+.serviceDetails { margin-top: 8px; }
+@media(max-width:800px){.serviceGrid{grid-template-columns:1fr}.roomsTableWrap table{min-width:1120px}}
+
+.summaryGroupTitle{font-weight:800;font-size:1.05rem;margin-top:16px;padding-top:10px;border-top:1px solid #d6e1ef;color:#0b2b4c;}
+
+/* v1.1.0 — poddasze */
+.atticScopeGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+#atticServiceBlock{border-color:#b8d2ee;background:#fbfdff}
+@media(max-width:800px){.atticScopeGrid{grid-template-columns:1fr}}
+
+
+/* v1.1.1 — elektryka szczegółowa + separacja bloków */
+.sectionBlock{margin-top:20px;}
+.electricDetailsInline{border-top:1px solid var(--line);margin-top:12px;padding-top:12px;}
+.electricDetailsInline h3{margin-top:0;}
+.electricTableWrap table{min-width:900px;}
+#electricTable input[type="number"]{width:110px;}
+#atticServiceBlock{margin-top:20px;}
+
+/* v1.1.3 — hydraulika szczegółowa + tooltipy */
+.field-label{display:inline-flex;align-items:center;gap:6px;font-weight:700;}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#0b5cab;color:#fff;font-size:11px;line-height:16px;cursor:pointer;user-select:none;}
+.tooltip-box{display:none;margin:6px 0 8px;padding:8px 10px;background:#eef5fc;border-left:4px solid #0b5cab;border-radius:8px;color:#3c5068;font-size:12px;line-height:1.45;white-space:normal;max-width:720px;}
+.tooltip-box.open{display:block;}
+#hydTable input[type="number"], #hydWhiteTable input[type="number"]{width:110px;}
+.hydTableWrap table{min-width:940px;}
+.serviceSubheader{font-weight:800;color:#0f2d4d;margin:14px 0 8px;padding-top:10px;border-top:1px solid var(--line);}
+
+/* v1.1.3 — hydraulika szczegółowa + tooltipy */
+.field-label{display:inline-flex;align-items:center;gap:6px;font-weight:700;}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#0b5cab;color:#fff;font-size:11px;line-height:16px;cursor:pointer;user-select:none;}
+.tooltip-box{display:none;margin:6px 0 8px;padding:8px 10px;background:#eef5fc;border-left:4px solid #0b5cab;border-radius:8px;color:#3c5068;font-size:12px;line-height:1.45;white-space:normal;max-width:720px;}
+.tooltip-box.open{display:block;}
+#hydTable input[type="number"], #hydWhiteTable input[type="number"]{width:110px;}
+.hydTableWrap table{min-width:940px;}
+.serviceSubheader{font-weight:800;color:#0f2d4d;margin:14px 0 8px;padding-top:10px;border-top:1px solid var(--line);}
+
+.delegationField.hidden{display:none !important;}
+
+
+/* v1.1.4 — pomieszczenia mokre */
+.wetDetailsInline{border-top:1px solid var(--line);margin-top:12px;padding-top:12px;}
+.wetTableWrap table{min-width:2100px;}
+#wetRoomsTable input[type="number"]{width:92px;}
+#wetRoomsTable select{min-width:120px;}
+#wetRoomsTable input[type="checkbox"]{width:auto;}
+#wetServiceBlock{border-color:#b8d2ee;background:#fbfdff;}
+
+
+/* v1.1.4.1 — pomieszczenia mokre: stabilizacja szerokości + szczegóły płytek */
+#wetServiceBlock{overflow:hidden;max-width:100%;}
+.wetDetailsInline{min-width:0;max-width:100%;}
+.wetTableWrap{width:100%;max-width:100%;overflow-x:auto;}
+.wetTableWrap table{min-width:2450px;table-layout:auto;}
+#wetRoomsTable th,#wetRoomsTable td{padding:5px;}
+#wetRoomsTable input[type="number"]{width:82px;min-width:82px;padding-left:7px;padding-right:5px;}
+#wetRoomsTable select{min-width:104px;max-width:150px;padding-left:7px;padding-right:6px;}
+#wetRoomsTable th:nth-child(1),#wetRoomsTable td:nth-child(1){min-width:115px;}
+#wetRoomsTable th:nth-child(2),#wetRoomsTable td:nth-child(2){min-width:135px;}
+#wetRoomsTable th:nth-child(8),#wetRoomsTable td:nth-child(8){min-width:120px;}
+#wetRoomsTable th:nth-child(9),#wetRoomsTable td:nth-child(9){min-width:130px;}
+
+/* v1.1.4.3 — tooltip overlay fix */
+#floatingTooltip{
+  display:none;
+  position:absolute;
+  z-index:99999;
+  padding:10px 12px;
+  background:#eef5fc;
+  border-left:4px solid #0b5cab;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(15,35,65,.18);
+  color:#26384d;
+  font-size:13px;
+  line-height:1.45;
+  white-space:normal;
+}
+
+.floorQuickOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+@media(max-width:800px){.floorQuickOptions{grid-template-columns:1fr}}
+.subfloorQuickOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+@media(max-width:800px){.subfloorQuickOptions{grid-template-columns:1fr}}

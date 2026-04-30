@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kalkulator remonty v1.1.6 — podłogi + listwy przypodłogowe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div><h1>Kalkulator ofertowy remonty</h1><p>v1.1.6 — podłogi + listwy przypodłogowe</p></div>
+    <div class="topActions"><button id="resetBtn" class="secondary">Reset</button></div>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <div class="tabs">
+        <button class="tabBtn active" data-tab="tabCalc">Kalkulator</button>
+        <button class="tabBtn" data-tab="tabAdmin">Administracja / cennik</button>
+      </div>
+    </section>
+
+    <div id="tabCalc" class="tabPanel active">
+      <section class="card">
+        <h2>1. Dane projektu</h2>
+        <div class="grid two">
+          <label>Nazwa klienta / projektu<input id="projectName" value="Klient" /></label>
+          <label>Typ nieruchomości<select id="propertyType"><option value="mieszkanie">mieszkanie</option><option value="dom_segment">dom / segment</option><option value="lokal">lokal użytkowy</option></select></label>
+          <label>Powierzchnia lokalu [m²]<input id="area" type="number" min="0" step="0.1" value="50" /></label>
+          <label>Wysokość domyślna [m]<input id="height" type="number" min="2" step="0.05" value="2.6" /></label>
+          <label>Liczba pokoi<input id="roomsCount" type="number" min="0" step="1" value="2" /></label>
+          <label>Liczba łazienek<input id="bathroomsCount" type="number" min="0" step="1" value="1" /></label>
+          <label>Kuchnia<select id="kitchenType"><option value="aneks">aneks</option><option value="oddzielna">oddzielna</option></select></label>
+          <label>Standard<select id="standard"><option value="1">STANDARD</option><option value="1.4">PREMIUM</option></select></label>
+        </div>
+        <p class="hint" id="livingRoomHint"></p>
+      </section>
+
+      <section class="card">
+        <h2>2. Obmiar malowania / gładzi</h2>
+        <div class="grid one measureModeRow">
+          <label>Tryb obmiaru<select id="measureMode"><option value="quick">szybki szacunek</option><option value="manual">ręczny</option><option value="rooms">z pomieszczeń</option></select></label>
+        </div>
+        <div class="info"><b>Definicje:</b> szybki szacunek = z metrażu i układu; ręczny = wpisujesz gotowy pomiar; z pomieszczeń = aplikacja liczy z długości, szerokości i wysokości.</div>
+
+        <div class="subcard" id="quickManualBox">
+          <h3>Szybki / ręczny obmiar — ustawienia domyślne</h3>
+          <div class="grid four">
+            <label>Ręczna powierzchnia ścian [m²]<input id="manualWalls" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Ręczna powierzchnia sufitów [m²]<input id="manualCeilings" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Domyślny kolor ścian<select id="paintColor"><option value="white">biały</option><option value="light">jasny kolor</option><option value="dark">ciemny kolor</option></select></label>
+            <label>Domyślny typ farby ścian<select id="paintType"><option value="acrylic">akrylowa</option><option value="latex">lateksowa</option><option value="ceramic">ceramiczna</option></select></label>
+          </div>
+          <p class="hint smallHint">Te pola są używane tylko dla trybu „szybki szacunek” i „ręczny”. Przy trybie „z pomieszczeń” kolor i typ farby wybierasz osobno dla każdego pomieszczenia.</p>
+        </div>
+
+        <h3>Pomieszczenia</h3>
+        <div class="tableWrap roomsTableWrap">
+          <table id="roomsTable">
+            <thead><tr><th>Pomieszczenie</th><th>Dł. [m]</th><th>Szer. [m]</th><th>Wys. [m]</th><th>Otwory [m²]</th><th>Zakres malowania</th><th>% ścian</th><th>Kolor ścian</th><th>Farba ścian</th><th>Farba sufit</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <button id="addRoomBtn" class="secondary">+ Dodaj pomieszczenie</button>
+      </section>
+
+      <section class="card">
+        <h2>3. Usługi</h2>
+        <div class="serviceStack">
+          <div class="serviceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcPaint" /> <span>Malowanie</span></label></div>
+            <div class="serviceGrid">
+              <label><span class="field-label">Rodzaj malowania <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">A = odświeżenie i drobne poprawki. B = przygotowanie średnie. C = zdzieranie do surowego + pełna gładź; automatycznie uruchamia gładzie.</div><select id="paintVariant"><option value="A">A — odświeżenie, drobne poprawki</option><option value="B">B — przygotowanie średnie</option><option value="C">C — do surowego + pełna gładź</option></select></label>
+              <label class="checkLine"><input type="checkbox" id="svcPrimer" /> <span>Gruntowanie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna nałożenia gruntu pod malowanie lub gładź. Materiał gruntujący rozliczany osobno.</div></label>
+              <label class="checkLine"><input type="checkbox" id="svcMask" /> <span>Zabezpieczenie / oklejanie powierzchni <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę zabezpieczenia podłóg, listew, drzwi, okien i elementów stałych folią oraz taśmą. Materiały zabezpieczające rozliczane osobno, jeśli nie ustalono inaczej.</div></label>
+            </div>
+            <p class="hint smallHint">Kolor i typ farby są ustawiane per pomieszczenie w sekcji obmiaru. Dla trybu szybkiego/ręcznego używane są ustawienia domyślne z sekcji 2.</p>
+          </div>
+
+          <div class="serviceBlock" id="smoothServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcSmooth" /> <span>Gładzie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie gładzi, szlifowanie i przygotowanie pod malowanie. Nie obejmuje dużych napraw podłoża ani zdzierania starych warstw, jeśli nie zaznaczono ich osobno.</div></label></div>
+            <div class="serviceDetails" id="smoothDetailsBox">
+              <p class="hint smallHint">Gładź uruchamia się ręcznie albo automatycznie po wyborze malowania C: „do surowego + pełna gładź”. Liczona jest po powierzchni ścian.</p>
+            </div>
+          </div>
+
+          <div class="serviceBlock" id="demoServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcDemo" /> <span>Demolka — wyburzanie / skuwanie / logistyka</span></label></div>
+            <p class="hint smallHint">Po zaznaczeniu poniżej otworzy się szczegółowy zakres: skuwanie, zrywanie, piętro, winda, wynoszenie i wywóz gruzu.</p>
+            <div class="serviceDetails demoDetailsInline" id="demoDetailsBox" style="display:none;">
+              <h3>Demolka — szczegóły robocizny i logistyki</h3>
+        <div class="info"><b>Zasada:</b> kucie/zrywanie liczone osobno, wynoszenie i wywóz gruzu osobno. Piętro i brak windy mocno podnoszą koszt.</div>
+        <div class="grid three">
+          <label>Piętro<input id="demoFloor" type="number" min="0" step="1" value="3" /></label>
+          <label>Winda<select id="demoElevator"><option value="yes">TAK</option><option value="no">NIE</option></select></label>
+          <label>Typ wywozu<select id="demoWasteMode"><option value="container_small">kontener mały 2–3 m³</option><option value="container_large">kontener 6–7 m³</option><option value="bigbag">Big-Bag 1 m³</option><option value="manual">ręcznie wpisany koszt</option></select></label>
+          <label>Ręczny koszt wywozu [zł]<input id="demoWasteManual" type="number" min="0" step="1" value="0" /></label>
+          <label>Osoby do wynoszenia<input id="demoCarryPeople" type="number" min="0" step="1" value="2" /></label>
+          <label>Czas wynoszenia [h]<input id="demoCarryHours" type="number" min="0" step="0.5" value="4" /></label>
+        </div>
+        <div class="tableWrap">
+          <table id="demoTable">
+            <thead><tr><th>Aktywne</th><th>Rodzaj prac</th><th>Ilość [m²]</th><th>Stawka auto [zł/m²]</th><th>Gruz auto [m³]</th></tr></thead>
+            <tbody>
+              <tr data-demo="tiles"><td><input type="checkbox" class="dActive" checked></td><td><span class="field-label">Skuwanie płytek ściany/podłogi <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje skucie płytek wraz z podstawowym usunięciem kleju i złożeniem gruzu w jednym miejscu. Nie obejmuje wynoszenia, wywozu ani przygotowania pod nowe płytki.</div></td><td><input class="dQty" type="number" min="0" step="0.1" value="20"></td><td class="dRate"></td><td class="dVol"></td></tr>
+              <tr data-demo="plaster"><td><input type="checkbox" class="dActive"></td><td><span class="field-label">Skuwanie starego tynku <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje usunięcie starego tynku z powierzchni ścian lub sufitów i złożenie odpadu w mieszkaniu. Nie obejmuje nowego tynkowania ani gładzi.</div></td><td><input class="dQty" type="number" min="0" step="0.1" value="0"></td><td class="dRate"></td><td class="dVol"></td></tr>
+              <tr data-demo="screed"><td><input type="checkbox" class="dActive" checked></td><td><span class="field-label">Kucie posadzki betonowej / wylewki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje rozbiórkę istniejącej wylewki lub posadzki betonowej. Cena zależy od grubości i twardości materiału. Wyniesienie i wywóz liczone osobno.</div></td><td><input class="dQty" type="number" min="0" step="0.1" value="5"></td><td class="dRate"></td><td class="dVol"></td></tr>
+              <tr data-demo="floor"><td><input type="checkbox" class="dActive"></td><td><span class="field-label">Zrywanie parkietu / desek / paneli <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje demontaż okładziny podłogowej. Legary, kleje bitumiczne, trudne podłoża lub wiele warstw mogą wymagać osobnej wyceny.</div></td><td><input class="dQty" type="number" min="0" step="0.1" value="0"></td><td class="dRate"></td><td class="dVol"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="hint">Stawki i współczynniki gruzu edytujesz w zakładce Administracja / cennik.</p>
+            </div>
+
+          </div>
+
+          <div class="serviceBlock" id="installationsServiceBlock">
+            <div class="serviceHeader"><span>Instalacje — elektryka</span></div>
+            <div class="serviceGrid">
+              <label class="checkLine"><input type="checkbox" id="svcElec" /> <span>Elektryka</span></label>
+            </div>
+            <div class="serviceDetails electricDetailsInline" id="electricDetailsBox" style="display:none;">
+              <h3>Elektryka — zakres prac</h3>
+              <div class="info"><b>Zasada:</b> tryb szybki liczy punkty elektryczne ryczałtowo. Tryb szczegółowy rozbija prace na bruzdy, przewody, punkty, rozdzielnię i dodatki.</div>
+              <div class="grid three">
+                <label>Tryb wyceny elektryki<select id="electricMode"><option value="quick">szybki — liczba punktów</option><option value="detailed">szczegółowy — zakres robót</option></select></label>
+                <label id="elecQuickPtsLabel">Punkty elektryczne [szt]<input id="elecPts" type="number" min="0" step="1" value="10" /></label>
+                <label>Auto podpowiedź punktów<input id="elecAutoHint" type="text" value="" readonly /></label>
+              </div>
+              <div id="electricDetailedBox" style="display:none;">
+                <div class="tableWrap electricTableWrap">
+                  <table id="electricTable">
+                    <thead><tr><th>Aktywne</th><th>Rodzaj prac</th><th>Jedn.</th><th>Ilość</th><th>Stawka auto</th></tr></thead>
+                    <tbody>
+                      <tr data-elec="socket"><td><input type="checkbox" class="eActive" checked></td><td><span class="field-label">Gniazda 230V — wykonanie punktu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punkt elektryczny obejmuje doprowadzenie przewodu, przygotowanie puszki i podłączenie do instalacji. Nie obejmuje osprzętu: gniazda, ramki ani materiałów.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="8"></td><td class="eRate"></td></tr>
+                      <tr data-elec="switch"><td><input type="checkbox" class="eActive" checked></td><td><span class="field-label">Włączniki — wykonanie punktu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje przygotowanie punktu pod włącznik, przewód, puszkę i podłączenie. Nie obejmuje osprzętu i materiałów.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="4"></td><td class="eRate"></td></tr>
+                      <tr data-elec="light"><td><input type="checkbox" class="eActive" checked></td><td><span class="field-label">Punkty oświetleniowe <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje doprowadzenie przewodu do punktu lampy/oprawy i przygotowanie pod montaż. Nie obejmuje oprawy oświetleniowej.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="4"></td><td class="eRate"></td></tr>
+                      <tr data-elec="power"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Gniazdo siłowe / dedykowany punkt AGD <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie dedykowanego punktu dla urządzenia o większym poborze mocy, np. płyta, piekarnik, zmywarka. Nie obejmuje osprzętu, zabezpieczeń i przewodów jako materiałów.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="bruzdaWall"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Bruzdownie w ścianie murowanej <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie bruzd pod przewody. Nie obejmuje odtworzenia tynku, gładzi ani wywozu gruzu.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="bruzdaConcrete"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Bruzdownie w betonie / żelbecie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Trudniejsze bruzdowanie w twardym podłożu. Nie obejmuje odtworzenia powierzchni ani wywozu gruzu.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="cable"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Układanie / prowadzenie przewodów <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę prowadzenia przewodów po trasie instalacji. Nie obejmuje przewodów jako materiału.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="conduit"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Montaż / prowadzenie przewodu w peszlu lub osłonie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">To jest robocizna ułożenia przewodu w peszlu/osłonie. Peszel i przewody są materiałem rozliczanym osobno.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="boxCut"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Kucie / wiercenie pod puszki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie otworów pod puszki elektryczne w ścianie. Nie obejmuje montażu puszki, odtworzenia tynku ani materiałów.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="boxMount"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Montaż / osadzenie puszki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje osadzenie puszki w przygotowanym otworze i przygotowanie pod osprzęt. Sama puszka jest materiałem rozliczanym osobno.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="board"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Montaż / uporządkowanie rozdzielnicy <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę montażu lub uporządkowania rozdzielnicy. Nie obejmuje aparatury, zabezpieczeń i obudowy.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="protection"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Zabezpieczenia w rozdzielnicy / obwody <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę podłączenia zabezpieczeń/obwodów w rozdzielnicy. Aparatura zabezpieczająca jest materiałem.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="agd"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Podłączenie płyty / piekarnika / AGD <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje podłączenie urządzenia do przygotowanego punktu elektrycznego oraz podstawowe sprawdzenie działania. Nie obejmuje wykonania nowego obwodu ani materiałów.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="led"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">LED / taśmy / sterowniki — montaż <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę montażu taśm LED i sterowników. Taśmy, profile, zasilacze i sterowniki są materiałem.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Pozycje elektryczne liczą robociznę. Materiały (peszel, przewody, osprzęt, zabezpieczenia) doliczaj w sekcji materiałów.</p>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="serviceBlock sectionBlock" id="hydraulicsServiceBlock">
+            <div class="serviceHeader"><span>Instalacje — hydraulika</span></div>
+            <div class="serviceGrid">
+              <label class="checkLine"><input type="checkbox" id="svcHyd" /> <span>Hydraulika</span></label>
+              <label>System instalacji<select id="hydSystem"><option value="pex">PEX-AL-PEX</option><option value="pp">PP zgrzewany</option></select></label>
+            </div>
+            <div class="serviceDetails" id="hydDetailsBox" style="display:none;">
+              <div class="info"><b>Zasada:</b> hydraulika liczy robociznę. Rury, kształtki, baterie, syfony, zawory, stelaże i osprzęt doliczaj w sekcji materiałów.</div>
+              <div class="grid three">
+                <label>Tryb wyceny hydrauliki<select id="hydMode"><option value="quick">szybki — punkty wod-kan</option><option value="detailed">szczegółowy — zakres robót</option></select></label>
+                <label id="hydQuickPtsLabel">Punkty wod-kan [szt]<input id="hydPts" type="number" min="0" step="1" value="4" /></label>
+                <label>Współczynnik systemu<input id="hydSystemHint" type="text" value="PEX-AL-PEX ×1.00" readonly /></label>
+              </div>
+              <div id="hydDetailedBox" style="display:none;">
+                <div class="serviceSubheader">Biały montaż / wymiany</div>
+                <div class="tableWrap hydTableWrap">
+                  <table id="hydWhiteTable">
+                    <thead><tr><th>Aktywne</th><th>Rodzaj prac</th><th>Jedn.</th><th>Ilość</th><th>Stawka auto</th></tr></thead>
+                    <tbody>
+                      <tr data-hyd="tapSink"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż baterii umywalkowej <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje montaż baterii do przygotowanych podejść, podłączenie wężyków i test szczelności. Nie obejmuje przeróbek instalacji ani materiałów.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="tapShower"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż baterii prysznicowej / wannowej <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje montaż baterii, podłączenie do przygotowanych podejść i test. Nie obejmuje kucia, przenoszenia punktów ani materiałów.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="sink"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż umywalki / zlewu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje osadzenie i podłączenie do przygotowanej wody oraz kanalizacji. Nie obejmuje szafki, blatu ani zmian instalacji.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="wcCompact"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż WC kompakt <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje montaż miski kompaktowej, podłączenie wody i kanalizacji oraz sprawdzenie działania. Nie obejmuje przeróbek podejść.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="wcFrame"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż WC podtynkowego / stelaż + miska <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje ustawienie stelaża, podłączenie do przygotowanych podejść, montaż miski i test. Nie obejmuje zabudowy GK, płytek ani materiałów.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="showerCabin"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż kabiny prysznicowej <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje montaż kabiny do przygotowanego brodzika/odpływu i sprawdzenie szczelności. Nie obejmuje silikonowania całej łazienki ani korekt glazury.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="bathtub"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż wanny <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje ustawienie, wypoziomowanie i podłączenie wanny do przygotowanej instalacji. Nie obejmuje obudowy wanny, płytek ani przeróbek instalacji.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="appliance"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Podłączenie pralki / zmywarki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje podłączenie urządzenia do przygotowanych zaworów i odpływu oraz test szczelności. Nie obejmuje wykonania nowych punktów wod-kan.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="hose"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Wymiana wężyków / zaworków <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wymianę elastycznych wężyków lub zaworków przy istniejących podejściach. Nie obejmuje przeróbek instalacji ani materiałów.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="serviceSubheader">Instalacja wod-kan / prowadzenie rur</div>
+                <div class="tableWrap hydTableWrap">
+                  <table id="hydTable">
+                    <thead><tr><th>Aktywne</th><th>Rodzaj prac</th><th>Jedn.</th><th>Ilość</th><th>Stawka auto</th></tr></thead>
+                    <tbody>
+                      <tr data-hyd="waterPoint"><td><input type="checkbox" class="hActive" checked></td><td><span class="field-label">Punkt wodny <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punkt wodny obejmuje doprowadzenie zimnej i ciepłej wody, wyprowadzenie zakończeń pod baterię lub urządzenie oraz próbę szczelności. Nie obejmuje montażu baterii ani materiałów.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="4"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="sewerPoint"><td><input type="checkbox" class="hActive" checked></td><td><span class="field-label">Punkt kanalizacyjny <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punkt kanalizacyjny obejmuje doprowadzenie rury kanalizacyjnej do miejsca odbioru, wykonanie podejścia ze spadkiem i przygotowanie pod WC, umywalkę, pralkę lub zmywarkę. Nie obejmuje podłączenia urządzenia ani materiałów.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="2"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="pipeWall"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Prowadzenie rur w ścianie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje trasowanie, mocowanie i prowadzenie rur do punktów. Nie obejmuje bruzdowania ani materiałów.</div></td><td>mb</td><td><input class="hQty" type="number" min="0" step="0.1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="pipeFloor"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Prowadzenie rur w podłodze <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje ułożenie i zamocowanie rur w warstwie podłogowej zgodnie z trasą instalacji. Nie obejmuje bruzdowania, kucia, izolacji ani materiałów.</div></td><td>mb</td><td><input class="hQty" type="number" min="0" step="0.1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="insulation"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Izolacja rur — robocizna <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę założenia otulin lub izolacji na rurach. Otuliny i materiały izolacyjne są rozliczane osobno.</div></td><td>mb</td><td><input class="hQty" type="number" min="0" step="0.1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="bruzda"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Bruzdowanie pod instalację hydrauliczną <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie bruzd pod rury. Nie obejmuje odtworzenia tynku, gładzi ani wywozu gruzu.</div></td><td>mb</td><td><input class="hQty" type="number" min="0" step="0.1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="sewerMb"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż podejścia kanalizacji <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie podejścia kanalizacyjnego na odcinku mb z zachowaniem spadku. Nie obejmuje materiałów ani podłączenia urządzenia końcowego.</div></td><td>mb</td><td><input class="hQty" type="number" min="0" step="0.1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="manifold"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Montaż rozdzielacza wody <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje montaż rozdzielacza i podłączenie obiegów. Nie obejmuje materiałów, szafki rozdzielacza ani rozbudowanych przeróbek.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="manifoldConnect"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Podłączenie rozdzielacza / obiegów <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje podłączenie obiegów do zamontowanego rozdzielacza i podstawowe uporządkowanie instalacji. Materiały i osprzęt rozdzielacza liczone osobno.</div></td><td>szt</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                      <tr data-hyd="correction"><td><input type="checkbox" class="hActive"></td><td><span class="field-label">Korekty spadków / przeróbki lokalne <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Pozycja ryczałtowa na lokalne korekty kanalizacji lub drobne przeróbki trasy. Nie obejmuje dużych zmian układu instalacji.</div></td><td>kpl</td><td><input class="hQty" type="number" min="0" step="1" value="0"></td><td class="hRate"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Hydraulika liczy robociznę; materiały i armaturę doliczaj osobno.</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="serviceBlock sectionBlock" id="wetServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcWet" /> <span>Pomieszczenia mokre / łazienki / kuchnia</span></label></div>
+            <p class="hint smallHint">Moduł przejmuje kontrolę nad hydrauliką i płytkami w wybranych pomieszczeniach. Wymiary pobiera z sekcji 2 — Obmiar. Hydraulika globalna nie jest wtedy liczona drugi raz.</p>
+            <div class="serviceDetails wetDetailsInline" id="wetDetailsBox" style="display:none;">
+              <div class="info"><b>Zasada:</b> wybierz pomieszczenie z obmiaru, a aplikacja pobierze jego podłogę i ściany. Ręczna korekta służy do nietypowych zakresów lub częściowych remontów.</div>
+              <div class="tableWrap wetTableWrap">
+                <table id="wetRoomsTable">
+                  <thead>
+                    <tr>
+                      <th>Typ</th><th>Źródło z obmiaru</th><th><span class="field-label">Korekta ręczna <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Po zaznaczeniu możesz ręcznie wpisać m² podłogi i m² ścian. Używaj przy częściowym remoncie, nietypowej zabudowie lub gdy obmiar z sekcji 2 nie pasuje do zakresu prac.</div></th><th>m² podłogi</th><th>m² ścian</th><th>% ścian w płytkach</th><th><span class="field-label">Fartuch [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Częściowa powierzchnia płytek, najczęściej w kuchni nad blatem. Jeśli wpiszesz fartuch, może zastąpić pełne płytkowanie ścian dla kuchni.</div></th><th><span class="field-label">Materiał płytek <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Glazura = standard. Gres i materiały trudne są twardsze w obróbce, dlatego aplikacja dolicza dopłatę do robocizny.</div></th><th><span class="field-label">Krawędzie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Listwy/profile lub szlif 45° są liczone osobno. Szlif 45° jest bardziej pracochłonny i droższy.</div></th><th>Krawędzie [mb]</th><th>Płytki śc.</th><th>Płytki podł.</th><th><span class="field-label">Grunt <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna gruntowania pod płytki. Stosowane dla poprawy przyczepności, wyrównania chłonności i przygotowania pod klej. Materiał gruntujący / grunt szczepny rozliczany osobno.</div></th><th><span class="field-label">Hydro <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Hydroizolacja / folia w płynie w strefach mokrych. Nie zawsze dotyczy całej powierzchni, ale jest krytyczna przy prysznicu, wannie i miejscach narażonych na wodę.</div></th><th><span class="field-label">Fuga <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Fugowanie i podstawowe wykończenie spoin po ułożeniu płytek. Materiał fugowy rozliczany osobno.</div></th><th>Punkty wodne</th><th>Punkty kanal.</th><th>Rury [mb]</th><th>Bruzdy [mb]</th><th>WC podt.</th><th>WC komp.</th><th>Umywalka/zlew</th><th>Baterie</th><th>Kabina</th><th>Wanna</th><th>Pralka/zmyw.</th><th></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <button id="addWetRoomBtn" type="button" class="secondary">+ Dodaj pomieszczenie mokre</button>
+              <p class="hint smallHint">Dla kuchni można liczyć tylko fartuch roboczy [m²]. Materiał płytek wpływa na robociznę: gres i materiały trudne wymagają dopłaty za obróbkę. Grunt pod płytki i fuga są domyślnie uwzględnione. Hydroizolacja jest świadomym dodatkiem — zaznacz ją ręcznie, gdy dotyczy zakresu. Krawędzie można liczyć jako listwy/profile albo szlif 45°. Wszystkie pozycje dotyczą robocizny; materiały, płytki i armatura są rozliczane osobno.</p>
+            </div>
+          </div>
+
+
+          <div class="serviceBlock sectionBlock" id="floorServiceBlock">
+            <div class="serviceHeader"><span>Podłogi — panele / winyl / deska / listwy</span></div>
+            <label class="checkLine"><input type="checkbox" id="svcFloor" /> <span>Podłogi + listwy przypodłogowe</span></label>
+            <p class="hint smallHint">Moduł liczy robociznę. Panele, podkład, folia, listwy, progi i akcesoria materiałowe rozliczaj w sekcji materiałów.</p>
+            <div class="serviceDetails" id="floorDetailsBox" style="display:none;">
+              <h3>Podłogi + listwy — zakres prac</h3>
+              <div class="info"><b>Zasada:</b> powierzchnia podłogi i obwód listew mogą być pobrane z obmiaru pomieszczeń. Docinki są dopłatą procentową do montażu wybranej podłogi.</div>
+              <div class="grid three">
+                <label>Tryb wyceny podłóg<select id="floorMode"><option value="quick">szybki — całość z obmiaru</option><option value="detailed">szczegółowy — per pomieszczenie</option></select></label>
+                <label id="floorQuickTypeLabel">Typ podłogi<select id="floorQuickType"><option value="laminate">panele laminowane</option><option value="vinyl">winyl click</option><option value="engineered">deska warstwowa pływająca</option></select></label>
+                <label id="floorQuickAreaLabel">Powierzchnia podłóg [m²]<input id="floorQuickArea" type="number" min="0" step="0.1" value="50" /></label>
+                <label id="floorQuickPerimeterLabel">Listwy przypodłogowe [mb]<input id="floorQuickSkirtingMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label id="floorThresholdsLabel">Listwy progowe [szt]<input id="floorThresholds" type="number" min="0" step="1" value="3" /></label>
+                <label id="floorCutPctLabel"><span class="field-label">Docinki [%] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Dopłata procentowa do montażu podłogi za straty, docinanie przy ścianach, wnękach i nietypowym układzie. Nie zwiększa kosztu materiałów, tylko robociznę.</div><input id="floorCutPct" type="number" min="0" step="0.01" value="0.08" /></label>
+              </div>
+              <div class="floorQuickOptions" id="floorQuickOptions">
+                <label class="checkLine"><input type="checkbox" id="floorQuickUnderlay" checked /> <span>Podkład pod panele / winyl <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna rozłożenia podkładu. Sam podkład jest materiałem i nie jest liczony w robociźnie.</div></label>
+                <label class="checkLine"><input type="checkbox" id="floorQuickVapor" /> <span>Folia paroizolacyjna <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna rozłożenia folii paroizolacyjnej, zwykle przy podłożu mineralnym. Folia jest materiałem.</div></label>
+                <label class="checkLine"><input type="checkbox" id="floorQuickSkirting" checked /> <span>Montaż listew przypodłogowych <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje docięcie i montaż listew przypodłogowych po obwodzie pomieszczeń. Listwy, narożniki i łączniki są materiałem.</div></label>
+                <label class="checkLine"><input type="checkbox" id="floorQuickDemoSkirting" /> <span>Demontaż starych listew <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna zdjęcia istniejących listew przypodłogowych. Utylizacja i wyniesienie odpadów są liczone osobno w demolce/logistyce, jeśli dotyczy.</div></label>
+              </div>
+              <div class="tableWrap" id="floorDetailedBox" style="display:none;">
+                <table id="floorTable">
+                  <thead>
+                    <tr><th>Aktywne</th><th>Pomieszczenie</th><th>Korekta ręczna</th><th>m² podłogi</th><th>mb listew</th><th>Typ podłogi</th><th>Podkład</th><th>Folia</th><th>Listwy</th><th>Progi [szt]</th><th>Demontaż listew</th><th>Docinki [%]</th><th>Stawka podłogi</th><th></th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <button id="addFloorRoomBtn" class="secondary" type="button">+ Dodaj pozycję podłogi</button>
+              </div>
+              <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Podkład jest domyślnie sugerowany, ale można go wyłączyć.</p>
+            </div>
+          </div>
+          <div class="serviceBlock sectionBlock" id="subfloorServiceBlock">
+            <div class="serviceHeader"><span>Posadzki — przygotowanie podłoża</span></div>
+            <label class="checkLine"><input type="checkbox" id="svcSubfloor" /> <span>Posadzki / przygotowanie podłoża</span></label>
+            <p class="hint smallHint">Moduł liczy robociznę przygotowania podłoża przed płytkami, panelami, winylem lub deską. Materiały: grunt, masa samopoziomująca, żywice i zaprawy rozliczaj w sekcji materiałów.</p>
+            <div class="serviceDetails" id="subfloorDetailsBox" style="display:none;">
+              <h3>Posadzki / podłoże — zakres prac</h3>
+              <div class="info"><b>Zasada:</b> powierzchnia m² może być pobrana z obmiaru pomieszczeń. Moduł działa technologicznie przed płytkami i podłogami, ale nie dubluje ich montażu.</div>
+              <div class="grid three">
+                <label>Tryb wyceny podłoża<select id="subfloorMode"><option value="quick">szybki — całość z obmiaru</option><option value="detailed">szczegółowy — per pomieszczenie</option></select></label>
+                <label id="subfloorQuickAreaLabel">Powierzchnia podłoża [m²]<input id="subfloorQuickArea" type="number" min="0" step="0.1" value="50" /></label>
+                <label id="subfloorQuickCracksLabel"><span class="field-label">Naprawa pęknięć [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Długość pęknięć / rys wymagających nacięcia, oczyszczenia, wypełnienia lub zszycia. Materiały naprawcze nie są liczone w robociźnie.</div><input id="subfloorQuickCracksMb" type="number" min="0" step="0.1" value="0" /></label>
+              </div>
+              <div class="subfloorQuickOptions" id="subfloorQuickOptions">
+                <label class="checkLine"><input type="checkbox" id="subfloorQuickPrimer" checked /> <span>Gruntowanie podłoża <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna naniesienia gruntu przed dalszymi pracami. Grunt jako materiał rozliczany osobno.</div></label>
+                <label class="checkLine"><span>Wylewka samopoziomująca <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna wykonania warstwy samopoziomującej. Opcja cienka dla standardowego wyrównania, grubsza dla większych nierówności. Materiał liczony osobno.</div><select id="subfloorQuickSelfLevel"><option value="none">brak</option><option value="thin">samopoziom cienki</option><option value="thick">samopoziom grubszy</option></select></label>
+                <label><span class="field-label">Wyrównanie lokalne [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Miejscowe naprawy, podlania, uzupełnienia i korekty przed docelową okładziną.</div><input id="subfloorQuickLocalArea" type="number" min="0" step="0.1" value="0" /></label>
+                <label class="checkLine"><input type="checkbox" id="subfloorQuickGrinding" /> <span>Szlifowanie / oczyszczenie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Mechaniczne przygotowanie powierzchni: usunięcie mleczka, nierówności, resztek kleju lub zabrudzeń. Nie obejmuje ciężkiego skuwania.</div></label>
+              </div>
+              <div class="tableWrap" id="subfloorDetailedBox" style="display:none;">
+                <table id="subfloorTable">
+                  <thead>
+                    <tr><th>Aktywne</th><th>Pomieszczenie</th><th>Korekta ręczna</th><th>m² podłoża</th><th>Grunt</th><th>Samopoziom</th><th>Wyrównanie lokalne [m²]</th><th>Szlifowanie</th><th>Pęknięcia [mb]</th><th>Stawka samopoziomu</th><th></th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <button id="addSubfloorRoomBtn" class="secondary" type="button">+ Dodaj pozycję podłoża</button>
+              </div>
+              <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Moduł jest celowo osobny, żeby przygotowanie podłoża można było policzyć przed płytkami lub podłogami bez duplikacji robót wykończeniowych.</p>
+            </div>
+          </div>
+
+          <div class="serviceBlock" id="wallsServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcWalls" /> <span>Ściany / zabudowy — GK i murowane</span></label></div>
+            <p class="hint smallHint">Moduł liczy robociznę dla lekkich zabudów GK oraz ścian murowanych. Materiały, drzwi, izolacje specjalne i malowanie rozliczaj osobno, jeśli nie zaznaczono ich niżej.</p>
+            <div class="serviceDetails" id="wallsDetailsBox" style="display:none;">
+              <div class="info"><b>Zasada:</b> GK i murowane są liczone oddzielnie, bo mają inną technologię, tempo pracy i wykończenie. Możesz użyć obu tabel w jednym zleceniu.</div>
+
+              <h4>Zabudowa lekka GK</h4>
+              <div class="tableWrap">
+                <table id="wallsGkTable">
+                  <thead><tr><th>Aktywne</th><th>Rodzaj prac</th><th>Jedn.</th><th>Ilość</th><th>Stawka auto</th></tr></thead>
+                  <tbody>
+                    <tr data-wall="gkSingle"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Ściana / zabudowa GK jednostronna <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie lekkiej zabudowy z płyt GK z jednej strony konstrukcji. Typowe dla obudów instalacji, pionów i prostych osłon. Materiały liczone osobno.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="gkDouble"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Ścianka GK dwustronna <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje wykonanie lekkiej ścianki działowej z konstrukcją i poszyciem z obu stron. Wełna, drzwi i pełne wykończenie są osobnymi pozycjami.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="gkCeiling"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Sufit podwieszany GK <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna montażu konstrukcji i płyt GK na suficie. Nie obejmuje oświetlenia, rewizji, materiałów ani pełnej gładzi.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="gkBuildout"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Zabudowy GK: stelaże, piony, półki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Pozycja na zabudowy niestandardowe: obudowy stelaży, pionów, półek, wnęk i elementów instalacyjnych. Materiały i okładziny liczone osobno.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="gkInsulation"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Wełna / izolacja w ściance GK <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna ułożenia wełny lub izolacji w konstrukcji GK. Wełna i folie są materiałem.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="gkJoint"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Spoinowanie / szpachlowanie GK <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje spoinowanie płyt, taśmy/narożniki w podstawowym zakresie i przygotowanie pod dalsze wykończenie. Pełna gładź może być liczona osobno.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="gkOpening"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Otwór drzwiowy / wzmocnienie GK <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Dodatkowa robocizna za przygotowanie otworu drzwiowego, wzmocnienia lub lokalne usztywnienia konstrukcji. Drzwi i ościeżnice osobno.</div></td><td>szt</td><td><input class="wQty" type="number" min="0" step="1" value="0"></td><td class="wRate"></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4>Ścianki murowane</h4>
+              <div class="tableWrap">
+                <table id="wallsMasonryTable">
+                  <thead><tr><th>Aktywne</th><th>Rodzaj prac</th><th>Jedn.</th><th>Ilość</th><th>Stawka auto</th></tr></thead>
+                  <tbody>
+                    <tr data-wall="masonryAerated"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Ścianka działowa z gazobetonu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Murowanie ścianki działowej z bloczków gazobetonowych. Liczone po powierzchni ściany. Materiały, nadproża, kotwy i tynkowanie osobno.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="masonryBrick"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Ścianka z cegły / silikatu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Murowanie ścianki z cięższego materiału, zwykle wolniejsze i droższe niż gazobeton. Materiały i późniejsze wykończenie osobno.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="masonryBuildout"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Murowane wnęki / zabudowy <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Lokalne zabudowy murowane, wnęki, obmurówki lub uzupełnienia. Stosuj gdy zakres nie jest typową prostą ścianką działową.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="masonryPlaster"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Tynkowanie nowej ścianki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna tynkowania nowej ścianki murowanej. Nie obejmuje gładzi, gruntowania, malowania ani materiałów tynkarskich.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="masonrySmooth"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Gładź na ściance murowanej <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Wykonanie gładzi na przygotowanej ściance murowanej. Malowanie i gruntowanie są osobnymi pozycjami.</div></td><td>m²</td><td><input class="wQty" type="number" min="0" step="0.1" value="0"></td><td class="wRate"></td></tr>
+                    <tr data-wall="masonryOpening"><td><input type="checkbox" class="wActive"></td><td><span class="field-label">Otwór / nadproże / wzmocnienie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Dodatkowa robocizna przy otworze drzwiowym, nadprożu lub lokalnym wzmocnieniu. Materiały konstrukcyjne i drzwi osobno.</div></td><td>szt</td><td><input class="wQty" type="number" min="0" step="1" value="0"></td><td class="wRate"></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="hint smallHint">Wszystkie pozycje dotyczą robocizny. Materiały konstrukcyjne, płyty, profile, bloczki, zaprawy, drzwi i malowanie rozliczaj osobno.</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="serviceBlock sectionBlock" id="atticServiceBlock" style="display:none;">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcAttic" /> <span>Poddasze — ocieplenie / izolacje / zabudowa GK</span></label></div>
+            <p class="hint smallHint">Moduł dostępny dla typu nieruchomości: dom / segment. Główna jednostka: m² połaci/skosów, nie m² podłogi.</p>
+            <div class="serviceDetails" id="atticDetailsBox" style="display:none;">
+              <div class="grid three">
+                <label>Tryb obmiaru poddasza<select id="atticMeasureMode"><option value="auto">z powierzchni podłogi × mnożnik</option><option value="manual">ręczne m² połaci</option></select></label>
+                <label>Powierzchnia podłogi poddasza [m²]<input id="atticFloorArea" type="number" min="0" step="0.1" value="50" /></label>
+                <label>Złożoność skosów<select id="atticComplexity"><option value="1.4">proste ×1.4</option><option value="1.6" selected>średnie ×1.6</option><option value="1.8">skomplikowane ×1.8</option></select></label>
+                <label>Ręczna powierzchnia połaci [m²]<input id="atticSlopeAreaManual" type="number" min="0" step="0.1" value="0" /></label>
+                <label>Okna dachowe [szt]<input id="atticRoofWindows" type="number" min="0" step="1" value="0" /></label>
+                <label>Włazy strychowe [szt]<input id="atticHatches" type="number" min="0" step="1" value="0" /></label>
+                <label>Belki / maskowanie [mb]<input id="atticBeamMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label>Wnęki / półki [szt]<input id="atticNiches" type="number" min="0" step="1" value="0" /></label>
+              </div>
+              <div class="atticScopeGrid">
+                <label class="checkLine"><input type="checkbox" id="atticWool1" checked /> <span>Wełna mineralna — 1 warstwa między krokwiami <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna ułożenia pierwszej warstwy wełny między krokwiami. Wełna i materiały pomocnicze liczone osobno.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticWool2" /> <span>Wełna mineralna — 2. warstwa / docieplenie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna ułożenia drugiej warstwy wełny, zwykle pod krokwiami, w celu ograniczenia mostków termicznych.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticVapor" checked /> <span>Paroizolacja <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna montażu folii paroizolacyjnej od strony pomieszczenia. Materiały i taśmy liczone osobno.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticTape" checked /> <span>Taśmy / uszczelnienia paroizolacji <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna uszczelnienia zakładów, połączeń, przejść i krawędzi paroizolacji. Taśmy i kleje są materiałem.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticFrame" checked /> <span>Ruszt stalowy pod GK <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Montaż konstrukcji z profili pod płyty GK na skosach i płaszczyznach. Profile, wieszaki i łączniki są materiałem.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticGk1" checked /> <span>Płyta GK 1x <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna montażu jednej warstwy płyt GK na przygotowanym ruszcie. Płyty i wkręty liczone osobno.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticGk2" /> <span>Płyta GK 2x <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna montażu drugiej warstwy płyt GK dla większej sztywności, akustyki lub odporności. Materiały liczone osobno.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticJoint" checked /> <span>Szpachlowanie i szlifowanie GK <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Spoinowanie płyt, narożniki lub taśmy w podstawowym zakresie i szlifowanie pod dalsze wykończenie. Pełna gładź jest osobną pozycją.</div></label>
+                <label class="checkLine"><input type="checkbox" id="atticSmooth" /> <span>Gładź na zabudowie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Wykonanie gładzi na zabudowie GK i przygotowanie pod malowanie. Materiały liczone osobno.</div></label>
+              </div>
+              <p class="info" id="atticAreaHint">Powierzchnia poddasza zostanie przeliczona automatycznie.</p>
+            </div>
+          </div>
+      </section>
+
+      <section class="card">
+        <h2>4. Materiały, VAT, delegacja</h2>
+        <div class="grid three">
+          <label><span class="field-label">Tryb materiałów <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Określa, kto kupuje materiały: klient, wykonawca albo model mieszany. Kalkulator rozdziela robociznę od materiałów.</div><select id="materialsMode"><option value="client">klient</option><option value="contractor">wykonawca</option><option value="mixed">mieszany</option></select></label>
+          <label>Materiały brutto [zł]<input id="materialsGross" type="number" min="0" step="1" value="0" /></label>
+          <label>Narzut materiałów [%]<input id="materialsMargin" type="number" min="0" step="0.01" value="0.15" /></label>
+          <label>Obsługa zakupów [zł]<input id="shoppingFee" type="number" min="0" step="1" value="0" /></label>
+          <label>VAT robocizna<select id="vatRate"><option value="0.08">8%</option><option value="0.23">23%</option></select></label>
+          <label><span class="field-label">Bufor ryzyka [%] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Rezerwa na nieprzewidziane prace wynikające ze stanu technicznego. W trybie transparentnym pokazuje cenę podstawową i maksymalną z rezerwą.</div><input id="riskBuffer" type="number" min="0" step="0.01" value="0.15" /></label>
+          <label><span class="field-label">Tryb bufora <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Standard: bufor jest wliczony w cenę. Transparentny: bufor jest pokazany jako rezerwa zwrotna, rozliczana po zakończeniu prac.</div><select id="bufferMode"><option value="standard">standard — wliczony w cenę</option><option value="transparent" selected>transparentny — zwrotny</option></select></label>
+          <label>Poza Warszawą?<select id="outsideWarsaw"><option value="no">NIE</option><option value="yes">TAK</option></select></label>
+          <label class="delegationField">Dni delegacji<input id="delegDays" type="number" min="0" step="1" value="0" /></label>
+          <label class="delegationField">Delegacja / dzień [zł]<input id="delegDaily" type="number" min="0" step="1" value="200" /></label>
+          <label class="delegationField">Km w jedną stronę<input id="kmOneWay" type="number" min="0" step="1" value="0" /></label>
+          <label class="delegationField">Stawka km [zł/km]<input id="kmRate" type="number" min="0" step="0.01" value="1.3" /></label>
+          <label class="delegationField">Nocleg [zł/dzień]<input id="hotel" type="number" min="0" step="1" value="0" /></label>
+        </div>
+      </section>
+
+      <section class="card summary">
+        <h2>5. Podsumowanie</h2>
+        <div id="summary"></div>
+        <button id="calcBtn">Przelicz</button>
+      </section>
+    </div>
+
+    <div id="tabAdmin" class="tabPanel">
+      <section class="card">
+        <h2>Administracja / cennik Warszawa — robocizna i logistyka</h2>
+        <p class="hint">Zmiana stawek działa od razu po kliknięciu „Zapisz cennik”. Dane są zapisywane lokalnie w przeglądarce.</p>
+        <div class="tableWrap"><table id="ratesTable"><thead><tr><th>Parametr</th><th>Wartość</th><th>Jednostka</th></tr></thead><tbody></tbody></table></div>
+        <div class="actions"><button id="saveRatesBtn">Zapisz cennik</button><button id="defaultRatesBtn" class="secondary">Przywróć domyślne</button></div>
+      </section>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
