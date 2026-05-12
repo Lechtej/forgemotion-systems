@@ -13,6 +13,9 @@ const defaultRates = {
   paintCeiling: 25,
   paintLatexExtra: 4,
   paintCeramicExtra: 8,
+  paintCeilingPatch: 50,
+  paintTouchup: 40,
+  paintTouchupExtended: 90,
   primer: 6,
   smooth: 45,
   mask: 4,
@@ -34,6 +37,10 @@ const defaultRates = {
   elecProtection: 120,
   elecAgd: 150,
   elecLed: 90,
+  elecLedPoint: 160,
+  elecLedTape: 35,
+  elecLedSolder: 25,
+  elecLedProfile: 20,
   hyd: 260,
   hydQuickPoint: 280,
   hydWaterPoint: 260,
@@ -55,6 +62,9 @@ const defaultRates = {
   hydBathtub: 450,
   hydAppliance: 130,
   hydHose: 50,
+  siliconeNew: 25,
+  siliconeReplace: 45,
+  siliconePatch: 60,
   hydPpMultiplier: 1.12,
   gk: 140,
   wallGkSingle: 90,
@@ -126,6 +136,21 @@ const defaultRates = {
   decorLedMask: 40,
   decorCorner: 20,
   decorPaint: 15,
+  wallpaperStandard: 45,
+  wallpaperPremium: 80,
+  wallpaperRemove: 20,
+  wallpaperPrimer: 6,
+  wallpaperProtection: 5,
+  floorSkirtingAcrylic: 8,
+  floorSkirtingProtection: 6,
+  floorSkirtingPaint: 12,
+  floorSkirtingEndRepair: 18,
+  floorSkirtingJointRepair: 20,
+  decorJointRepair: 35,
+  decorStepRepair: 45,
+  decorAcrylicRepair: 8,
+  decorProtection: 6,
+  decorRepairPaint: 15,
   hardStairsPct: 0.10,
   hardScaffoldDay: 220,
   hardProtectionMb: 10
@@ -139,6 +164,9 @@ const rateLabels = {
   paintCeiling:['Malowanie sufitów — biały','zł/m²'],
   paintLatexExtra:['Dopłata: farba lateksowa','zł/m²'],
   paintCeramicExtra:['Dopłata: farba ceramiczna','zł/m²'],
+  paintCeilingPatch:['Serwis malarski: naprawa punktowa sufitu','zł/szt'],
+  paintTouchup:['Serwis malarski: zaprawka do ok. 0,25 m²','zł/szt'],
+  paintTouchupExtended:['Serwis malarski: zaprawka rozszerzona','zł/szt'],
   primer:['Gruntowanie ścian/sufitów','zł/m²'],
   mask:['Zabezpieczenie powierzchni: folia/taśma','zł/m²'],
   prepMediumExtra:['Dopłata: zeskrobanie/poprawki średnie','zł/m²'],
@@ -159,7 +187,11 @@ const rateLabels = {
   elecBoard:['Elektryka: montaż/uporządkowanie rozdzielnicy','zł/szt'],
   elecProtection:['Elektryka: zabezpieczenia/obwody w rozdzielnicy','zł/szt'],
   elecAgd:['Elektryka: podłączenie płyty/piekarnika/AGD','zł/szt'],
-  elecLed:['Elektryka: LED/taśmy/sterowniki','zł/mb'],
+  elecLed:['Elektryka: LED/taśmy/sterowniki — legacy','zł/mb'],
+  elecLedPoint:['Elektryka LED: punkt LED / podłączenie','zł/szt'],
+  elecLedTape:['Elektryka LED: montaż taśmy LED','zł/mb'],
+  elecLedSolder:['Elektryka LED: lutowanie / łączenie','zł/szt'],
+  elecLedProfile:['Elektryka LED: montaż profilu alu','zł/mb'],
   hyd:['Punkt wod-kan — legacy','zł/szt'],
   hydQuickPoint:['Hydraulika: punkt wod-kan — szybki tryb','zł/szt'],
   hydWaterPoint:['Hydraulika: punkt wodny','zł/szt'],
@@ -181,6 +213,9 @@ const rateLabels = {
   hydBathtub:['Hydraulika: montaż wanny','zł/szt'],
   hydAppliance:['Hydraulika: podłączenie pralki/zmywarki','zł/szt'],
   hydHose:['Hydraulika: wymiana wężyków/zaworków','zł/szt'],
+  siliconeNew:['Pomieszczenia mokre: nowe silikonowanie','zł/mb'],
+  siliconeReplace:['Pomieszczenia mokre: wymiana silikonu','zł/mb'],
+  siliconePatch:['Pomieszczenia mokre: poprawka punktowa silikonu','zł/szt'],
   hydPpMultiplier:['Hydraulika: mnożnik systemu PP zgrzewanego','×'],
   gk:['Ściany GK — legacy','zł/m²'],
   wallGkSingle:['Zabudowy: GK jednostronna','zł/m²'],
@@ -252,6 +287,21 @@ const rateLabels = {
   decorLedMask:["Dekoracje: maskownice LED","zł/mb"],
   decorCorner:["Dekoracje: narożniki / zakończenia","zł/szt"],
   decorPaint:["Dekoracje: malowanie listew","zł/mb"],
+  wallpaperStandard:["Tapetowanie: standard","zł/m²"],
+  wallpaperPremium:["Tapetowanie: premium / wzór","zł/m²"],
+  wallpaperRemove:["Tapetowanie: usunięcie starej tapety","zł/m²"],
+  wallpaperPrimer:["Tapetowanie: grunt pod tapetę","zł/m²"],
+  wallpaperProtection:["Tapetowanie: zabezpieczenie / oklejenie tapety","zł/m²"],
+  floorSkirtingAcrylic:["Listwy przypodłogowe: akrylowanie","zł/mb"],
+  floorSkirtingProtection:["Listwy przypodłogowe: taśmowanie ochronne","zł/mb"],
+  floorSkirtingPaint:["Listwy przypodłogowe: malowanie","zł/mb"],
+  floorSkirtingEndRepair:["Listwy przypodłogowe: renowacja zakończenia","zł/szt"],
+  floorSkirtingJointRepair:["Listwy przypodłogowe: korekta łączenia","zł/szt"],
+  decorJointRepair:["Sztukateria: renowacja łączenia","zł/szt"],
+  decorStepRepair:["Sztukateria: wygubienie uskoku / przejścia","zł/szt"],
+  decorAcrylicRepair:["Sztukateria: poprawa starego akrylu / pęknięć","zł/mb"],
+  decorProtection:["Sztukateria: zabezpieczenie / oklejanie do malowania","zł/mb"],
+  decorRepairPaint:["Sztukateria: malowanie po renowacji","zł/mb"],
   hardStairsPct:["Prace trudne: klatki schodowe — dopłata","% robocizny"],
   hardScaffoldDay:["Prace trudne: rusztowanie","zł/dzień"],
   hardProtectionMb:["Prace trudne: zabezpieczenia","zł/mb"]
@@ -270,9 +320,10 @@ const SUMMARY_GROUPS = [
   {id:'smooth', title:'9. Gładzie', order:90},
   {id:'floor', title:'10. Podłogi i listwy przypodłogowe', order:100},
   {id:'decor', title:'11. Dekoracje / sztukateria', order:110},
-  {id:'paint', title:'12. Malowanie', order:120},
-  {id:'hard', title:'13. Prace trudne / narzuty', order:130},
-  {id:'other', title:'14. Inne pozycje', order:900}
+  {id:'wallpaper', title:'12. Tapetowanie / okładziny ścienne', order:115},
+  {id:'paint', title:'13. Malowanie', order:120},
+  {id:'hard', title:'14. Prace trudne / narzuty', order:130},
+  {id:'other', title:'15. Inne pozycje', order:900}
 ];
 const SUMMARY_GROUP_BY_ID = Object.fromEntries(SUMMARY_GROUPS.map(g => [g.id, g]));
 function inferSummaryMeta(name=''){
@@ -305,7 +356,7 @@ function inferSummaryMeta(name=''){
   if(n.includes('posadzki') || n.includes('podłoże') || n.includes('samopoziom') || n.includes('wyrównanie lokalne') || n.includes('szlifowanie')) { id='subfloor'; order=30; }
   if(n.includes('elektryka')) { id='electric'; order=40; }
   if(n.includes('hydraulika')) { id='hydraulic'; order=50; }
-  if(n.includes('płytki') || n.includes('glazura') || n.includes('łazienka') || n.includes('hydroizolacja') || n.includes('fugowanie')) { id='wet'; order=60; }
+  if(n.includes('płytki') || n.includes('glazura') || n.includes('łazienka') || n.includes('hydroizolacja') || n.includes('fugowanie') || n.includes('silikon')) { id='wet'; order=60; }
   // v1.4.1: po imporcie JSON pozycje malowania per pomieszczenie mają nazwy typu
   // „salon — ściany (biały, akrylowa)” / „sypialnia — sufit (biały, akrylowa)”.
   // Nie zawierają słowa „malowanie”, więc muszą być klasyfikowane jawnie.
@@ -318,8 +369,11 @@ function inferSummaryMeta(name=''){
   if(n.includes('poddasze')) { id='attic'; order=80; }
   if(n.includes('gładź')) { id='smooth'; order=90; }
   if(n.includes('podłogi') || n.includes('panele') || n.includes('winyl') || n.includes('deska warstwowa') || n.includes('listwy przypodłogowe') || n.includes('podkład') || n.includes('paroizolacyjna') || n.includes('progowa')) { id='floor'; order=100; }
-  if(n.includes('dekoracje') || n.includes('sztukateria') || n.includes('listwy przysufitowe') || n.includes('maskownice led') || n.includes('malowanie listew')) { id='decor'; order=110; }
-  if(n.includes('malowanie') || n.includes('gruntowanie')) { id='paint'; order=120; }
+  if(n.includes('dekoracje') || n.includes('sztukateria') || n.includes('listwy przysufitowe') || n.includes('maskownice led') || n.includes('malowanie listew') || n.includes('renowacja łączeń sztukaterii') || n.includes('wygubienie uskoku') || n.includes('korekta starego akrylu') || n.includes('poprawa starego akrylu') || n.includes('zabezpieczenie / oklejanie sztukaterii') || n.includes('zabezpieczenie / oklejanie do malowania')) { id='decor'; order=110; }
+  if(n.includes('tapetowanie') || n.includes('tapeta') || n.includes('tapety')) { id='wallpaper'; order=115; }
+  if(n.includes('serwis malarski') || n.includes('zaprawka') || n.includes('naprawa punktowa sufitu')) { id='paint'; order=120; }
+  if((n.includes('malowanie') || n.includes('gruntowanie')) && !n.includes('sztukateria') && !n.includes('listwy przypodłogowe') && !n.includes('dekoracje')) { id='paint'; order=120; }
+  if(n.includes('tapetowanie') || n.includes('tapeta') || n.includes('tapety')) { id='wallpaper'; order=115; }
   if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('transport pionowy')) { id='hard'; order=130; }
   return {group:id, groupOrder:SUMMARY_GROUP_BY_ID[id].order, order};
 }
@@ -365,7 +419,14 @@ function workTimeRule(row){
   if(row.note || !Number(row.qty)) return null;
   if(n.includes('wywóz') || n.includes('kontener') || n.includes('big-bag')) return null;
   if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('dopłata globalna')) return null;
+  if(n.includes('tapetowanie')) return {min:8, max:18};
+  if(n.includes('usunięcie starej tapety')) return {min:18, max:35};
+  if(n.includes('zabezpieczenie') && n.includes('tapety')) return {min:40, max:80};
+  if(n.includes('serwis malarski: naprawa punktowa sufitu')) return {min:8, max:14};
+  if(n.includes('serwis malarski: zaprawka malarska')) return {min:10, max:18};
+  if(n.includes('serwis malarski: zaprawka rozszerzona')) return {min:5, max:10};
   if(n.includes('malowanie listew')) return {min:45, max:75};
+  if(n.includes('renowacja zakończeń') || n.includes('korekta łączeń') || n.includes('wygubienie uskoku') || n.includes('korekta starego akrylu') || n.includes('renowacja łączeń')) return {min:3, max:6};
   if(n.includes('malowanie ścian')) return {min:45, max:75};
   if(n.includes('malowanie sufit')) return {min:40, max:65};
   if(n.includes('gruntowanie')) return {min:90, max:150};
@@ -472,7 +533,11 @@ const electricMap = {
   board: {rate:'elecBoard', label:'Elektryka: rozdzielnica'},
   protection: {rate:'elecProtection', label:'Elektryka: zabezpieczenia / obwody w rozdzielnicy'},
   agd: {rate:'elecAgd', label:'Elektryka: podłączenie AGD'},
-  led: {rate:'elecLed', label:'Elektryka: LED / taśmy / sterowniki'}
+  led: {rate:'elecLed', label:'Elektryka: LED / taśmy / sterowniki'},
+  ledPoint: {rate:'elecLedPoint', label:'Elektryka LED: punkt LED / podłączenie'},
+  ledTape: {rate:'elecLedTape', label:'Elektryka LED: montaż taśmy LED'},
+  ledSolder: {rate:'elecLedSolder', label:'Elektryka LED: lutowanie / łączenie'},
+  ledProfile: {rate:'elecLedProfile', label:'Elektryka LED: montaż profilu alu'}
 };
 
 
@@ -849,6 +914,16 @@ function syncDemoUi(){
   const box = el('demoDetailsBox');
   if(box) box.style.display = chk('svcDemo') ? '' : 'none';
 }
+function syncPaintUi(){
+  const paintBox = el('paintDetailsBox');
+  const repairBox = el('paintRepairDetailsBox');
+  if(paintBox) paintBox.style.display = chk('svcPaint') ? '' : 'none';
+  if(repairBox) repairBox.style.display = chk('svcPaintRepair') ? '' : 'none';
+}
+function paintRepairLightMultiplier(){
+  const mode = el('paintRepairLightMode') ? val('paintRepairLightMode') : 'standard';
+  return ({standard:1, demanding:1.2, critical:1.5})[mode] || 1;
+}
 function syncSmoothUi(){
   const box = el('smoothDetailsBox');
   if(box) box.style.display = chk('svcSmooth') ? '' : 'none';
@@ -1006,9 +1081,23 @@ function seedFloorRows(){
   names.forEach(n=>addFloorRoom({source:n}));
   if(!tbody.children.length) addFloorRoom({});
 }
+function setSubsectionEnabled(box, enabled){
+  if(!box) return;
+  box.style.display = enabled ? 'block' : 'none';
+  box.classList.toggle('serviceSubsectionDisabled', !enabled);
+  box.querySelectorAll('input, select, textarea, button').forEach(ctrl=>{
+    ctrl.disabled = !enabled;
+  });
+}
 function syncFloorUi(){
   const details=el('floorDetailsBox');
-  if(details) details.style.display = chk('svcFloor') ? 'block' : 'none';
+  const floorEnabled = chk('svcFloor');
+  const repairEnabled = chk('svcFloorRepair');
+  if(details) details.style.display = (floorEnabled || repairEnabled) ? 'block' : 'none';
+  const newWorkBox = el('floorNewWorkBox');
+  const repairBox = el('floorRepairBox');
+  setSubsectionEnabled(newWorkBox, floorEnabled);
+  setSubsectionEnabled(repairBox, repairEnabled);
   const detailed = el('floorMode') && val('floorMode') === 'detailed';
   const detailedBox=el('floorDetailedBox');
   const quickOptions=el('floorQuickOptions');
@@ -1035,8 +1124,22 @@ function syncFloorUi(){
     if(cell) cell.textContent=money(rate);
   });
 }
+function trimSizeMultiplier(size){
+  const map = {small:0.90, medium:1.00, large:1.25, premium:1.45};
+  return map[size] || 1.00;
+}
+
+function addWithMultiplier(add, label, qty, unit, rate, multiplier){
+  if(!qty || qty <= 0) return;
+  const m = multiplier || 1;
+  const suffix = m !== 1 ? ` × mnożnik ${m.toFixed(2)}` : '';
+  add(`${label}${suffix}`, qty, unit, rate * m);
+}
+
 function addFloorRows(add){
-  if(!chk('svcFloor')) return;
+  const floorEnabled = chk('svcFloor');
+  const repairEnabled = chk('svcFloorRepair');
+  if(!floorEnabled && !repairEnabled) return;
   syncFloorUi();
   const detailed = el('floorMode') && val('floorMode') === 'detailed';
   const addSet = (prefix, area, skirtingMb, type, underlay, vapor, skirting, thresholds, demoSkirting, cutPct)=>{
@@ -1050,11 +1153,10 @@ function addFloorRows(add){
     add(`${prefix}: listwy progowe`, thresholds, 'szt', rates.floorThreshold);
     if(demoSkirting) add(`${prefix}: demontaż starych listew`, skirtingMb, 'mb', rates.floorDemoSkirting);
   };
-  if(!detailed){
+  if(floorEnabled && !detailed){
     addSet('Podłogi', num('floorQuickArea'), num('floorQuickSkirtingMb'), val('floorQuickType'), chk('floorQuickUnderlay'), chk('floorQuickVapor'), chk('floorQuickSkirting'), num('floorThresholds'), chk('floorQuickDemoSkirting'), num('floorCutPct'));
-    return;
   }
-  document.querySelectorAll('#floorTable tbody tr').forEach(tr=>{
+  if(floorEnabled && detailed) document.querySelectorAll('#floorTable tbody tr').forEach(tr=>{
     if(!tr.querySelector('.fActive')?.checked) return;
     const source=tr.querySelector('.floorSource')?.value || 'pomieszczenie';
     addSet(`Podłogi — ${source}`,
@@ -1069,6 +1171,14 @@ function addFloorRows(add){
       parseFloat(tr.querySelector('.floorCutPct')?.value || '0') || 0
     );
   });
+  if(repairEnabled){
+    const trimMul = trimSizeMultiplier(val('floorSkirtingSize'));
+    add('Listwy przypodłogowe: akrylowanie', num('floorSkirtingAcrylicMb'), 'mb', rates.floorSkirtingAcrylic);
+    add('Listwy przypodłogowe: taśmowanie ochronne', num('floorSkirtingProtectionMb'), 'mb', rates.floorSkirtingProtection);
+    addWithMultiplier(add, 'Listwy przypodłogowe: malowanie', num('floorSkirtingPaintMb'), 'mb', rates.floorSkirtingPaint, trimMul);
+    addWithMultiplier(add, 'Listwy przypodłogowe: renowacja zakończeń', num('floorSkirtingEndRepairQty'), 'szt', rates.floorSkirtingEndRepair, trimMul);
+    addWithMultiplier(add, 'Listwy przypodłogowe: korekta łączeń / pęknięć', num('floorSkirtingJointRepairQty'), 'szt', rates.floorSkirtingJointRepair, trimMul);
+  }
 }
 
 function subfloorSourceOptions(selected=''){
@@ -1371,7 +1481,9 @@ function seedWetRooms(){
 }
 function syncWetUi(){
   const box=el('wetDetailsBox');
+  const repairBox=el('wetRepairDetailsBox');
   if(box) box.style.display = chk('svcWet') ? 'block' : 'none';
+  if(repairBox) repairBox.style.display = chk('svcWetRepair') ? 'block' : 'none';
   if(chk('svcWet')) seedWetRooms();
   document.querySelectorAll('#wetRoomsTable tbody tr').forEach(tr=>{
     const override=tr.querySelector('.wetOverride')?.checked;
@@ -1384,9 +1496,12 @@ function syncWetUi(){
   });
 }
 function addWetRows(add, rows){
-  if(!chk('svcWet')) return;
+  const wetEnabled = chk('svcWet');
+  const wetRepairEnabled = chk('svcWetRepair');
+  if(!wetEnabled && !wetRepairEnabled) return;
   syncWetUi();
   const mult = hydSystemMultiplier();
+  if(wetEnabled){
   document.querySelectorAll('#wetRoomsTable tbody tr').forEach(tr=>{
     const type=tr.querySelector('.wetType').value;
     const source=tr.querySelector('.wetSource').value || 'pomieszczenie';
@@ -1425,6 +1540,12 @@ function addWetRows(add, rows){
     add(`${prefix}: podłączenie pralki / zmywarki`, parseFloat(tr.querySelector('.wetAppliance').value)||0, 'szt', rates.hydAppliance);
   });
   if(rows) rows.push({name:'Hydraulika i płytki w pomieszczeniach mokrych są liczone w module pomieszczeń mokrych — nie dubluj ich w globalnej hydraulice.', qty:0, unit:'', rate:0, value:0, note:true});
+  }
+  if(wetRepairEnabled){
+    add('Pomieszczenia mokre: nowe silikonowanie', num('wetSiliconeNewMb'), 'mb', rates.siliconeNew);
+    add('Pomieszczenia mokre: wymiana silikonu', num('wetSiliconeReplaceMb'), 'mb', rates.siliconeReplace);
+    add('Pomieszczenia mokre: poprawka punktowa silikonu', num('wetSiliconePatchQty'), 'szt', rates.siliconePatch);
+  }
 }
 
 function syncMeasureUi(){
@@ -1438,7 +1559,17 @@ function syncMeasureUi(){
 
 function syncDecorUi(){
   const details = el('decorDetailsBox');
-  if(details) details.style.display = chk('svcDecor') ? 'block' : 'none';
+  const decorEnabled = chk('svcDecor');
+  const repairEnabled = chk('svcDecorRepair');
+  if(details) details.style.display = (decorEnabled || repairEnabled) ? 'block' : 'none';
+  const newWorkBox = el('decorNewWorkBox');
+  const repairBox = el('decorRepairBox');
+  setSubsectionEnabled(newWorkBox, decorEnabled);
+  setSubsectionEnabled(repairBox, repairEnabled);
+}
+function syncWallpaperUi(){
+  const details = el('wallpaperDetailsBox');
+  if(details) details.style.display = chk('svcWallpaper') ? 'block' : 'none';
 }
 function syncHardUi(){
   const details = el('hardDetailsBox');
@@ -1452,15 +1583,35 @@ function syncAtticMenuUi(){
   if(!isHouse && el('svcAttic')) el('svcAttic').checked = false;
 }
 function addDecorRows(add){
-  if(!chk('svcDecor')) return;
-  const ceiling = num('decorCeilingMb');
-  const wall = num('decorWallMb');
-  const led = num('decorLedMb');
-  add('Dekoracje: listwy przysufitowe', ceiling, 'mb', rates.decorCeiling);
-  add('Dekoracje: listwy ścienne dekoracyjne', wall, 'mb', rates.decorWall);
-  add('Dekoracje: maskownice LED', led, 'mb', rates.decorLedMask);
-  add('Dekoracje: narożniki / zakończenia', num('decorCornersQty'), 'szt', rates.decorCorner);
-  if(chk('decorPaint')) add('Dekoracje: malowanie listew', ceiling + wall + led, 'mb', rates.decorPaint);
+  const decorEnabled = chk('svcDecor');
+  const repairEnabled = chk('svcDecorRepair');
+  if(!decorEnabled && !repairEnabled) return;
+  if(decorEnabled){
+    const ceiling = num('decorCeilingMb');
+    const wall = num('decorWallMb');
+    const led = num('decorLedMb');
+    add('Dekoracje: listwy przysufitowe', ceiling, 'mb', rates.decorCeiling);
+    add('Dekoracje: listwy ścienne dekoracyjne', wall, 'mb', rates.decorWall);
+    add('Dekoracje: maskownice LED', led, 'mb', rates.decorLedMask);
+    add('Dekoracje: narożniki / zakończenia', num('decorCornersQty'), 'szt', rates.decorCorner);
+    if(chk('decorPaint')) add('Dekoracje: malowanie listew', ceiling + wall + led, 'mb', rates.decorPaint);
+  }
+  if(repairEnabled){
+    const decorMul = trimSizeMultiplier(val('decorProfileSize'));
+    add('Sztukateria: zabezpieczenie / oklejanie do malowania', num('decorProtectionMb'), 'mb', rates.decorProtection);
+    addWithMultiplier(add, 'Sztukateria: renowacja łączeń', num('decorJointRepairQty'), 'szt', rates.decorJointRepair, decorMul);
+    addWithMultiplier(add, 'Sztukateria: wygubienie uskoku / przejścia', num('decorStepRepairQty'), 'szt', rates.decorStepRepair, decorMul);
+    add('Sztukateria: poprawa starego akrylu / pęknięć', num('decorAcrylicRepairMb'), 'mb', rates.decorAcrylicRepair);
+    addWithMultiplier(add, 'Sztukateria: malowanie po renowacji', num('decorRepairPaintMb'), 'mb', rates.decorRepairPaint, decorMul);
+  }
+}
+function addWallpaperRows(add){
+  if(!chk('svcWallpaper')) return;
+  add('Tapetowanie: standard', num('wallpaperStandardM2'), 'm²', rates.wallpaperStandard);
+  add('Tapetowanie: premium / wzór', num('wallpaperPremiumM2'), 'm²', rates.wallpaperPremium);
+  add('Tapetowanie: usunięcie starej tapety', num('wallpaperRemoveM2'), 'm²', rates.wallpaperRemove);
+  add('Tapetowanie: grunt pod tapetę', num('wallpaperPrimerM2'), 'm²', rates.wallpaperPrimer);
+  add('Tapetowanie: zabezpieczenie / oklejenie tapety', num('wallpaperProtectionM2'), 'm²', rates.wallpaperProtection);
 }
 function addHardRows(rows, addFixed, baseNet){
   if(!chk('svcHard')) return 0;
@@ -1483,9 +1634,11 @@ function calc(){
   syncElectricUi();
   syncHydraulicUi();
   syncWetUi();
+  syncPaintUi();
   syncFloorUi();
   syncSubfloorUi();
   syncDecorUi();
+  syncWallpaperUi();
   syncHardUi();
   syncAtticMenuUi();
   syncWallsUi();
@@ -1517,6 +1670,12 @@ function calc(){
   if(chk('svcPrimer')) add('Gruntowanie', paintArea, 'm²', rates.primer);
   if(chk('svcSmooth')) add('Gładź', m.walls, 'm²', rates.smooth);
   if(chk('svcMask')) add('Zabezpieczenie / oklejanie', paintArea, 'm²', rates.mask);
+  if(chk('svcPaintRepair')){
+    const lightMult = paintRepairLightMultiplier();
+    add('Serwis malarski: naprawa punktowa sufitu', num('paintCeilingPatchQty'), 'szt', (rates.paintCeilingPatch || 0) * lightMult);
+    add('Serwis malarski: zaprawka malarska do ok. 0,25 m²', num('paintTouchupQty'), 'szt', (rates.paintTouchup || 0) * lightMult);
+    add('Serwis malarski: zaprawka rozszerzona', num('paintTouchupExtendedQty'), 'szt', (rates.paintTouchupExtended || 0) * lightMult);
+  }
   addElectricRows(add);
   addWetRows(add, rows);
   if(!chk('svcWet')) addHydraulicRows(add);
@@ -1531,6 +1690,7 @@ function calc(){
   addSubfloorRows(add);
   addFloorRows(add);
   addDecorRows(add);
+  addWallpaperRows(add);
   addWallRows(add);
   addAtticRows(add);
   const netBeforeHard = net;
@@ -1630,8 +1790,10 @@ function bindAll(){
       if(el('svcPrimer')) el('svcPrimer').checked = true;
       if(el('svcMask')) el('svcMask').checked = true;
     }
+    if(typeof syncPaintUi === 'function') syncPaintUi();
     calc();
   });
+  if(el('svcPaintRepair')) el('svcPaintRepair').addEventListener('change',()=>{ if(typeof syncPaintUi === 'function') syncPaintUi(); calc(); });
   if(el('addWetRoomBtn')) el('addWetRoomBtn').addEventListener('click',()=>addWetRoom({type:'bathroom'}));
   if(el('addFloorRoomBtn')) el('addFloorRoomBtn').addEventListener('click',()=>addFloorRoom({}));
   if(el('addSubfloorRoomBtn')) el('addSubfloorRoomBtn').addEventListener('click',()=>addSubfloorRoom({}));
@@ -1651,15 +1813,20 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 (function(){
   const moduleStateMap = [
     {masterId:'roomsTable', locked:true},
-    {masterId:'svcPaint', sync:()=>{}},
+    {masterId:'svcPaint', sync:()=>{ if(typeof syncPaintUi==='function') syncPaintUi(); }},
+    {masterId:'svcPaintRepair', sync:()=>{ if(typeof syncPaintUi==='function') syncPaintUi(); }},
     {masterId:'svcDemo', sync:()=>{}},
     {masterId:'svcElec', sync:()=>{}},
     {masterId:'svcHyd', sync:()=>{}},
     {masterId:'svcWet', sync:()=>{ if(typeof syncWetUi==='function') syncWetUi(); }},
+    {masterId:'svcWetRepair', sync:()=>{ if(typeof syncWetUi==='function') syncWetUi(); }},
     {masterId:'svcWalls', sync:()=>{}},
     {masterId:'svcFloor', sync:()=>{ if(typeof syncFloorUi==='function') syncFloorUi(); }},
+    {masterId:'svcFloorRepair', sync:()=>{ if(typeof syncFloorUi==='function') syncFloorUi(); }},
     {masterId:'svcSubfloor', sync:()=>{ if(typeof syncSubfloorUi==='function') syncSubfloorUi(); }},
     {masterId:'svcDecor', sync:()=>{ if(typeof syncDecorUi==='function') syncDecorUi(); }},
+    {masterId:'svcDecorRepair', sync:()=>{ if(typeof syncDecorUi==='function') syncDecorUi(); }},
+    {masterId:'svcWallpaper', sync:()=>{ if(typeof syncWallpaperUi==='function') syncWallpaperUi(); }},
     {masterId:'svcHard', sync:()=>{ if(typeof syncHardUi==='function') syncHardUi(); }},
     {masterId:'svcAttic', sync:()=>{ if(typeof syncAtticUi==='function') syncAtticUi(); }}
   ];
@@ -1680,6 +1847,10 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
       const master = getMaster(cfg.masterId);
       setMenuMirror(cfg.masterId, cfg.locked ? true : !!master?.checked);
     });
+    setMenuMirror('svcPaint', !!getMaster('svcPaint')?.checked || !!getMaster('svcPaintRepair')?.checked);
+    setMenuMirror('svcWet', !!getMaster('svcWet')?.checked || !!getMaster('svcWetRepair')?.checked);
+    setMenuMirror('svcFloor', !!getMaster('svcFloor')?.checked || !!getMaster('svcFloorRepair')?.checked);
+    setMenuMirror('svcDecor', !!getMaster('svcDecor')?.checked || !!getMaster('svcDecorRepair')?.checked);
   }
 
   function runModuleSync(masterId){
@@ -1729,6 +1900,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
   if(typeof syncFloorUi==='function') syncFloorUi();
   if(typeof syncSubfloorUi==='function') syncSubfloorUi();
   if(typeof syncDecorUi==='function') syncDecorUi();
+  if(typeof syncWallpaperUi==='function') syncWallpaperUi();
   if(typeof syncHardUi==='function') syncHardUi();
   if(typeof syncAtticMenuUi==='function') syncAtticMenuUi();
   if(typeof syncWetUi==='function') syncWetUi();
@@ -1761,7 +1933,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
 // v1.4.0 - funkcje operacyjne: Zapisz / Wczytaj / Generuj ofertę PDF PRO
 (function(){
-  const PROJECT_SCHEMA_VERSION = '1.4.1';
+  const PROJECT_SCHEMA_VERSION = '1.8.1';
   const safeId = (id) => document.getElementById(id);
   const getControls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
 
@@ -1880,6 +2052,14 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
     }
     return root;
   }
+  function setPrintDocumentTitle(prefix, offerNumber, clientName){
+    const originalTitle = document.title;
+    const offer = sanitizeFilePart(offerNumber || 'REM', 'REM').toUpperCase();
+    const client = sanitizeFilePart(clientShortName(clientName), 'klient');
+    document.title = `${prefix}_${offer}_${client}`;
+    const restore = () => { document.title = originalTitle; window.removeEventListener('afterprint', restore); };
+    window.addEventListener('afterprint', restore);
+  }
   function offerLine(label, value){ return value ? `<div><b>${escapeHtml(label)}:</b> ${escapeHtml(value)}</div>` : ''; }
   function storeLeadHistory(payload){
     try{
@@ -1889,6 +2069,218 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
       localStorage.setItem(key, JSON.stringify(list.slice(0,100)));
     }catch(e){}
   }
+
+  function scopeItem(title, body, details){
+    const paragraphs = Array.isArray(body) ? body : [body];
+    const pHtml = paragraphs.filter(Boolean).map(txt => `<p>${escapeHtml(txt)}</p>`).join('');
+    const detailHtml = details && details.length ? `<ul>${details.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : '';
+    return `<article class="scopeItem"><h3>${escapeHtml(title)}</h3>${pHtml}${detailHtml}</article>`;
+  }
+  function isOn(id){ const c = safeId(id); return !!(c && c.checked); }
+  function anyValue(ids){ return ids.some(id => { const c = safeId(id); return c && ((c.type === 'checkbox' && c.checked) || (c.value && Number(String(c.value).replace(',','.')) > 0)); }); }
+  function buildPdfScopeDescriptions(){
+    const items = [];
+    items.push(scopeItem('Zakres oferty', [
+      'Oferta obejmuje robociznę wynikającą z pozycji zaznaczonych w kosztorysie. Materiały, zakupy inwestorskie oraz prace ukryte nie są ujęte, jeżeli nie wskazano ich osobno.',
+      'Zakres końcowy wymaga potwierdzenia po oględzinach. Pozycje serwisowe i renowacyjne są rozliczane zgodnie z ilościami wskazanymi w kosztorysie.'
+    ], [
+      'kosztorys dotyczy robocizny',
+      'materiały po stronie klienta, o ile nie wskazano inaczej',
+      'prace ukryte i dodatkowe wymagają osobnego potwierdzenia'
+    ]));
+
+    if(isOn('svcMask')){
+      items.push(scopeItem('Prace przygotowawcze — zabezpieczenie / oklejanie', [
+        'Zabezpieczenie obejmuje robociznę przygotowania pola pracy: osłonięcie elementów stałych, powierzchni narażonych na zabrudzenie oraz podstawowe oklejanie przed pracami malarskimi lub wykończeniowymi.'
+      ], [
+        'zabezpieczenie dotyczy zakresu wynikającego z obmiaru',
+        'materiały zabezpieczające mogą być rozliczane osobno, jeśli nie ustalono inaczej',
+        'przy pracach serwisowych zakres zabezpieczeń jest dobierany do miejsca naprawy'
+      ]));
+    }
+    if(isOn('svcSmooth')){
+      items.push(scopeItem('Gładzie — przygotowanie powierzchni pod malowanie', [
+        'Wykonanie gładzi obejmuje robociznę nałożenia warstwy wyrównującej, szlifowanie i przygotowanie powierzchni pod malowanie zgodnie z zakresem w kosztorysie.',
+        'Standardowa gładź nie obejmuje dużych napraw konstrukcyjnych, usuwania starych odspojeń ani korekt bardzo krzywych ścian, jeśli takie prace nie zostały wskazane osobno.'
+      ], [
+        'gładź liczona z obmiaru powierzchni',
+        'szlifowanie i przygotowanie pod malowanie w zakresie pozycji',
+        'ukryte odspojenia i uszkodzenia podłoża mogą zmienić zakres'
+      ]));
+    }
+    if(isOn('svcPrimer')){
+      items.push(scopeItem('Gruntowanie', [
+        'Gruntowanie obejmuje robociznę miejscowego lub całościowego przygotowania chłonności podłoża pod kolejne warstwy, w szczególności pod gładź, malowanie lub inne wykończenie powierzchni.'
+      ], [
+        'materiał gruntujący nie jest ujęty, jeśli nie wskazano inaczej',
+        'zakres gruntowania wynika z aktywnych pozycji i obmiaru',
+        'podłoża bardzo chłonne lub pylące mogą wymagać dodatkowego przygotowania'
+      ]));
+    }
+    if(isOn('svcPaint')){
+      items.push(scopeItem('Malowanie — nowe prace', [
+        'Malowanie obejmuje robociznę wykonania powłoki malarskiej na ścianach i/lub sufitach zgodnie z wybranym zakresem. Standardowo kalkulacja zakłada pracę na zadeklarowanym obmiarze i wybranych parametrach koloru oraz rodzaju farby.',
+        'Efekt końcowy zależy od jakości podłoża, wcześniejszych powłok, chłonności, światła oraz przygotowania powierzchni.'
+      ], [
+        'malowanie ścian i sufitów liczone według aktywnego obmiaru',
+        'kolory ciemne, lateksowe lub ceramiczne mogą zwiększać pracochłonność',
+        'prace przygotowawcze i gruntowanie są ujmowane jako osobne pozycje, jeśli są zaznaczone'
+      ]));
+    }
+    if(isOn('svcPaintRepair')){
+      items.push(scopeItem('Malowanie — serwis / zaprawki', [
+        'Zaprawki lokalne mają charakter serwisowy i dotyczą małych napraw po przewodach, punktach oświetleniowych, odpryskach lub ubytkach. Obejmują lokalne szpachlowanie, szlifowanie, miejscowe przygotowanie oraz malowanie naprawcze zgodnie z wybraną pozycją.',
+        'Ze względu na starzenie farby, strukturę wałka, światło, chłonność powierzchni oraz różnice połysku miejsce naprawy może pozostać częściowo widoczne pod określonym kątem lub przy mocnym oświetleniu.'
+      ], [
+        'materiał jest domyślnie po stronie klienta',
+        'zaprawka punktowa nie gwarantuje pełnego zlania się ze starą powłoką',
+        'przy wysokich wymaganiach wizualnych może być konieczne malowanie większego fragmentu lub całego sufitu/ściany'
+      ]));
+    }
+    if(isOn('svcDemo')){
+      items.push(scopeItem('Demontaże / skucia / gruz', [
+        'Prace demontażowe obejmują skuwanie, zrywanie lub usuwanie istniejących warstw zgodnie z wybranymi pozycjami. Logistyka gruzu i wynoszenie są traktowane jako osobna część kosztu, ponieważ zależą od piętra, windy, odległości i sposobu wywozu.'
+      ], [
+        'zakres demontażu wymaga potwierdzenia po oględzinach',
+        'ukryte warstwy i większa ilość gruzu mogą zwiększyć koszt',
+        'kontener, big-bag i transport odpadów mogą wymagać osobnego rozliczenia'
+      ]));
+    }
+    if(isOn('svcSubfloor')){
+      items.push(scopeItem('Posadzki / przygotowanie podłoża', [
+        'Przygotowanie podłoża obejmuje prace takie jak gruntowanie, warstwy samopoziomujące lub korekty podłogi przed montażem docelowej okładziny. Zakres dobierany jest do stanu istniejącej posadzki i oczekiwanej technologii dalszych prac.'
+      ], [
+        'samopoziomowanie nie zastępuje napraw konstrukcyjnych podłoża',
+        'grubość i zużycie materiału wymagają oceny na miejscu',
+        'czas schnięcia jest zależny od materiału i warunków w lokalu'
+      ]));
+    }
+    if(isOn('svcWalls')){
+      items.push(scopeItem('Ściany / zabudowy GK i murowane', [
+        'Zabudowy obejmują wykonanie elementów GK lub murowanych zgodnie z wybraną technologią. Pozycje dotyczą robocizny, a materiały konstrukcyjne, płyty, profile, łączniki lub zaprawy są rozliczane osobno, jeśli nie wskazano inaczej.'
+      ], [
+        'otwory, wnęki i niestandardowe kształty zwiększają pracochłonność',
+        'łączenia, spoinowanie i przygotowanie pod malowanie powinny być wskazane w kosztorysie',
+        'kolizje instalacyjne mogą wymagać korekty zakresu'
+      ]));
+    }
+    if(isOn('svcWet')){
+      items.push(scopeItem('Pomieszczenia mokre — glazura / hydroizolacja', [
+        'Zakres pomieszczeń mokrych obejmuje prace glazurnicze i przygotowawcze wskazane w kosztorysie, w tym hydroizolację, gruntowanie, układanie płytek, fugowanie i elementy dodatkowe, jeżeli zostały zaznaczone.',
+        'W łazienkach i kuchniach zakres wymaga szczególnej kontroli podłoża, spadków, narożników, stref mokrych i kolizji z hydrauliką.'
+      ], [
+        'materiały, płytki, kleje, fugi i hydroizolacje nie są ujęte, jeśli nie wskazano inaczej',
+        'płytki trudne, gres, docinki i szlify mogą zwiększać koszt',
+        'ostateczny zakres wymaga oględzin podłoża'
+      ]));
+    }
+    if(isOn('svcWetRepair')){
+      items.push(scopeItem('Pomieszczenia mokre — silikony / uszczelnienia', [
+        'Nowe silikonowanie obejmuje wykonanie nowej spoiny w miejscach takich jak umywalki, blaty, wanny, brodziki, kabiny lub styki ścian i wyposażenia. Wymiana silikonu obejmuje wycięcie starego silikonu, oczyszczenie, użycie removera i wykonanie nowej spoiny.',
+        'Oklejanie i przygotowanie krawędzi jest elementem technologii wykonawcy i jest wliczone w operację — niezależnie od tego, czy spoina jest wykonywana z taśmą, czy bez.'
+      ], [
+        'nowe silikonowanie liczone w metrach bieżących',
+        'wymiana silikonu liczona w metrach bieżących jako operacja pełna',
+        'poprawki punktowe liczone w sztukach',
+        'kolor i struktura nowej spoiny mogą różnić się od starych elementów'
+      ]));
+    }
+    if(isOn('svcFloor')){
+      items.push(scopeItem('Podłogi i nowe listwy przypodłogowe', [
+        'Nowe prace podłogowe obejmują montaż wybranej okładziny, podkładów, progów i listew zgodnie z zakresem kosztorysu. Nowy montaż listew powinien zawierać standardowe spasowanie i prawidłowe wykończenie połączeń wynikające z technologii montażu.'
+      ], [
+        'zakres dotyczy nowych prac, a nie serwisu istniejących listew',
+        'listwy, progi, podkłady i materiały montażowe są materiałem klienta, jeśli nie wskazano inaczej',
+        'nietypowe docinki, krzywe ściany lub trudny dostęp mogą zwiększyć pracochłonność'
+      ]));
+    }
+    if(isOn('svcFloorRepair')){
+      items.push(scopeItem('Listwy przypodłogowe — serwis / renowacja', [
+        'Renowacja istniejących listew obejmuje prace liniowe liczone w metrach bieżących, takie jak zabezpieczenie, akrylowanie i malowanie, oraz prace punktowe liczone w sztukach, takie jak zakończenia, korekty i naprawy połączeń.',
+        'Mnożnik wielkości listwy dotyczy malowania oraz prac punktowych, ponieważ rośnie powierzchnia malowania i trudność estetyczna korekt. Nie dotyczy podstawowego oklejania, zabezpieczania i akrylowania po długości.'
+      ], [
+        'akrylowanie liczone w mb',
+        'taśmowanie i zabezpieczenie liczone w mb',
+        'zakończenia, uskoki i korekty liczone w sztukach',
+        'widoczność napraw zależy od stanu istniejącego montażu i światła'
+      ]));
+    }
+    if(isOn('svcDecor')){
+      items.push(scopeItem('Dekoracje / sztukateria — nowe prace', [
+        'Nowy montaż dekoracji obejmuje listwy przysufitowe, listwy ścienne, maskownice LED, narożniki i opcjonalne malowanie elementów. Prawidłowy nowy montaż zawiera standardowe spasowanie połączeń wynikające z technologii montażu.',
+        'Maskownice LED są elementem dekoracyjnym. Taśmy LED, lutowanie, zasilacze, sterowniki i podłączenia pozostają w zakresie elektryki.'
+      ], [
+        'listwy i maskownice liczone w mb',
+        'narożniki i zakończenia mogą być liczone w sztukach',
+        'malowanie listew jest osobną aktywną pozycją, jeśli zostało wybrane'
+      ]));
+    }
+    if(isOn('svcDecorRepair')){
+      items.push(scopeItem('Sztukateria — serwis / renowacja', [
+        'Renowacja istniejącej sztukaterii obejmuje poprawę akrylu, malowanie po renowacji oraz punktowe wygubienie łączeń lub uskoków. Poprawa akrylu i malowanie są liczone liniowo w metrach bieżących, a łączenia i uskoki punktowo w sztukach.',
+        'Mnożnik wielkości profilu dotyczy malowania oraz prac punktowych, ponieważ większy profil zwiększa powierzchnię, czas szlifowania i ryzyko widoczności pod światło. Nie dotyczy podstawowego zabezpieczania i akrylowania po długości.'
+      ], [
+        'zabezpieczenie do malowania liczone w mb',
+        'poprawa akrylu liczona w mb',
+        'malowanie po renowacji liczone w mb',
+        'wygubienie uskoków i renowacja łączeń liczone w sztukach'
+      ]));
+    }
+    if(isOn('svcWallpaper')){
+      items.push(scopeItem('Tapetowanie', [
+        'Tapetowanie jest liczone z ręcznie wpisanego obmiaru, ponieważ tapeta często obejmuje tylko jedną ścianę, fragment ściany, wnękę lub dekor. Zakres obejmuje robociznę klejenia zgodnie z wybraną pozycją standardową lub premium.',
+        'Przy tapetach wzorzystych lub premium większa pracochłonność wynika z konieczności spasowania wzoru, kontroli łączeń i starannego prowadzenia brytów.'
+      ], [
+        'obmiar tapetowania wpisywany ręcznie',
+        'usunięcie starej tapety i gruntowanie są osobnymi pozycjami',
+        'materiał tapety i klej po stronie klienta, jeśli nie wskazano inaczej'
+      ]));
+    }
+    if(isOn('svcElec')){
+      items.push(scopeItem('Elektryka / LED', [
+        'Pozycje elektryczne obejmują punkty, bruzdowanie, prowadzenie przewodów, osprzęt i elementy LED zgodnie z wybranymi pozycjami. LED w elektryce dotyczy części technicznej: taśm, lutowania, punktów podłączeniowych, zasilaczy i połączeń.',
+        'Elementy dekoracyjne lub maskujące związane z LED, takie jak maskownice lub profile dekoracyjne, są ujmowane w dekoracjach / sztukaterii.'
+      ], [
+        'prace elektryczne wymagają zgodności z istniejącą instalacją',
+        'osprzęt, taśmy, zasilacze i sterowniki są materiałem, jeśli nie wskazano inaczej',
+        'zakres wymaga weryfikacji po oględzinach instalacji'
+      ]));
+    }
+    if(isOn('svcHyd')){
+      items.push(scopeItem('Hydraulika / biały montaż', [
+        'Hydraulika obejmuje punkty wodne i kanalizacyjne, prowadzenie instalacji, korekty oraz montaż elementów wyposażenia zgodnie z wybranymi pozycjami. Zakres zależy od istniejącej instalacji, materiału rur i dostępności podejść.'
+      ], [
+        'materiały instalacyjne i osprzęt nie są ujęte, jeśli nie wskazano inaczej',
+        'przeróbki starej instalacji mogą wymagać korekty zakresu',
+        'biały montaż zależy od kompletności dostarczonego wyposażenia'
+      ]));
+    }
+    if(isOn('svcHard')){
+      items.push(scopeItem('Prace trudne / narzuty', [
+        'Prace trudne są traktowane jako narzut lub koszt dodatkowy wynikający z utrudnionego dostępu, pracy na wysokości, transportu pionowego, zabezpieczeń, pracy na klatkach schodowych lub konieczności użycia rusztowań.'
+      ], [
+        'narzut jest liczony na końcu, zgodnie z konfiguracją kosztorysu',
+        'rusztowania i zabezpieczenia mogą być liczone jako koszt stały lub dzienny',
+        'utrudnienia logistyczne wymagają potwierdzenia na miejscu'
+      ]));
+    }
+    if(isOn('svcAttic')){
+      items.push(scopeItem('Poddasze', [
+        'Zakres poddasza obejmuje izolacje, paroizolacje, taśmowanie, konstrukcję, zabudowę GK i elementy dodatkowe zgodnie z wybranymi pozycjami. Prace na poddaszu zależą od geometrii skosów, dostępu, wysokości i liczby detali.'
+      ], [
+        'skosy, wnęki, okna dachowe i belki zwiększają pracochłonność',
+        'materiały izolacyjne i płyty są rozliczane osobno, jeśli nie wskazano inaczej',
+        'prace wymagają oceny wilgotności i stanu konstrukcji'
+      ]));
+    }
+
+    items.push(scopeItem('Uwagi technologiczne i ograniczenia', [
+      'Kosztorys ma charakter ofertowy i opiera się na zadeklarowanym zakresie oraz obmiarze. Różnice stanu podłoża, ukryte uszkodzenia, odspojenia, zawilgocenia, krzywizny, stare warstwy lub konieczność prac dodatkowych mogą wymagać korekty zakresu po oględzinach.',
+      'Prace renowacyjne i serwisowe wykonywane na istniejących elementach mogą różnić się efektem od nowych prac, ponieważ zależą od wieku materiału, wcześniejszej technologii wykonania i warunków oświetleniowych.'
+    ]));
+    return `<section class="scopePage"><h2>Zakres i technologia prac</h2><div class="scopeLead">Poniższe informacje opisują zakres technologiczny, ograniczenia oraz założenia wybranych prac. Sekcja jest generowana dynamicznie na podstawie aktywnych usług w kosztorysie.</div>${items.join('')}</section>`;
+  }
+
   function exportSummaryPdf(){
     if(typeof calc === 'function') calc();
     const offerNumber = ensureOfferNumber(true);
@@ -1897,7 +2289,9 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
     const clientPhone = safeId('clientPhone') ? safeId('clientPhone').value : '';
     const clientEmail = safeId('clientEmail') ? safeId('clientEmail').value : '';
     const investmentAddress = safeId('investmentAddress') ? safeId('investmentAddress').value : '';
+    const clientAddress = safeId('clientAddress') ? safeId('clientAddress').value : '';
     const companyName = safeId('companyName') ? (safeId('companyName').value || 'RemontPRO') : 'RemontPRO';
+    const companyAddress = safeId('companyAddress') ? safeId('companyAddress').value : '';
     const companyPhone = safeId('companyPhone') ? safeId('companyPhone').value : '';
     const companyEmail = safeId('companyEmail') ? safeId('companyEmail').value : '';
     const propertyType = safeId('propertyType') ? safeId('propertyType').value : '';
@@ -1911,6 +2305,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
         <div class="offerBrand">
           <h1>${escapeHtml(companyName)}</h1>
           <div class="tagline">Kosztorys robocizny remontowej</div>
+          ${offerLine('Adres', companyAddress)}
           ${offerLine('Telefon', companyPhone)}
           ${offerLine('Email', companyEmail)}
         </div>
@@ -1926,6 +2321,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
           ${offerLine('Klient', clientName || projectName)}
           ${offerLine('Telefon', clientPhone)}
           ${offerLine('Email', clientEmail)}
+          ${offerLine('Adres zamawiającego', clientAddress || investmentAddress)}
           ${offerLine('Adres inwestycji', investmentAddress)}
         </div>
         <div class="offerBox">
@@ -1942,15 +2338,110 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
         <b>Uwagi:</b> Oferta dotyczy robocizny i nie obejmuje materiałów, zakupów inwestorskich ani ukrytych prac dodatkowych, jeżeli nie wskazano inaczej.
         Ważność oferty: ${escapeHtml(offerValidDays)} dni. Finalny zakres wymaga potwierdzenia po oględzinach.
       </div>
+      ${buildPdfScopeDescriptions()}
     `;
     root.setAttribute('aria-hidden', 'false');
+    setPrintDocumentTitle('Kosztorys', offerNumber, clientName || projectName);
     requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
   }
+  function contractClause(title, body){
+    return `<article class="contractClause"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`;
+  }
+
+  function exportContractPdf(){
+    if(typeof calc === 'function') calc();
+    const offerNumber = ensureOfferNumber(true);
+    const projectName = safeId('projectName') ? (safeId('projectName').value || 'Projekt') : 'Projekt';
+    const clientName = safeId('clientName') ? safeId('clientName').value : '';
+    const clientPhone = safeId('clientPhone') ? safeId('clientPhone').value : '';
+    const clientEmail = safeId('clientEmail') ? safeId('clientEmail').value : '';
+    const investmentAddress = safeId('investmentAddress') ? safeId('investmentAddress').value : '';
+    const clientAddress = safeId('clientAddress') ? safeId('clientAddress').value : '';
+    const companyName = safeId('companyName') ? (safeId('companyName').value || 'RemontPRO') : 'RemontPRO';
+    const companyAddress = safeId('companyAddress') ? safeId('companyAddress').value : '';
+    const companyPhone = safeId('companyPhone') ? safeId('companyPhone').value : '';
+    const companyEmail = safeId('companyEmail') ? safeId('companyEmail').value : '';
+    const propertyType = safeId('propertyType') ? safeId('propertyType').value : '';
+    const area = safeId('area') ? safeId('area').value : '';
+    const offerValidDays = safeId('offerValidDays') ? (safeId('offerValidDays').value || '14') : '14';
+    const summary = safeId('summary') ? safeId('summary').innerHTML : '';
+    storeLeadHistory({offerNumber, savedAt:new Date().toISOString(), clientName, clientPhone, clientEmail, investmentAddress, projectName, area, documentType:'contract'});
+    const root = ensurePrintRoot();
+    const today = new Date().toLocaleDateString('pl-PL');
+    root.innerHTML = `
+      <section class="contractPage">
+        <div class="offerTop">
+          <div class="offerBrand">
+            <h1>Umowa o wykonanie prac remontowych</h1>
+            <div class="tagline">${escapeHtml(companyName)} · dokument wygenerowany w RemontPRO</div>
+            ${offerLine('Telefon wykonawcy', companyPhone)}
+            ${offerLine('Email wykonawcy', companyEmail)}
+          </div>
+          <div class="offerBadge">
+            <div>Nr oferty / umowy</div>
+            <b>${escapeHtml(offerNumber)}</b>
+            <div>Data: ${today}</div>
+          </div>
+        </div>
+        <div class="offerGrid">
+          <div class="offerBox">
+            <h3>Wykonawca</h3>
+            ${offerLine('Nazwa', companyName)}
+            ${offerLine('Adres', companyAddress)}
+            ${offerLine('Telefon', companyPhone)}
+            ${offerLine('Email', companyEmail)}
+          </div>
+          <div class="offerBox">
+            <h3>Zamawiający</h3>
+            ${offerLine('Klient', clientName || projectName)}
+            ${offerLine('Adres zamawiającego', clientAddress || investmentAddress)}
+            ${offerLine('Telefon', clientPhone)}
+            ${offerLine('Email', clientEmail)}
+            ${offerLine('Adres inwestycji', investmentAddress)}
+          </div>
+        </div>
+        <div class="offerBox contractMeta">
+          <h3>Dane projektu</h3>
+          ${offerLine('Projekt', projectName)}
+          ${offerLine('Typ nieruchomości', propertyType)}
+          ${offerLine('Powierzchnia', area ? area + ' m²' : '')}
+          ${offerLine('Ważność oferty', offerValidDays + ' dni')}
+        </div>
+
+        <h2>Postanowienia umowy</h2>
+        ${contractClause('§1. Zakres prac', 'Zakres prac określa Załącznik nr 1 — kosztorys robocizny oraz Załącznik nr 2 — zakres i technologia prac. Zakres końcowy wymaga potwierdzenia po oględzinach, jeżeli strony nie uzgodniły inaczej.')}
+        ${contractClause('§2. Wynagrodzenie', 'Wynagrodzenie za wykonanie prac wynika z kosztorysu stanowiącego Załącznik nr 1. Ceny dotyczą robocizny, chyba że w kosztorysie wskazano inaczej.')}
+        ${contractClause('§3. Materiały', 'Materiały, zakupy inwestorskie oraz elementy wyposażenia są po stronie Zamawiającego, o ile strony nie ustalą inaczej w kosztorysie lub korespondencji.')}
+        ${contractClause('§4. Termin realizacji', 'Szacowany czas realizacji wynika z kosztorysu i ma charakter organizacyjny. Harmonogram może ulec zmianie w przypadku przerw technologicznych, oczekiwania na materiały, prac dodatkowych lub kolizji między branżami.')}
+        ${contractClause('§5. Prace dodatkowe', 'Prace wykraczające poza zakres załączników wymagają osobnego potwierdzenia przez strony. Prace ukryte, dodatkowe uszkodzenia lub zmiany zakresu mogą wpływać na wynagrodzenie i termin realizacji.')}
+        ${contractClause('§6. Odpowiedzialność i ubezpieczenie', 'Wykonawca posiada aktualne ubezpieczenie odpowiedzialności cywilnej (OC) związane z prowadzoną działalnością i wykonywanym zakresem prac. Kopia polisy może zostać okazana Zamawiającemu na życzenie.')}
+        ${contractClause('§7. Ograniczenia technologiczne', 'Prace renowacyjne, zaprawki lokalne, naprawy istniejących elementów i prace na starych powłokach mogą różnić się efektem od nowych prac. Efekt końcowy zależy od stanu podłoża, wieku materiałów, wcześniejszej technologii wykonania oraz warunków oświetleniowych.')}
+        ${contractClause('§8. Załączniki', 'Integralną częścią umowy są: Załącznik nr 1 — kosztorys robocizny oraz Załącznik nr 2 — zakres i technologia prac wygenerowane na podstawie aktywnych pozycji kalkulatora.')}
+        <div class="signatureGrid">
+          <div>Wykonawca<br><br>................................................</div>
+          <div>Zamawiający<br><br>................................................</div>
+        </div>
+      </section>
+      <section class="scopePage">
+        <h2>Załącznik nr 1 — kosztorys robocizny</h2>
+        <div class="printSummary">${summary}</div>
+      </section>
+      <section class="scopePage">
+        <h2>Załącznik nr 2 — zakres i technologia prac</h2>
+        ${buildPdfScopeDescriptions().replace('<section class="scopePage"><h2>Zakres i technologia prac</h2>', '<div class="scopeAppendix">').replace('</section>', '</div>')}
+      </section>
+    `;
+    root.setAttribute('aria-hidden', 'false');
+    setPrintDocumentTitle('Umowa', offerNumber, clientName || projectName);
+    requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+  }
+
   function bindProjectIo(){
-    const saveBtn = safeId('saveProjectBtn'), loadBtn = safeId('loadProjectBtn'), fileInput = safeId('projectFileInput'), pdfBtn = safeId('exportPdfBtn');
+    const saveBtn = safeId('saveProjectBtn'), loadBtn = safeId('loadProjectBtn'), fileInput = safeId('projectFileInput'), pdfBtn = safeId('exportPdfBtn'), contractBtn = safeId('exportContractBtn');
     if(saveBtn) saveBtn.addEventListener('click', saveProjectToFile); if(loadBtn && fileInput) loadBtn.addEventListener('click', () => fileInput.click());
     if(fileInput) fileInput.addEventListener('change', () => { const file = fileInput.files && fileInput.files[0]; if(file) loadProjectFromFile(file); fileInput.value = ''; });
     if(pdfBtn) pdfBtn.addEventListener('click', exportSummaryPdf);
+    if(contractBtn) contractBtn.addEventListener('click', exportContractPdf);
     ensureOfferNumber(false);
   }
   bindProjectIo();
@@ -1958,7 +2449,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
 // v1.5.0 - CRM local-first: historia ofert, statusy, wczytywanie z historii
 (function(){
-  const VERSION = '1.5.0';
+  const VERSION = '1.8.1';
   const HISTORY_KEY = 'offers_history_v150';
   const safeId = (id) => document.getElementById(id);
   const controls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);

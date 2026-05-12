@@ -271,3 +271,37 @@ input[readonly]{background:#f2f6fb;color:#526173;}
 .offerStatusSelect{font-size:12px;padding:5px 7px;border-radius:8px;border:1px solid #cfd8e3;background:#fff;}
 @media (max-width: 980px){.offerHistoryRow{grid-template-columns:1fr;}.offerHistoryActions{justify-content:flex-start;}}
 @media print{.historyCard{display:none!important;}}
+
+.serviceSwitchGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:8px 0 10px;}
+@media(max-width:900px){.serviceSwitchGrid{grid-template-columns:1fr;}}
+.serviceSubsectionDisabled{opacity:.42;pointer-events:none;}
+
+
+/* v1.7.0 - PDF PRO+ / strona zakresu i technologii */
+#printRoot .scopePage{page-break-before:always;break-before:page;margin-top:0;}
+#printRoot .scopeLead{border-left:3px solid #1f6fd1;background:#f3f7fc;padding:8px 10px;border-radius:6px;color:#334155;margin:8px 0 10px;font-size:11px;}
+#printRoot .scopeItem{break-inside:avoid;border:1px solid #d8e1ed;border-radius:8px;padding:8px 10px;margin:7px 0;background:#fff;}
+#printRoot .scopeItem h3{font-size:12px;margin:0 0 5px;color:#0b2b4c;}
+#printRoot .scopeItem p{font-size:10.8px;line-height:1.38;margin:0;color:#243653;}
+@media print{
+  #printRoot .scopePage{page-break-before:always;break-before:page;}
+  #printRoot .scopeItem{break-inside:avoid;}
+}
+
+/* v1.7.1 — PDF PRO++ dynamiczne opisy technologiczne */
+@media print{
+  #printRoot .scopeItem ul{margin:6px 0 0 16px;padding:0;color:#243653;font-size:10.6px;line-height:1.35;}
+  #printRoot .scopeItem li{margin:2px 0;}
+  #printRoot .scopeItem p + p{margin-top:5px;}
+}
+
+
+@media print{
+  #printRoot .contractPage{break-after:page;page-break-after:always;}
+  #printRoot .contractClause{break-inside:avoid;border:1px solid #d8e1ed;border-radius:8px;padding:8px 10px;margin:7px 0;background:#fff;}
+  #printRoot .contractClause h3{font-size:12px;margin:0 0 5px;color:#0b2b4c;}
+  #printRoot .contractClause p{font-size:10.8px;line-height:1.38;margin:0;color:#243653;}
+  #printRoot .contractMeta{margin-bottom:10px;}
+  #printRoot .signatureGrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px;font-size:11px;color:#0b1f3a;}
+  #printRoot .scopeAppendix .scopeLead{margin-top:0;}
+}

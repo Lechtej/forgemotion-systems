@@ -1,4 +1,4 @@
-# Kalkulator remonty v1.4.1
+# Kalkulator remonty v1.7.1
 
 Lokalna aplikacja HTML + JS do kalkulacji kosztów robocizny remontowej.
 
@@ -53,3 +53,85 @@ Funkcje:
 - wczytanie oferty z historii,
 - usunięcie wpisu,
 - automatyczny zapis do historii przy generowaniu PDF.
+
+
+## v1.5.1 — wykończeniówka PRO
+
+Dodano rozszerzenia usługowe:
+- Tapetowanie z ręcznym obmiarem m².
+- Rozszerzone LED w elektryce: punkt LED, taśma, lutowanie, profil.
+- Serwis listew przypodłogowych: akrylowanie, malowanie, renowacja zakończeń i korekta łączeń.
+- Serwis sztukaterii: renowacja łączeń, wygubienie uskoku, korekta starego akrylu/pęknięć.
+- Tooltipy technologiczne dla nowych pól.
+
+
+## v1.5.4 — serwis listew i sztukaterii
+
+Zmiany:
+- osobne aktywatory serwisu/renowacji dla listew przypodłogowych i sztukaterii,
+- akrylowanie i malowanie listew liczone liniowo w mb,
+- zakończenia, łączenia i uskoki liczone punktowo w szt,
+- brak przeliczania serwisu bez zaznaczenia checkboxa serwisowego.
+
+
+## v1.5.4 — hotfix sekcji niezależnych
+- Nowe prace i serwis/renowacja w podłogach oraz sztukaterii działają jako niezależne sekcje.
+- Nieaktywne sekcje są ukrywane zamiast wyszarzania.
+- Posadzki i ściany/GK są ponownie osobnymi blokami, nie zagnieżdżają się w bloku podłóg.
+
+
+## v1.5.5 — serwis listew: taśmowanie, akryl mb, malowanie renowacyjne
+- Dodano taśmowanie ochronne przy listwach przypodłogowych liczone w mb.
+- Poprawa akrylu sztukaterii liczona liniowo w mb.
+- Dodano malowanie sztukaterii po renowacji liczone w mb.
+- Łączenia i uskoki pozostają punktowe w szt.
+
+
+## v1.6.1 — listwy / sztukateria PRO
+- Dodano mnożniki wielkości listew i profili: mała, średnia, duża, premium.
+- Ujednolicono logikę serwisu listew przypodłogowych i sztukaterii.
+- Akrylowanie i malowanie pozostają liczone liniowo w mb.
+- Łączenia, zakończenia i uskoki pozostają liczone punktowo w szt.
+- LED elektryczny pozostaje w module Elektryka, a maskownice/profil dekoracyjny w Sztukaterii.
+
+
+## v1.6.2 — korekta mnożników wielkości listew
+- Ustawiono standard / średnie listwy jako punkt odniesienia ×1.00.
+- Małe listwy/profil: ×0.90.
+- Duże listwy/profil: ×1.25.
+- Premium / bardzo wysokie lub szerokie: ×1.45.
+- Mnożnik nadal dotyczy tylko malowania oraz renowacji połączeń/zakończeń/uskoków.
+
+
+## v1.6.3 — Silikony / uszczelnienia
+- Dodano sekcję silikonów w module Pomieszczenia mokre.
+- Nowe silikonowanie liczone w mb.
+- Wymiana silikonu liczona w mb jako operacja kompletna: wycięcie, remover, przygotowanie i nowa spoina.
+- Poprawki punktowe liczone w szt.
+- Oklejanie i zabezpieczenia są wliczone w stawkę operacji.
+## v1.6.4 — Renowacja pomieszczeń mokrych
+- rozdzielono nowe prace mokre od serwisu / renowacji,
+- dodano niezależny checkbox „Renowacja pomieszczeń mokrych”,
+- silikony / uszczelnienia liczą się tylko po aktywacji renowacji,
+- zaznaczenie renowacji nie uruchamia glazury, płytek ani hydrauliki.
+
+
+
+## v1.6.5 — Serwis / zaprawki malarskie
+- Dodano niezależny tryb MALOWANIE → Serwis / zaprawki.
+- Dodano naprawę punktową sufitu, zaprawkę malarską i zaprawkę rozszerzoną.
+- Materiały domyślnie po stronie klienta.
+- Tooltipy zawierają ostrzeżenie o możliwej widoczności napraw punktowych.
+
+
+## v1.7.1 — PDF PRO+
+- Druga strona PDF: „Zakres i technologia prac”.
+- Opisy technologiczne generowane na podstawie aktywnych modułów.
+- Tooltipy w UI pozostają krótkie, a PDF zawiera opisy ofertowe i ograniczenia technologiczne.
+
+## v1.7.1 — PDF PRO++
+PDF zawiera dynamiczną kartę „Zakres i technologia prac”, generowaną na podstawie aktywnych usług w kosztorysie. Karta opisuje zakres, ograniczenia technologiczne oraz ryzyka dla prac nowych, serwisowych i renowacyjnych.
+
+
+### v1.8.0
+Dodano generator umowy. Umowa jest drukowana/PDF z poziomu aplikacji i zawiera kosztorys jako załącznik oraz dynamiczny zakres technologiczny jako drugi załącznik.

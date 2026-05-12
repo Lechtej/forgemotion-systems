@@ -164,3 +164,125 @@
 - Dodano przycisk „Zapisz ofertę” niezależny od backupu JSON.
 - Generowanie PDF zapisuje ofertę w historii lokalnej.
 - Backup JSON pozostaje bez zmian.
+
+
+## v1.5.1 — Tapetowanie, LED, serwis listew/sztukaterii
+
+### Added
+- Moduł Tapetowanie z ręcznym obmiarem m².
+- Rozszerzenie elektryki LED: punkt LED, montaż taśmy LED, lutowanie/łączenie, profil LED.
+- Serwis / poprawki listew przypodłogowych: akrylowanie, malowanie, renowacja zakończeń, korekta łączeń.
+- Serwis / poprawki sztukaterii: renowacja łączeń, wygubienie uskoku/przejścia, korekta starego akrylu/pęknięcia.
+- Komplet tooltipów technologicznych dla nowych pozycji.
+
+### Changed
+- Poprawki istniejących listew/sztukaterii są liczone jako serwis elementów już położonych, nie jako dopłata do prawidłowego nowego montażu.
+- Tapetowanie nie pobiera automatycznie całych ścian z obmiaru — wymaga ręcznego m².
+
+### Test
+- PASS: node --check app.js.
+- PASS: unzip -t paczki release.
+
+## v1.5.3 — Hotfix serwisu listew i sztukaterii
+
+### Added
+- Oddzielny checkbox `Serwis / renowacja listew przypodłogowych`.
+- Oddzielny checkbox `Serwis / renowacja sztukaterii`.
+
+### Changed
+- Nowe prace i serwis/renowacje są rozdzielone logicznie.
+- Akrylowanie listew przypodłogowych pozostaje pracą liniową i jest liczone w `mb`.
+- Renowacje zakończeń, korekty łączeń, wygubianie uskoków i korekty starego akrylu są liczone punktowo w `szt`.
+- Pozycje serwisowe nie trafiają do podsumowania bez zaznaczenia właściwego checkboxa serwisowego.
+- Tooltipy doprecyzowano pod kątem różnicy: nowy montaż vs serwis istniejących elementów.
+
+### Test
+- PASS: node --check app.js.
+- PASS: unzip -t paczki release.
+
+
+## v1.5.3 — Hotfix aktywacji sekcji serwisowych
+- Rozdzielono stan aktywacji nowych prac i serwisu/renowacji dla Podłóg oraz Dekoracji/Sztukaterii.
+- Checkbox serwisu aktywuje wyłącznie pola serwisowe.
+- Checkbox nowych prac aktywuje wyłącznie pola nowych prac.
+- Sekcje mogą działać niezależnie: tylko nowe, tylko serwis albo oba naraz.
+
+
+## v1.5.4 — Hotfix UI sekcji serwisowych
+- Poprawiono aktywację serwisu listew przypodłogowych: checkbox serwisu pokazuje i aktywuje wyłącznie sekcję renowacji.
+- Poprawiono analogiczną logikę dla sztukaterii.
+- Nieaktywne podsekcje są ukrywane, a nie wyszarzane.
+- Naprawiono strukturę HTML: Posadzki i Ściany/GK są osobnymi blokami poza blokiem Podłogi.
+
+
+## v1.5.5 — Doprecyzowanie renowacji listew i sztukaterii
+- Listwy przypodłogowe: dodano precyzyjne taśmowanie ochronne przy malowaniu listew, liczone w mb.
+- Sztukateria: poprawa starego akrylu / pęknięć zmieniona na mb.
+- Sztukateria: dodano malowanie po renowacji w mb.
+- Zachowano: renowacja łączeń i wygubienie uskoków jako szt.
+
+
+## v1.6.1 — Ujednolicenie renowacji listew i sztukaterii
+- Dodano mnożniki wielkości listew / profili dla prac renowacyjnych.
+- Dodano zabezpieczenie / oklejanie sztukaterii [mb].
+- Zachowano rozdział: LED elektryczny w Elektryce, maskownice LED w Sztukaterii.
+- Tooltipy rozszerzone o rozróżnienie prac liniowych [mb] i punktowych [szt].
+
+
+## v1.6.2 — Korekta mnożników listew i sztukaterii
+- Zmieniono mnożniki rozmiaru: małe ×0.90, standard/średnie ×1.00, duże ×1.25, premium ×1.45.
+- Standard / średnie jest teraz bazą cenową.
+- Zakres działania mnożnika bez zmian: malowanie oraz renowacja połączeń/zakończeń/uskoków.
+
+
+## v1.6.3 — Silikony / uszczelnienia w pomieszczeniach mokrych
+- Dodano nowe silikonowanie [mb].
+- Dodano wymianę silikonu [mb] obejmującą wycięcie, remover, przygotowanie i nową spoinę.
+- Dodano poprawkę punktową silikonu [szt].
+- Zaktualizowano tooltipy i klasyfikację kosztorysu do bloku Pomieszczenia mokre / glazura.
+## v1.6.4 — Renowacja pomieszczeń mokrych
+- Fix architektury modułu mokrego: osobny aktywator dla prac glazurniczych i osobny dla silikonów / uszczelnień.
+- Silikony nie są już liczone przy samym zaznaczeniu „Pomieszczenia mokre”.
+- Renowacja pomieszczeń mokrych może działać samodzielnie, bez płytek i hydrauliki.
+- Mirror w lewym menu pokazuje aktywność modułu, gdy włączone są nowe prace albo renowacja.
+
+
+
+## v1.6.5 — Serwis / zaprawki malarskie
+- Dodano osobny checkbox „Serwis / zaprawki” w module Malowanie.
+- Zaprawki działają niezależnie od klasycznego malowania.
+- Dodano: naprawa punktowa sufitu [szt], zaprawka malarska [szt], zaprawka rozszerzona [szt].
+- Dodano mnożnik „widoczność pod światło”.
+- Tooltipy doprecyzowują, że naprawa punktowa może pozostać częściowo widoczna.
+
+
+## v1.7.1 — PDF PRO+
+- Dodano drugą stronę PDF: „Zakres i technologia prac”.
+- Dodano opis zakresu i ograniczeń technologicznych dla aktywnych modułów: zaprawki, renowacje, silikony, sztukateria, listwy, LED i tapetowanie.
+- Zachowano krótkie tooltipy w UI; PDF generuje dłuższe opisy ofertowe.
+- Materiały i prace ukryte pozostają poza zakresem, jeżeli nie wskazano ich osobno.
+
+### Test
+- PASS: node --check app.js.
+- PASS: unzip -t paczki release.
+
+## v1.7.1 — PDF PRO++ dynamiczne opisy technologiczne
+- Rozszerzono drugą stronę PDF: „Zakres i technologia prac”.
+- Sekcje są generowane dynamicznie na podstawie aktywnych usług.
+- Dodano szczegółowe opisy dla: malowania, gładzi, zaprawek, zabezpieczeń, demontaży, posadzek, pomieszczeń mokrych, silikonów, listew, sztukaterii, tapet, elektryki/LED, hydrauliki, prac trudnych i poddasza.
+- Dodano ostrzeżenia technologiczne dla prac serwisowych i renowacyjnych.
+
+
+## v1.8.0 — Generator umowy
+- Dodano przycisk „Generuj umowę”.
+- Dodano dokument umowy z danymi wykonawcy, klienta i projektu.
+- Kosztorys jest generowany jako Załącznik nr 1.
+- Zakres i technologia prac są generowane jako Załącznik nr 2.
+- Dodano zapis o ubezpieczeniu OC wykonawcy:
+  „Wykonawca posiada aktualne ubezpieczenie odpowiedzialności cywilnej (OC) związane z prowadzoną działalnością i wykonywanym zakresem prac. Kopia polisy może zostać okazana Zamawiającemu na życzenie.”
+
+## v1.8.1
+- Rozdzielono nazwy plików PDF przez tytuł dokumentu: `Kosztorys_...` oraz `Umowa_...`.
+- Dodano opcjonalne pole adresu wykonawcy.
+- Dodano opcjonalne pole adresu zamawiającego / korespondencyjnego.
+- Adresy wykonawcy i zamawiającego są zaciągane do umowy.

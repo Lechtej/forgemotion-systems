@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kalkulator remonty v1.5.0 - CRM local-first</title>
+  <title>Kalkulator remonty v1.8.1 - Umowa + PDF</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar proTopbar">
-    <div class="brandBox"><div class="brandIcon">⌂</div><div><h1>Kalkulator remonty <span class="versionPill">v1.5.0</span></h1><p>Kalkulacja kosztów robocizny + oferta PDF</p></div></div>
-    <div class="topActions proActions"><button id="resetBtn" class="ghostBtn" type="button">▣ Nowy projekt</button><button id="saveProjectBtn" class="ghostBtn" type="button">▣ Zapisz JSON</button><button id="saveHistoryBtn" class="ghostBtn" type="button">★ Zapisz ofertę</button><button id="loadProjectBtn" class="ghostBtn" type="button">⇧ Wczytaj</button><button id="exportPdfBtn" class="ghostBtn" type="button">▣ Generuj ofertę PDF</button><button class="ghostBtn" type="button" data-tab-target="tabAdmin">⚙ Administracja</button><button class="ghostBtn" type="button">⚙ Ustawienia</button><input id="projectFileInput" type="file" accept="application/json,.json" style="display:none" /></div>
+    <div class="brandBox"><div class="brandIcon">⌂</div><div><h1>Kalkulator remonty <span class="versionPill">v1.8.1</span></h1><p>Kalkulacja kosztów robocizny + oferta + umowa</p></div></div>
+    <div class="topActions proActions"><button id="resetBtn" class="ghostBtn" type="button">▣ Nowy projekt</button><button id="saveProjectBtn" class="ghostBtn" type="button">▣ Zapisz JSON</button><button id="saveHistoryBtn" class="ghostBtn" type="button">★ Zapisz ofertę</button><button id="loadProjectBtn" class="ghostBtn" type="button">⇧ Wczytaj</button><button id="exportPdfBtn" class="ghostBtn" type="button">▣ Generuj ofertę PDF</button><button id="exportContractBtn" class="ghostBtn" type="button">▣ Generuj umowę</button><button class="ghostBtn" type="button" data-tab-target="tabAdmin">⚙ Administracja</button><button class="ghostBtn" type="button">⚙ Ustawienia</button><input id="projectFileInput" type="file" accept="application/json,.json" style="display:none" /></div>
   </header>
 
   <main class="layout">
@@ -25,6 +25,7 @@
       <button class="moduleItem" data-scroll-target="floorServiceBlock" data-master-id="svcFloor"><span class="moduleCheck"></span><span><b>Podłogi + listwy</b><small>Panele, winyl, deska, listwy</small></span><em>›</em></button>
       <button class="moduleItem active" data-scroll-target="subfloorServiceBlock" data-master-id="svcSubfloor"><span class="moduleCheck"></span><span><b>Posadzki / podłoże</b><small>Przygotowanie podłoża</small></span><em>›</em></button>
       <button class="moduleItem" data-scroll-target="decorServiceBlock" data-master-id="svcDecor"><span class="moduleCheck"></span><span><b>Dekoracje / sztukateria</b><small>Listwy, maskownice, dekoracje</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="wallpaperServiceBlock" data-master-id="svcWallpaper"><span class="moduleCheck"></span><span><b>Tapetowanie</b><small>Ręczny obmiar m²</small></span><em>›</em></button>
       <button class="moduleItem" data-scroll-target="hardServiceBlock" data-master-id="svcHard"><span class="moduleCheck"></span><span><b>Prace trudne</b><small>Wysokość, rusztowania, transport</small></span><em>›</em></button>
       <button class="moduleItem atticMenuItem" data-scroll-target="atticServiceBlock" data-master-id="svcAttic" style="display:none;"><span class="moduleCheck"></span><span><b>Poddasze</b><small>Izolacje, skosy, GK</small></span><em>›</em></button>
       <div class="sidebarFooter"><button data-scroll-target="timeSettingsCard">2. CZAS</button><button data-scroll-target="summary">3. PODSUMOWANIE</button><button data-tab-target="tabAdmin">3. ADMINISTRACJA</button><button data-scroll-target="materialsMode">4. MATERIAŁY / VAT / BUFOR</button></div>
@@ -40,12 +41,14 @@
             <label>Telefon<input id="clientPhone" placeholder="np. 600 000 000" /></label>
             <label>Email<input id="clientEmail" type="email" placeholder="np. klient@email.pl" /></label>
             <label>Adres inwestycji<input id="investmentAddress" placeholder="np. Warszawa, Ursus" /></label>
+            <label>Adres zamawiającego / korespondencyjny<input id="clientAddress" placeholder="opcjonalnie, jeśli inny niż adres inwestycji" /></label>
             <label>Numer oferty<input id="offerNumber" readonly value="REM/2026/04/001" /></label>
             <label>Ważność oferty [dni]<input id="offerValidDays" type="number" min="1" step="1" value="14" /></label>
             <label>Status oferty<select id="offerStatus"><option value="robocza">robocza</option><option value="wyslana">wysłana</option><option value="zaakceptowana">zaakceptowana</option><option value="odrzucona">odrzucona</option></select></label>
           </div>
           <div class="grid three brandingGrid">
             <label>Nazwa wykonawcy / brand<input id="companyName" value="RemontPRO" /></label>
+            <label>Adres wykonawcy<input id="companyAddress" placeholder="opcjonalnie: adres firmy" /></label>
             <label>Telefon wykonawcy<input id="companyPhone" placeholder="" /></label>
             <label>Email wykonawcy<input id="companyEmail" placeholder="" /></label>
           </div>
@@ -104,13 +107,28 @@
         <h2>3. Usługi</h2>
         <div class="serviceStack">
           <div class="serviceBlock">
-            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcPaint" /> <span>Malowanie</span></label></div>
-            <div class="serviceGrid">
-              <label><span class="field-label">Rodzaj malowania <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">A = odświeżenie i drobne poprawki. B = przygotowanie średnie. C = zdzieranie do surowego + pełna gładź; automatycznie uruchamia gładzie.</div><select id="paintVariant"><option value="A">A — odświeżenie, drobne poprawki</option><option value="B">B — przygotowanie średnie</option><option value="C">C — do surowego + pełna gładź</option></select></label>
-              <label class="checkLine"><input type="checkbox" id="svcPrimer" /> <span>Gruntowanie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna nałożenia gruntu pod malowanie lub gładź. Materiał gruntujący rozliczany osobno.</div></label>
-              <label class="checkLine"><input type="checkbox" id="svcMask" /> <span>Zabezpieczenie / oklejanie powierzchni <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę zabezpieczenia podłóg, listew, drzwi, okien i elementów stałych folią oraz taśmą. Materiały zabezpieczające rozliczane osobno, jeśli nie ustalono inaczej.</div></label>
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcPaint" /> <span>Malowanie / nowe prace</span></label><label class="checkLine"><input type="checkbox" id="svcPaintRepair" /> <span>Serwis / zaprawki <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Niezależny tryb serwisowy dla lokalnych napraw po przewodach, punktach oświetleniowych, odpryskach i ubytkach. Nie uruchamia automatycznie malowania całych ścian ani sufitów.</div></label></div>
+            <div class="serviceDetails" id="paintDetailsBox" style="display:none;">
+              <div class="serviceGrid">
+                <label><span class="field-label">Rodzaj malowania <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">A = odświeżenie i drobne poprawki. B = przygotowanie średnie. C = zdzieranie do surowego + pełna gładź; automatycznie uruchamia gładzie.</div><select id="paintVariant"><option value="A">A — odświeżenie, drobne poprawki</option><option value="B">B — przygotowanie średnie</option><option value="C">C — do surowego + pełna gładź</option></select></label>
+                <label class="checkLine"><input type="checkbox" id="svcPrimer" /> <span>Gruntowanie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna nałożenia gruntu pod malowanie lub gładź. Materiał gruntujący rozliczany osobno.</div></label>
+                <label class="checkLine"><input type="checkbox" id="svcMask" /> <span>Zabezpieczenie / oklejanie powierzchni <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę zabezpieczenia podłóg, listew, drzwi, okien i elementów stałych folią oraz taśmą. Materiały zabezpieczające rozliczane osobno, jeśli nie ustalono inaczej.</div></label>
+              </div>
+              <p class="hint smallHint">Kolor i typ farby są ustawiane per pomieszczenie w sekcji obmiaru. Dla trybu szybkiego/ręcznego używane są ustawienia domyślne z sekcji 2.</p>
             </div>
-            <p class="hint smallHint">Kolor i typ farby są ustawiane per pomieszczenie w sekcji obmiaru. Dla trybu szybkiego/ręcznego używane są ustawienia domyślne z sekcji 2.</p>
+            <div class="serviceDetails" id="paintRepairDetailsBox" style="display:none;">
+              <div class="subsectionBox">
+                <h3>Serwis / zaprawki malarskie</h3>
+                <div class="info"><b>Zasada:</b> materiały, w szczególności farba do zaprawek, są domyślnie po stronie klienta. Usługa obejmuje robociznę naprawczą i lokalne odtworzenie powierzchni.</div>
+                <div class="serviceGrid">
+                  <label><span class="field-label">Naprawa punktowa sufitu [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Lokalne szpachlowanie, szlifowanie i przygotowanie miejsca po uszkodzeniach instalacyjnych, np. po doprowadzeniu przewodów oświetleniowych. W przypadku istniejących powłok mogą wystąpić różnice struktury lub odbicia światła.</div><input id="paintCeilingPatchQty" type="number" min="0" step="1" value="0" /></label>
+                  <label><span class="field-label">Zaprawka malarska do ok. 0,25 m² [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Lokalna naprawa i malowanie punktowe. Ze względu na starzenie farby, strukturę wałka, światło oraz różnice chłonności powierzchni miejsce naprawy może pozostać częściowo widoczne pod określonym kątem lub przy mocnym oświetleniu.</div><input id="paintTouchupQty" type="number" min="0" step="1" value="0" /></label>
+                  <label><span class="field-label">Zaprawka rozszerzona [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Rozszerzona zaprawka wykonywana dla zmniejszenia widoczności naprawy, np. przez większe rozciągnięcie koloru. Efekt końcowy zależy od wieku powłoki, rodzaju farby, faktury oraz warunków oświetleniowych.</div><input id="paintTouchupExtendedQty" type="number" min="0" step="1" value="0" /></label>
+                  <label><span class="field-label">Widoczność pod światło <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Mnożnik ryzyka i precyzji. Przy świetle bocznym, połysku, starej farbie lub wysokich wymaganiach wizualnych zaprawki wymagają więcej czasu i ostrożniejszego wykończenia.</div><select id="paintRepairLightMode"><option value="standard" selected>standard ×1.00</option><option value="demanding">wymagające ×1.20</option><option value="critical">krytyczne / światło boczne ×1.50</option></select></label>
+                </div>
+                <p class="hint smallHint">Zaprawki lokalne mają charakter serwisowy i mogą być częściowo widoczne w zależności od rodzaju farby, wieku powłoki oraz warunków oświetleniowych. Jeśli klient nie posiada farby, materiał i dobór koloru należy rozliczyć poza robocizną.</p>
+              </div>
+            </div>
           </div>
 
           <div class="serviceBlock" id="smoothServiceBlock">
@@ -181,7 +199,10 @@
                       <tr data-elec="board"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Montaż / uporządkowanie rozdzielnicy <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę montażu lub uporządkowania rozdzielnicy. Nie obejmuje aparatury, zabezpieczeń i obudowy.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
                       <tr data-elec="protection"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Zabezpieczenia w rozdzielnicy / obwody <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę podłączenia zabezpieczeń/obwodów w rozdzielnicy. Aparatura zabezpieczająca jest materiałem.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
                       <tr data-elec="agd"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Podłączenie płyty / piekarnika / AGD <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje podłączenie urządzenia do przygotowanego punktu elektrycznego oraz podstawowe sprawdzenie działania. Nie obejmuje wykonania nowego obwodu ani materiałów.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
-                      <tr data-elec="led"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">LED / taśmy / sterowniki — montaż <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obejmuje robociznę montażu taśm LED i sterowników. Taśmy, profile, zasilacze i sterowniki są materiałem.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="ledPoint"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Punkt elektryczny LED — przygotowanie i podłączenie <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punkt LED obejmuje przygotowanie miejsca zasilania/sterowania, podstawowe podłączenie taśmy lub oprawy LED i sprawdzenie działania. Zasilacz, sterownik, taśma i osprzęt są materiałem.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="ledTape"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Montaż taśmy LED <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna przyklejenia i ułożenia taśmy LED na przygotowanym podłożu/profilu. Nie obejmuje taśmy, profilu, zasilacza ani sterownika.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="ledSolder"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Lutowanie / łączenie taśm LED <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punktowe lutowanie, łączenie odcinków taśmy LED, przewodów lub narożników. Liczone na sztuki, bo czas zależy od liczby połączeń, nie od długości taśmy.</div></td><td>szt</td><td><input class="eQty" type="number" min="0" step="1" value="0"></td><td class="eRate"></td></tr>
+                      <tr data-elec="ledProfile"><td><input type="checkbox" class="eActive"></td><td><span class="field-label">Montaż profilu aluminiowego LED <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Robocizna montażu profilu aluminiowego lub maskownicy pod taśmę LED. Profil, klosz, uchwyty i taśma są materiałem.</div></td><td>mb</td><td><input class="eQty" type="number" min="0" step="0.1" value="0"></td><td class="eRate"></td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -249,8 +270,8 @@
 
 
           <div class="serviceBlock sectionBlock" id="wetServiceBlock">
-            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcWet" /> <span>Pomieszczenia mokre / łazienki / kuchnia</span></label></div>
-            <p class="hint smallHint">Moduł przejmuje kontrolę nad hydrauliką i płytkami w wybranych pomieszczeniach. Wymiary pobiera z sekcji 2 — Obmiar. Hydraulika globalna nie jest wtedy liczona drugi raz.</p>
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcWet" /> <span>Pomieszczenia mokre / łazienki / kuchnia</span></label><label class="checkLine"><input type="checkbox" id="svcWetRepair" /> <span>Renowacja pomieszczeń mokrych</span> <span class="info-icon" onclick="toggleTip(this)">i</span><div class="tooltip-box">Niezależny tryb serwisowy dla silikonów i uszczelnień. Nie uruchamia automatycznie płytek, glazury ani hydrauliki.</div></label></div>
+            <p class="hint smallHint">Moduł nowych prac przejmuje kontrolę nad hydrauliką i płytkami w wybranych pomieszczeniach. Renowacja pomieszczeń mokrych działa osobno i służy do silikonów / uszczelnień bez uruchamiania glazury.</p>
             <div class="serviceDetails wetDetailsInline" id="wetDetailsBox" style="display:none;">
               <div class="info"><b>Zasada:</b> wybierz pomieszczenie z obmiaru, a aplikacja pobierze jego podłogę i ściany. Ręczna korekta służy do nietypowych zakresów lub częściowych remontów.</div>
               <div class="tableWrap wetTableWrap">
@@ -266,15 +287,30 @@
               <button id="addWetRoomBtn" type="button" class="secondary">+ Dodaj pomieszczenie mokre</button>
               <p class="hint smallHint">Dla kuchni można liczyć tylko fartuch roboczy [m²]. Materiał płytek wpływa na robociznę: gres i materiały trudne wymagają dopłaty za obróbkę. Grunt pod płytki i fuga są domyślnie uwzględnione. Hydroizolacja jest świadomym dodatkiem — zaznacz ją ręcznie, gdy dotyczy zakresu. Krawędzie można liczyć jako listwy/profile albo szlif 45°. Wszystkie pozycje dotyczą robocizny; materiały, płytki i armatura są rozliczane osobno.</p>
             </div>
+            <div class="serviceDetails wetRepairDetailsInline" id="wetRepairDetailsBox" style="display:none;">
+              <div class="subsectionBox" id="wetSiliconeBox">
+                <h3>Silikony / uszczelnienia</h3>
+                <div class="info"><b>Zasada:</b> oklejanie i zabezpieczenie są wliczone w stawkę. Przy wymianie silikonu stawka obejmuje wycięcie starej spoiny, oczyszczenie, użycie removera oraz wykonanie nowej spoiny.</div>
+                <div class="grid3">
+                  <label>Nowe silikonowanie [mb] <span class="info-icon" onclick="toggleTip(this)">i</span><div class="tooltip-box">Wykonanie nowej spoiny silikonowej przy wannie, umywalce, blacie, kabinie, ścianie lub innym styku. Stosuj, gdy nie ma starego silikonu do usunięcia.</div><input id="wetSiliconeNewMb" type="number" min="0" step="0.1" value="0" /></label>
+                  <label>Wymiana silikonu [mb] <span class="info-icon" onclick="toggleTip(this)">i</span><div class="tooltip-box">Usługa dwuetapowa: wycięcie starego silikonu, oczyszczenie, użycie removera i wykonanie nowej spoiny. Oklejanie oraz zabezpieczenia są wliczone w operację.</div><input id="wetSiliconeReplaceMb" type="number" min="0" step="0.1" value="0" /></label>
+                  <label>Poprawka punktowa [szt] <span class="info-icon" onclick="toggleTip(this)">i</span><div class="tooltip-box">Miejscowa naprawa krótkiego odcinka lub punktowego ubytku, gdy liczenie pełnej długości w mb nie ma sensu.</div><input id="wetSiliconePatchQty" type="number" min="0" step="1" value="0" /></label>
+                </div>
+                <p class="hint smallHint">Renowacja pomieszczeń mokrych nie uruchamia prac glazurniczych. Używaj jej do silikonowania, wymiany spoin silikonowych i drobnych poprawek przy umywalkach, wannach, blatach, kabinach i stykach ściana-podłoga.</p>
+              </div>
+            </div>
           </div>
 
 
           <div class="serviceBlock sectionBlock" id="floorServiceBlock">
             <div class="serviceHeader"><span>Podłogi — panele / winyl / deska / listwy</span></div>
-            <label class="checkLine"><input type="checkbox" id="svcFloor" /> <span>Podłogi + listwy przypodłogowe</span></label>
+            <div class="serviceSwitchGrid">
+              <label class="checkLine"><input type="checkbox" id="svcFloor" /> <span>Podłogi + listwy przypodłogowe <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Nowe prace: montaż podłogi, podkładu, listew i progów. Ten checkbox nie uruchamia automatycznie serwisu istniejących listew.</div></label>
+              <label class="checkLine"><input type="checkbox" id="svcFloorRepair" /> <span>Serwis / renowacja listew przypodłogowych <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Osobny tryb dla istniejących listew: zabezpieczenie, akrylowanie i malowanie liczone liniowo w mb; zakończenia i korekty łączeń liczone punktowo w szt. Wielkość listwy wpływa na czas pracy przez mnożnik technologiczny.</div></label>
+            </div>
             <p class="hint smallHint">Moduł liczy robociznę. Panele, podkład, folia, listwy, progi i akcesoria materiałowe rozliczaj w sekcji materiałów.</p>
             <div class="serviceDetails" id="floorDetailsBox" style="display:none;">
-              <h3>Podłogi + listwy — zakres prac</h3>
+              <div id="floorNewWorkBox"><h3>Podłogi + listwy — zakres prac</h3>
               <div class="info"><b>Zasada:</b> powierzchnia podłogi i obwód listew mogą być pobrane z obmiaru pomieszczeń. Docinki są dopłatą procentową do montażu wybranej podłogi.</div>
               <div class="grid three">
                 <label>Tryb wyceny podłóg<select id="floorMode"><option value="quick">szybki — całość z obmiaru</option><option value="detailed">szczegółowy — per pomieszczenie</option></select></label>
@@ -299,7 +335,18 @@
                 </table>
                 <button id="addFloorRoomBtn" class="secondary" type="button">+ Dodaj pozycję podłogi</button>
               </div>
-              <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Podkład jest domyślnie sugerowany, ale można go wyłączyć.</p>
+              </div>
+              <div id="floorRepairBox"><h4>Serwis / poprawki listew przypodłogowych</h4>
+              <div class="grid three">
+                <label><span class="field-label">Wielkość listwy przypodłogowej <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Mnożnik technologiczny dotyczy tylko malowania oraz renowacji połączeń/zakończeń. Akrylowanie, taśmowanie i zabezpieczenia liczone są liniowo bez mnożnika, bo nakład pracy jest podobny niezależnie od wysokości listwy.</div><select id="floorSkirtingSize"><option value="small">mała do 6 cm ×0.90</option><option value="medium" selected>standard / średnia 7–12 cm ×1.00</option><option value="large">duża 13–20 cm ×1.25</option><option value="premium">premium / wysoka 20+ cm ×1.45</option></select></label>
+                <label><span class="field-label">Akrylowanie listew przypodłogowych [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Uszczelnienie styku listwy ze ścianą lub podłogą akrylem. Praca liniowa po długości listew. Materiał liczony osobno.</div><input id="floorSkirtingAcrylicMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Taśmowanie ochronne przy listwach [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Precyzyjne zabezpieczenie podłogi i ścian taśmą przed malowaniem listew. Liczone liniowo po długości zabezpieczanej listwy.</div><input id="floorSkirtingProtectionMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Malowanie listew przypodłogowych [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Malowanie istniejących lub przygotowanych listew przypodłogowych. Liczone w mb, niezależnie od montażu nowych listew. Przy pracach renowacyjnych zwykle poprzedzone taśmowaniem ochronnym.</div><input id="floorSkirtingPaintMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Renowacja zakończeń listew [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punktowa obróbka zakończeń listew, np. przy drzwiach: szpachlowanie, szlifowanie i przygotowanie pod malowanie. To nie jest dopłata do nowego montażu, tylko serwis/poprawka elementów istniejących.</div><input id="floorSkirtingEndRepairQty" type="number" min="0" step="1" value="0" /></label>
+                <label><span class="field-label">Korekta łączeń listew [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Naprawa widocznych łączeń, pęknięć akrylu lub przejść na istniejących listwach. Obejmuje punktową korektę, szpachlowanie i ręczne szlifowanie.</div><input id="floorSkirtingJointRepairQty" type="number" min="0" step="1" value="0" /></label>
+              </div>
+              </div>
+              <p class="hint smallHint">Stawki są edytowalne w zakładce Administracja / cennik. Podkład jest domyślnie sugerowany, ale można go wyłączyć. Akrylowanie, taśmowanie ochronne i malowanie listew są liczone liniowo w mb; renowacje zakończeń i łączeń są liczone punktowo w szt.</p>
             </div>
           </div>
           <div class="serviceBlock sectionBlock" id="subfloorServiceBlock">
@@ -374,10 +421,14 @@
         </div>
 
           <div class="serviceBlock sectionBlock" id="decorServiceBlock">
-            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcDecor" /> <span>Dekoracje / sztukateria</span></label></div>
+            <div class="serviceHeader"><span>Dekoracje / sztukateria</span></div>
+            <div class="serviceSwitchGrid">
+              <label class="checkLine"><input type="checkbox" id="svcDecor" /> <span>Dekoracje / sztukateria <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Nowe prace: montaż listew przysufitowych, ściennych, maskownic LED, narożników oraz opcjonalne malowanie listew. Prawidłowy nowy montaż zawiera standardowe spasowanie połączeń.</div></label>
+              <label class="checkLine"><input type="checkbox" id="svcDecorRepair" /> <span>Serwis / renowacja sztukaterii <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Osobny tryb dla istniejącej sztukaterii: zabezpieczenie, poprawa akrylu i malowanie liczone liniowo w mb; łączenia i uskoki liczone punktowo w szt. Wielkość profilu wpływa na czas przez mnożnik technologiczny.</div></label>
+            </div>
             <p class="hint smallHint">Moduł liczy robociznę dekoracji: listwy, maskownice LED, narożniki oraz malowanie listew. Materiały rozliczane osobno.</p>
             <div class="serviceDetails" id="decorDetailsBox" style="display:none;">
-              <h3>Dekoracje / sztukateria — zakres prac</h3>
+              <div id="decorNewWorkBox"><h3>Dekoracje / sztukateria — zakres prac</h3>
               <div class="grid three">
                 <label><span class="field-label">Listwy przysufitowe [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Montaż listew przysufitowych/sztukateryjnych. Kleje, akryle i listwy jako materiał.</div><input id="decorCeilingMb" type="number" min="0" step="0.1" value="0" /></label>
                 <label><span class="field-label">Listwy ścienne dekoracyjne [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Ramki, podziały i listwy dekoracyjne na ścianach. Liczone w metrach bieżących.</div><input id="decorWallMb" type="number" min="0" step="0.1" value="0" /></label>
@@ -385,7 +436,33 @@
                 <label><span class="field-label">Narożniki / zakończenia [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Docinki, narożniki, zakończenia i dopasowania listew.</div><input id="decorCornersQty" type="number" min="0" step="1" value="0" /></label>
                 <label class="checkLine"><input type="checkbox" id="decorPaint" /> <span>Malowanie listew <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Po zaznaczeniu malowanie liczy się automatycznie po sumie mb listew przysufitowych, ściennych i maskownic LED.</div></label>
               </div>
-              <p class="hint smallHint">Malowanie listew nie ma osobnego obmiaru — system liczy sumę mb aktywnych listew.</p>
+              </div>
+              <div id="decorRepairBox"><h4>Serwis / poprawki sztukaterii</h4>
+              <div class="grid three">
+                <label><span class="field-label">Wielkość profilu / listwy <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Mnożnik technologiczny dotyczy malowania po renowacji oraz punktowych napraw łączeń/uskoków. Zabezpieczenie i poprawa akrylu są liczone liniowo w mb bez mnożnika.</div><select id="decorProfileSize"><option value="small">mała do 6 cm ×0.90</option><option value="medium" selected>standard / średnia 7–12 cm ×1.00</option><option value="large">duża 13–20 cm ×1.25</option><option value="premium">premium / szeroka 20+ cm ×1.45</option></select></label>
+                <label><span class="field-label">Zabezpieczenie / oklejanie sztukaterii [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Precyzyjne zabezpieczenie ścian, sufitu lub tapety przed akrylowaniem i malowaniem sztukaterii. Liczone liniowo w mb, bo praca idzie po długości elementu.</div><input id="decorProtectionMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Renowacja łączeń sztukaterii [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Punktowa naprawa istniejących łączeń listew przysufitowych lub dekoracyjnych: uzupełnienie, szpachlowanie i przygotowanie pod malowanie. Nie dotyczy prawidłowego nowego montażu, który zawiera standardowe spasowanie.</div><input id="decorJointRepairQty" type="number" min="0" step="1" value="0" /></label>
+                <label><span class="field-label">Wygubienie uskoku / przejścia [szt] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Ręczne wygubienie widocznego uskoku lub przejścia na istniejącej sztukaterii: szpachlowanie i szlifowanie różnymi gradacjami papieru. Liczone punktowo, bo czas zależy od liczby miejsc.</div><input id="decorStepRepairQty" type="number" min="0" step="1" value="0" /></label>
+                <label><span class="field-label">Poprawa starego akrylu / pęknięć [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Usunięcie lub korekta starego akrylu, pęknięcia albo szczeliny na istniejącej sztukaterii. Liczone liniowo w mb, bo praca zwykle idzie po długości elementu. Łączenia i uskoki są liczone oddzielnie w szt.</div><input id="decorAcrylicRepairMb" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Malowanie sztukaterii po renowacji [mb] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Malowanie odcinków sztukaterii po szpachlowaniu, szlifowaniu lub poprawie akrylu. Można wpisać tylko odcinek naprawiany albo całą długość elementu.</div><input id="decorRepairPaintMb" type="number" min="0" step="0.1" value="0" /></label>
+              </div>
+              </div>
+              <p class="hint smallHint">Malowanie nowych listew liczy się po sumie mb aktywnych listew. Serwis istniejących elementów jest osobny: zabezpieczenie, poprawa akrylu i malowanie po renowacji liniowo w mb; łączenia i uskoki punktowo w szt. Mnożnik wielkości profilu koryguje tylko malowanie oraz punktowe naprawy łączeń/uskoków; zabezpieczenie i akryl pozostają bez mnożnika.</p>
+            </div>
+          </div>
+
+          <div class="serviceBlock sectionBlock" id="wallpaperServiceBlock">
+            <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcWallpaper" /> <span>Tapetowanie</span></label></div>
+            <p class="hint smallHint">Tapetowanie ma ręczny obmiar m², bo często dotyczy jednej ściany, wnęki albo dekoru. Materiały i sama tapeta są rozliczane osobno.</p>
+            <div class="serviceDetails" id="wallpaperDetailsBox" style="display:none;">
+              <h3>Tapetowanie — zakres prac</h3>
+              <div class="grid three">
+                <label><span class="field-label">Tapetowanie standard [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Montaż tapety standardowej, np. flizelina/papier, na przygotowanym podłożu. Obmiar wpisz ręcznie dla konkretnej ściany lub fragmentu.</div><input id="wallpaperStandardM2" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Tapeta premium / wzór [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Tapeta wymagająca dokładnego spasowania wzoru, większej ostrożności lub wolniejszej pracy. Obmiar ręczny.</div><input id="wallpaperPremiumM2" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Usunięcie starej tapety [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Zerwanie starej tapety i podstawowe oczyszczenie powierzchni. Naprawy podłoża, gładź i malowanie są osobnymi pozycjami.</div><input id="wallpaperRemoveM2" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Grunt pod tapetę [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Gruntowanie powierzchni pod tapetę. Stosuj, gdy podłoże wymaga wyrównania chłonności lub przygotowania pod klej.</div><input id="wallpaperPrimerM2" type="number" min="0" step="0.1" value="0" /></label>
+                <label><span class="field-label">Zabezpieczenie / oklejenie tapety [m²] <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Zabezpieczenie istniejącej tapety przed malowaniem, akrylowaniem lub pracami przy listwach. Liczone ręcznie wg chronionej powierzchni/strefy.</div><input id="wallpaperProtectionM2" type="number" min="0" step="0.1" value="0" /></label>
+              </div>
             </div>
           </div>
 
