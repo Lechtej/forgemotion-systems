@@ -62,6 +62,9 @@ const defaultRates = {
   hydBathtub: 450,
   hydAppliance: 130,
   hydHose: 50,
+  hydRadiatorInstall: 250,
+  hydRadiatorReplace: 400,
+  hydRadiatorConnection: 350,
   siliconeNew: 25,
   siliconeReplace: 45,
   siliconePatch: 60,
@@ -84,10 +87,17 @@ const defaultRates = {
   demoPlaster: 30,
   demoScreed: 65,
   demoFloor: 30,
+  demoWall: 120,
+  demoWallGk: 55,
+  demoWallGazobeton: 90,
+  demoWallBrickSilicate: 130,
+  demoWallReinforcedThin: 160,
+  demoWallHard: 350,
   rubbleTilesM3: 0.04,
   rubblePlasterM3: 0.02,
   rubbleScreedM3: 0.06,
   rubbleFloorM3: 0.015,
+  rubbleWallM3: 0.08,
   carryHourly: 70,
   noElevatorSurchargePct: 0.35,
   elevatorSurchargePct: 0.08,
@@ -153,7 +163,22 @@ const defaultRates = {
   decorRepairPaint: 15,
   hardStairsPct: 0.10,
   hardScaffoldDay: 220,
-  hardProtectionMb: 10
+  hardProtectionMb: 10,
+  furnitureAssembly: 120,
+  furnitureKitchenMb: 220,
+  furnitureCountertopMb: 120,
+  furnitureHandleAdjust: 20,
+  furnitureHourly: 80
+,
+  furnitureDoorStandard: 350,
+  furnitureDoorHidden: 650,
+  furnitureDoorAdjustment: 120
+,
+  revealsWindowStandard: 110,
+  revealsDoorStandard: 120,
+  revealsHiddenDoor: 190,
+  revealsAluCorner: 45,
+  revealsOldFrameRepair: 250
 };
 let rates = {...defaultRates, ...(JSON.parse(localStorage.getItem('rates_v135') || '{}'))};
 
@@ -213,6 +238,9 @@ const rateLabels = {
   hydBathtub:['Hydraulika: montaż wanny','zł/szt'],
   hydAppliance:['Hydraulika: podłączenie pralki/zmywarki','zł/szt'],
   hydHose:['Hydraulika: wymiana wężyków/zaworków','zł/szt'],
+  hydRadiatorInstall:['Hydraulika C.O.: montaż grzejnika standardowego','zł/szt'],
+  hydRadiatorReplace:['Hydraulika C.O.: wymiana grzejnika z demontażem','zł/szt'],
+  hydRadiatorConnection:['Hydraulika C.O.: przeróbka podejścia pod grzejnik','zł/szt'],
   siliconeNew:['Pomieszczenia mokre: nowe silikonowanie','zł/mb'],
   siliconeReplace:['Pomieszczenia mokre: wymiana silikonu','zł/mb'],
   siliconePatch:['Pomieszczenia mokre: poprawka punktowa silikonu','zł/szt'],
@@ -235,10 +263,17 @@ const rateLabels = {
   demoPlaster:['Demolka: skuwanie starego tynku','zł/m²'],
   demoScreed:['Demolka: kucie posadzki / wylewki','zł/m²'],
   demoFloor:['Demolka: zrywanie parkietu/desek/paneli','zł/m²'],
+  demoWall:['Demolka: wyburzanie ścian działowych — legacy','zł/m²'],
+  demoWallGk:['Demolka: wyburzanie ścian — GK / lekka zabudowa','zł/m²'],
+  demoWallGazobeton:['Demolka: wyburzanie ścian — gazobeton / beton komórkowy','zł/m²'],
+  demoWallBrickSilicate:['Demolka: wyburzanie ścian — cegła / silikat','zł/m²'],
+  demoWallReinforcedThin:['Demolka: wyburzanie ścian — żelbet cienki / beton lekki','zł/m²'],
+  demoWallHard:['Demolka: wyburzanie ścian — żelbet / beton / klinkier trudny','zł/m²'],
   rubbleTilesM3:['Gruz: płytki z klejem','m³/m²'],
   rubblePlasterM3:['Gruz: tynk ok. 2 cm','m³/m²'],
   rubbleScreedM3:['Gruz: wylewka/posadzka','m³/m²'],
   rubbleFloorM3:['Gruz: podłoga drewniana/panele','m³/m²'],
+  rubbleWallM3:['Gruz: ściana działowa','m³/m²'],
   carryHourly:['Wynoszenie gruzu — roboczogodzina','zł/h/os'],
   noElevatorSurchargePct:['Dopłata bez windy od 2. piętra','% robocizny'],
   elevatorSurchargePct:['Dopłata z windą / organizacja','% robocizny'],
@@ -304,7 +339,22 @@ const rateLabels = {
   decorRepairPaint:["Sztukateria: malowanie po renowacji","zł/mb"],
   hardStairsPct:["Prace trudne: klatki schodowe — dopłata","% robocizny"],
   hardScaffoldDay:["Prace trudne: rusztowanie","zł/dzień"],
-  hardProtectionMb:["Prace trudne: zabezpieczenia","zł/mb"]
+  hardProtectionMb:["Prace trudne: zabezpieczenia","zł/mb"],
+  furnitureAssembly:["Montaż mebli: skręcanie / montaż wolnostojący","zł/szt"],
+  furnitureKitchenMb:["Montaż mebli: zabudowa kuchenna / szafki","zł/mb"],
+  furnitureCountertopMb:["Montaż mebli: blat / dopasowanie proste","zł/mb"],
+  furnitureHandleAdjust:["Montaż mebli: uchwyty / regulacja frontów","zł/szt"],
+  furnitureHourly:["Montaż mebli: korekty / dopasowania godzinowe","zł/h"]
+,
+  furnitureDoorStandard:["Montaż drzwi: wewnętrzne z ościeżnicą regulowaną","zł/szt"],
+  furnitureDoorHidden:["Montaż drzwi: ukryte / bezprzylgowe / ukryta ościeżnica","zł/szt"],
+  furnitureDoorAdjustment:["Montaż drzwi: korekta / regulacja / podcięcia","zł/szt"]
+,
+  revealsWindowStandard:["Glify / szpalety: okienne standard","zł/mb"],
+  revealsDoorStandard:["Glify / szpalety: drzwiowe standard","zł/mb"],
+  revealsHiddenDoor:["Glify / szpalety: pod drzwi ukryte","zł/mb"],
+  revealsAluCorner:["Glify / szpalety: narożnik / kątownik alu","zł/mb"],
+  revealsOldFrameRepair:["Glify / szpalety: naprawa po starej ościeżnicy","zł/szt"]
 };
 
 
@@ -322,8 +372,9 @@ const SUMMARY_GROUPS = [
   {id:'decor', title:'11. Dekoracje / sztukateria', order:110},
   {id:'wallpaper', title:'12. Tapetowanie / okładziny ścienne', order:115},
   {id:'paint', title:'13. Malowanie', order:120},
-  {id:'hard', title:'14. Prace trudne / narzuty', order:130},
-  {id:'other', title:'15. Inne pozycje', order:900}
+  {id:'furniture', title:'14. Montaż mebli / wyposażenia', order:125},
+  {id:'hard', title:'15. Prace trudne / narzuty', order:130},
+  {id:'other', title:'16. Inne pozycje', order:900}
 ];
 const SUMMARY_GROUP_BY_ID = Object.fromEntries(SUMMARY_GROUPS.map(g => [g.id, g]));
 function inferSummaryMeta(name=''){
@@ -351,6 +402,12 @@ function inferSummaryMeta(name=''){
   // Priorytet 2: prace przygotowawcze niebędące demontażem.
   if(n.includes('zabezpieczenie') || n.includes('oklejanie')) return {group:'prep', groupOrder:SUMMARY_GROUP_BY_ID.prep.order, order:10};
 
+  if(n.includes('glify') || n.includes('szpalety') || n.includes('kątownik alu') || n.includes('starej ościeżnicy')) return {group:'furniture', groupOrder:999, order:126};
+
+  // Priorytet 2A: C.O. i drzwi.
+  if(n.includes('grzejnik') || n.includes('c.o.')) return {group:'hydraulic', groupOrder:SUMMARY_GROUP_BY_ID.hydraulic.order, order:50};
+  if(n.includes('drzwi') || n.includes('ościeżnic')) return {group:'furniture', groupOrder:SUMMARY_GROUP_BY_ID.furniture.order, order:125};
+
   let id = 'other';
   let order = 9000;
   if(n.includes('posadzki') || n.includes('podłoże') || n.includes('samopoziom') || n.includes('wyrównanie lokalne') || n.includes('szlifowanie')) { id='subfloor'; order=30; }
@@ -374,6 +431,7 @@ function inferSummaryMeta(name=''){
   if(n.includes('serwis malarski') || n.includes('zaprawka') || n.includes('naprawa punktowa sufitu')) { id='paint'; order=120; }
   if((n.includes('malowanie') || n.includes('gruntowanie')) && !n.includes('sztukateria') && !n.includes('listwy przypodłogowe') && !n.includes('dekoracje')) { id='paint'; order=120; }
   if(n.includes('tapetowanie') || n.includes('tapeta') || n.includes('tapety')) { id='wallpaper'; order=115; }
+  if(n.includes('montaż mebli') || n.includes('meble:') || n.includes('zabudowa kuchenna') || n.includes('regulacja frontów') || n.includes('uchwyty')) { id='furniture'; order=125; }
   if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('transport pionowy')) { id='hard'; order=130; }
   return {group:id, groupOrder:SUMMARY_GROUP_BY_ID[id].order, order};
 }
@@ -419,6 +477,10 @@ function workTimeRule(row){
   if(row.note || !Number(row.qty)) return null;
   if(n.includes('wywóz') || n.includes('kontener') || n.includes('big-bag')) return null;
   if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('dopłata globalna')) return null;
+  if(n.includes('montaż mebli: zabudowa kuchenna') || n.includes('montaż mebli: blat')) return {min:4, max:8};
+  if(n.includes('montaż mebli: skręcanie')) return {min:4, max:8};
+  if(n.includes('montaż mebli: uchwyty') || n.includes('regulacja frontów')) return {min:8, max:15};
+  if(n.includes('montaż mebli: korekty')) return {min:1, max:1.5};
   if(n.includes('tapetowanie')) return {min:8, max:18};
   if(n.includes('usunięcie starej tapety')) return {min:18, max:35};
   if(n.includes('zabezpieczenie') && n.includes('tapety')) return {min:40, max:80};
@@ -516,7 +578,12 @@ const demoMap = {
   tiles: {rate:'demoTiles', rubble:'rubbleTilesM3', label:'Skuwanie płytek ściany/podłogi'},
   plaster: {rate:'demoPlaster', rubble:'rubblePlasterM3', label:'Skuwanie starego tynku'},
   screed: {rate:'demoScreed', rubble:'rubbleScreedM3', label:'Kucie posadzki betonowej / wylewki'},
-  floor: {rate:'demoFloor', rubble:'rubbleFloorM3', label:'Zrywanie parkietu / desek / paneli'}
+  floor: {rate:'demoFloor', rubble:'rubbleFloorM3', label:'Zrywanie parkietu / desek / paneli'},
+  wallGk: {rate:'demoWallGk', rubble:'rubbleWallM3', label:'Wyburzanie ścian działowych — GK / lekka zabudowa'},
+  wallGazobeton: {rate:'demoWallGazobeton', rubble:'rubbleWallM3', label:'Wyburzanie ścian działowych — gazobeton / beton komórkowy'},
+  wallBrickSilicate: {rate:'demoWallBrickSilicate', rubble:'rubbleWallM3', label:'Wyburzanie ścian działowych — cegła / silikat'},
+  wallReinforcedThin: {rate:'demoWallReinforcedThin', rubble:'rubbleWallM3', label:'Wyburzanie ścian działowych — żelbet cienki / beton lekki'},
+  wallHard: {rate:'demoWallHard', rubble:'rubbleWallM3', label:'Wyburzanie ścian działowych — żelbet / beton / klinkier trudny'}
 };
 
 const electricMap = {
@@ -541,6 +608,80 @@ const electricMap = {
 };
 
 
+
+
+const revealsMap = {
+  windowStandard: {rate:'revealsWindowStandard', label:'Glify / szpalety: okienne standard', unit:'mb'},
+  doorStandard: {rate:'revealsDoorStandard', label:'Glify / szpalety: drzwiowe standard', unit:'mb'},
+  hiddenDoor: {rate:'revealsHiddenDoor', label:'Glify / szpalety: pod drzwi ukryte', unit:'mb'},
+  aluCorner: {rate:'revealsAluCorner', label:'Glify / szpalety: narożnik / kątownik alu', unit:'mb'},
+  oldFrameRepair: {rate:'revealsOldFrameRepair', label:'Glify / szpalety: naprawa po starej ościeżnicy', unit:'szt'}
+};
+
+function calcRevealMb(row){
+  const mode = row.querySelector('.rMode')?.value || 'quick';
+  if(mode === 'manual') return parseFloat(row.querySelector('.rManual')?.value || '0') || 0;
+  const count = parseFloat(row.querySelector('.rCount')?.value || '0') || 0;
+  const width = parseFloat(row.querySelector('.rWidth')?.value || '0') || 0;
+  const height = parseFloat(row.querySelector('.rHeight')?.value || '0') || 0;
+  return count * (2 * height + width);
+}
+
+function syncRevealsUi(){
+  document.querySelectorAll('#revealsTable tbody tr[data-reveal]').forEach(row=>{
+    const mode = row.querySelector('.rMode')?.value || 'quick';
+    row.querySelectorAll('.rQuick').forEach(el=>{ el.style.display = mode === 'quick' ? '' : 'none'; });
+    row.querySelectorAll('.rManualWrap').forEach(el=>{ el.style.display = mode === 'manual' ? '' : 'none'; });
+    const def = revealsMap[row.dataset.reveal];
+    const qty = def?.unit === 'szt' ? (parseFloat(row.querySelector('.rManual')?.value || '0') || 0) : calcRevealMb(row);
+    const cell = row.querySelector('.rCalcMb');
+    if(cell) cell.textContent = def?.unit === 'szt' ? qty.toFixed(1)+' szt' : qty.toFixed(1)+' mb';
+    const rateCell = row.querySelector('.rRate');
+    if(rateCell && def) rateCell.textContent = money(rates[def.rate] || 0);
+  });
+}
+
+function addRevealsRows(add){
+  if(!chk('svcReveals')) return;
+  document.querySelectorAll('#revealsTable tbody tr[data-reveal]').forEach(row=>{
+    const def = revealsMap[row.dataset.reveal];
+    if(!def || !row.querySelector('.rActive')?.checked) return;
+    const qty = def.unit === 'szt' ? (parseFloat(row.querySelector('.rManual')?.value || '0') || 0) : calcRevealMb(row);
+    if(qty <= 0) return;
+    add(def.label, qty, def.unit, rates[def.rate] || 0);
+  });
+}
+
+const furnitureMap = {
+  assembly: {rate:'furnitureAssembly', label:'Montaż mebli: skręcanie / montaż wolnostojący', unit:'szt'},
+  kitchenMb: {rate:'furnitureKitchenMb', label:'Montaż mebli: zabudowa kuchenna / szafki', unit:'mb'},
+  countertopMb: {rate:'furnitureCountertopMb', label:'Montaż mebli: blat / dopasowanie proste', unit:'mb'},
+  handleAdjust: {rate:'furnitureHandleAdjust', label:'Montaż mebli: uchwyty / regulacja frontów', unit:'szt'},
+  hourly: {rate:'furnitureHourly', label:'Montaż mebli: korekty / dopasowania', unit:'h'},
+  doorStandard: {rate:'furnitureDoorStandard', label:'Montaż drzwi: wewnętrzne z ościeżnicą regulowaną', unit:'szt'},
+  doorHidden: {rate:'furnitureDoorHidden', label:'Montaż drzwi: ukryte / bezprzylgowe / ukryta ościeżnica', unit:'szt'},
+  doorAdjustment: {rate:'furnitureDoorAdjustment', label:'Montaż drzwi: korekta / regulacja / podcięcia', unit:'szt'}
+};
+
+function addFurnitureRows(add){
+  if(!chk('svcFurniture')) return;
+  document.querySelectorAll('#furnitureTable tbody tr').forEach(tr=>{
+    const key = tr.dataset.furniture;
+    const active = tr.querySelector('.fActive')?.checked;
+    const qty = parseFloat(tr.querySelector('.fQty')?.value || '0') || 0;
+    const cfg = furnitureMap[key];
+    if(!cfg) return;
+    const rate = rates[cfg.rate] || 0;
+    const rateCell = tr.querySelector('.fRate');
+    if(rateCell) rateCell.textContent = money(rate);
+    if(active && qty > 0) add(cfg.label, qty, cfg.unit, rate);
+  });
+}
+
+function syncFurnitureUi(){
+  const box = el('furnitureDetailsBox');
+  if(box) box.style.display = chk('svcFurniture') ? '' : 'none';
+}
 
 const wallMap = {
   gkSingle: {rate:'wallGkSingle', label:'Zabudowy GK: jednostronna'},
@@ -568,6 +709,9 @@ const hydraulicMap = {
   bathtub: {rate:'hydBathtub', label:'Hydraulika: montaż wanny', white:true},
   appliance: {rate:'hydAppliance', label:'Hydraulika: podłączenie pralki / zmywarki', white:true},
   hose: {rate:'hydHose', label:'Hydraulika: wymiana wężyków / zaworków', white:true},
+  radiatorInstall: {rate:'hydRadiatorInstall', label:'Hydraulika C.O.: montaż grzejnika standardowego', white:true},
+  radiatorReplace: {rate:'hydRadiatorReplace', label:'Hydraulika C.O.: wymiana grzejnika z demontażem', white:true},
+  radiatorConnection: {rate:'hydRadiatorConnection', label:'Hydraulika C.O.: przeróbka podejścia pod grzejnik', white:true},
   waterPoint: {rate:'hydWaterPoint', label:'Hydraulika: punkt wodny'},
   sewerPoint: {rate:'hydSewerPoint', label:'Hydraulika: punkt kanalizacyjny'},
   pipeWall: {rate:'hydPipeWall', label:'Hydraulika: prowadzenie rur w ścianie'},
@@ -1300,6 +1444,7 @@ function syncWallsUi(){
 function addWallRows(add){
   if(!chk('svcWalls')) return;
   syncWallsUi();
+  syncRevealsUi();
   document.querySelectorAll('#wallsGkTable tbody tr, #wallsMasonryTable tbody tr').forEach(tr=>{
     if(!tr.querySelector('.wActive')?.checked) return;
     const key = tr.dataset.wall;
@@ -1691,6 +1836,8 @@ function calc(){
   addFloorRows(add);
   addDecorRows(add);
   addWallpaperRows(add);
+  addRevealsRows(add);
+  addFurnitureRows(add);
   addWallRows(add);
   addAtticRows(add);
   const netBeforeHard = net;
@@ -1827,6 +1974,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
     {masterId:'svcDecor', sync:()=>{ if(typeof syncDecorUi==='function') syncDecorUi(); }},
     {masterId:'svcDecorRepair', sync:()=>{ if(typeof syncDecorUi==='function') syncDecorUi(); }},
     {masterId:'svcWallpaper', sync:()=>{ if(typeof syncWallpaperUi==='function') syncWallpaperUi(); }},
+    {masterId:'svcFurniture', sync:()=>{ if(typeof syncFurnitureUi==='function') syncFurnitureUi(); }},
     {masterId:'svcHard', sync:()=>{ if(typeof syncHardUi==='function') syncHardUi(); }},
     {masterId:'svcAttic', sync:()=>{ if(typeof syncAtticUi==='function') syncAtticUi(); }}
   ];
@@ -1901,6 +2049,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
   if(typeof syncSubfloorUi==='function') syncSubfloorUi();
   if(typeof syncDecorUi==='function') syncDecorUi();
   if(typeof syncWallpaperUi==='function') syncWallpaperUi();
+  if(typeof syncFurnitureUi==='function') syncFurnitureUi();
   if(typeof syncHardUi==='function') syncHardUi();
   if(typeof syncAtticMenuUi==='function') syncAtticMenuUi();
   if(typeof syncWetUi==='function') syncWetUi();
@@ -1933,7 +2082,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
 // v1.4.0 - funkcje operacyjne: Zapisz / Wczytaj / Generuj ofertę PDF PRO
 (function(){
-  const PROJECT_SCHEMA_VERSION = '1.8.1';
+  const PROJECT_SCHEMA_VERSION = '1.8.5';
   const safeId = (id) => document.getElementById(id);
   const getControls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
 
@@ -2274,6 +2423,31 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
       ]));
     }
 
+
+    if(isOn('svcDemo')) items.push(scopeItem('Wyburzanie ścian działowych — wg materiału', [
+      'Wyburzanie ścian działowych jest rozdzielone według materiału, ponieważ pracochłonność GK, gazobetonu, cegły, silikatu, żelbetu i klinkieru znacząco się różni.',
+      'Przed wyburzeniem wymagane jest potwierdzenie, że ściana nie jest elementem nośnym oraz że w przegrodzie nie przebiegają instalacje wymagające zabezpieczenia lub przełożenia.'
+    ], [
+      'gruz, wynoszenie i kontener są rozliczane osobno',
+      'żelbet, beton i klinkier trudny mogą wymagać indywidualnej oceny',
+      'zakres wymaga oględzin przed pracami'
+    ]));
+    if(anyValue(['radiatorInstall','radiatorReplace','radiatorConnection'])) items.push(scopeItem('Hydraulika C.O. — grzejniki', [
+      'Pozycje grzejnikowe obejmują robociznę montażu, wymiany lub korekty podejścia pod grzejnik zgodnie z zakresem kosztorysu.',
+      'Materiały, zawory, uchwyty, odpowietrzniki oraz ewentualne zamrażanie lub spuszczanie instalacji nie są ujęte, jeżeli nie wskazano inaczej.'
+    ], [
+      'zakres zależy od istniejącej instalacji i dostępu do podejść',
+      'prace na instalacji C.O. mogą wymagać uzgodnień ze wspólnotą lub administracją',
+      'przeróbki podejść są liczone osobno'
+    ]));
+    if(anyValue(['doorStandard','doorHidden','doorAdjustment'])) items.push(scopeItem('Montaż drzwi wewnętrznych', [
+      'Montaż drzwi obejmuje robociznę osadzenia i regulacji skrzydła oraz ościeżnicy zgodnie z wybraną pozycją.',
+      'Drzwi ukryte wymagają większej precyzji, kontroli płaszczyzn ściany i często koordynacji z gładziami oraz malowaniem.'
+    ], [
+      'otwory drzwiowe muszą zostać zweryfikowane przed montażem',
+      'powiększanie otworów, obróbki, malowanie i materiały nie są ujęte, jeżeli nie wskazano inaczej',
+      'regulacje istniejących drzwi nie obejmują napraw stolarskich ani lakierniczych'
+    ]));
     items.push(scopeItem('Uwagi technologiczne i ograniczenia', [
       'Kosztorys ma charakter ofertowy i opiera się na zadeklarowanym zakresie oraz obmiarze. Różnice stanu podłoża, ukryte uszkodzenia, odspojenia, zawilgocenia, krzywizny, stare warstwy lub konieczność prac dodatkowych mogą wymagać korekty zakresu po oględzinach.',
       'Prace renowacyjne i serwisowe wykonywane na istniejących elementach mogą różnić się efektem od nowych prac, ponieważ zależą od wieku materiału, wcześniejszej technologii wykonania i warunków oświetleniowych.'
@@ -2449,7 +2623,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
 // v1.5.0 - CRM local-first: historia ofert, statusy, wczytywanie z historii
 (function(){
-  const VERSION = '1.8.1';
+  const VERSION = '1.8.5';
   const HISTORY_KEY = 'offers_history_v150';
   const safeId = (id) => document.getElementById(id);
   const controls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
@@ -2652,3 +2826,6 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
   bindHistory();
 })();
+
+document.addEventListener('input', e=>{ if(e.target.closest && e.target.closest('#revealsTable')) { syncRevealsUi(); calc(); } });
+document.addEventListener('change', e=>{ if(e.target.closest && e.target.closest('#revealsTable')) { syncRevealsUi(); calc(); } });

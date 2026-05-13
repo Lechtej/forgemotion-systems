@@ -133,5 +133,9 @@ Zmiany:
 PDF zawiera dynamiczną kartę „Zakres i technologia prac”, generowaną na podstawie aktywnych usług w kosztorysie. Karta opisuje zakres, ograniczenia technologiczne oraz ryzyka dla prac nowych, serwisowych i renowacyjnych.
 
 
-### v1.8.0
+### v1.8.5
 Dodano generator umowy. Umowa jest drukowana/PDF z poziomu aplikacji i zawiera kosztorys jako załącznik oraz dynamiczny zakres technologiczny jako drugi załącznik.
+
+
+## v1.8.5
+Dodano wyburzanie ścian działowych oraz moduł montażu mebli / wyposażenia.

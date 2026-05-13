@@ -1,0 +1,19 @@
+RemontPRO v1.8.4
+================
+
+Zakres:
+- Poprawione realne wdrożenie zmian w strukturach kalkulatora, bez nakładek.
+- Demolka: wyburzanie ścian działowych rozdzielone wg materiału:
+  - GK / lekka zabudowa: 55 zł/m²
+  - Gazobeton / beton komórkowy: 90 zł/m²
+  - Cegła / silikat: 130 zł/m²
+  - Żelbet cienki / beton lekki: 160 zł/m²
+  - Żelbet / beton / klinkier trudny: 350 zł/m²
+- Hydraulika: grzejniki / C.O.:
+  - Montaż grzejnika standardowego: 250 zł/szt
+  - Wymiana grzejnika z demontażem: 400 zł/szt
+  - Przeróbka podejścia pod grzejnik: 350 zł/szt
+- Montaż mebli / drzwi:
+  - Montaż drzwi wewnętrznych z ościeżnicą regulowaną: 350 zł/szt
+  - Montaż drzwi ukrytych / bezprzylgowych / ukryta ościeżnica: 650 zł/szt
+  - Regulacja / podcięcie / korekta drzwi: 120 zł/szt

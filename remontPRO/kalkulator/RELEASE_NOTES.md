@@ -273,7 +273,7 @@
 - Dodano ostrzeżenia technologiczne dla prac serwisowych i renowacyjnych.
 
 
-## v1.8.0 — Generator umowy
+## v1.8.5 — Generator umowy
 - Dodano przycisk „Generuj umowę”.
 - Dodano dokument umowy z danymi wykonawcy, klienta i projektu.
 - Kosztorys jest generowany jako Załącznik nr 1.
@@ -281,8 +281,22 @@
 - Dodano zapis o ubezpieczeniu OC wykonawcy:
   „Wykonawca posiada aktualne ubezpieczenie odpowiedzialności cywilnej (OC) związane z prowadzoną działalnością i wykonywanym zakresem prac. Kopia polisy może zostać okazana Zamawiającemu na życzenie.”
 
-## v1.8.1
+## v1.8.5
 - Rozdzielono nazwy plików PDF przez tytuł dokumentu: `Kosztorys_...` oraz `Umowa_...`.
 - Dodano opcjonalne pole adresu wykonawcy.
 - Dodano opcjonalne pole adresu zamawiającego / korespondencyjnego.
 - Adresy wykonawcy i zamawiającego są zaciągane do umowy.
+
+
+## v1.8.5
+
+Zakres:
+- Dodano pozycję demolki: wyburzanie ścian działowych [m²].
+- Dodano współczynnik gruzu dla ścian działowych.
+- Dodano nowy moduł: Montaż mebli / wyposażenia.
+- Pozycje meblowe: skręcanie mebli, zabudowa/szafki [mb], blaty [mb], uchwyty/regulacja frontów [szt], korekty godzinowe [h].
+- Dodano tooltipy i opisy technologiczne do PDF/umowy.
+
+Uwagi:
+- Wyburzanie ścian dotyczy ścian działowych, nie nośnych/konstrukcyjnych.
+- Meble i akcesoria są materiałem klienta, jeśli nie wskazano inaczej.
