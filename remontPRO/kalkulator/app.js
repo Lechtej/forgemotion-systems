@@ -372,9 +372,10 @@ const SUMMARY_GROUPS = [
   {id:'decor', title:'11. Dekoracje / sztukateria', order:110},
   {id:'wallpaper', title:'12. Tapetowanie / okładziny ścienne', order:115},
   {id:'paint', title:'13. Malowanie', order:120},
-  {id:'furniture', title:'14. Montaż mebli / wyposażenia', order:125},
-  {id:'hard', title:'15. Prace trudne / narzuty', order:130},
-  {id:'other', title:'16. Inne pozycje', order:900}
+  {id:'reveals', title:'14. Obróbki glifów / szpalet / otworów', order:124},
+  {id:'furniture', title:'15. Montaż mebli / wyposażenia', order:125},
+  {id:'hard', title:'16. Prace trudne / narzuty', order:130},
+  {id:'other', title:'17. Inne pozycje', order:900}
 ];
 const SUMMARY_GROUP_BY_ID = Object.fromEntries(SUMMARY_GROUPS.map(g => [g.id, g]));
 function inferSummaryMeta(name=''){
@@ -402,7 +403,7 @@ function inferSummaryMeta(name=''){
   // Priorytet 2: prace przygotowawcze niebędące demontażem.
   if(n.includes('zabezpieczenie') || n.includes('oklejanie')) return {group:'prep', groupOrder:SUMMARY_GROUP_BY_ID.prep.order, order:10};
 
-  if(n.includes('glify') || n.includes('szpalety') || n.includes('kątownik alu') || n.includes('starej ościeżnicy')) return {group:'furniture', groupOrder:999, order:126};
+  if(n.includes('glify') || n.includes('szpalety') || n.includes('kątownik alu') || n.includes('starej ościeżnicy')) return {group:'reveals', groupOrder:SUMMARY_GROUP_BY_ID.reveals.order, order:124};
 
   // Priorytet 2A: C.O. i drzwi.
   if(n.includes('grzejnik') || n.includes('c.o.')) return {group:'hydraulic', groupOrder:SUMMARY_GROUP_BY_ID.hydraulic.order, order:50};
@@ -618,37 +619,40 @@ const revealsMap = {
   oldFrameRepair: {rate:'revealsOldFrameRepair', label:'Glify / szpalety: naprawa po starej ościeżnicy', unit:'szt'}
 };
 
+function revealNum(row, selector){
+  return parseFloat(row.querySelector(selector)?.value || '0') || 0;
+}
 function calcRevealMb(row){
   const mode = row.querySelector('.rMode')?.value || 'quick';
-  if(mode === 'manual') return parseFloat(row.querySelector('.rManual')?.value || '0') || 0;
-  const count = parseFloat(row.querySelector('.rCount')?.value || '0') || 0;
-  const width = parseFloat(row.querySelector('.rWidth')?.value || '0') || 0;
-  const height = parseFloat(row.querySelector('.rHeight')?.value || '0') || 0;
+  if(mode === 'manual') return revealNum(row, '.rManual');
+  const count = revealNum(row, '.rCount');
+  const width = revealNum(row, '.rWidth');
+  const height = revealNum(row, '.rHeight');
   return count * (2 * height + width);
 }
-
 function syncRevealsUi(){
+  const box = el('revealsDetailsBox');
+  if(box) box.style.display = chk('svcReveals') ? 'block' : 'none';
   document.querySelectorAll('#revealsTable tbody tr[data-reveal]').forEach(row=>{
     const mode = row.querySelector('.rMode')?.value || 'quick';
-    row.querySelectorAll('.rQuick').forEach(el=>{ el.style.display = mode === 'quick' ? '' : 'none'; });
-    row.querySelectorAll('.rManualWrap').forEach(el=>{ el.style.display = mode === 'manual' ? '' : 'none'; });
+    row.querySelectorAll('.rQuick').forEach(w=>{ w.style.display = mode === 'quick' ? '' : 'none'; });
+    row.querySelectorAll('.rManualWrap').forEach(w=>{ w.style.display = mode === 'manual' ? '' : 'none'; });
     const def = revealsMap[row.dataset.reveal];
-    const qty = def?.unit === 'szt' ? (parseFloat(row.querySelector('.rManual')?.value || '0') || 0) : calcRevealMb(row);
-    const cell = row.querySelector('.rCalcMb');
-    if(cell) cell.textContent = def?.unit === 'szt' ? qty.toFixed(1)+' szt' : qty.toFixed(1)+' mb';
+    const qty = def?.unit === 'szt' ? revealNum(row,'.rManual') : calcRevealMb(row);
+    const calcCell = row.querySelector('.rCalcMb');
+    if(calcCell) calcCell.textContent = def?.unit === 'szt' ? qty.toFixed(1) + ' szt' : qty.toFixed(1) + ' mb';
     const rateCell = row.querySelector('.rRate');
     if(rateCell && def) rateCell.textContent = money(rates[def.rate] || 0);
   });
 }
-
 function addRevealsRows(add){
   if(!chk('svcReveals')) return;
+  syncRevealsUi();
   document.querySelectorAll('#revealsTable tbody tr[data-reveal]').forEach(row=>{
     const def = revealsMap[row.dataset.reveal];
     if(!def || !row.querySelector('.rActive')?.checked) return;
-    const qty = def.unit === 'szt' ? (parseFloat(row.querySelector('.rManual')?.value || '0') || 0) : calcRevealMb(row);
-    if(qty <= 0) return;
-    add(def.label, qty, def.unit, rates[def.rate] || 0);
+    const qty = def.unit === 'szt' ? revealNum(row,'.rManual') : calcRevealMb(row);
+    if(qty > 0) add(def.label, qty, def.unit, rates[def.rate] || 0);
   });
 }
 
@@ -1444,7 +1448,6 @@ function syncWallsUi(){
 function addWallRows(add){
   if(!chk('svcWalls')) return;
   syncWallsUi();
-  syncRevealsUi();
   document.querySelectorAll('#wallsGkTable tbody tr, #wallsMasonryTable tbody tr').forEach(tr=>{
     if(!tr.querySelector('.wActive')?.checked) return;
     const key = tr.dataset.wall;
@@ -2448,6 +2451,15 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
       'powiększanie otworów, obróbki, malowanie i materiały nie są ujęte, jeżeli nie wskazano inaczej',
       'regulacje istniejących drzwi nie obejmują napraw stolarskich ani lakierniczych'
     ]));
+
+    if(isOn('svcReveals')) items.push(scopeItem('Obróbki glifów / szpalet / otworów', [
+      'Obróbki glifów i szpalet obejmują wykończenie krawędzi oraz płaszczyzn wokół okien, drzwi wejściowych, drzwi wewnętrznych lub drzwi ukrytych.',
+      'Tryb szybki przelicza obmiar jako liczba otworów × (2 × wysokość + szerokość), czyli dwa boki i górę otworu. Tryb ręczny pozwala wpisać gotowy obmiar w mb.'
+    ], [
+      'dolna krawędź/parapet nie jest liczona w trybie szybkim',
+      'materiały są po stronie klienta, jeżeli nie wskazano inaczej',
+      'drzwi ukryte wymagają większej precyzji i kontroli płaszczyzn'
+    ]));
     items.push(scopeItem('Uwagi technologiczne i ograniczenia', [
       'Kosztorys ma charakter ofertowy i opiera się na zadeklarowanym zakresie oraz obmiarze. Różnice stanu podłoża, ukryte uszkodzenia, odspojenia, zawilgocenia, krzywizny, stare warstwy lub konieczność prac dodatkowych mogą wymagać korekty zakresu po oględzinach.',
       'Prace renowacyjne i serwisowe wykonywane na istniejących elementach mogą różnić się efektem od nowych prac, ponieważ zależą od wieku materiału, wcześniejszej technologii wykonania i warunków oświetleniowych.'
@@ -2826,6 +2838,3 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
   bindHistory();
 })();
-
-document.addEventListener('input', e=>{ if(e.target.closest && e.target.closest('#revealsTable')) { syncRevealsUi(); calc(); } });
-document.addEventListener('change', e=>{ if(e.target.closest && e.target.closest('#revealsTable')) { syncRevealsUi(); calc(); } });

@@ -306,5 +306,5 @@ input[readonly]{background:#f2f6fb;color:#526173;}
   #printRoot .scopeAppendix .scopeLead{margin-top:0;}
 }
 
-.mini{max-width:72px;display:inline-block;margin:0 4px;padding:6px 8px}
-.hint-box{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px;margin:10px 0;background:rgba(255,255,255,.04)}
+.miniInput{max-width:74px;display:inline-block;margin:0 4px;padding:6px 8px;}
+#revealsTable .rQuick{white-space:nowrap;}

@@ -26,6 +26,7 @@
       <button class="moduleItem active" data-scroll-target="subfloorServiceBlock" data-master-id="svcSubfloor"><span class="moduleCheck"></span><span><b>Posadzki / podłoże</b><small>Przygotowanie podłoża</small></span><em>›</em></button>
       <button class="moduleItem" data-scroll-target="decorServiceBlock" data-master-id="svcDecor"><span class="moduleCheck"></span><span><b>Dekoracje / sztukateria</b><small>Listwy, maskownice, dekoracje</small></span><em>›</em></button>
       <button class="moduleItem" data-scroll-target="wallpaperServiceBlock" data-master-id="svcWallpaper"><span class="moduleCheck"></span><span><b>Tapetowanie</b><small>Ręczny obmiar m²</small></span><em>›</em></button>
+      <button class="moduleItem" data-scroll-target="revealsServiceBlock" data-master-id="svcReveals"><span class="moduleCheck"></span><span><b>Glify / szpalety</b><small>Okna, drzwi, otwory</small></span><em>›</em></button>
       <button class="moduleItem" data-scroll-target="furnitureServiceBlock" data-master-id="svcFurniture"><span class="moduleCheck"></span><span><b>Montaż mebli</b><small>Szafki, blaty, drzwi</small></span><em>›</em></button>
       <button class="moduleItem" data-scroll-target="hardServiceBlock" data-master-id="svcHard"><span class="moduleCheck"></span><span><b>Prace trudne</b><small>Wysokość, rusztowania, transport</small></span><em>›</em></button>
       <button class="moduleItem atticMenuItem" data-scroll-target="atticServiceBlock" data-master-id="svcAttic" style="display:none;"><span class="moduleCheck"></span><span><b>Poddasze</b><small>Izolacje, skosy, GK</small></span><em>›</em></button>
@@ -477,7 +478,63 @@
           </div>
 
 
-          <div class="serviceBlock sectionBlock" id="furnitureServiceBlock">
+          
+          <div class="serviceBlock sectionBlock" id="revealsServiceBlock">
+            <div class="serviceHeader">
+              <label class="checkLine"><input type="checkbox" id="svcReveals" /> <span>Obróbki glifów / szpalet / otworów <span class="info-icon" onclick="toggleTip(this)">i</span></span>
+                <div class="tooltip-box">Moduł liczy robociznę obróbek wokół okien, drzwi wejściowych, drzwi wewnętrznych oraz drzwi ukrytych. Materiały rozliczaj osobno, jeśli nie wskazano inaczej.</div>
+              </label>
+            </div>
+            <div class="serviceDetails" id="revealsDetailsBox" style="display:none;">
+              <h3>Glify / szpalety — zakres prac</h3>
+              <p class="info"><b>Tryb szybki:</b> liczba × (2 × wysokość + szerokość). Liczymy dwa boki i górę otworu — bez dołu/parapetu. <b>Tryb ręczny:</b> wpisujesz gotowy obmiar w mb.</p>
+              <div class="tableWrap">
+                <table id="revealsTable">
+                  <thead><tr><th>Aktywne</th><th>Pozycja</th><th>Tryb</th><th>Obmiar</th><th>Przeliczone</th><th>Stawka auto</th></tr></thead>
+                  <tbody>
+                    <tr data-reveal="windowStandard">
+                      <td><input type="checkbox" class="rActive"></td>
+                      <td><span class="field-label">Glify okienne standard <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obróbka szpalet okiennych: wyrównanie, gładź/naprawa, przygotowanie pod malowanie i estetyczne wykończenie krawędzi. Nie obejmuje parapetu.</div></td>
+                      <td><select class="rMode"><option value="quick">szybki</option><option value="manual">ręczny mb</option></select></td>
+                      <td><div class="rQuick">liczba <input class="rCount miniInput" type="number" min="0" step="1" value="0"> szer. <input class="rWidth miniInput" type="number" min="0" step="0.01" value="0"> m wys. <input class="rHeight miniInput" type="number" min="0" step="0.01" value="0"> m</div><div class="rManualWrap" style="display:none">mb <input class="rManual miniInput" type="number" min="0" step="0.1" value="0"></div></td>
+                      <td class="rCalcMb">0 mb</td><td class="rRate"></td>
+                    </tr>
+                    <tr data-reveal="doorStandard">
+                      <td><input type="checkbox" class="rActive"></td>
+                      <td><span class="field-label">Glify drzwiowe standard <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obróbka otworu drzwiowego po montażu lub wymianie drzwi. Dotyczy drzwi wejściowych i wewnętrznych, bez specjalnej precyzji dla drzwi ukrytych.</div></td>
+                      <td><select class="rMode"><option value="quick">szybki</option><option value="manual">ręczny mb</option></select></td>
+                      <td><div class="rQuick">liczba <input class="rCount miniInput" type="number" min="0" step="1" value="0"> szer. <input class="rWidth miniInput" type="number" min="0" step="0.01" value="0"> m wys. <input class="rHeight miniInput" type="number" min="0" step="0.01" value="0"> m</div><div class="rManualWrap" style="display:none">mb <input class="rManual miniInput" type="number" min="0" step="0.1" value="0"></div></td>
+                      <td class="rCalcMb">0 mb</td><td class="rRate"></td>
+                    </tr>
+                    <tr data-reveal="hiddenDoor">
+                      <td><input type="checkbox" class="rActive"></td>
+                      <td><span class="field-label">Obróbka pod drzwi ukryte <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Precyzyjna obróbka płaszczyzny pod drzwi ukryte / bezprzylgowe. Wymaga kontroli płaszczyzny ściany, krawędzi i połączenia z ościeżnicą.</div></td>
+                      <td><select class="rMode"><option value="quick">szybki</option><option value="manual">ręczny mb</option></select></td>
+                      <td><div class="rQuick">liczba <input class="rCount miniInput" type="number" min="0" step="1" value="0"> szer. <input class="rWidth miniInput" type="number" min="0" step="0.01" value="0"> m wys. <input class="rHeight miniInput" type="number" min="0" step="0.01" value="0"> m</div><div class="rManualWrap" style="display:none">mb <input class="rManual miniInput" type="number" min="0" step="0.1" value="0"></div></td>
+                      <td class="rCalcMb">0 mb</td><td class="rRate"></td>
+                    </tr>
+                    <tr data-reveal="aluCorner">
+                      <td><input type="checkbox" class="rActive"></td>
+                      <td><span class="field-label">Narożnik / kątownik alu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Osadzenie lub korekta narożnika/kątownika aluminiowego przy glifach i krawędziach otworów. Liczone z mb.</div></td>
+                      <td><select class="rMode"><option value="manual">ręczny mb</option></select></td>
+                      <td><div class="rManualWrap">mb <input class="rManual miniInput" type="number" min="0" step="0.1" value="0"></div></td>
+                      <td class="rCalcMb">0 mb</td><td class="rRate"></td>
+                    </tr>
+                    <tr data-reveal="oldFrameRepair">
+                      <td><input type="checkbox" class="rActive"></td>
+                      <td><span class="field-label">Naprawa po starej ościeżnicy <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Ryczałtowa naprawa uszkodzeń po demontażu starej ościeżnicy: uzupełnienia, szpachlowanie i przygotowanie do dalszego wykończenia.</div></td>
+                      <td><select class="rMode"><option value="manual">sztuki</option></select></td>
+                      <td><div class="rManualWrap">szt <input class="rManual miniInput" type="number" min="0" step="1" value="0"></div></td>
+                      <td class="rCalcMb">0 szt</td><td class="rRate"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="hint">Stawki są edytowalne w Administracji. Materiały i ewentualne obróbki specjalne rozliczaj osobno.</p>
+            </div>
+          </div>
+
+<div class="serviceBlock sectionBlock" id="furnitureServiceBlock">
             <div class="serviceHeader"><label class="checkLine"><input type="checkbox" id="svcFurniture" /> <span>Montaż mebli / drzwi / wyposażenia <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Moduł liczy robociznę montażu mebli, szafek, blatów, drzwi wewnętrznych, uchwytów i regulacji. Materiały, okucia, akcesoria i kompletność zestawu są po stronie klienta, jeżeli nie wskazano inaczej.</div></label></div>
             <div class="serviceDetails" id="furnitureDetailsBox" style="display:none;">
               <h3>Montaż mebli i drzwi — zakres prac</h3>
@@ -595,24 +652,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-          <section class="service-card" id="svcReveals">
-            <div class="service-head">
-              <div><h2>Obróbki glifów / szpalet / otworów</h2><p>Okna, drzwi wejściowe, drzwi wewnętrzne i drzwi ukryte</p></div>
-              <label class="switch"><input type="checkbox" class="svc-toggle" id="svcReveals"><span></span></label>
-            </div>
-            <div class="service-body">
-              <div class="hint-box"><b>Tryb szybki:</b> liczba × (2 × wysokość + szerokość). Liczymy dwa boki i górę otworu — bez dołu/parapetu.<br><b>Tryb ręczny:</b> wpisujesz gotowy obmiar w mb.</div>
-              <table class="calc-table" id="revealsTable">
-                <thead><tr><th>Aktywne</th><th>Pozycja</th><th>Tryb</th><th>Obmiar</th><th>Przeliczone</th><th>Stawka</th></tr></thead>
-                <tbody>
-                  <tr data-reveal="windowStandard"><td><input type="checkbox" class="rActive"></td><td><span class="field-label">Glify okienne standard <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obróbka szpalet okiennych: wyrównanie, gładź/naprawa, przygotowanie pod malowanie i estetyczne wykończenie krawędzi.</div></td><td><select class="rMode"><option value="quick">Szybki</option><option value="manual">Ręczny mb</option></select></td><td><div class="rQuick">liczba <input class="rCount mini" type="number" min="0" step="1" value="0"> szer. <input class="rWidth mini" type="number" min="0" step="0.01" value="0"> m wys. <input class="rHeight mini" type="number" min="0" step="0.01" value="0"> m</div><div class="rManualWrap" style="display:none">mb <input class="rManual mini" type="number" min="0" step="0.1" value="0"></div></td><td class="rCalcMb">0 mb</td><td class="rRate"></td></tr>
-                  <tr data-reveal="doorStandard"><td><input type="checkbox" class="rActive"></td><td><span class="field-label">Glify drzwiowe standard <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Obróbka otworu drzwiowego po montażu lub wymianie drzwi.</div></td><td><select class="rMode"><option value="quick">Szybki</option><option value="manual">Ręczny mb</option></select></td><td><div class="rQuick">liczba <input class="rCount mini" type="number" min="0" step="1" value="0"> szer. <input class="rWidth mini" type="number" min="0" step="0.01" value="0"> m wys. <input class="rHeight mini" type="number" min="0" step="0.01" value="0"> m</div><div class="rManualWrap" style="display:none">mb <input class="rManual mini" type="number" min="0" step="0.1" value="0"></div></td><td class="rCalcMb">0 mb</td><td class="rRate"></td></tr>
-                  <tr data-reveal="hiddenDoor"><td><input type="checkbox" class="rActive"></td><td><span class="field-label">Obróbka pod drzwi ukryte <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Precyzyjna obróbka płaszczyzny pod drzwi ukryte / bezprzylgowe.</div></td><td><select class="rMode"><option value="quick">Szybki</option><option value="manual">Ręczny mb</option></select></td><td><div class="rQuick">liczba <input class="rCount mini" type="number" min="0" step="1" value="0"> szer. <input class="rWidth mini" type="number" min="0" step="0.01" value="0"> m wys. <input class="rHeight mini" type="number" min="0" step="0.01" value="0"> m</div><div class="rManualWrap" style="display:none">mb <input class="rManual mini" type="number" min="0" step="0.1" value="0"></div></td><td class="rCalcMb">0 mb</td><td class="rRate"></td></tr>
-                  <tr data-reveal="aluCorner"><td><input type="checkbox" class="rActive"></td><td><span class="field-label">Narożnik / kątownik alu <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Osadzenie lub korekta narożnika/kątownika aluminiowego przy glifach i krawędziach otworów.</div></td><td><select class="rMode"><option value="manual">Ręczny mb</option></select></td><td><div class="rManualWrap">mb <input class="rManual mini" type="number" min="0" step="0.1" value="0"></div></td><td class="rCalcMb">0 mb</td><td class="rRate"></td></tr>
-                  <tr data-reveal="oldFrameRepair"><td><input type="checkbox" class="rActive"></td><td><span class="field-label">Naprawa po starej ościeżnicy <span class="info-icon" onclick="toggleTip(this)">i</span></span><div class="tooltip-box">Ryczałtowa naprawa uszkodzeń po demontażu starej ościeżnicy.</div></td><td><select class="rMode"><option value="manual">Sztuki</option></select></td><td><div class="rManualWrap">szt <input class="rManual mini" type="number" min="0" step="1" value="0"></div></td><td class="rCalcMb">0 szt</td><td class="rRate"></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-

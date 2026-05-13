@@ -1,6 +1,18 @@
-RemontPRO v1.8.5
-================
-- Dodano blok: Obróbki glifów / szpalet / otworów.
+RemontPRO v1.8.5 FIX
+====================
+
+Zakres:
+- Dodano blok w poprawnym kontenerze aplikacji: Obróbki glifów / szpalet / otworów.
 - Tryb szybki: liczba × (2 × wysokość + szerokość).
 - Tryb ręczny: wpisanie gotowego obmiaru w mb.
-- Stawki: okna 110 zł/mb, drzwi 120 zł/mb, drzwi ukryte 190 zł/mb, narożnik alu 45 zł/mb, naprawa po starej ościeżnicy 250 zł/szt.
+- Pozycje:
+  - Glify okienne standard: 110 zł/mb
+  - Glify drzwiowe standard: 120 zł/mb
+  - Obróbka pod drzwi ukryte: 190 zł/mb
+  - Narożnik / kątownik alu: 45 zł/mb
+  - Naprawa po starej ościeżnicy: 250 zł/szt
+
+Naprawa względem poprzedniego v1.8.5:
+- sekcja nie jest już wstawiana poza layout,
+- kalkulacja wchodzi w główny calc(),
+- stawki działają z Administracji.
