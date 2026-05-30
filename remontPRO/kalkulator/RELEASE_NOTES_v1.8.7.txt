@@ -1,0 +1,12 @@
+# Release notes — kalkulator_remonty_v1.8.7
+
+## Changed
+- Zmieniono opis pozycji „Dodatkowe przygotowanie pod malowanie”.
+- Nowa nazwa: „Przygotowanie ścian pod gładź / malowanie (zdzieranie, szlifowanie)”.
+- Pozycja została przeniesiona logicznie na początek bloku Malowanie, przed standardowe malowanie ścian i sufitów.
+- Zaktualizowano opis wariantów malowania w UI.
+
+## Notes
+- Stawki nie zostały zmienione.
+- Wariant C nadal automatycznie uruchamia gładzie.
+- Zachowano zmiany z v1.8.6: parapety, płytki specjalne oraz rozbite zabezpieczenia malarskie.

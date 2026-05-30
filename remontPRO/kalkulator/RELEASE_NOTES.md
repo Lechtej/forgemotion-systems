@@ -1,9 +1,48 @@
+# Release notes — kalkulator_remonty_v1.9.0
+
+## v1.9.0 — porządek bloków kosztorysu i przygotowanie pod instalacje
+
+### Changed
+- Uporządkowano kolejność bloków kosztorysu zgodnie z przebiegiem remontu.
+- Dodano osobny blok „Przygotowanie pod instalacje” dla bruzdowania, podkuwania, przepustów i otworów pod puszki.
+- Usunięto prefiks „Malowanie:” z pozycji zabezpieczeń.
+- Kuchnia i łazienka są prezentowane razem w bloku „Łazienki i kuchnie”.
+- Pozycje wod-kan z kuchni nie wpadają już do bloku „Inne pozycje”.
+- Blok „Inne pozycje” przemianowano na „Pozycje indywidualne” i zostawiono jako miejsce dla pozycji ręcznych.
+
 ## v1.4.1
 - Zapis projektu używa nazwy pliku z numerem oferty i nazwiskiem/firmą klienta.
 - Poprawiono klasyfikację pozycji malowania po wczytaniu JSON: pozycje wracają do bloku Malowanie zamiast Inne pozycje.
 - Walidacja techniczna: node --check, unzip -t.
 
 # Release notes
+
+
+## v1.9.0 — doprecyzowanie przygotowania ścian pod gładź / malowanie
+
+### Changed
+- Zmieniono nazwę pozycji „Dodatkowe przygotowanie pod malowanie”.
+- Nowa nazwa: „Przygotowanie ścian pod gładź / malowanie (zdzieranie, szlifowanie)”.
+- Pozycja jest generowana jako pierwsza pozycja w bloku Malowanie.
+- Zaktualizowano opis wariantu malowania w interfejsie.
+
+### Compatibility
+- Zachowano dotychczasową logikę i stawki wariantów B/C.
+- Projekty zapisane w starszych wersjach pozostają wczytywalne.
+
+## v1.8.6 — parapety, płytki specjalne, zabezpieczenia malarskie
+
+### Added
+- Modułowe pozycje parapetów wewnętrznych: demontaż, obsadzenie, obróbka, docinanie.
+- Dopłaty za utrudnione układanie płytek: mały format, cegiełka, mozaika, kit-kat/lamelki, jodełka.
+- Rozbicie zabezpieczeń do malowania: pełne, podłogi, parkiet, okna, drzwi, klatka/winda.
+
+### Changed
+- Glify i parapety są osobnymi pozycjami kosztorysowymi.
+- Pozycja legacy zabezpieczenia została zachowana w cenniku, ale kalkulacja malowania korzysta z rozbitych pozycji.
+
+### Validation
+- PASS: node --check app.js.
 
 ## v1.4.0
 - Dodano dane klienta / lead do formularza projektu.
@@ -80,6 +119,20 @@
 - Bez zmian w logice kosztów względem v1.1.7.8.
 
 # Release notes
+
+## v1.8.6 — parapety, płytki specjalne, zabezpieczenia malarskie
+
+### Added
+- Modułowe pozycje parapetów wewnętrznych: demontaż, obsadzenie, obróbka, docinanie.
+- Dopłaty za utrudnione układanie płytek: mały format, cegiełka, mozaika, kit-kat/lamelki, jodełka.
+- Rozbicie zabezpieczeń do malowania: pełne, podłogi, parkiet, okna, drzwi, klatka/winda.
+
+### Changed
+- Glify i parapety są osobnymi pozycjami kosztorysowymi.
+- Pozycja legacy zabezpieczenia została zachowana w cenniku, ale kalkulacja malowania korzysta z rozbitych pozycji.
+
+### Validation
+- PASS: node --check app.js.
 
 ## v1.1.7.3 — scroll layout fix + powrót z Administracji
 - Zmieniono układ przewijania: lewy panel zakresu prac pozostaje stale widoczny na ekranie.

@@ -1,0 +1,12 @@
+# Release notes — kalkulator_remonty_v1.9.0
+
+## v1.9.0 — porządek bloków kosztorysu i przygotowanie pod instalacje
+
+### Changed
+- Uporządkowano kolejność bloków kosztorysu zgodnie z przebiegiem remontu.
+- Dodano osobny blok „Przygotowanie pod instalacje” dla bruzdowania, podkuwania, przepustów i otworów pod puszki.
+- Usunięto prefiks „Malowanie:” z pozycji zabezpieczeń.
+- Kuchnia i łazienka są prezentowane razem w bloku „Łazienki i kuchnie”.
+- Pozycje wod-kan z kuchni nie wpadają już do bloku „Inne pozycje”.
+- Blok „Inne pozycje” przemianowano na „Pozycje indywidualne” i zostawiono jako miejsce dla pozycji ręcznych.
+

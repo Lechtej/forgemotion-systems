@@ -1,4 +1,12 @@
-# Kalkulator remonty v1.7.1
+# Kalkulator remonty v1.9.0
+
+## v1.9.0 — porządek bloków kosztorysu
+
+- Osobny blok: Przygotowanie pod instalacje.
+- Zabezpieczenia bez prefiksu „Malowanie”.
+- Łazienki i kuchnie scalone logicznie w jednym bloku.
+- Kolejność bloków zgodna z przebiegiem remontu.
+
 
 Lokalna aplikacja HTML + JS do kalkulacji kosztów robocizny remontowej.
 
@@ -10,6 +18,25 @@ python -m http.server 8000
 ```
 
 Następnie wejdź na `http://localhost:8000`.
+
+
+
+## v1.9.0 — doprecyzowanie przygotowania ścian pod gładź / malowanie
+
+Zmiany:
+- zmieniono nazwę pozycji „Dodatkowe przygotowanie pod malowanie” na „Przygotowanie ścian pod gładź / malowanie (zdzieranie, szlifowanie)”,
+- pozycja jest dodawana jako pierwsza w bloku Malowanie,
+- zaktualizowano opis wariantu malowania w UI,
+- zachowano stawki wariantów B/C: 18 zł/m² i 35 zł/m².
+
+## v1.8.6 — parapety, płytki specjalne, zabezpieczenia malarskie
+
+Dodano:
+- osobne pozycje parapetów: demontaż, obsadzenie, obróbka i docinanie,
+- dopłaty glazurnicze za mały format, cegiełkę, mozaikę, kit-kat/lamelki i jodełkę,
+- rozbite zabezpieczenia malarskie: pełne, podłogi, parkiet, okna, drzwi, klatka/winda.
+
+Zasada kosztorysowa: glify i parapety nie dublują się. Zabezpieczenie pełne stosuj zamiennie z zabezpieczeniami elementów.
 
 ## Funkcje
 - obmiar pomieszczeń,

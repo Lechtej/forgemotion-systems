@@ -1,0 +1,30 @@
+# Release notes — kalkulator_remonty_v1.8.6
+
+## Dodano
+- Parapety wewnętrzne w module „Obróbki glifów / szpalet / otworów”:
+  - demontaż parapetu,
+  - obsadzenie parapetu,
+  - obróbka parapetu / wnęki,
+  - docinanie / dopasowanie parapetu.
+- Utrudnienia układania płytek w module łazienek/kuchni:
+  - mały format ≤15 cm,
+  - cegiełka,
+  - mozaika,
+  - kit-kat / lamelki,
+  - jodełka.
+- Rozbite zabezpieczenia w malowaniu:
+  - zabezpieczenie pełne pomieszczenia,
+  - zabezpieczenie podłogi,
+  - zabezpieczenie parkietu wzmocnione,
+  - zabezpieczenie okien,
+  - zabezpieczenie drzwi,
+  - zabezpieczenie klatki schodowej / windy.
+
+## Zmieniono
+- Glify i parapety są rozdzielone kosztorysowo, aby nie dublować robocizny.
+- Pozycja legacy „Zabezpieczenie powierzchni” pozostała w cenniku jako kompatybilność, ale kalkulacja używa nowych rozbitych pozycji.
+- Dopłaty za format/wzór płytek doliczają się do m² płytek ściennych i podłogowych w danym wierszu pomieszczenia mokrego.
+
+## Testy
+- PASS: `node --check app.js`.
+- PASS: ZIP zweryfikowany przez `unzip -t`.

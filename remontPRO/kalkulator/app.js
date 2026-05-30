@@ -19,6 +19,12 @@ const defaultRates = {
   primer: 6,
   smooth: 45,
   mask: 4,
+  paintProtectFull: 12,
+  paintProtectFloor: 7,
+  paintProtectParkiet: 12,
+  paintProtectWindow: 45,
+  paintProtectDoor: 40,
+  paintProtectStairLift: 220,
   prepMediumExtra: 18,
   prepHeavyExtra: 35,
   elec: 150,
@@ -126,6 +132,11 @@ const defaultRates = {
   tileGresExtra: 20,
   tileHardExtra: 35,
   tileMiter: 80,
+  tileSmallExtra: 35,
+  tileBrickExtra: 45,
+  tileMosaicExtra: 90,
+  tileKitkatExtra: 110,
+  tileHerringboneExtra: 80,
   bathroomGkFrame: 550,
   floorLaminate: 45,
   floorVinylClick: 55,
@@ -178,7 +189,11 @@ const defaultRates = {
   revealsDoorStandard: 120,
   revealsHiddenDoor: 190,
   revealsAluCorner: 45,
-  revealsOldFrameRepair: 250
+  revealsOldFrameRepair: 250,
+  parapetDemount: 40,
+  parapetSet: 120,
+  parapetFinish: 80,
+  parapetCut: 40
 };
 let rates = {...defaultRates, ...(JSON.parse(localStorage.getItem('rates_v135') || '{}'))};
 
@@ -193,9 +208,15 @@ const rateLabels = {
   paintTouchup:['Serwis malarski: zaprawka do ok. 0,25 m²','zł/szt'],
   paintTouchupExtended:['Serwis malarski: zaprawka rozszerzona','zł/szt'],
   primer:['Gruntowanie ścian/sufitów','zł/m²'],
-  mask:['Zabezpieczenie powierzchni: folia/taśma','zł/m²'],
-  prepMediumExtra:['Dopłata: zeskrobanie/poprawki średnie','zł/m²'],
-  prepHeavyExtra:['Dopłata: do surowego / ciężkie przygotowanie','zł/m²'],
+  mask:['Zabezpieczenie powierzchni: folia/taśma — legacy','zł/m²'],
+  paintProtectFull:['Zabezpieczenie pełne pomieszczenia','zł/m²'],
+  paintProtectFloor:['Zabezpieczenie podłogi','zł/m²'],
+  paintProtectParkiet:['Zabezpieczenie parkietu wzmocnione','zł/m²'],
+  paintProtectWindow:['Zabezpieczenie okien','zł/szt'],
+  paintProtectDoor:['Zabezpieczenie drzwi','zł/szt'],
+  paintProtectStairLift:['Zabezpieczenie klatki schodowej / windy','zł/kpl'],
+  prepMediumExtra:['Przygotowanie ścian pod gładź / malowanie (zdzieranie, szlifowanie) — wariant średni','zł/m²'],
+  prepHeavyExtra:['Przygotowanie ścian pod gładź / malowanie (zdzieranie, szlifowanie) — wariant ciężki','zł/m²'],
   smooth:['Gładź','zł/m²'],
   elec:['Punkt elektryczny — legacy','zł/szt'],
   elecQuickPoint:['Elektryka: punkt elektryczny — szybki tryb','zł/szt'],
@@ -203,11 +224,11 @@ const rateLabels = {
   elecSwitch:['Elektryka: włącznik / punkt','zł/szt'],
   elecLight:['Elektryka: punkt oświetleniowy','zł/szt'],
   elecPower:['Elektryka: gniazdo siłowe / dedykowany punkt AGD','zł/szt'],
-  elecBruzdaWall:['Elektryka: bruzdowanie w ścianie','zł/mb'],
-  elecBruzdaConcrete:['Elektryka: bruzdowanie w betonie','zł/mb'],
+  elecBruzdaWall:['Przygotowanie pod instalacje: bruzdowanie elektryczne w ścianie','zł/mb'],
+  elecBruzdaConcrete:['Przygotowanie pod instalacje: bruzdowanie elektryczne w betonie','zł/mb'],
   elecCable:['Elektryka: układanie przewodów','zł/mb'],
   elecConduit:['Elektryka: robocizna — prowadzenie w peszlu/osłonie','zł/mb'],
-  elecBoxCut:['Elektryka: kucie/wiercenie pod puszki','zł/szt'],
+  elecBoxCut:['Przygotowanie pod instalacje: wycinanie / wiercenie otworów pod puszki','zł/szt'],
   elecBoxMount:['Elektryka: montaż/osadzenie puszki','zł/szt'],
   elecBoard:['Elektryka: montaż/uporządkowanie rozdzielnicy','zł/szt'],
   elecProtection:['Elektryka: zabezpieczenia/obwody w rozdzielnicy','zł/szt'],
@@ -224,7 +245,7 @@ const rateLabels = {
   hydPipeWall:['Hydraulika: prowadzenie rur w ścianie','zł/mb'],
   hydPipeFloor:['Hydraulika: prowadzenie rur w podłodze','zł/mb'],
   hydInsulation:['Hydraulika: izolacja rur — robocizna','zł/mb'],
-  hydBruzda:['Hydraulika: bruzdowanie pod rury','zł/mb'],
+  hydBruzda:['Przygotowanie pod instalacje: bruzdowanie pod wod-kan','zł/mb'],
   hydSewerMb:['Hydraulika: podejście kanalizacyjne','zł/mb'],
   hydManifold:['Hydraulika: montaż rozdzielacza','zł/szt'],
   hydManifoldConnect:['Hydraulika: podłączenie rozdzielacza/obiegów','zł/szt'],
@@ -302,6 +323,11 @@ const rateLabels = {
   tileGresExtra:["Płytki: dopłata za gres","zł/m²"],
   tileHardExtra:["Płytki: dopłata za materiał trudny w obróbce","zł/m²"],
   tileMiter:["Płytki: szlifowanie krawędzi 45° / narożniki","zł/mb"],
+  tileSmallExtra:["Płytki: dopłata za mały format ≤15 cm","zł/m²"],
+  tileBrickExtra:["Płytki: dopłata za cegiełkę","zł/m²"],
+  tileMosaicExtra:["Płytki: dopłata za mozaikę","zł/m²"],
+  tileKitkatExtra:["Płytki: dopłata za kit-kat / lamelki","zł/m²"],
+  tileHerringboneExtra:["Płytki: dopłata za jodełkę","zł/m²"],
   bathroomGkFrame:["Łazienka: zabudowa stelaża WC","zł/szt"],
   floorLaminate:["Podłogi: panele laminowane — montaż pływający","zł/m²"],
   floorVinylClick:["Podłogi: winyl click — montaż pływający","zł/m²"],
@@ -354,86 +380,104 @@ const rateLabels = {
   revealsDoorStandard:["Glify / szpalety: drzwiowe standard","zł/mb"],
   revealsHiddenDoor:["Glify / szpalety: pod drzwi ukryte","zł/mb"],
   revealsAluCorner:["Glify / szpalety: narożnik / kątownik alu","zł/mb"],
-  revealsOldFrameRepair:["Glify / szpalety: naprawa po starej ościeżnicy","zł/szt"]
+  revealsOldFrameRepair:["Glify / szpalety: naprawa po starej ościeżnicy","zł/szt"],
+  parapetDemount:["Parapety: demontaż parapetu wewnętrznego","zł/szt"],
+  parapetSet:["Parapety: obsadzenie parapetu wewnętrznego","zł/szt"],
+  parapetFinish:["Parapety: obróbka parapetu / wykończenie wnęki","zł/szt"],
+  parapetCut:["Parapety: docinanie / dopasowanie parapetu","zł/szt"]
 };
 
 
 const SUMMARY_GROUPS = [
   {id:'prep', title:'1. Prace przygotowawcze', order:10},
-  {id:'demo', title:'2. Demontaże / skucia / gruz', order:20},
-  {id:'subfloor', title:'3. Posadzki / przygotowanie podłoża', order:30},
+  {id:'demo', title:'2. Demontaże / rozbiórki / wywóz', order:20},
+  {id:'installPrep', title:'3. Przygotowanie pod instalacje', order:30},
   {id:'electric', title:'4. Instalacje elektryczne', order:40},
-  {id:'hydraulic', title:'5. Hydraulika / biały montaż', order:50},
-  {id:'wet', title:'6. Pomieszczenia mokre / glazura', order:60},
-  {id:'walls', title:'7. Ściany / sufity / zabudowy', order:70},
-  {id:'attic', title:'8. Poddasze', order:80},
+  {id:'hydraulic', title:'5. Instalacje wod-kan', order:50},
+  {id:'walls', title:'6. Ściany / sufity / zabudowy', order:60},
+  {id:'attic', title:'6A. Poddasze / skosy', order:65},
+  {id:'subfloor', title:'7. Posadzki / przygotowanie podłoża', order:70},
+  {id:'wet', title:'8. Łazienki i kuchnie', order:80},
   {id:'smooth', title:'9. Gładzie', order:90},
-  {id:'floor', title:'10. Podłogi i listwy przypodłogowe', order:100},
+  {id:'reveals', title:'10. Glify / szpalety / parapety', order:100},
   {id:'decor', title:'11. Dekoracje / sztukateria', order:110},
-  {id:'wallpaper', title:'12. Tapetowanie / okładziny ścienne', order:115},
-  {id:'paint', title:'13. Malowanie', order:120},
-  {id:'reveals', title:'14. Obróbki glifów / szpalet / otworów', order:124},
-  {id:'furniture', title:'15. Montaż mebli / wyposażenia', order:125},
-  {id:'hard', title:'16. Prace trudne / narzuty', order:130},
-  {id:'other', title:'17. Inne pozycje', order:900}
+  {id:'floor', title:'12. Podłogi i listwy przypodłogowe', order:120},
+  {id:'wallpaper', title:'13. Tapetowanie / okładziny ścienne', order:130},
+  {id:'paint', title:'14. Malowanie', order:140},
+  {id:'furniture', title:'15. Stolarka / drzwi / meble', order:150},
+  {id:'hard', title:'16. Utrudnienia i dopłaty', order:160},
+  {id:'other', title:'17. Pozycje indywidualne', order:900}
 ];
 const SUMMARY_GROUP_BY_ID = Object.fromEntries(SUMMARY_GROUPS.map(g => [g.id, g]));
 function inferSummaryMeta(name=''){
   const n = (name || '').toLowerCase();
 
-  // Priorytet 1: wszystkie roboty rozbiórkowe i logistyka gruzu.
-  // To musi być return, a nie zwykłe nadpisanie id, bo nazwy typu
-  // „Skuwanie płytek…” zawierają też słowa klasyfikujące do glazury/podłóg.
+  // v1.9.0: brudne prace przygotowawcze pod instalacje są osobnym blokiem,
+  // a nie demontażem ani właściwą instalacją.
+  if(
+    n.includes('bruzdowanie') ||
+    n.includes('wycinanie / wiercenie otworów pod puszki') ||
+    n.includes('kucie/wiercenie pod puszki') ||
+    n.includes('wiercenie pod puszki') ||
+    n.includes('otworów pod puszki') ||
+    n.includes('przepust')
+  ) {
+    return {group:'installPrep', groupOrder:SUMMARY_GROUP_BY_ID.installPrep.order, order:30};
+  }
+
+  // Roboty rozbiórkowe i logistyka gruzu.
   if(
     n.includes('demolka') ||
     n.includes('demontaż') ||
     n.includes('skuwanie') ||
-    n.includes('kucie') ||
+    n.includes('kucie posadzki') ||
     n.includes('zrywanie') ||
     n.includes('usunięcie') ||
     n.includes('gruz') ||
     n.includes('kontener') ||
     n.includes('big-bag') ||
     n.includes('wynoszenie') ||
-    n.includes('wywóz')
+    n.includes('wywóz') ||
+    n.includes('wyburzanie')
   ) {
     return {group:'demo', groupOrder:SUMMARY_GROUP_BY_ID.demo.order, order:20};
   }
 
-  // Priorytet 2: prace przygotowawcze niebędące demontażem.
+  // Prace przygotowawcze niebędące demontażem.
   if(n.includes('zabezpieczenie') || n.includes('oklejanie')) return {group:'prep', groupOrder:SUMMARY_GROUP_BY_ID.prep.order, order:10};
 
-  if(n.includes('glify') || n.includes('szpalety') || n.includes('kątownik alu') || n.includes('starej ościeżnicy')) return {group:'reveals', groupOrder:SUMMARY_GROUP_BY_ID.reveals.order, order:124};
+  if(n.includes('glify') || n.includes('szpalety') || n.includes('kątownik alu') || n.includes('starej ościeżnicy') || n.includes('parapety')) return {group:'reveals', groupOrder:SUMMARY_GROUP_BY_ID.reveals.order, order:100};
 
-  // Priorytet 2A: C.O. i drzwi.
+  // Łazienki i kuchnie: glazura, hydro, wod-kan i biały montaż w pomieszczeniach mokrych razem.
+  const wetRoomPrefix = n.includes('łazienka —') || n.includes('kuchnia —') || n.includes('wc —') || n.includes('pralnia') || n.includes('pomieszczenia mokre');
+  const isPaintRoomRow = n.includes('— ściany (') || n.includes('- ściany (') || n.includes('— sufit (') || n.includes('- sufit (') || n.includes('— sufity (') || n.includes('- sufity (');
+  const wetWork = n.includes('płytki') || n.includes('glazura') || n.includes('hydroizolacja') || n.includes('fugowanie') || n.includes('gruntowanie pod płytki') || n.includes('punkt wodny') || n.includes('punkt kanalizacyjny') || n.includes('prowadzenie rur') || n.includes('stelaża wc') || n.includes('montaż wc') || n.includes('montaż umywalki') || n.includes('montaż baterii') || n.includes('montaż kabiny') || n.includes('montaż wanny') || n.includes('pralki') || n.includes('zmywarki') || n.includes('silikon');
+  if((wetRoomPrefix && wetWork && !isPaintRoomRow) || (!isPaintRoomRow && (n.includes('płytki') || n.includes('glazura') || n.includes('hydroizolacja') || n.includes('fugowanie') || n.includes('pomieszczenia mokre')))) {
+    return {group:'wet', groupOrder:SUMMARY_GROUP_BY_ID.wet.order, order:80};
+  }
+
+  // C.O. i drzwi.
   if(n.includes('grzejnik') || n.includes('c.o.')) return {group:'hydraulic', groupOrder:SUMMARY_GROUP_BY_ID.hydraulic.order, order:50};
-  if(n.includes('drzwi') || n.includes('ościeżnic')) return {group:'furniture', groupOrder:SUMMARY_GROUP_BY_ID.furniture.order, order:125};
+  if(n.includes('drzwi') || n.includes('ościeżnic')) return {group:'furniture', groupOrder:SUMMARY_GROUP_BY_ID.furniture.order, order:150};
 
   let id = 'other';
   let order = 9000;
-  if(n.includes('posadzki') || n.includes('podłoże') || n.includes('samopoziom') || n.includes('wyrównanie lokalne') || n.includes('szlifowanie')) { id='subfloor'; order=30; }
   if(n.includes('elektryka')) { id='electric'; order=40; }
-  if(n.includes('hydraulika')) { id='hydraulic'; order=50; }
-  if(n.includes('płytki') || n.includes('glazura') || n.includes('łazienka') || n.includes('hydroizolacja') || n.includes('fugowanie') || n.includes('silikon')) { id='wet'; order=60; }
-  // v1.4.1: po imporcie JSON pozycje malowania per pomieszczenie mają nazwy typu
-  // „salon — ściany (biały, akrylowa)” / „sypialnia — sufit (biały, akrylowa)”.
-  // Nie zawierają słowa „malowanie”, więc muszą być klasyfikowane jawnie.
-  if(
-    n.includes('— ściany (') || n.includes('- ściany (') ||
-    n.includes('— sufit (') || n.includes('- sufit (') ||
-    n.includes('— sufity (') || n.includes('- sufity (')
-  ) { id='paint'; order=120; }
-  if(n.includes('zabudowy') || n.includes('ścianka') || n.includes('sufit podwieszany') || n.includes('gk') || n.includes('murowan')) { id='walls'; order=70; }
-  if(n.includes('poddasze')) { id='attic'; order=80; }
+  if(n.includes('hydraulika') || n.includes('wod-kan') || n.includes('punkt wodny') || n.includes('punkt kanalizacyjny') || n.includes('prowadzenie rur')) { id='hydraulic'; order=50; }
+  if(n.includes('zabudowy') || n.includes('ścianka') || n.includes('sufit podwieszany') || n.includes('gk') || n.includes('murowan') || n.includes('tynkowanie nowej ścianki')) { id='walls'; order=60; }
+  if(n.includes('poddasze')) { id='attic'; order=65; }
+  if(n.includes('posadzki') || n.includes('podłoże') || n.includes('samopoziom') || n.includes('wyrównanie lokalne') || n.includes('szlifowanie podłoża')) { id='subfloor'; order=70; }
   if(n.includes('gładź')) { id='smooth'; order=90; }
-  if(n.includes('podłogi') || n.includes('panele') || n.includes('winyl') || n.includes('deska warstwowa') || n.includes('listwy przypodłogowe') || n.includes('podkład') || n.includes('paroizolacyjna') || n.includes('progowa')) { id='floor'; order=100; }
   if(n.includes('dekoracje') || n.includes('sztukateria') || n.includes('listwy przysufitowe') || n.includes('maskownice led') || n.includes('malowanie listew') || n.includes('renowacja łączeń sztukaterii') || n.includes('wygubienie uskoku') || n.includes('korekta starego akrylu') || n.includes('poprawa starego akrylu') || n.includes('zabezpieczenie / oklejanie sztukaterii') || n.includes('zabezpieczenie / oklejanie do malowania')) { id='decor'; order=110; }
-  if(n.includes('tapetowanie') || n.includes('tapeta') || n.includes('tapety')) { id='wallpaper'; order=115; }
-  if(n.includes('serwis malarski') || n.includes('zaprawka') || n.includes('naprawa punktowa sufitu')) { id='paint'; order=120; }
-  if((n.includes('malowanie') || n.includes('gruntowanie')) && !n.includes('sztukateria') && !n.includes('listwy przypodłogowe') && !n.includes('dekoracje')) { id='paint'; order=120; }
-  if(n.includes('tapetowanie') || n.includes('tapeta') || n.includes('tapety')) { id='wallpaper'; order=115; }
-  if(n.includes('montaż mebli') || n.includes('meble:') || n.includes('zabudowa kuchenna') || n.includes('regulacja frontów') || n.includes('uchwyty')) { id='furniture'; order=125; }
-  if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('transport pionowy')) { id='hard'; order=130; }
+  if(n.includes('podłogi') || n.includes('panele') || n.includes('winyl') || n.includes('deska warstwowa') || n.includes('listwy przypodłogowe') || n.includes('podkład') || n.includes('paroizolacyjna') || n.includes('progowa')) { id='floor'; order=120; }
+  if(n.includes('tapetowanie') || n.includes('tapeta') || n.includes('tapety')) { id='wallpaper'; order=130; }
+  if(
+    isPaintRoomRow ||
+    n.includes('serwis malarski') || n.includes('zaprawka') || n.includes('naprawa punktowa sufitu') ||
+    ((n.includes('malowanie') || n.includes('gruntowanie')) && !n.includes('pod płytki') && !n.includes('sztukateria') && !n.includes('listwy przypodłogowe') && !n.includes('dekoracje'))
+  ) { id='paint'; order=140; }
+  if(n.includes('montaż mebli') || n.includes('meble:') || n.includes('zabudowa kuchenna') || n.includes('regulacja frontów') || n.includes('uchwyty')) { id='furniture'; order=150; }
+  if(n.includes('prace trudne') || n.includes('rusztowanie') || n.includes('transport pionowy') || n.includes('dopłata')) { id='hard'; order=160; }
   return {group:id, groupOrder:SUMMARY_GROUP_BY_ID[id].order, order};
 }
 function renderGroupedSummary(rows){
@@ -592,11 +636,11 @@ const electricMap = {
   switch: {rate:'elecSwitch', label:'Elektryka: włączniki'},
   light: {rate:'elecLight', label:'Elektryka: punkty oświetleniowe'},
   power: {rate:'elecPower', label:'Elektryka: gniazda siłowe / dedykowane punkty AGD'},
-  bruzdaWall: {rate:'elecBruzdaWall', label:'Elektryka: bruzdowanie w ścianie'},
-  bruzdaConcrete: {rate:'elecBruzdaConcrete', label:'Elektryka: bruzdowanie w betonie'},
+  bruzdaWall: {rate:'elecBruzdaWall', label:'Przygotowanie pod instalacje: bruzdowanie elektryczne w ścianie'},
+  bruzdaConcrete: {rate:'elecBruzdaConcrete', label:'Przygotowanie pod instalacje: bruzdowanie elektryczne w betonie'},
   cable: {rate:'elecCable', label:'Elektryka: układanie przewodów'},
   conduit: {rate:'elecConduit', label:'Elektryka: prowadzenie w peszlu/osłonie'},
-  boxCut: {rate:'elecBoxCut', label:'Elektryka: kucie/wiercenie pod puszki'},
+  boxCut: {rate:'elecBoxCut', label:'Przygotowanie pod instalacje: wycinanie / wiercenie otworów pod puszki'},
   boxMount: {rate:'elecBoxMount', label:'Elektryka: montaż/osadzenie puszki'},
   board: {rate:'elecBoard', label:'Elektryka: rozdzielnica'},
   protection: {rate:'elecProtection', label:'Elektryka: zabezpieczenia / obwody w rozdzielnicy'},
@@ -616,7 +660,11 @@ const revealsMap = {
   doorStandard: {rate:'revealsDoorStandard', label:'Glify / szpalety: drzwiowe standard', unit:'mb'},
   hiddenDoor: {rate:'revealsHiddenDoor', label:'Glify / szpalety: pod drzwi ukryte', unit:'mb'},
   aluCorner: {rate:'revealsAluCorner', label:'Glify / szpalety: narożnik / kątownik alu', unit:'mb'},
-  oldFrameRepair: {rate:'revealsOldFrameRepair', label:'Glify / szpalety: naprawa po starej ościeżnicy', unit:'szt'}
+  oldFrameRepair: {rate:'revealsOldFrameRepair', label:'Glify / szpalety: naprawa po starej ościeżnicy', unit:'szt'},
+  parapetDemount: {rate:'parapetDemount', label:'Parapety: demontaż parapetu wewnętrznego', unit:'szt'},
+  parapetSet: {rate:'parapetSet', label:'Parapety: obsadzenie parapetu wewnętrznego', unit:'szt'},
+  parapetFinish: {rate:'parapetFinish', label:'Parapety: obróbka parapetu / wykończenie wnęki', unit:'szt'},
+  parapetCut: {rate:'parapetCut', label:'Parapety: docinanie / dopasowanie parapetu', unit:'szt'}
 };
 
 function revealNum(row, selector){
@@ -1065,8 +1113,10 @@ function syncDemoUi(){
 function syncPaintUi(){
   const paintBox = el('paintDetailsBox');
   const repairBox = el('paintRepairDetailsBox');
+  const protectionBox = el('paintProtectionBox');
   if(paintBox) paintBox.style.display = chk('svcPaint') ? '' : 'none';
   if(repairBox) repairBox.style.display = chk('svcPaintRepair') ? '' : 'none';
+  if(protectionBox) protectionBox.style.display = (chk('svcPaint') && chk('svcMask')) ? '' : 'none';
 }
 function paintRepairLightMultiplier(){
   const mode = el('paintRepairLightMode') ? val('paintRepairLightMode') : 'standard';
@@ -1545,6 +1595,7 @@ function addWetRoom(data={}){
     <td><input class="wetTilePct" type="number" min="0" max="100" step="1" value="100"></td>
     <td><input class="wetBacksplash" type="number" min="0" step="0.1" value="0"></td>
     <td><select class="wetTileMaterial"><option value="glazura">glazura</option><option value="gres">gres</option><option value="hard">materiał trudny</option></select></td>
+    <td><select class="wetTilePattern"><option value="standard">standard</option><option value="small">mały format ≤15 cm</option><option value="brick">cegiełka</option><option value="mosaic">mozaika</option><option value="kitkat">kit-kat / lamelki</option><option value="herringbone">jodełka</option></select></td>
     <td><select class="wetEdgeMode"><option value="none">brak</option><option value="profile">listwy/profile</option><option value="miter">szlif 45°</option></select></td>
     <td><input class="wetEdgeMb" type="number" min="0" step="0.1" value="0"></td>
     <td><input type="checkbox" class="wetWallTiles" checked></td>
@@ -1568,6 +1619,7 @@ function addWetRoom(data={}){
   tr.querySelector('.wetType').value=type;
   tr.querySelector('.wetSource').value=source;
   tr.querySelector('.wetTileMaterial').value=data.tileMaterial || (type==='kitchen' ? 'glazura' : 'gres');
+  tr.querySelector('.wetTilePattern').value=data.tilePattern || 'standard';
   tr.querySelector('.wetEdgeMode').value=data.edgeMode || 'profile';
   tr.querySelector('.wetEdgeMb').value=data.edgeMb ?? 0;
   tr.querySelector('.wetTilePct').value=data.tilePct ?? (type==='kitchen' ? 0 : type==='wc' ? 75 : 100);
@@ -1664,10 +1716,15 @@ function addWetRows(add, rows){
     const tileMaterial = tr.querySelector('.wetTileMaterial')?.value || 'glazura';
     const materialExtra = tileMaterial==='gres' ? (rates.tileGresExtra||0) : tileMaterial==='hard' ? (rates.tileHardExtra||0) : 0;
     const materialLabel = tileMaterial==='gres' ? 'gres' : tileMaterial==='hard' ? 'materiał trudny' : 'glazura';
-    const wallRate = (rates.tileWall||0) + materialExtra;
-    const floorRate = (rates.tileFloor||0) + materialExtra;
-    if(tr.querySelector('.wetWallTiles').checked) add(`${prefix}: płytki ścienne (${materialLabel})`, wallTileArea, 'm²', wallRate);
-    if(tr.querySelector('.wetFloorTiles').checked) add(`${prefix}: płytki podłogowe (${materialLabel})`, floorTileArea, 'm²', floorRate);
+    const pattern = tr.querySelector('.wetTilePattern')?.value || 'standard';
+    const patternExtraMap = {small: rates.tileSmallExtra||0, brick: rates.tileBrickExtra||0, mosaic: rates.tileMosaicExtra||0, kitkat: rates.tileKitkatExtra||0, herringbone: rates.tileHerringboneExtra||0};
+    const patternLabelMap = {standard:'standard', small:'mały format', brick:'cegiełka', mosaic:'mozaika', kitkat:'kit-kat / lamelki', herringbone:'jodełka'};
+    const patternExtra = patternExtraMap[pattern] || 0;
+    const labelExtra = pattern === 'standard' ? materialLabel : `${materialLabel}, ${patternLabelMap[pattern]}`;
+    const wallRate = (rates.tileWall||0) + materialExtra + patternExtra;
+    const floorRate = (rates.tileFloor||0) + materialExtra + patternExtra;
+    if(tr.querySelector('.wetWallTiles').checked) add(`${prefix}: płytki ścienne (${labelExtra})`, wallTileArea, 'm²', wallRate);
+    if(tr.querySelector('.wetFloorTiles').checked) add(`${prefix}: płytki podłogowe (${labelExtra})`, floorTileArea, 'm²', floorRate);
     const edgeMode = tr.querySelector('.wetEdgeMode')?.value || 'none';
     const edgeMb = parseFloat(tr.querySelector('.wetEdgeMb')?.value)||0;
     if(edgeMode==='profile') add(`${prefix}: listwy / profile krawędziowe`, edgeMb, 'mb', rates.tileProfile);
@@ -1678,7 +1735,7 @@ function addWetRows(add, rows){
     add(`${prefix}: punkt wodny`, parseFloat(tr.querySelector('.wetWaterPts').value)||0, 'szt', (rates.hydWaterPoint||0)*mult);
     add(`${prefix}: punkt kanalizacyjny`, parseFloat(tr.querySelector('.wetSewerPts').value)||0, 'szt', (rates.hydSewerPoint||0)*mult);
     add(`${prefix}: prowadzenie rur`, parseFloat(tr.querySelector('.wetPipeMb').value)||0, 'mb', (rates.hydPipeWall||0)*mult);
-    add(`${prefix}: bruzdowanie pod instalację`, parseFloat(tr.querySelector('.wetBruzdaMb').value)||0, 'mb', (rates.hydBruzda||0));
+    add(`${prefix}: przygotowanie pod wod-kan — bruzdy pod instalację`, parseFloat(tr.querySelector('.wetBruzdaMb').value)||0, 'mb', (rates.hydBruzda||0));
     add(`${prefix}: zabudowa stelaża WC`, parseFloat(tr.querySelector('.wetWcFrame').value)||0, 'szt', rates.bathroomGkFrame);
     add(`${prefix}: montaż WC kompakt`, parseFloat(tr.querySelector('.wetWcCompact').value)||0, 'szt', rates.hydWcCompact);
     add(`${prefix}: montaż umywalki / zlewu`, parseFloat(tr.querySelector('.wetSink').value)||0, 'szt', rates.hydSink);
@@ -1687,7 +1744,7 @@ function addWetRows(add, rows){
     add(`${prefix}: montaż wanny`, parseFloat(tr.querySelector('.wetBathtub').value)||0, 'szt', rates.hydBathtub);
     add(`${prefix}: podłączenie pralki / zmywarki`, parseFloat(tr.querySelector('.wetAppliance').value)||0, 'szt', rates.hydAppliance);
   });
-  if(rows) rows.push({name:'Hydraulika i płytki w pomieszczeniach mokrych są liczone w module pomieszczeń mokrych — nie dubluj ich w globalnej hydraulice.', qty:0, unit:'', rate:0, value:0, note:true});
+  if(rows) rows.push({name:'Hydraulika, biały montaż i płytki w łazienkach/kuchniach są prezentowane razem w bloku Łazienki i kuchnie — nie dubluj ich w globalnej hydraulice.', qty:0, unit:'', rate:0, value:0, note:true});
   }
   if(wetRepairEnabled){
     add('Pomieszczenia mokre: nowe silikonowanie', num('wetSiliconeNewMb'), 'mb', rates.siliconeNew);
@@ -1807,17 +1864,24 @@ function calc(){
     net+=value; rows.push({name, qty:1, unit:'kpl', rate:value, value, ...inferSummaryMeta(name)});
   }
   if(chk('svcPaint')){
+    add('Przygotowanie ścian pod gładź / malowanie (zdzieranie, szlifowanie)', paintArea, 'm²', prepExtraRate());
     if(val('measureMode') === 'rooms' && Array.isArray(m.paintRows)){
       m.paintRows.forEach(r=>add(r.name, r.qty, r.unit, r.rate));
     } else {
       add(`Malowanie ścian 2x — ${wallColorLabel(val('paintColor'))}, ${paintTypeLabel(val('paintType'))}`, m.walls, 'm²', paintRateFor(val('paintColor'), val('paintType'), false));
       add('Malowanie sufitów — biały', m.ceilings, 'm²', rates.paintCeiling);
     }
-    add('Dodatkowe przygotowanie pod malowanie', paintArea, 'm²', prepExtraRate());
   }
   if(chk('svcPrimer')) add('Gruntowanie', paintArea, 'm²', rates.primer);
   if(chk('svcSmooth')) add('Gładź', m.walls, 'm²', rates.smooth);
-  if(chk('svcMask')) add('Zabezpieczenie / oklejanie', paintArea, 'm²', rates.mask);
+  if(chk('svcMask')){
+    add('Zabezpieczenie pełne pomieszczenia', num('paintProtectFullM2'), 'm²', rates.paintProtectFull);
+    add('Zabezpieczenie podłogi', num('paintProtectFloorM2'), 'm²', rates.paintProtectFloor);
+    add('Zabezpieczenie parkietu wzmocnione', num('paintProtectParkietM2'), 'm²', rates.paintProtectParkiet);
+    add('Zabezpieczenie okien', num('paintProtectWindowQty'), 'szt', rates.paintProtectWindow);
+    add('Zabezpieczenie drzwi', num('paintProtectDoorQty'), 'szt', rates.paintProtectDoor);
+    add('Zabezpieczenie klatki schodowej / windy', num('paintProtectStairLiftKpl'), 'kpl', rates.paintProtectStairLift);
+  }
   if(chk('svcPaintRepair')){
     const lightMult = paintRepairLightMultiplier();
     add('Serwis malarski: naprawa punktowa sufitu', num('paintCeilingPatchQty'), 'szt', (rates.paintCeilingPatch || 0) * lightMult);
@@ -2085,7 +2149,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
 // v1.4.0 - funkcje operacyjne: Zapisz / Wczytaj / Generuj ofertę PDF PRO
 (function(){
-  const PROJECT_SCHEMA_VERSION = '1.8.5';
+  const PROJECT_SCHEMA_VERSION = '1.9.0';
   const safeId = (id) => document.getElementById(id);
   const getControls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
 
@@ -2242,8 +2306,8 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
     ]));
 
     if(isOn('svcMask')){
-      items.push(scopeItem('Prace przygotowawcze — zabezpieczenie / oklejanie', [
-        'Zabezpieczenie obejmuje robociznę przygotowania pola pracy: osłonięcie elementów stałych, powierzchni narażonych na zabrudzenie oraz podstawowe oklejanie przed pracami malarskimi lub wykończeniowymi.'
+      items.push(scopeItem('Prace przygotowawcze — zabezpieczenia', [
+        'Zabezpieczenie obejmuje robociznę przygotowania pola pracy: osłonięcie elementów stałych, powierzchni narażonych na zabrudzenie oraz podstawowe oklejanie przed pracami remontowymi, instalacyjnymi, tynkarskimi, gładziami, malowaniem lub innymi pracami wykończeniowymi.'
       ], [
         'zabezpieczenie dotyczy zakresu wynikającego z obmiaru',
         'materiały zabezpieczające mogą być rozliczane osobno, jeśli nie ustalono inaczej',
@@ -2290,7 +2354,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
       ]));
     }
     if(isOn('svcDemo')){
-      items.push(scopeItem('Demontaże / skucia / gruz', [
+      items.push(scopeItem('Demontaże / rozbiórki / wywóz', [
         'Prace demontażowe obejmują skuwanie, zrywanie lub usuwanie istniejących warstw zgodnie z wybranymi pozycjami. Logistyka gruzu i wynoszenie są traktowane jako osobna część kosztu, ponieważ zależą od piętra, windy, odległości i sposobu wywozu.'
       ], [
         'zakres demontażu wymaga potwierdzenia po oględzinach',
@@ -2390,7 +2454,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
     }
     if(isOn('svcElec')){
       items.push(scopeItem('Elektryka / LED', [
-        'Pozycje elektryczne obejmują punkty, bruzdowanie, prowadzenie przewodów, osprzęt i elementy LED zgodnie z wybranymi pozycjami. LED w elektryce dotyczy części technicznej: taśm, lutowania, punktów podłączeniowych, zasilaczy i połączeń.',
+        'Pozycje elektryczne obejmują punkty, prowadzenie przewodów, osprzęt, rozdzielnicę i elementy LED zgodnie z wybranymi pozycjami. Bruzdowanie i wycinanie otworów pod puszki są prezentowane w bloku przygotowania pod instalacje. LED w elektryce dotyczy części technicznej: taśm, lutowania, punktów podłączeniowych, zasilaczy i połączeń.',
         'Elementy dekoracyjne lub maskujące związane z LED, takie jak maskownice lub profile dekoracyjne, są ujmowane w dekoracjach / sztukaterii.'
       ], [
         'prace elektryczne wymagają zgodności z istniejącą instalacją',
@@ -2456,7 +2520,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
       'Obróbki glifów i szpalet obejmują wykończenie krawędzi oraz płaszczyzn wokół okien, drzwi wejściowych, drzwi wewnętrznych lub drzwi ukrytych.',
       'Tryb szybki przelicza obmiar jako liczba otworów × (2 × wysokość + szerokość), czyli dwa boki i górę otworu. Tryb ręczny pozwala wpisać gotowy obmiar w mb.'
     ], [
-      'dolna krawędź/parapet nie jest liczona w trybie szybkim',
+      'dolna krawędź/parapet nie jest liczona w trybie szybkim glifów — parapety są osobnymi pozycjami',
       'materiały są po stronie klienta, jeżeli nie wskazano inaczej',
       'drzwi ukryte wymagają większej precyzji i kontroli płaszczyzn'
     ]));
@@ -2635,7 +2699,7 @@ renderRates(); bindAll(); updateLivingHint(); seedRooms(); updateDelegationVisib
 
 // v1.5.0 - CRM local-first: historia ofert, statusy, wczytywanie z historii
 (function(){
-  const VERSION = '1.8.5';
+  const VERSION = '1.9.0';
   const HISTORY_KEY = 'offers_history_v150';
   const safeId = (id) => document.getElementById(id);
   const controls = () => Array.from(document.querySelectorAll('input, select, textarea')).filter(c => c.type !== 'file' && !c.dataset.rate);
